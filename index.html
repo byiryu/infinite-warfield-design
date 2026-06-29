@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>infinite warfield · 디자인 보드</title>
+<style>
+  :root{--ground:#14181c;--panel:#1b2228;--line:#2d383f;--text:#dde4e1;--muted:#8a9691;--amber:#e8a33d;--cyan:#56c2d0;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:ui-sans-serif,system-ui,-apple-system,sans-serif;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.6}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 22px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:10px 0 0;font-size:clamp(26px,5vw,40px);font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin-top:12px;font-size:14px}
+  .status{font-family:var(--mono);font-size:11px;color:var(--amber);margin-top:8px}
+  .section{display:flex;align-items:baseline;gap:10px;margin:36px 0 4px}
+  .section .label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:700}
+  .section .hint{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .section .rule{flex:1;height:1px;background:var(--line)}
+  .cards{display:grid;gap:14px;margin-top:14px}
+  a.card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 22px;color:var(--text);transition:border-color .15s,transform .15s}
+  a.card:hover{border-color:var(--cyan);transform:translateY(-1px)}
+  a.card .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan)}
+  a.card h2{margin:6px 0 4px;font-size:18px}
+  a.card p{margin:0;color:var(--muted);font-size:13px}
+  a.card.wip{border-style:dashed;border-color:#3a4650;background:transparent;opacity:.62}
+  a.card.wip:hover{opacity:1;border-color:var(--amber)}
+  a.card.wip .k{color:var(--amber)}
+  a.card.archived{opacity:.42;background:transparent;border-style:dashed}
+  a.card.archived:hover{opacity:.7;transform:none;border-color:var(--line)}
+  a.card.archived .k{color:var(--muted)}
+  .note{margin-top:34px;font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.8}
+  .note a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">byiryu studio · 디자인 보드</div>
+  <h1>infinite warfield</h1>
+  <p class="sub">좌우 대치 코스트 기반 실시간 유닛 소환 (2D 모바일). 활성 개발 — weaver 홀드.</p>
+  <p class="status">● 공개 · GitHub Pages (infinite-warfield-design) · 진행 중 = 비활성 표기</p>
+
+  <div class="section">
+    <span class="label">진행 중 · 검토/결정 대기</span>
+    <span class="rule"></span>
+    <span class="hint">비활성 — 미확정</span>
+  </div>
+  <div class="cards">
+    <a class="card wip" href="sanity/arden-distinction-p0-board.html">
+      <div class="k">★ 지금 검토 — P0 매체 슬라이스</div>
+      <h2>아르덴 distinction — 영웅 vs 일반 대비 →</h2>
+      <p>프레임-기반 픽셀(CEO 확정)·chibi·PixelLab 실렌더. 25차 "영웅감 없음" 갭 → distinction 스택 풀 적용본을 일반 유닛 옆에. 난전 군집 식별(#5)·스택 랜딩·결정 3건. SoT = ideas/2026-06-29-art-medium-animation-architecture.md.</p>
+    </a>
+    <a class="card wip" href="sanity/meta-screens-wireframe-board.html">
+      <div class="k">메타 화면 (결정 대기)</div>
+      <h2>결과 · 강화 · 환생 · 업적 · 미션 · 상점 →</h2>
+      <p>그 외 전 메타 화면 재설계. 미션·상점 MVP 범위 = 리드 결정 대기.</p>
+    </a>
+    <a class="card wip" href="sanity/art-direction-board.html">
+      <div class="k">아트 디렉션 재검토 (캐주얼 SD)</div>
+      <h2>레퍼런스 + 매체 결정 →</h2>
+      <p>사용자 피드백("영웅 X·캐주얼·SD") → 4-에이전트 리서치 종합. realistic→chibi 진단·레퍼런스 7종·매체 비교. 매체/애니 CEO 확정(06-29)으로 → P0 슬라이스로 승계. (맥락 보존)</p>
+    </a>
+    <a class="card archived" href="sanity/arden-view-board.html">
+      <div class="k">아르덴 view 결정 (보류)</div>
+      <h2>side vs low top-down(3/4) →</h2>
+      <p>⏸ 아트 디렉션 재검토로 보류 — realistic v3 양 view 비교였으나 chibi 전환·매체 결정이 상위. view = P0 슬라이스에서 재판정. (이력 보존)</p>
+    </a>
+  </div>
+
+  <div class="section">
+    <span class="label">디자인 · 확정</span>
+    <span class="rule"></span>
+    <span class="hint">승인 · 현행</span>
+  </div>
+  <div class="cards">
+    <a class="card" href="sanity/main-hud-wireframe-board.html">
+      <div class="k">흐름 와이어</div>
+      <h2>메인 · 편성 · 전투 HUD →</h2>
+      <p>스테이지 선택 → 편성(확인/조정) → 전투. 흐름·레이아웃 확정. 난전 가독(paranoia #5).</p>
+    </a>
+    <a class="card" href="sanity/threat-formation-board.html">
+      <div class="k">위협 편성 (M2 step-1 게이트)</div>
+      <h2>5종 대표 편성 · bias · 별점 →</h2>
+      <p>위협 5종 대표 편성(37 미러 풀)·약점축 bias·카운터(5테마 색)·별점 매핑 + 보스 5테마(기존 3영웅 객원·D2 확정)·분포 곡선·하이브리드 저작. ✅ 게이트 통과(06-29)·plat step-2~5 양산 언블록. SoT = spec §7.0b-1/§2/§6.B⑥.</p>
+    </a>
+    <a class="card" href="sanity/threat-telegraph-board.html">
+      <div class="k">위협 텔레그래프</div>
+      <h2>5 아키타입 라벨 · 아이콘 · 2축 언어 →</h2>
+      <p>철벽·러시·폭격·디버퍼·보스 — 색/아이콘/카운터 힌트·별점 자동매핑 디렉션. 카운터 매핑 = 5테마 영웅 정합. BattlePrepare ShowFormation 확장.</p>
+    </a>
+    <a class="card" href="sanity/commander-select-wireframe-board.html">
+      <div class="k">온보딩 영웅 선택</div>
+      <h2>아르덴 · 베스라 · 에이라 →</h2>
+      <p>첫 진입 영웅 3종 1택(추천·강제 없음)·선택 시 덱 테마 글로우·kit 3슬롯·해금 진척. SoT = spec §6.B②/§8.</p>
+    </a>
+    <a class="card" href="sanity/color-tokens-board.html">
+      <div class="k">색 토큰</div>
+      <h2>5테마 + 시스템 팔레트 →</h2>
+      <p>5테마 색·피드백·진영·방어축·위협5 정식 토큰 + 색 충돌 회피 3건(Spirit/Machine/Beast). SoT = design-system.md §1.</p>
+    </a>
+    <a class="card" href="sanity/juice-board.html">
+      <div class="k">juice 룩</div>
+      <h2>히트 · 소환 · 사망 VFX →</h2>
+      <p>placeholder VFX 3종 룩 톤(색·이징·지속). SoT = juice-look-guide.md.</p>
+    </a>
+    <a class="card" href="sanity/feedback-board.html">
+      <div class="k">전투 피드백 색</div>
+      <h2>효과적 · 막힘 · 치명타 →</h2>
+      <p>난전 위 플로팅 텍스트 색·가독. SoT = juice-look-guide.md §④.</p>
+    </a>
+  </div>
+
+  <div class="section">
+    <span class="label">자료 · 분석</span>
+    <span class="rule"></span>
+    <span class="hint">추적 · 진단</span>
+  </div>
+  <div class="cards">
+    <a class="card" href="overview.html">
+      <div class="k">게임 개요</div>
+      <h2>한눈에 보기 — 전체 요약 →</h2>
+      <p>장르·코어 재미·플레이·유닛/영웅·전투 2축·시너지·성장 메타·경제·로드맵·미결. 종합 스냅샷.</p>
+    </a>
+    <a class="card" href="asset-tracker.html">
+      <div class="k">에셋 인벤토리</div>
+      <h2>필요 에셋 · 우선순위 →</h2>
+      <p>5카테고리 전체 + 현황 + 우선순위 레인. SoT = asset-manifest.md §0.</p>
+    </a>
+    <a class="card" href="unit-codex.html">
+      <div class="k">유닛 코덱스</div>
+      <h2>유닛 스탯 · 스킬 →</h2>
+      <p>전 37유닛 스탯·스킬. 파생 뷰(SoT=SO).</p>
+    </a>
+    <a class="card" href="unit-redesign-board.html">
+      <div class="k">유닛 재설계 제안 · 리뷰</div>
+      <h2>이름·스킬·스탯·태그 (CEO 리뷰) →</h2>
+      <p>38종 현재→제안 한눈에. 변경강도 색코딩(유지11·라벨10·신규16)·시너지/텔레그래프 정합·태그 신규. SoT=unit-redesign-proposal.md.</p>
+    </a>
+    <a class="card" href="balance-report.html">
+      <div class="k">밸런싱 보고서</div>
+      <h2>유닛 · 스테이지 · 경제 →</h2>
+      <p>파워버짓·난이도 곡선·경제 분석. 구조 결함 3 + 버그 2.</p>
+    </a>
+    <a class="card" href="audit/">
+      <div class="k">정밀 감사</div>
+      <h2>아키텍처 · 시스템 진단 →</h2>
+      <p>PM 6에이전트 감사. "엔진 완성형 / 게임 미완".</p>
+    </a>
+  </div>
+
+  <div class="section">
+    <span class="label">구버전</span>
+    <span class="rule"></span>
+    <span class="hint">대체됨 · 참고용</span>
+  </div>
+  <div class="cards">
+    <a class="card archived" href="sanity/flow-wireframe-board.html">
+      <div class="k">7화면 플로우 (초안)</div>
+      <h2>인트로→메인→편성→전투→결과→강화→환생 →</h2>
+      <p>메인 영웅 로스터 전제 폐기 → 「흐름 와이어」로 대체. 7화면 개관 참고용.</p>
+    </a>
+  </div>
+
+  <p class="note">
+    갱신 2026-06-29 · 디자인 보드 레포 = infinite-warfield-design (공개·GitHub Pages)<br>
+    SoT(.md) = projects/infinite-warfield/design/ · spec/PLAN = projects/infinite-warfield/<br>
+    진행 중 = 비활성(점선) · 확정 = 활성 · 고아 0 (check_orphans.sh pre-commit 강제)
+  </p>
+</div>
+</body>
+</html>

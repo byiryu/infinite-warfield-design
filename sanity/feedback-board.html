@@ -1,0 +1,184 @@
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IWF — 전투 피드백 색 3종 검증 보드</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&display=swap');
+
+  :root{
+    --bg-0:#0a0d12; --bg-1:#141a24; --bg-2:#1d2632;
+    --ink:#e8edf3; --ink-dim:#7f8c9c; --line:#2a3543;
+    --fb-effective:#8AE05A;  /* 효과적! */
+    --fb-blocked:#9AA7B5;    /* 막힘 */
+    --fb-critical:#FFC23D;   /* 치명타! */
+    --glow-friendly:#4FA3FF; --glow-enemy:#FF5B5B; /* 기존 juice 진영색 (충돌 회피 참조) */
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{max-width:100%;overflow-x:hidden}
+  body{
+    background:
+      radial-gradient(120% 80% at 50% -10%, #18222f 0%, var(--bg-0) 60%),
+      var(--bg-0);
+    color:var(--ink); font-family:'Pretendard',sans-serif;
+    padding:32px 20px 56px; min-height:100vh;
+  }
+  body::before{ /* 미세 그레인 */
+    content:""; position:fixed; inset:0; pointer-events:none; opacity:.04; z-index:0;
+    background-image:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px);
+  }
+  .wrap{max-width:1080px;margin:0 auto;position:relative;z-index:1}
+
+  header{margin-bottom:24px;border-left:3px solid var(--fb-critical);padding-left:14px}
+  h1{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(19px,4.6vw,26px);letter-spacing:.01em;line-height:1.25}
+  .sub{color:var(--ink-dim);font-size:13px;margin-top:8px;line-height:1.65}
+  .sub code{color:#b6c2d0;background:#1a232f;padding:1px 6px;border-radius:4px;font-size:12px;word-break:break-all}
+
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin-top:22px}
+  @media(max-width:840px){.grid{grid-template-columns:1fr}}
+
+  .panel{background:linear-gradient(180deg,var(--bg-1),var(--bg-0));border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .panel-h{font-family:'Chakra Petch',sans-serif;font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);padding:14px 16px;border-bottom:1px solid var(--line)}
+
+  /* ===== 전장 목업 (난전 가독 검증) ===== */
+  .field{position:relative;width:100%;aspect-ratio:13/10;min-height:300px;
+    background:
+      radial-gradient(80% 120% at 50% 120%, #202c3a 0%, transparent 55%),
+      repeating-linear-gradient(90deg,transparent 0 8%,#ffffff08 8%,#ffffff08 calc(8% + 1px)),
+      linear-gradient(180deg,#0c1118,#0a0d12);
+    overflow:hidden}
+  /* 유닛 = 위치 마커 (아트 아님 — 가독 컨텍스트용 placeholder) · %기반 */
+  .unit{position:absolute;width:7.5%;aspect-ratio:34/46;transform:translate(-50%,-50%);border-radius:5px 5px 3px 3px;
+    box-shadow:0 6px 14px #0008, inset 0 -8px 10px #0006}
+  .unit.ally{background:linear-gradient(180deg,#3a5876,#22384e);outline:1px solid #4FA3FF55}
+  .unit.enemy{background:linear-gradient(180deg,#76393a,#4e2222);outline:1px solid #FF5B5B55}
+  .hpbar{position:absolute;width:7.5%;height:4px;border-radius:2px;background:#000a;transform:translate(-50%,-180%)}
+  .hpbar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#4ad06a,#2fae54)}
+  .hpbar.low i{background:linear-gradient(90deg,#ffb347,#ff6b4a)}
+
+  /* 코스트 게이지 (하단 HUD — 가리면 안 되는 대상) */
+  .hud{position:absolute;left:0;right:0;bottom:0;height:56px;background:linear-gradient(0deg,#0d1219,#0d121900);
+    display:flex;align-items:center;gap:8px;padding:0 14px 6px}
+  .cost{flex:1;height:14px;border-radius:8px;background:#1a2330;border:1px solid #2c3a4c;overflow:hidden;position:relative}
+  .cost i{display:block;height:100%;width:62%;background:linear-gradient(90deg,#ffd24a,#ff9d2e)}
+  .cost b{position:absolute;right:8px;top:-1px;font-size:11px;color:#0a0d12;font-weight:800}
+  .slot{width:36px;height:36px;border-radius:8px;background:#161e29;border:1px solid #2c3a4c;flex:0 0 auto}
+
+  /* 플로팅 피드백 텍스트 · 앵커 중앙정렬(translateX -50%) */
+  .fb{position:absolute;font-weight:700;white-space:nowrap;pointer-events:none;z-index:5;
+    text-shadow:0 2px 0 #000c, 0 0 7px #000a;}
+  .fb.effective{color:var(--fb-effective);font-size:clamp(17px,4.5vw,22px);animation:riseMed 1.8s ease-out infinite}
+  .fb.blocked{color:var(--fb-blocked);font-size:clamp(14px,3.6vw,17px);font-weight:600;animation:riseSm 1.8s ease-out infinite}
+  .fb.critical{color:var(--fb-critical);font-size:clamp(24px,6.5vw,34px);font-weight:800;letter-spacing:-.01em;
+    text-shadow:0 2px 0 #000c, 0 0 7px #000a, 0 0 16px #FFC23D88;
+    animation:riseCrit 1.8s cubic-bezier(.2,.9,.3,1) infinite}
+  @keyframes riseMed{0%{transform:translate(-50%,8px);opacity:0}18%{opacity:1}70%{opacity:1}100%{transform:translate(-50%,-34px);opacity:0}}
+  @keyframes riseSm{0%{transform:translate(-50%,4px);opacity:0}18%{opacity:.85}60%{opacity:.85}100%{transform:translate(-50%,-20px);opacity:0}}
+  @keyframes riseCrit{0%{transform:translate(-50%,10px) scale(1.4);opacity:0}14%{transform:translate(-50%,2px) scale(1);opacity:1}72%{opacity:1}100%{transform:translate(-50%,-46px) scale(1);opacity:0}}
+
+  /* ===== 토큰 명세 패널 ===== */
+  .tokrow{display:flex;gap:13px;align-items:flex-start;padding:15px 16px;border-bottom:1px solid var(--line)}
+  .tokrow:last-child{border-bottom:0}
+  .sw{flex:0 0 auto;width:50px;height:50px;border-radius:10px;border:1px solid #ffffff22;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#0008}
+  .tok-name{font-family:'Chakra Petch',monospace;font-size:13px;font-weight:700;color:#cdd8e4;word-break:break-all}
+  .tok-hex{font-family:'Chakra Petch',monospace;font-size:12px;color:var(--ink-dim);margin-left:6px}
+  .tok-kr{font-size:15px;font-weight:700;margin-top:5px}
+  .tok-desc{font-size:12px;color:var(--ink-dim);line-height:1.6;margin-top:4px}
+  .tok-cod{font-size:11px;color:#8a96a4;margin-top:6px}
+  .tok-cod b{color:#b6c2d0;font-weight:600}
+
+  .note{margin-top:22px;background:#10161f;border:1px solid var(--line);border-radius:12px;padding:16px;font-size:12.5px;color:var(--ink-dim);line-height:1.75}
+  .note b{color:#cdd8e4}
+  .note .k{color:var(--fb-effective)}
+  .note .k2{color:var(--fb-critical)}
+  .note code{color:#b6c2d0;background:#1a232f;padding:1px 5px;border-radius:4px;font-size:11.5px}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>전투 피드백 색 3종 — 난전 가독 검증</h1>
+    <div class="sub">
+      <code>CombatFeedbackText.Spawn(text, color)</code> 의 color 인자 SoT · 다크 전장 대비 + paranoia #5(코스트게이지·HP바 가독)<br>
+      진영색 <span style="color:#4FA3FF">아군 파랑</span> / <span style="color:#FF5B5B">적 빨강</span> 과 충돌 회피 → 피드백은 <b style="color:#8AE05A">초록</b>·<b style="color:#9AA7B5">회색</b>·<b style="color:#FFC23D">금색</b> 직교 배치
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- 전장 목업 -->
+    <div class="panel">
+      <div class="panel-h">실전 컨텍스트 — 15v15 난전 위 플로팅 (모션 루프)</div>
+      <div class="field" id="field">
+        <!-- 유닛 클러스터 = JS 생성 (%기반 위치 마커) -->
+        <!-- 피드백 텍스트 (% 앵커 · 안전 영역 25~72%) -->
+        <div class="fb critical" style="left:32%;top:33%">치명타!</div>
+        <div class="fb effective" style="left:62%;top:44%">효과적!</div>
+        <div class="fb blocked" style="left:45%;top:60%">막힘</div>
+        <div class="fb effective" style="left:72%;top:28%;animation-delay:.6s">효과적!</div>
+        <div class="fb blocked" style="left:25%;top:52%;animation-delay:.9s">막힘</div>
+
+        <div class="hud">
+          <div class="slot"></div><div class="slot"></div><div class="slot"></div>
+          <div class="cost"><i></i><b>6 / 10</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 토큰 명세 -->
+    <div class="panel">
+      <div class="panel-h">색 토큰 + 중복 코딩 (색맹 대비)</div>
+      <div class="tokrow">
+        <div class="sw" style="background:#8AE05A">AA</div>
+        <div>
+          <span class="tok-name">feedback_effective</span><span class="tok-hex">#8AE05A</span>
+          <div class="tok-kr" style="color:#8AE05A">효과적!</div>
+          <div class="tok-desc">상성 우위 · 데미지 관통(maxHP 비율 高). 긍정 신호 = 초록(보편적 성공). HP바 그린과 분리 = 더 라임 + 항상 외곽선 + 순간 소멸.</div>
+          <div class="tok-cod"><b>22px · semibold</b> · 상승 34px · 0.7s</div>
+        </div>
+      </div>
+      <div class="tokrow">
+        <div class="sw" style="background:#9AA7B5">AA</div>
+        <div>
+          <span class="tok-name">feedback_blocked</span><span class="tok-hex">#9AA7B5</span>
+          <div class="tok-kr" style="color:#9AA7B5">막힘</div>
+          <div class="tok-desc">DEF 흡수 · 상성 불리(데미지 반감). 의도적 저채도 = "무력화/약함". 빨강(적 진영) 회피 → 스틸그레이. 어둡게 둬 난전 가독 보호.</div>
+          <div class="tok-cod"><b>17px · medium · 작게</b> · 상승 20px · 0.5s · 저강조</div>
+        </div>
+      </div>
+      <div class="tokrow">
+        <div class="sw" style="background:#FFC23D">AAA</div>
+        <div>
+          <span class="tok-name">feedback_critical</span><span class="tok-hex">#FFC23D</span>
+          <div class="tok-kr" style="color:#FFC23D">치명타!</div>
+          <div class="tok-desc">크리티컬 = 잭팟. 금색 = crit 관습. 흰 플래시·웜 스파크와 구분되는 채도. 펀치 스케일 + 골드 블룸 = 최대 강조.</div>
+          <div class="tok-cod"><b>34px · heavy · 펀치(1.4→1)</b> · 골드 글로우 · 0.85s</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>설계 근거</b><br>
+    ① <b>색 신호 경제:</b> <span class="k">초록(효과적)</span>·<span class="k2">금색(치명타)</span> = 긍정 강조 / 회색(막힘) = 저강조. 플레이어는 <b>밝은 색의 부재</b>로 "막혔다"를 읽음 → 신호 절약.<br>
+    ② <b>난전 가독(paranoia #5):</b> 막힘은 의도적으로 작고 어둡게 → 수십 개 떠도 코스트게이지·HP바 안 가림. 키 유닛 풀 피드백 + 동시 표시 캡(MaxLive 24)은 plat hook 책임.<br>
+    ③ <b>색맹 대비:</b> 초록 vs 금색 = deutan 혼동쌍 → <b>크기·굵기·모션 + 한국어 라벨</b>로 중복 코딩. 색은 보강이고 1차 신호는 텍스트.<br>
+    ④ <b>블렌드:</b> 텍스트 = 솔리드 + 다크 외곽선(가독 우선) — juice 글로우의 <code>screen</code> 블렌드와 다름(텍스트는 screen 시 밝은 스프라이트 위서 날아감).
+  </div>
+</div>
+
+<script>
+  // 유닛 클러스터 (위치 마커 — 아트 아님) · %기반 → 어느 폭에서도 안 깨짐
+  const field=document.getElementById('field');
+  const allyX=[9,18,27], enemyX=[73,82,91,100-3];
+  const rows=[26,40,54,68]; // % of height
+  let pts=[];
+  allyX.forEach(x=>rows.forEach(y=>pts.push(['ally',x,y])));
+  enemyX.forEach(x=>rows.forEach(y=>pts.push(['enemy',x,y])));
+  pts.forEach(([side,x,y],i)=>{
+    const u=document.createElement('div');u.className='unit '+side;
+    u.style.left=x+'%';u.style.top=y+'%';field.appendChild(u);
+    const hp=document.createElement('div');hp.className='hpbar'+(i%3===0?' low':'');
+    hp.style.left=x+'%';hp.style.top=y+'%';
+    hp.innerHTML='<i style="width:'+(40+(i*13)%55)+'%"></i>';field.appendChild(hp);
+  });
+</script>

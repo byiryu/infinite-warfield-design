@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>IWF — 위협 텔레그래프 시각 디렉션</title>
+<style>
+:root{
+  /* 네온 메타 팔레트 (brief §0(e)) */
+  --bg:#0d1117;
+  --panel:#141b22;
+  --panel2:#1a2332;
+  --border:#243040;
+  --border-hi:#304a60;
+  --text:#d4dde8;
+  --muted:#5c7080;
+  --muted2:#3a4e60;
+
+  /* 위협 5색 — ThreatTelegraph.Describe() 현행 색에서 시각 강화 */
+  --fortress:#8ab4ff;      /* 철벽 · 밝은 스틸블루 (현행 0.55,0.75,1) */
+  --swarm:#f5c842;         /* 러시 군집 · 황금 경보 (현행 1,0.85,0.3) */
+  --ranged:#c08dff;        /* 원거리 폭격 · 보라 (현행 0.8,0.6,1) */
+  --debuffer:#54e87a;      /* 디버퍼 · 독초록 (현행 0.5,0.9,0.6) */
+  --boss:#ff5e55;          /* 혼합보스 · 적오렌지 (현행 1,0.4,0.35) */
+  --standard:#b0bcc8;      /* 보병 편성 · 회색 */
+
+  /* 방어 2축 색 — 전투 피드백과 일치 (juice-look-guide §④ 원칙) */
+  --armor-col:#4FA3FF;     /* 물리방어 = 아군 글로우색 직교 → 차가운 파랑-청 */
+  --magic-col:#C87FFF;     /* 마법저항 = 보라-마젠타 계 */
+  --axis-neutral:#5c7080;  /* Balanced */
+
+  /* 진영색 (juice-look-guide) */
+  --friendly:#4FA3FF;
+  --enemy:#FF5B5B;
+
+  /* 피드백 3색 */
+  --fb-eff:#8AE05A;
+  --fb-blk:#9AA7B5;
+  --fb-crit:#FFC23D;
+
+  /* 5테마 색 토큰 (design-system 정식·트리오 흡수 2026-06-26) */
+  --theme-combat:#E03A5C;   /* 마젠타 강철 · 아르덴 앵커 */
+  --theme-necro:#9D3EE8;    /* 보라 · 베스라 앵커 (림라이트 강제) */
+  --theme-spirit:#5DDD7E;   /* 에메랄드 · 에이라 앵커 (인게임 VFX = #4EC879) */
+  --theme-machine:#00D4FF;  /* 시안 · standalone (각형 분리) */
+  --theme-beast:#E06B14;    /* 주황 · standalone */
+
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
+.page{max-width:1160px;margin:0 auto;padding:52px 24px 80px}
+
+/* 헤더 */
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+h1{font-size:clamp(22px,4vw,32px);font-weight:800;letter-spacing:-.02em;color:#e8f0f8}
+h1 span{color:var(--swarm)}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.1em;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:3px 9px;color:var(--muted)}
+.badge.hi{border-color:var(--armor-col);color:var(--armor-col)}
+
+/* 섹션 */
+.sec-head{display:flex;align-items:center;gap:12px;margin:44px 0 18px}
+.sec-head .sec-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text);font-weight:700;white-space:nowrap}
+.sec-head .sec-rule{flex:1;height:1px;background:var(--border)}
+.sec-head .sec-note{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap}
+
+/* 위협 카드 그리드 */
+.threat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+
+.threat-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  position:relative;
+}
+.threat-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--c,#fff);
+  border-radius:8px 8px 0 0;
+}
+.card-head{padding:20px 20px 14px;display:flex;align-items:flex-start;gap:16px}
+.icon-box{
+  width:52px;height:52px;flex-shrink:0;
+  border-radius:6px;
+  background:color-mix(in srgb,var(--c,#fff) 14%,#0d1117);
+  border:1.5px solid color-mix(in srgb,var(--c,#fff) 45%,transparent);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  position:relative;
+  overflow:hidden;
+}
+.icon-box::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 40% 40%,color-mix(in srgb,var(--c) 22%,transparent),transparent 70%);
+}
+.card-name-row{flex:1}
+.threat-type{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.threat-name{font-size:18px;font-weight:800;color:var(--c,#fff);line-height:1.1;text-shadow:0 0 22px color-mix(in srgb,var(--c) 40%,transparent)}
+.threat-sub{font-size:12px;color:var(--muted);margin-top:4px}
+
+.card-body{padding:0 20px 20px;display:flex;flex-direction:column;gap:12px}
+
+/* 라벨 배지 */
+.label-row{display:flex;flex-wrap:wrap;gap:6px}
+.lbl{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em;
+  padding:4px 10px;border-radius:4px;
+  background:color-mix(in srgb,var(--c,#fff) 12%,#0d1117);
+  border:1px solid color-mix(in srgb,var(--c,#fff) 35%,transparent);
+  color:var(--c,#fff);
+  white-space:nowrap;
+}
+.lbl.dim{background:var(--panel2);border-color:var(--border);color:var(--muted);font-weight:400}
+
+/* 2축 방어 표시 */
+.axis-row{display:flex;gap:8px;align-items:stretch}
+.axis-pill{
+  flex:1;border-radius:5px;padding:8px 10px;
+  display:flex;flex-direction:column;gap:2px;
+  position:relative;overflow:hidden;
+}
+.axis-pill.armor{background:color-mix(in srgb,var(--armor-col) 10%,#0d1117);border:1px solid color-mix(in srgb,var(--armor-col) 30%,transparent)}
+.axis-pill.magic{background:color-mix(in srgb,var(--magic-col) 10%,#0d1117);border:1px solid color-mix(in srgb,var(--magic-col) 30%,transparent)}
+.axis-pill.balanced{background:var(--panel2);border:1px solid var(--border)}
+.axis-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+.axis-pill.armor .axis-label{color:var(--armor-col)}
+.axis-pill.magic .axis-label{color:var(--magic-col)}
+.axis-pill.balanced .axis-label{color:var(--muted)}
+.axis-val{font-family:var(--mono);font-size:13px;font-weight:700}
+.axis-pill.armor .axis-val{color:var(--armor-col)}
+.axis-pill.magic .axis-val{color:var(--magic-col)}
+.axis-pill.balanced .axis-val{color:var(--muted)}
+.axis-bar{height:3px;border-radius:2px;margin-top:4px;background:var(--border)}
+.axis-fill{height:3px;border-radius:2px;transition:width .3s}
+
+/* 힌트 박스 */
+.hint-box{
+  background:color-mix(in srgb,var(--c,#fff) 6%,#0d1117);
+  border:1px solid color-mix(in srgb,var(--c,#fff) 20%,transparent);
+  border-left:3px solid var(--c,#fff);
+  border-radius:4px;
+  padding:9px 12px;
+}
+.hint-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.hint-text{font-size:13px;color:var(--text);font-weight:600}
+.hint-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* 카운터 테마 태그 */
+.counter-row{display:flex;flex-wrap:wrap;gap:5px}
+.counter-tag{
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  padding:3px 8px;border-radius:3px;
+  background:color-mix(in srgb,var(--tc,#fff) 8%,var(--panel2));
+  border:1px solid var(--border);
+  border-left:3px solid var(--tc,var(--border));
+  color:var(--tc,var(--text));
+  display:inline-flex;align-items:center;gap:5px;
+}
+/* ▲ 유효 카운터 = 테마색 선명 · ▼ 비효율 = 흐리게(opacity)·테마 정체성은 유지 */
+.counter-tag.good{}
+.counter-tag.bad{opacity:.42}
+.counter-tag .vm{font-size:11px}
+.counter-tag.good .vm{color:var(--fb-eff)}
+.counter-tag.bad .vm{color:#ff6b6b}
+
+/* 별점 매핑 박스 */
+.star-box{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:9px 12px;
+}
+.star-box-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.star-row{display:flex;flex-direction:column;gap:4px}
+.star-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted2)}
+.star-item .stars{color:var(--swarm);font-size:13px;letter-spacing:1px;font-family:var(--mono);white-space:nowrap}
+.star-item .star-desc{color:var(--muted);font-size:11px}
+
+/* ─── 섹션 2: 2축 언어 규칙 ─── */
+.axis-system{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:24px;
+}
+@media(max-width:680px){.axis-system{grid-template-columns:1fr}}
+.axis-col{}
+.axis-col-head{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.axis-col-head .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.axis-entry{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.axis-entry-row{display:flex;align-items:center;gap:8px}
+.axis-icon{
+  width:32px;height:32px;border-radius:4px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.axis-entry-text{flex:1}
+.axis-entry-name{font-weight:700;font-size:13px}
+.axis-entry-hint{font-size:11px;color:var(--muted)}
+.axis-arrow{font-family:var(--mono);font-size:20px;margin:0 4px}
+
+/* ─── 섹션 3: ShowFormation UI 컴포넌트 ─── */
+.formation-preview{
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;
+  padding:0;overflow:hidden;
+}
+.fp-head{
+  padding:16px 20px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.fp-title{font-size:15px;font-weight:700}
+.fp-subtitle{font-size:11px;color:var(--muted)}
+.fp-stage{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+
+.fp-body{
+  padding:20px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+@media(max-width:680px){.fp-body{grid-template-columns:1fr}}
+
+/* 적 진형 프리뷰 */
+.formation-zone{
+  background:#0a1018;border:1px solid var(--border);border-radius:6px;
+  padding:14px;position:relative;
+  min-height:160px;
+}
+.fz-label{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.unit-dots{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start}
+.udot{
+  width:28px;height:28px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--mono);
+  border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.6);
+}
+.udot.tank{background:color-mix(in srgb,var(--armor-col) 20%,#0a1018);border-color:color-mix(in srgb,var(--armor-col) 40%,transparent);color:var(--armor-col)}
+.udot.dealer{background:color-mix(in srgb,var(--enemy) 18%,#0a1018);border-color:color-mix(in srgb,var(--enemy) 35%,transparent);color:var(--enemy)}
+.udot.support{background:color-mix(in srgb,var(--fb-eff) 15%,#0a1018);border-color:color-mix(in srgb,var(--fb-eff) 30%,transparent);color:var(--fb-eff)}
+
+/* 위협 텔레그래프 패널 */
+.telegraph-panel{
+  background:color-mix(in srgb,var(--c,#fff) 6%,#0d1117);
+  border:1px solid color-mix(in srgb,var(--c,#fff) 25%,transparent);
+  border-radius:6px;padding:14px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.tp-archetype{display:flex;align-items:center;gap:10px}
+.tp-icon{width:38px;height:38px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:color-mix(in srgb,var(--c) 18%,#0d1117);border:1.5px solid color-mix(in srgb,var(--c) 40%,transparent)}
+.tp-arch-name{font-size:15px;font-weight:800;color:var(--c);text-shadow:0 0 18px color-mix(in srgb,var(--c) 35%,transparent)}
+.tp-arch-sub{font-size:11px;color:var(--muted)}
+
+.tp-axis{display:flex;gap:6px}
+.tp-axis-chip{
+  flex:1;padding:6px 8px;border-radius:4px;
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  display:flex;align-items:center;gap:5px;
+}
+.tp-axis-chip .chip-icon{font-size:13px}
+.tp-axis-chip.armor-heavy{background:color-mix(in srgb,var(--armor-col) 12%,transparent);border:1px solid color-mix(in srgb,var(--armor-col) 35%,transparent);color:var(--armor-col)}
+.tp-axis-chip.magic-heavy{background:color-mix(in srgb,var(--magic-col) 12%,transparent);border:1px solid color-mix(in srgb,var(--magic-col) 35%,transparent);color:var(--magic-col)}
+.tp-axis-chip.balanced{background:var(--panel2);border:1px solid var(--border);color:var(--muted)}
+
+.tp-hint{
+  background:color-mix(in srgb,var(--c) 8%,transparent);
+  border:1px solid color-mix(in srgb,var(--c) 22%,transparent);
+  border-left:2px solid var(--c);
+  border-radius:3px;
+  padding:7px 10px;
+  font-size:12px;color:var(--text);
+}
+.tp-hint-sub{font-size:10px;color:var(--muted);margin-top:2px;font-family:var(--mono)}
+
+/* ─── 섹션 4: 힌트 룰 표 ─── */
+.rule-table{width:100%;border-collapse:collapse;font-size:13px}
+.rule-table thead tr th{
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);text-align:left;padding:0 12px 10px;border-bottom:1px solid var(--border);
+}
+.rule-table tbody tr td{padding:10px 12px;border-bottom:1px solid var(--border2,#1a2230);vertical-align:top}
+.rule-table tbody tr:last-child td{border-bottom:none}
+.rule-table tbody tr:hover td{background:rgba(255,255,255,.02)}
+.rt-icon{font-size:16px;text-align:center}
+.rt-name{font-weight:700;font-size:13px}
+.rt-code{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.rt-label{display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700}
+.rt-hint{font-size:12px;color:var(--muted)}
+.rt-star{font-size:11px;color:var(--muted)}
+.axis-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:3px;font-family:var(--mono);font-size:10px;font-weight:700}
+.axis-tag.arm{background:color-mix(in srgb,var(--armor-col) 14%,transparent);border:1px solid color-mix(in srgb,var(--armor-col) 30%,transparent);color:var(--armor-col)}
+.axis-tag.mag{background:color-mix(in srgb,var(--magic-col) 14%,transparent);border:1px solid color-mix(in srgb,var(--magic-col) 30%,transparent);color:var(--magic-col)}
+.axis-tag.bal{background:var(--panel2);border:1px solid var(--border);color:var(--muted)}
+
+/* ─── 섹션 5: 실루엣 컬러 팔레트 ─── */
+.palette-row{display:flex;flex-wrap:wrap;gap:12px}
+.pal-chip{
+  flex:1;min-width:140px;max-width:200px;
+  background:var(--panel);border:1px solid var(--border);border-radius:6px;
+  overflow:hidden;
+}
+.pal-swatch{height:56px;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative}
+.pal-swatch::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.5))}
+.pal-info{padding:8px 10px}
+.pal-name{font-size:12px;font-weight:700}
+.pal-hex{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.pal-role{font-size:10px;color:var(--muted);margin-top:1px}
+
+/* ─── 워크 메모 ─── */
+.memo-box{
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px 22px;
+}
+.memo-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.memo-grid{grid-template-columns:1fr}}
+.memo-item{}
+.memo-item-head{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.memo-item ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.memo-item ul li{font-size:12px;color:var(--muted);padding-left:12px;position:relative}
+.memo-item ul li::before{content:'·';position:absolute;left:0;color:var(--muted2)}
+.memo-item ul li strong{color:var(--text)}
+
+/* footer */
+.foot{font-family:var(--mono);font-size:10px;color:var(--muted);border-top:1px solid var(--border);padding-top:16px;margin-top:48px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- 헤더 -->
+<div class="eyebrow">byiryu studio · infinite warfield · 디자인 디렉션</div>
+<h1>위협 텔레그래프 <span>시각 디렉션</span></h1>
+<p style="color:var(--muted);font-size:13px;margin-top:8px">5 아키타입 라벨·아이콘·색·2축 언어·카운터 힌트 룰. SoT = ThreatTelegraph.cs + wireframes §5</p>
+<div class="meta-row">
+  <span class="badge">BattlePrepare · ShowFormation 확장</span>
+  <span class="badge hi">M2 step-Xc 가동 중</span>
+  <span class="badge">unlisted · 2026-06-26 (트리오 흡수 정합)</span>
+  <span class="badge">레이아웃/UX 도메인 · 매체게이트 #8 무관</span>
+</div>
+
+<!-- 5테마 ↔ 앵커 영웅 범례 (트리오 흡수 — 카운터 테마 색코딩 기준) -->
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:12px 14px;background:var(--panel);border:1px solid var(--border);border-radius:6px;align-items:center">
+  <span style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:4px">5테마 색 ↔ 앵커 영웅</span>
+  <span class="counter-tag good" style="--tc:var(--theme-combat)">Combat · 아르덴</span>
+  <span class="counter-tag good" style="--tc:var(--theme-necro)">Necro · 베스라</span>
+  <span class="counter-tag good" style="--tc:var(--theme-spirit)">Spirit · 에이라</span>
+  <span class="counter-tag good" style="--tc:var(--theme-machine)">Machine · standalone</span>
+  <span class="counter-tag good" style="--tc:var(--theme-beast)">Beast · standalone</span>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     섹션 1: 5 아키타입 카드
+═══════════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-label">5 위협 아키타입</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">ThreatArchetype enum · Describe() 확장 디렉션</span>
+</div>
+
+<div class="threat-grid">
+
+  <!-- ① 철벽 (Fortress) -->
+  <div class="threat-card" style="--c:var(--fortress)">
+    <div class="card-head">
+      <div class="icon-box">🛡</div>
+      <div class="card-name-row">
+        <div class="threat-type">Fortress · 철벽</div>
+        <div class="threat-name">철벽</div>
+        <div class="threat-sub">고방어 탱커 과밀 · ShieldWall 진형</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- 라벨 -->
+      <div class="label-row">
+        <span class="lbl">철벽</span>
+        <span class="lbl">중장갑(물리방어)</span>
+        <span class="lbl dim">armor bias 1.4×</span>
+      </div>
+      <!-- 방어 2축 -->
+      <div class="axis-row">
+        <div class="axis-pill armor">
+          <span class="axis-label">물리방어</span>
+          <span class="axis-val" style="font-size:15px">높음</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:85%;background:var(--armor-col)"></div></div>
+        </div>
+        <div class="axis-pill balanced">
+          <span class="axis-label">마법저항</span>
+          <span class="axis-val">중간</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:40%;background:var(--muted2)"></div></div>
+        </div>
+      </div>
+      <!-- 힌트 -->
+      <div class="hint-box">
+        <div class="hint-label">카운터 힌트 (DescribeAxis)</div>
+        <div class="hint-text">마법취약 → 마법축 · 방어무시 딜 추천</div>
+        <div class="hint-sub">Necro 부패(Corrupt=방어무시) · Spirit 마법 추가타 · DEF 디버프</div>
+      </div>
+      <!-- 카운터 테마 -->
+      <div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">카운터 테마</div>
+        <div class="counter-row">
+          <span class="counter-tag good" style="--tc:var(--theme-necro)">Necro 부패(방무) <span class="vm">▲</span></span>
+          <span class="counter-tag good" style="--tc:var(--theme-spirit)">Spirit 마법 <span class="vm">▲</span></span>
+          <span class="counter-tag good" style="--tc:var(--theme-machine)">Machine CC <span class="vm">▲</span></span>
+          <span class="counter-tag bad" style="--tc:var(--theme-combat)">Combat 물리 <span class="vm">▼</span></span>
+          <span class="counter-tag bad" style="--tc:var(--theme-beast)">Beast 돌진 <span class="vm">▼</span></span>
+        </div>
+      </div>
+      <!-- 별점 매핑 -->
+      <div class="star-box">
+        <div class="star-box-label">★ 별점 자동 매핑 (§6.B⑥)</div>
+        <div class="star-row">
+          <div class="star-item"><span class="stars">★</span><span class="star-desc">클리어</span></div>
+          <div class="star-item"><span class="stars">★★</span><span class="star-desc">약점축(마법) 적중 — 마법 딜러 50%+</span></div>
+          <div class="star-item"><span class="stars">★★★</span><span class="star-desc">약점축 적중 + 클리어 시간 ≤ T</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 러시 군집 (Swarm) -->
+  <div class="threat-card" style="--c:var(--swarm)">
+    <div class="card-head">
+      <div class="icon-box">⚡</div>
+      <div class="card-name-row">
+        <div class="threat-type">Swarm · 군집</div>
+        <div class="threat-name">러시 군집</div>
+        <div class="threat-sub">9기+ · 저코스트 avg ≤ 3.5 · 다수 고속</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="label-row">
+        <span class="lbl">러시</span>
+        <span class="lbl">다수</span>
+        <span class="lbl dim">9기+ · avgCost ≤ 3.5</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-pill balanced">
+          <span class="axis-label">물리방어</span>
+          <span class="axis-val">낮음</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:25%;background:var(--muted2)"></div></div>
+        </div>
+        <div class="axis-pill balanced">
+          <span class="axis-label">마법저항</span>
+          <span class="axis-val">낮음</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:22%;background:var(--muted2)"></div></div>
+        </div>
+      </div>
+      <div class="hint-box">
+        <div class="hint-label">카운터 힌트</div>
+        <div class="hint-text">다수 저체력 — AoE · 광역기 우선</div>
+        <div class="hint-sub">Spirit 힐링으로 영웅 생존 유지 필수</div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">카운터 테마</div>
+        <div class="counter-row">
+          <span class="counter-tag good" style="--tc:var(--theme-spirit)">Spirit 광역 <span class="vm">▲</span></span>
+          <span class="counter-tag good" style="--tc:var(--theme-machine)">Machine 견인 <span class="vm">▲</span></span>
+          <span class="counter-tag bad" style="--tc:var(--theme-necro)">Necro DoT <span class="vm">▼</span></span>
+        </div>
+      </div>
+      <div class="star-box">
+        <div class="star-box-label">★ 별점 자동 매핑 (§6.B⑥)</div>
+        <div class="star-row">
+          <div class="star-item"><span class="stars">★</span><span class="star-desc">클리어</span></div>
+          <div class="star-item"><span class="stars">★★</span><span class="star-desc">영웅 HP 잔량 ≥ X%</span></div>
+          <div class="star-item"><span class="stars">★★★</span><span class="star-desc">HP 잔량 + 소환 수 ↓ (효율 클리어)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 원거리 폭격 (RangedBombard) -->
+  <div class="threat-card" style="--c:var(--ranged)">
+    <div class="card-head">
+      <div class="icon-box">🎯</div>
+      <div class="card-name-row">
+        <div class="threat-type">RangedBombard · 폭격</div>
+        <div class="threat-name">원거리 폭격</div>
+        <div class="threat-sub">딜러+원거리 각 50%+ · 후열 집중</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="label-row">
+        <span class="lbl">원거리</span>
+        <span class="lbl">마법저항(물리취약)</span>
+        <span class="lbl dim">ranged 과반 · magicResist bias 1.4×</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-pill magic">
+          <span class="axis-label">마법저항</span>
+          <span class="axis-val">높음</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:78%;background:var(--magic-col)"></div></div>
+        </div>
+        <div class="axis-pill balanced">
+          <span class="axis-label">물리방어</span>
+          <span class="axis-val">보통</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:45%;background:var(--muted2)"></div></div>
+        </div>
+      </div>
+      <div class="hint-box">
+        <div class="hint-label">카운터 힌트</div>
+        <div class="hint-text">물리취약 → 돌진/견인으로 후열 압박</div>
+        <div class="hint-sub">Machine 견인 · Beast 돌진 · Combat 즉발 — 후열 직접 타격</div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">카운터 테마</div>
+        <div class="counter-row">
+          <span class="counter-tag good" style="--tc:var(--theme-machine)">Machine 견인 <span class="vm">▲</span></span>
+          <span class="counter-tag good" style="--tc:var(--theme-beast)">Beast 돌진 <span class="vm">▲</span></span>
+          <span class="counter-tag good" style="--tc:var(--theme-combat)">Combat 즉발 <span class="vm">▲</span></span>
+          <span class="counter-tag bad" style="--tc:var(--theme-spirit)">Spirit 힐 <span class="vm">▼</span></span>
+        </div>
+      </div>
+      <div class="star-box">
+        <div class="star-box-label">★ 별점 자동 매핑 (§6.B⑥)</div>
+        <div class="star-row">
+          <div class="star-item"><span class="stars">★</span><span class="star-desc">클리어</span></div>
+          <div class="star-item"><span class="stars">★★</span><span class="star-desc">아군 피해 최소화 · 전선 유지</span></div>
+          <div class="star-item"><span class="stars">★★★</span><span class="star-desc">아군 보호 + 클리어 시간 ≤ T</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 디버퍼 (Debuffer) -->
+  <div class="threat-card" style="--c:var(--debuffer)">
+    <div class="card-head">
+      <div class="icon-box">☠</div>
+      <div class="card-name-row">
+        <div class="threat-type">Debuffer · 약화</div>
+        <div class="threat-name">디버퍼</div>
+        <div class="threat-sub">Debuff 태그 1/3+ · Support 과밀</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="label-row">
+        <span class="lbl">디버퍼</span>
+        <span class="lbl">약화</span>
+        <span class="lbl dim">debuff×3≥total</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-pill balanced">
+          <span class="axis-label">물리방어</span>
+          <span class="axis-val">낮음</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:30%;background:var(--muted2)"></div></div>
+        </div>
+        <div class="axis-pill balanced">
+          <span class="axis-label">마법저항</span>
+          <span class="axis-val">낮음</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:28%;background:var(--muted2)"></div></div>
+        </div>
+      </div>
+      <div class="hint-box">
+        <div class="hint-label">카운터 힌트</div>
+        <div class="hint-text">약화 누적 — Cleanse + 고HP 장기전</div>
+        <div class="hint-sub">Spirit Cleanse 정화 · 고HP Necro 흡혈로 버팀 · 군세 결집 정화</div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">카운터 테마</div>
+        <div class="counter-row">
+          <span class="counter-tag good" style="--tc:var(--theme-spirit)">Spirit Cleanse <span class="vm">▲</span></span>
+          <span class="counter-tag good" style="--tc:var(--theme-necro)">고HP Necro 장기전 <span class="vm">▲</span></span>
+          <span class="counter-tag good">군세 결집 시너지 <span class="vm">▲</span></span>
+        </div>
+      </div>
+      <div class="star-box">
+        <div class="star-box-label">★ 별점 자동 매핑 (§6.B⑥)</div>
+        <div class="star-row">
+          <div class="star-item"><span class="stars">★</span><span class="star-desc">클리어</span></div>
+          <div class="star-item"><span class="stars">★★</span><span class="star-desc">Cleanse/Taunt 유닛 포함 편성</span></div>
+          <div class="star-item"><span class="stars">★★★</span><span class="star-desc">디버프 0회 또는 영웅 노데미지</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 혼합 보스 (MixedBoss) -->
+  <div class="threat-card" style="--c:var(--boss)">
+    <div class="card-head">
+      <div class="icon-box">👑</div>
+      <div class="card-name-row">
+        <div class="threat-type">MixedBoss · 보스</div>
+        <div class="threat-name">혼합 보스</div>
+        <div class="threat-sub">isBossStage · statMult 스파이크</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="label-row">
+        <span class="lbl">보스</span>
+        <span class="lbl">복합</span>
+        <span class="lbl dim">isBossStage true</span>
+      </div>
+      <div class="axis-row">
+        <div class="axis-pill armor">
+          <span class="axis-label">물리방어</span>
+          <span class="axis-val">스파이크</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:90%;background:var(--armor-col)"></div></div>
+        </div>
+        <div class="axis-pill magic">
+          <span class="axis-label">마법저항</span>
+          <span class="axis-val">스파이크</span>
+          <div class="axis-bar"><div class="axis-fill" style="width:88%;background:var(--magic-col)"></div></div>
+        </div>
+      </div>
+      <div class="hint-box">
+        <div class="hint-label">카운터 힌트</div>
+        <div class="hint-text">양 축 모두 높음 — 처치 시간이 관건</div>
+        <div class="hint-sub">초반 무피해 버퍼 + 딜 최대화 덱</div>
+      </div>
+      <div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">카운터 테마</div>
+        <div class="counter-row">
+          <span class="counter-tag good" style="--tc:var(--theme-necro)">Necro 장기전 DoT <span class="vm">▲</span></span>
+          <span class="counter-tag good">빌드 전환 · 시너지 극대화 <span class="vm">▲</span></span>
+          <span class="counter-tag bad">단일 테마 특화 <span class="vm">▼</span></span>
+        </div>
+      </div>
+      <div class="star-box">
+        <div class="star-box-label">★ 별점 자동 매핑 (§6.B⑥)</div>
+        <div class="star-row">
+          <div class="star-item"><span class="stars">★</span><span class="star-desc">클리어</span></div>
+          <div class="star-item"><span class="stars">★★</span><span class="star-desc">처치 시간 ≤ T</span></div>
+          <div class="star-item"><span class="stars">★★★</span><span class="star-desc">처치 시간 + 초반 N초 무피해</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /threat-grid -->
+
+
+<!-- ═══════════════════════════════════════════
+     섹션 2: 방어 2축 언어 규칙
+═══════════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-label">방어 2축 언어 규칙</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">DefenseAxis enum · DescribeAxis() · 물/마 색코딩</span>
+</div>
+
+<div class="axis-system">
+  <div class="axis-col">
+    <div class="axis-col-head">
+      <div class="dot" style="background:var(--armor-col)"></div>
+      <span style="color:var(--armor-col);font-weight:700">물리방어 축 (armor)</span>
+    </div>
+
+    <div class="axis-entry">
+      <div class="axis-entry-row">
+        <div class="axis-icon" style="background:color-mix(in srgb,var(--armor-col) 15%,#0d1117);border:1.5px solid color-mix(in srgb,var(--armor-col) 40%,transparent)">
+          <span style="color:var(--armor-col);font-size:15px;font-family:var(--mono);font-weight:800">DEF</span>
+        </div>
+        <div class="axis-entry-text">
+          <div class="axis-entry-name" style="color:var(--armor-col)">ArmorHeavy</div>
+          <div class="axis-entry-hint">물리방어 높음 → 마법 딜러 추천</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);padding-left:40px">
+        avgDef &gt; avgMagResist × 1.3 일 때 단정<br>
+        <span style="color:var(--armor-col)">중장갑(물리방어)</span> 라벨 + 파란 아이콘<br>
+        힌트: <span style="color:var(--text)">"물리방어 높음 → 마법 딜러 추천"</span>
+      </div>
+    </div>
+
+    <div style="background:var(--panel2);border:1px solid var(--border);border-radius:5px;padding:10px 12px;font-size:12px">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">color-match 원칙</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:12px;height:12px;border-radius:2px;background:var(--armor-col)"></div>
+          <span style="color:var(--muted)">아이콘·바·라벨 = <span style="color:var(--armor-col)">아군 글로우색(#4FA3FF)</span></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:12px;height:12px;border-radius:2px;background:var(--fb-eff)"></div>
+          <span style="color:var(--muted)">전투 피드백 "효과적!" = <span style="color:var(--fb-eff)">#8AE05A</span> — 마법 딜 통함</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted2);margin-top:2px">→ 텔레그래프 색 ↔ 피드백 색 일치 = 학습비용 최소</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="axis-col">
+    <div class="axis-col-head">
+      <div class="dot" style="background:var(--magic-col)"></div>
+      <span style="color:var(--magic-col);font-weight:700">마법저항 축 (magicResist)</span>
+    </div>
+
+    <div class="axis-entry">
+      <div class="axis-entry-row">
+        <div class="axis-icon" style="background:color-mix(in srgb,var(--magic-col) 15%,#0d1117);border:1.5px solid color-mix(in srgb,var(--magic-col) 40%,transparent)">
+          <span style="color:var(--magic-col);font-size:13px;font-family:var(--mono);font-weight:800">MR</span>
+        </div>
+        <div class="axis-entry-text">
+          <div class="axis-entry-name" style="color:var(--magic-col)">MagicResistHeavy</div>
+          <div class="axis-entry-hint">마법저항 높음 → 물리 딜러 추천</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);padding-left:40px">
+        avgMagResist &gt; avgDef × 1.3 일 때 단정<br>
+        <span style="color:var(--magic-col)">마법저항(마법취약)</span> 라벨 + 보라 아이콘<br>
+        힌트: <span style="color:var(--text)">"마법저항 높음 → 물리 딜러 추천"</span>
+      </div>
+    </div>
+
+    <div style="background:var(--panel2);border:1px solid var(--border);border-radius:5px;padding:10px 12px;font-size:12px">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">★ 적 magicResist 비대칭 입력 (D3)</div>
+      <div style="color:var(--muted);display:flex;flex-direction:column;gap:4px">
+        <div>적 stage/formation 에 <code style="font-family:var(--mono);font-size:10px;color:var(--text);background:var(--panel);padding:1px 4px;border-radius:2px">defenseAxisBias</code> + <code style="font-family:var(--mono);font-size:10px;color:var(--text);background:var(--panel);padding:1px 4px;border-radius:2px">biasMult</code> 부여 (미러풀 불변)</div>
+        <div>→ 철벽 <span style="color:var(--armor-col)">armor bias 1.4×</span> / 원거리 <span style="color:var(--magic-col)">magicResist bias 1.4×</span> / 보스 양축</div>
+        <div>→ <code style="font-family:var(--mono);font-size:10px;color:var(--text);background:var(--panel);padding:1px 4px;border-radius:2px">ThreatTelegraph.Analyze()</code> avgDef/avgMagResist 측정</div>
+        <div style="color:var(--muted2);font-size:11px;margin-top:2px">현 시드: armor==magicResist → Balanced. <strong style="color:var(--text)">biasMult ≥ 1.35</strong>(라벨 읽힐 만큼)·정밀값 = 출시후 sim_trace.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Balanced 상태 설명 -->
+<div style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin-top:12px;display:flex;gap:14px;align-items:flex-start">
+  <div style="width:38px;height:38px;border-radius:5px;background:var(--panel2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">⚖</div>
+  <div>
+    <div style="font-weight:700;font-size:13px;color:var(--muted)">Balanced — 약점 축 주장 안 함</div>
+    <div style="font-size:12px;color:var(--muted2);margin-top:3px">avgDef ≈ avgMagResist (1.3배 미만 차이) 또는 total=0 → DescribeAxis() = 빈 문자열. 거짓 힌트 출력 금지 — hollow 방지 원칙 (ThreatTelegraph.cs 헤더). 플레이어에게 힌트 없음 = "어느 딜러든 OK" 신호.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     섹션 3: ShowFormation UI 컴포넌트 목업
+═══════════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-label">ShowFormation UI 컴포넌트 목업</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">BattlePrepare · 편성 우측 패널 · wireframes §5</span>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-bottom:16px">
+  아래 = 편성 화면 우측(적 진형 ~38% 존)에 들어갈 위협 텔레그래프 컴포넌트 2케이스 목업. 신규 화면 아님 — EnemyUnitPreviewManager.ShowFormation() 확장.
+</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+
+  <!-- 케이스 A: 철벽 (ArmorHeavy) -->
+  <div>
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">케이스 A — 철벽 + ArmorHeavy</div>
+    <div class="formation-preview">
+      <div class="fp-head">
+        <div><div class="fp-title">적 진형 미리보기</div><div class="fp-subtitle">편성 화면 · 우측 존</div></div>
+        <div class="fp-stage">STAGE 10</div>
+      </div>
+      <div class="fp-body">
+        <div class="formation-zone">
+          <div class="fz-label">적 유닛 배치 (formation)</div>
+          <div class="unit-dots">
+            <div class="udot tank">T</div>
+            <div class="udot tank">T</div>
+            <div class="udot tank">T</div>
+            <div class="udot tank">T</div>
+            <div class="udot dealer">D</div>
+            <div class="udot dealer">D</div>
+            <div class="udot support">S</div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:5px;flex-wrap:wrap">
+            <span style="font-family:var(--mono);font-size:9px;color:var(--armor-col);background:color-mix(in srgb,var(--armor-col) 10%,transparent);border:1px solid color-mix(in srgb,var(--armor-col) 30%,transparent);padding:2px 6px;border-radius:3px">T=탱커</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--enemy);background:color-mix(in srgb,var(--enemy) 10%,transparent);border:1px solid color-mix(in srgb,var(--enemy) 30%,transparent);padding:2px 6px;border-radius:3px">D=딜러</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--fb-eff);background:color-mix(in srgb,var(--fb-eff) 10%,transparent);border:1px solid color-mix(in srgb,var(--fb-eff) 30%,transparent);padding:2px 6px;border-radius:3px">S=서포터</span>
+          </div>
+        </div>
+        <div class="telegraph-panel" style="--c:var(--fortress)">
+          <div class="tp-archetype">
+            <div class="tp-icon">🛡</div>
+            <div>
+              <div class="tp-arch-name">철벽</div>
+              <div class="tp-arch-sub">고방어 · 탱커 과밀</div>
+            </div>
+          </div>
+          <div class="tp-axis">
+            <div class="tp-axis-chip armor-heavy">
+              <span class="chip-icon">🔵</span>
+              <span>물리방어 높음</span>
+            </div>
+            <div class="tp-axis-chip balanced">
+              <span class="chip-icon">—</span>
+              <span>마법저항 보통</span>
+            </div>
+          </div>
+          <div class="tp-hint">
+            <div>마법취약 → 방어무시·마법 딜 추천</div>
+            <div class="tp-hint-sub">Necro 부패(방무) · Spirit 마법 추가타 유효</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 케이스 B: 원거리 폭격 (MagicResistHeavy) -->
+  <div>
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">케이스 B — 원거리 폭격 + MagicResistHeavy</div>
+    <div class="formation-preview">
+      <div class="fp-head">
+        <div><div class="fp-title">적 진형 미리보기</div><div class="fp-subtitle">편성 화면 · 우측 존</div></div>
+        <div class="fp-stage">STAGE 23</div>
+      </div>
+      <div class="fp-body">
+        <div class="formation-zone">
+          <div class="fz-label">적 유닛 배치 (formation)</div>
+          <div class="unit-dots">
+            <div class="udot dealer">D</div>
+            <div class="udot dealer">D</div>
+            <div class="udot dealer">D</div>
+            <div class="udot dealer">D</div>
+            <div class="udot dealer">D</div>
+            <div class="udot support">S</div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:5px;flex-wrap:wrap">
+            <span style="font-family:var(--mono);font-size:9px;color:var(--enemy);background:color-mix(in srgb,var(--enemy) 10%,transparent);border:1px solid color-mix(in srgb,var(--enemy) 30%,transparent);padding:2px 6px;border-radius:3px">D=원거리 딜러</span>
+            <span style="font-family:var(--mono);font-size:9px;color:var(--fb-eff);background:color-mix(in srgb,var(--fb-eff) 10%,transparent);border:1px solid color-mix(in srgb,var(--fb-eff) 30%,transparent);padding:2px 6px;border-radius:3px">S=서포터</span>
+          </div>
+        </div>
+        <div class="telegraph-panel" style="--c:var(--ranged)">
+          <div class="tp-archetype">
+            <div class="tp-icon">🎯</div>
+            <div>
+              <div class="tp-arch-name">원거리 폭격</div>
+              <div class="tp-arch-sub">후열 원거리 집중</div>
+            </div>
+          </div>
+          <div class="tp-axis">
+            <div class="tp-axis-chip balanced">
+              <span class="chip-icon">—</span>
+              <span>물리방어 보통</span>
+            </div>
+            <div class="tp-axis-chip magic-heavy">
+              <span class="chip-icon">🟣</span>
+              <span>마법저항 높음</span>
+            </div>
+          </div>
+          <div class="tp-hint">
+            <div>물리취약 → 돌진/견인 물리 딜 추천</div>
+            <div class="tp-hint-sub">Machine 견인 · Beast 돌진 · Combat 즉발 유효</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     섹션 4: 힌트 룰 전체 표
+═══════════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-label">힌트 룰 전체 참조표</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">Describe() 출력 · plat ThreatTelegraph.cs 매핑</span>
+</div>
+
+<div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+<table class="rule-table">
+  <thead>
+    <tr>
+      <th>아이콘</th>
+      <th>아키타입</th>
+      <th>라벨 (ThreatTelegraph.Describe)</th>
+      <th>방어 2축 아이콘</th>
+      <th>힌트 텍스트</th>
+      <th>별점 ★★ 조건 (auto-map)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="rt-icon">🛡</td>
+      <td>
+        <div class="rt-name">철벽</div>
+        <div class="rt-code">Fortress</div>
+      </td>
+      <td>
+        <span class="rt-label" style="background:color-mix(in srgb,var(--fortress) 14%,transparent);border:1px solid color-mix(in srgb,var(--fortress) 35%,transparent);color:var(--fortress)">위협: 중장갑(물리방어)</span>
+      </td>
+      <td>
+        <span class="axis-tag arm">🔵 물리방어↑</span>
+      </td>
+      <td class="rt-hint">마법취약 → Necro 방무 · Spirit 마법 · DEF 디버프</td>
+      <td class="rt-star">약점축(마법) 딜러 50%+</td>
+    </tr>
+    <tr>
+      <td class="rt-icon">⚡</td>
+      <td>
+        <div class="rt-name">러시 군집</div>
+        <div class="rt-code">Swarm</div>
+      </td>
+      <td>
+        <span class="rt-label" style="background:color-mix(in srgb,var(--swarm) 14%,transparent);border:1px solid color-mix(in srgb,var(--swarm) 35%,transparent);color:var(--swarm)">위협: 러시 군집 · 다수</span>
+      </td>
+      <td>
+        <span class="axis-tag bal">⚖ 균형</span>
+      </td>
+      <td class="rt-hint">다수 저체력 — AoE 우선</td>
+      <td class="rt-star">영웅 HP 잔량 ≥ X%</td>
+    </tr>
+    <tr>
+      <td class="rt-icon">🎯</td>
+      <td>
+        <div class="rt-name">원거리 폭격</div>
+        <div class="rt-code">RangedBombard</div>
+      </td>
+      <td>
+        <span class="rt-label" style="background:color-mix(in srgb,var(--ranged) 14%,transparent);border:1px solid color-mix(in srgb,var(--ranged) 35%,transparent);color:var(--ranged)">위협: 원거리 폭격</span>
+      </td>
+      <td>
+        <span class="axis-tag mag">🟣 마법저항↑</span>
+      </td>
+      <td class="rt-hint">물리취약 → Machine 견인 · Beast 돌진 · Combat 즉발</td>
+      <td class="rt-star">아군 피해 최소화</td>
+    </tr>
+    <tr>
+      <td class="rt-icon">☠</td>
+      <td>
+        <div class="rt-name">디버퍼</div>
+        <div class="rt-code">Debuffer</div>
+      </td>
+      <td>
+        <span class="rt-label" style="background:color-mix(in srgb,var(--debuffer) 14%,transparent);border:1px solid color-mix(in srgb,var(--debuffer) 35%,transparent);color:var(--debuffer)">위협: 디버퍼 · 약화</span>
+      </td>
+      <td>
+        <span class="axis-tag bal">⚖ 균형</span>
+      </td>
+      <td class="rt-hint">약화 누적 — Spirit Cleanse + 고HP Necro 장기전</td>
+      <td class="rt-star">Cleanse/Taunt 유닛 포함</td>
+    </tr>
+    <tr>
+      <td class="rt-icon">👑</td>
+      <td>
+        <div class="rt-name">혼합 보스</div>
+        <div class="rt-code">MixedBoss</div>
+      </td>
+      <td>
+        <span class="rt-label" style="background:color-mix(in srgb,var(--boss) 14%,transparent);border:1px solid color-mix(in srgb,var(--boss) 35%,transparent);color:var(--boss)">위협: 미니보스 · 복합</span>
+      </td>
+      <td>
+        <span class="axis-tag arm" style="margin-right:3px">🔵▲</span>
+        <span class="axis-tag mag">🟣▲</span>
+      </td>
+      <td class="rt-hint">양 축 모두 높음 — 처치 시간이 관건</td>
+      <td class="rt-star">처치 시간 ≤ T</td>
+    </tr>
+    <tr>
+      <td class="rt-icon">—</td>
+      <td>
+        <div class="rt-name">보병 편성</div>
+        <div class="rt-code">Standard</div>
+      </td>
+      <td>
+        <span class="rt-label" style="background:var(--panel2);border:1px solid var(--border);color:var(--standard)">보병 편성</span>
+      </td>
+      <td>
+        <span class="axis-tag bal">⚖ 균형</span>
+      </td>
+      <td class="rt-hint" style="color:var(--muted2)">— (힌트 없음)</td>
+      <td class="rt-star" style="color:var(--muted2)">클리어 + 시간 조건</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     섹션 5: 실루엣 컬러 팔레트
+═══════════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-label">위협 컬러 팔레트</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">ThreatTelegraph.Describe() 색 기준 · 난전 가독 #5 통과</span>
+</div>
+
+<div class="palette-row">
+  <div class="pal-chip">
+    <div class="pal-swatch" style="background:color-mix(in srgb,var(--fortress) 20%,#0d1117)">🛡</div>
+    <div class="pal-info">
+      <div class="pal-name" style="color:var(--fortress)">철벽</div>
+      <div class="pal-hex">#8AB4FF</div>
+      <div class="pal-role">스틸블루 · 방어·중후</div>
+    </div>
+  </div>
+  <div class="pal-chip">
+    <div class="pal-swatch" style="background:color-mix(in srgb,var(--swarm) 20%,#0d1117)">⚡</div>
+    <div class="pal-info">
+      <div class="pal-name" style="color:var(--swarm)">러시 군집</div>
+      <div class="pal-hex">#F5C842</div>
+      <div class="pal-role">황금 경보 · 위험·긴박</div>
+    </div>
+  </div>
+  <div class="pal-chip">
+    <div class="pal-swatch" style="background:color-mix(in srgb,var(--ranged) 20%,#0d1117)">🎯</div>
+    <div class="pal-info">
+      <div class="pal-name" style="color:var(--ranged)">원거리 폭격</div>
+      <div class="pal-hex">#C08DFF</div>
+      <div class="pal-role">미스틱 보라 · 원격·미스터리</div>
+    </div>
+  </div>
+  <div class="pal-chip">
+    <div class="pal-swatch" style="background:color-mix(in srgb,var(--debuffer) 20%,#0d1117)">☠</div>
+    <div class="pal-info">
+      <div class="pal-name" style="color:var(--debuffer)">디버퍼</div>
+      <div class="pal-hex">#54E87A</div>
+      <div class="pal-role">독초록 · 독·저주·약화</div>
+    </div>
+  </div>
+  <div class="pal-chip">
+    <div class="pal-swatch" style="background:color-mix(in srgb,var(--boss) 20%,#0d1117)">👑</div>
+    <div class="pal-info">
+      <div class="pal-name" style="color:var(--boss)">혼합 보스</div>
+      <div class="pal-hex">#FF5E55</div>
+      <div class="pal-role">적오렌지 · 보스·최고 위협</div>
+    </div>
+  </div>
+  <div class="pal-chip">
+    <div class="pal-swatch" style="background:color-mix(in srgb,var(--armor-col) 18%,#0d1117)">🔵</div>
+    <div class="pal-info">
+      <div class="pal-name" style="color:var(--armor-col)">물리방어 아이콘</div>
+      <div class="pal-hex">#4FA3FF</div>
+      <div class="pal-role">아군 글로우색 직교 재사용</div>
+    </div>
+  </div>
+  <div class="pal-chip">
+    <div class="pal-swatch" style="background:color-mix(in srgb,var(--magic-col) 18%,#0d1117)">🟣</div>
+    <div class="pal-info">
+      <div class="pal-name" style="color:var(--magic-col)">마법저항 아이콘</div>
+      <div class="pal-hex">#C87FFF</div>
+      <div class="pal-role">마젠타 계 · 메타 네온 톤</div>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin-top:12px">
+  <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">난전 가독 #5 통과 근거</div>
+  <div style="display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--muted)">
+    <div>위협 5색 = **편성 화면 전용** — 전투 진입 후엔 HP바/코스트/피드백이 우선(진영색 #4FA3FF/#FF5B5B · 피드백 #8AE05A/#9AA7B5/#FFC23D)</div>
+    <div>위협 패널 = BattlePrepare 우측 존(~38%) 전용 · 전장 레이어에 침범 0</div>
+    <div>5색 모두 다크 배경(#0d1117)에서 충분한 대비 → 텍스트 라벨 + 색 중복코딩(색맹 가드)</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     섹션 6: plat 구현 매핑 / 워크 메모
+═══════════════════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-label">plat 구현 매핑</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">ThreatTelegraph.cs → EnemyUnitPreviewManager 확장 경로</span>
+</div>
+
+<div class="memo-box">
+  <div class="memo-grid">
+    <div class="memo-item">
+      <div class="memo-item-head">현재 가동 중 (M2 step-Xc)</div>
+      <ul>
+        <li><strong>ThreatTelegraph.Analyze()</strong> — avgDef/avgMagResist 측정 완료</li>
+        <li><strong>DefenseAxis enum</strong> — ArmorHeavy/MagicResistHeavy/Balanced</li>
+        <li><strong>ThreatReport struct</strong> — archetype + defenseAxis + 수치</li>
+        <li><strong>Describe()</strong> — label/hint/Color 반환</li>
+        <li>라벨 텍스트 + 색 = 이미 코드에 선재</li>
+      </ul>
+    </div>
+    <div class="memo-item">
+      <div class="memo-item-head">M3 step-5 UI 패스 (디자인 → plat)</div>
+      <ul>
+        <li><strong>아이콘 픽토</strong> — 5종 소형 픽셀 아이콘 (🛡⚡🎯☠👑 → 실제 Sprite로 교체·M3)</li>
+        <li><strong>2축 아이콘 칩</strong> — armor(🔵) / magic(🟣) Sprite 2종·정적 픽토(리깅 0)</li>
+        <li><strong>ShowFormation 패널</strong> — 진형 위치 프리뷰 + 위협 패널 레이아웃 (상설·진형형)</li>
+        <li><strong>힌트 서브텍스트</strong> — DescribeAxis() 반환값 TMP 출력</li>
+        <li>color-match: 아이콘·바·라벨 색 = Describe().color 직접 사용</li>
+      </ul>
+    </div>
+    <div class="memo-item">
+      <div class="memo-item-head">별점 매핑 자동화 (§6.B⑥)</div>
+      <ul>
+        <li>아키타입 → ★2/★3 목표 <strong>자동 배정</strong></li>
+        <li>Fortress → 마법 딜러 비율 체크</li>
+        <li>Swarm → 영웅 HP 잔량 체크</li>
+        <li>RangedBombard → 아군 피해량 체크</li>
+        <li>Debuffer → Cleanse/Taunt 유닛 포함 여부</li>
+        <li>MixedBoss → 처치 시간 + 초반 무피해</li>
+      </ul>
+    </div>
+    <div class="memo-item">
+      <div class="memo-item-head">프리즈 가드 (현재)</div>
+      <ul>
+        <li>위협 픽토 아이콘 5종 = <strong>M3 이후</strong> (시스템 코드 굳은 후)</li>
+        <li>시너지 세트 아이콘 = 동일 프리즈</li>
+        <li>지금 = 텍스트 라벨 + emoji → M3에서 Sprite 교체</li>
+        <li>color 값 자체는 <strong>확정</strong> — M3 Sprite에 틴트 재사용</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 디자인 파라노이아 검토 -->
+<div class="sec-head">
+  <span class="sec-label">paranoia 검토</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">이 보드 = 레이아웃/UX 도메인</span>
+</div>
+
+<div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:10px">
+  <div style="display:flex;gap:10px;align-items:flex-start">
+    <span style="color:var(--fb-eff);font-family:var(--mono);font-size:11px;font-weight:700;white-space:nowrap">#5 난전 가독</span>
+    <span style="font-size:12px;color:var(--muted)">✅ 위협 패널 = BattlePrepare 전용(전장 레이어 침범 0). 전투 진입 후 HUD에 위협 라벨 잔존 없음. 아이콘은 편성 화면 우측 컴팩트 존에만.</span>
+  </div>
+  <div style="display:flex;gap:10px;align-items:flex-start">
+    <span style="color:var(--fb-eff);font-family:var(--mono);font-size:11px;font-weight:700;white-space:nowrap">#6 브랜드 토큰</span>
+    <span style="font-size:12px;color:var(--muted)">✅ 위협 5색 = ThreatTelegraph.Describe() 현행 색 계승·시각 강화. 물리방어 아이콘 = #4FA3FF(아군 글로우 직교 재사용). 마법저항 아이콘 = 마젠타 계(네온 메타 톤 정합).</span>
+  </div>
+  <div style="display:flex;gap:10px;align-items:flex-start">
+    <span style="color:var(--fb-eff);font-family:var(--mono);font-size:11px;font-weight:700;white-space:nowrap">#8 매체게이트</span>
+    <span style="font-size:12px;color:var(--muted)">✅ 본 보드 = 라벨·아이콘·색·HUD 레이아웃 도메인. 아트 appeal 아님. HTML 캔버스 OK. 실제 아이콘 Sprite = M3 PixelLab 생성(정적 픽토·리깅 0).</span>
+  </div>
+  <div style="display:flex;gap:10px;align-items:flex-start">
+    <span style="color:var(--swarm);font-family:var(--mono);font-size:11px;font-weight:700;white-space:nowrap">#4 게임필</span>
+    <span style="font-size:12px;color:var(--muted)">✅ 위협 아이콘 글로우 효과(text-shadow)로 메타화면 네온 톤 반영. BattlePrepare = 메타화면 → 네온 허용(다크 전장 X). 전투 전 "적을 읽는" 긴장감 증폭.</span>
+  </div>
+  <div style="display:flex;gap:10px;align-items:flex-start">
+    <span style="color:var(--fb-eff);font-family:var(--mono);font-size:11px;font-weight:700;white-space:nowrap">힌트 절제</span>
+    <span style="font-size:12px;color:var(--muted)">✅ "과하지 않게" 원칙: Balanced → 힌트 공백(거짓 축 안 함). 서브텍스트 1줄만. 플레이어가 스스로 읽는 여지 보존.</span>
+  </div>
+</div>
+
+
+<div class="foot">
+  2026-06-26 · 위협 텔레그래프 시각 디렉션 (트리오 흡수 카운터 매핑 정합) · SoT = spec §7.0b-1 (f) + wireframes §5 + ThreatTelegraph.cs<br>
+  plat 구현 = M3 step-5 ShowFormation 확장 · 아이콘 Sprite = M3 PixelLab(프리즈 가드 유지) · 이 보드 = 레이아웃/UX 도메인 · 카운터 매핑 = 5테마 영웅 정체성(아르덴/베스라/에이라) 정합
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

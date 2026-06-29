@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>IWF 흐름 와이어 · 스테이지→편성→전투</title>
+<style>
+  :root{
+    --ground:#0c1014;--panel:#141b21;--panel2:#1a232a;--panel3:#212c34;
+    --line:#273139;--line2:#36444e;--line3:#475762;
+    --text:#e0e7e3;--muted:#869189;--dim:#5d6862;
+    --neon-m:#ff5bb0;--neon-c:#3fd0e0;
+    --cta:#ffce4a;--lock:#6b7780;--enemy:#ff6b6b;--ally:#5aa9ff;
+    --good:#8AE05A;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(900px 480px at 86% -6%,rgba(255,91,176,.09),transparent 60%),
+      radial-gradient(820px 460px at 5% 1%,rgba(63,208,224,.07),transparent 58%),
+      linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
+    background-size:auto,auto,40px 40px,40px 40px;background-attachment:fixed}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  a{color:var(--neon-c);text-decoration:none}a:hover{text-decoration:underline}
+
+  /* header */
+  header{border-bottom:1px solid var(--line);padding:42px 0 26px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;
+    background:linear-gradient(90deg,var(--neon-m),var(--neon-c),transparent)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  .eyebrow b{color:var(--neon-m);font-weight:700}
+  h1{margin:11px 0 0;font-size:clamp(25px,4.2vw,40px);font-weight:800;letter-spacing:-.015em;
+    background:linear-gradient(92deg,#fff,#cfeef2 52%,#ffd0ea);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:14px;margin-top:12px;max-width:72ch}
+  .updated{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:13px}
+  .updated b{color:var(--muted)}
+
+  .pivot{margin:22px 0 0;background:linear-gradient(100deg,rgba(63,208,224,.12),rgba(63,208,224,.04));
+    border:1px solid rgba(63,208,224,.34);border-left:4px solid var(--neon-c);border-radius:7px;padding:15px 19px}
+  .pivot h3{margin:0 0 6px;font-size:14px;color:#bdeef4;letter-spacing:.01em}
+  .pivot p{margin:0;font-size:12.5px;color:var(--muted)}
+  .pivot b{color:var(--text)}
+  .pivot s{color:var(--dim)}
+
+  /* section label */
+  .seclabel{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    margin:48px 0 0;padding-bottom:9px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:11px}
+  .seclabel .n{color:var(--neon-c);font-weight:800;font-size:15px}
+
+  /* ===== core loop ===== */
+  .loop{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px 22px}
+  .loopflow{display:flex;flex-wrap:wrap;align-items:stretch;gap:9px}
+  .node{flex:1 1 130px;min-width:120px;background:var(--panel2);border:1px solid var(--line2);border-radius:8px;padding:13px 14px;position:relative}
+  .node.hub{border-color:var(--neon-c);box-shadow:inset 0 0 0 1px rgba(63,208,224,.18)}
+  .node.prep{border-color:var(--neon-m);box-shadow:inset 0 0 0 1px rgba(255,91,176,.16)}
+  .node .nk{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+  .node .nt{font-size:14px;font-weight:700;margin-top:4px}
+  .node .nd{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4}
+  .node.hub .nk{color:var(--neon-c)} .node.prep .nk{color:var(--neon-m)}
+  .arrow{display:flex;align-items:center;justify-content:center;color:var(--line3);font-size:20px;font-family:var(--mono);min-width:18px}
+  .arrow span{font-size:8.5px;color:var(--dim);writing-mode:horizontal-tb;text-align:center;line-height:1.2}
+  .loopmeta{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:18px}
+  .lm{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--neon-c);border-radius:6px;padding:11px 14px}
+  .lm .lmk{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--neon-c);font-weight:700}
+  .lm p{margin:5px 0 0;font-size:11.5px;color:var(--muted);line-height:1.45}
+  .lm b{color:var(--text)}
+  .branch{margin-top:14px;font-size:11.5px;color:var(--muted);font-family:var(--mono);line-height:1.7}
+  .branch b{color:var(--text)} .branch .t{color:var(--dim)}
+
+  /* ===== screen blocks ===== */
+  .screen{display:grid;grid-template-columns:1.45fr 1fr;gap:20px;margin-top:22px;align-items:start}
+  @media(max-width:760px){.screen{grid-template-columns:1fr}}
+  .scaption{font-size:13px;color:var(--muted);margin:14px 0 0}
+
+  /* device frame — landscape 16:9 */
+  .frame{position:relative;width:100%;aspect-ratio:16/9;background:#0a0e12;border:1px solid var(--line2);border-radius:9px;
+    overflow:hidden;display:flex;flex-direction:column;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:26px 26px}
+  .frame.battle{background:#070a0d}
+  .topbar{height:15%;min-height:26px;border-bottom:1px dashed var(--line2);display:flex;align-items:center;justify-content:space-between;
+    padding:0 10px;font-family:var(--mono);font-size:9px;color:var(--muted);gap:8px}
+  .topbar .res{color:var(--cta);letter-spacing:.02em}
+  .topbar .prog{color:var(--neon-c)}
+  .body{flex:1;display:flex;min-height:0}
+  .menucol{width:16%;min-width:46px;display:flex;flex-direction:column;gap:5px;padding:8px 6px;border-right:1px dashed var(--line2);justify-content:center}
+  .menucol.r{border-right:none;border-left:1px dashed var(--line2)}
+  .mbtn{border:1px dashed var(--line3);border-radius:5px;font-family:var(--mono);font-size:8.5px;color:var(--muted);
+    text-align:center;padding:6px 2px;background:rgba(255,255,255,.012)}
+  .center{flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;min-width:0}
+
+  /* coverflow */
+  .cover{display:flex;align-items:center;justify-content:center;gap:0;width:100%;height:70%}
+  .stagecard{border:1px dashed var(--line3);border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:var(--mono);color:var(--dim);background:rgba(255,255,255,.012);flex-shrink:0}
+  .stagecard.far{width:13%;height:55%;opacity:.4;font-size:7px}
+  .stagecard.near{width:17%;height:74%;opacity:.66;font-size:8px;margin:0 -2%}
+  .stagecard.cur{width:32%;height:100%;border:1.5px solid var(--neon-c);border-radius:9px;opacity:1;z-index:2;
+    background:linear-gradient(180deg,rgba(63,208,224,.07),rgba(63,208,224,.015));box-shadow:0 0 22px rgba(63,208,224,.16);
+    color:var(--text);padding:6px}
+  .stagecard.cur .stg{font-size:11px;font-weight:800;color:#fff;letter-spacing:.02em}
+  .stagecard.cur .thm{font-size:8px;color:var(--neon-m);margin-top:2px}
+  .stagecard.cur .thr{font-size:7.5px;color:var(--cta);margin-top:1px}
+  .stagecard .lk{font-size:11px;color:var(--lock)}
+  .cta{margin-top:5px;font-family:var(--mono);font-size:8.5px;font-weight:800;color:#06222a;
+    background:var(--cta);border-radius:5px;padding:4px 10px;box-shadow:0 0 14px rgba(255,206,74,.4);letter-spacing:.03em}
+  .scrollnav{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:8px;color:var(--dim);letter-spacing:.2em}
+  .arrowl,.arrowr{position:absolute;top:50%;transform:translateY(-50%);font-size:13px;color:var(--line3);font-family:var(--mono)}
+  .arrowl{left:3px}.arrowr{right:3px}
+
+  /* generic zone */
+  .zone{border:1px dashed var(--line3);border-radius:6px;font-family:var(--mono);font-size:8.5px;color:var(--muted);
+    display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(255,255,255,.012);padding:5px}
+  .zone.key{border-style:solid;border-color:var(--neon-c);color:var(--text)}
+  .zone.cta{border:none;background:var(--cta);color:#06222a;font-weight:800;box-shadow:0 0 14px rgba(255,206,74,.4)}
+  .zone.enemy{border-color:rgba(255,107,107,.5)}
+  .zone.ally{border-color:rgba(90,169,255,.5)}
+
+  /* prepare layout */
+  .prepbody{flex:1;display:flex;gap:8px;padding:9px;min-height:0}
+  .prepcol{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .threatbox{flex:1;border:1px solid rgba(255,107,107,.45);border-radius:7px;padding:7px;display:flex;flex-direction:column;gap:4px;
+    background:rgba(255,107,107,.04)}
+  .threatbox .th{font-family:var(--mono);font-size:8px;color:var(--enemy);letter-spacing:.05em}
+  .efm{display:flex;gap:3px;flex-wrap:wrap}
+  .eunit{width:15px;height:15px;border:1px dashed rgba(255,107,107,.55);border-radius:3px}
+  .hint{font-family:var(--mono);font-size:7.5px;color:var(--good);margin-top:auto;line-height:1.3}
+  .decklabel{font-family:var(--mono);font-size:8px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+  .decklabel .syn{color:var(--neon-m)}
+  .slots{display:flex;gap:4px;flex-wrap:wrap}
+  .slot{width:16%;aspect-ratio:1;min-width:26px;border:1px dashed var(--line3);border-radius:5px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:7px;color:var(--dim)}
+  .slot.hero{border:1.5px solid var(--cta);color:var(--cta)}
+  .slot.filled{border-color:var(--line3);border-style:solid;color:var(--muted);background:rgba(255,255,255,.02)}
+  .cost{font-family:var(--mono);font-size:8px;color:var(--muted)}
+  .startbtn{font-family:var(--mono);font-size:10px;font-weight:800;color:#06222a;background:var(--cta);
+    border-radius:6px;padding:8px;text-align:center;box-shadow:0 0 16px rgba(255,206,74,.45);letter-spacing:.04em}
+  .rosterlabel{font-family:var(--mono);font-size:7.5px;color:var(--dim);margin-top:3px}
+  .roster{display:flex;align-items:center;gap:4px;overflow:hidden;padding:3px 0}
+  .roster .nav{font-family:var(--mono);font-size:11px;color:var(--line3);flex:0 0 auto}
+  .runit{width:20px;height:20px;flex:0 0 auto;border:1px dashed var(--line3);border-radius:4px;background:rgba(255,255,255,.025)}
+  .runit.locked{border-color:var(--line2);opacity:.45}
+  .formation{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:center;justify-items:center;padding:6px 4px}
+  .fpos{width:18px;height:18px;border:1px dashed rgba(255,107,107,.5);border-radius:3px}
+  .fpos.front{border-style:solid;border-color:rgba(255,107,107,.7)}
+  .deckcol{flex:1.6}
+  .enemycol{flex:1}
+  .enemycol .threatbox{flex:0 1 auto}
+  .slots.big .slot{min-width:30px}
+  .roster2{display:flex;flex-direction:column;gap:5px;flex:1;justify-content:center;min-height:0}
+  .actions{margin-top:auto;display:flex;flex-direction:column;gap:5px}
+  .cancelbtn{font-family:var(--mono);font-size:8.5px;color:var(--muted);border:1px dashed var(--line3);border-radius:6px;padding:6px;text-align:center;letter-spacing:.02em}
+
+  /* battle hud */
+  .field{flex:1;display:flex;min-height:0;position:relative}
+  .side{flex:1;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:5px;padding:8px;position:relative}
+  .side.l{border-right:1px dashed rgba(255,255,255,.05)}
+  .mob{width:13px;height:13px;border-radius:3px;position:relative}
+  .mob.a{border:1px solid var(--ally)}.mob.e{border:1px solid var(--enemy)}
+  .mob::after{content:"";position:absolute;top:-3px;left:0;width:100%;height:1.5px;background:var(--good);border-radius:2px}
+  .mob.boss{width:22px;height:22px}
+  .mob.boss::after{height:2.5px}
+  .sidelabel{position:absolute;top:5px;font-family:var(--mono);font-size:7.5px;color:var(--dim)}
+  .synhud{position:absolute;top:5px;right:8px;font-family:var(--mono);font-size:8px;color:var(--neon-m);border:1px dashed rgba(255,91,176,.4);
+    border-radius:4px;padding:2px 6px;background:rgba(255,91,176,.05)}
+  .hudbot{height:24%;min-height:38px;border-top:1px dashed var(--line2);display:flex;align-items:stretch;gap:6px;padding:6px 8px}
+  .hgauge{flex:1.3;display:flex;flex-direction:column;justify-content:center;gap:3px}
+  .gbar{height:9px;border:1px solid var(--line3);border-radius:3px;overflow:hidden;position:relative}
+  .gbar::after{content:"";position:absolute;left:0;top:0;bottom:0;width:55%;background:linear-gradient(90deg,var(--neon-c),rgba(63,208,224,.5))}
+  .glabel{font-family:var(--mono);font-size:7.5px;color:var(--muted)}
+  .deckhud{flex:2;display:flex;gap:4px;align-items:center;justify-content:center}
+  .dslot{flex:1;max-width:38px;aspect-ratio:1;border:1px dashed var(--line3);border-radius:5px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:7px;color:var(--dim)}
+  .skillz{flex:1;display:flex;gap:4px;align-items:center;justify-content:flex-end}
+  .skbtn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--neon-c);display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:8px;color:var(--neon-c);background:rgba(63,208,224,.06)}
+  .backbtn{width:22px;height:22px;border:1px dashed var(--line3);border-radius:5px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:9px;color:var(--dim)}
+
+  /* notes */
+  .notes{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:17px 19px}
+  .notes h4{margin:0 0 11px;font-size:13px;display:flex;align-items:center;gap:8px}
+  .notes h4 .pin{font-family:var(--mono);font-size:9px;background:var(--neon-c);color:#06222a;border-radius:3px;padding:1px 6px;font-weight:800}
+  .notes ul{list-style:none;margin:0;padding:0}
+  .notes li{padding:7px 0 7px 17px;position:relative;font-size:12px;color:var(--muted);border-bottom:1px solid var(--panel2);line-height:1.45}
+  .notes li:last-child{border-bottom:none}
+  .notes li::before{content:"▸";position:absolute;left:0;color:var(--neon-c)}
+  .notes li b{color:var(--text)}
+  .notes li .pr{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--neon-m);letter-spacing:.03em}
+  .notes li.warn::before{content:"⚠";color:var(--cta)}
+  .notes li.kill::before{content:"✕";color:var(--enemy)}
+  .notes li.keep::before{content:"✓";color:var(--good)}
+
+  /* change / open */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:18px 20px}
+  .card.kill{border-left:3px solid var(--enemy)}
+  .card.open{border-left:3px solid var(--cta)}
+  .card h3{margin:0 0 11px;font-size:14px}
+  .card ul{list-style:none;margin:0;padding:0}
+  .card li{padding:6px 0 6px 18px;position:relative;font-size:12px;color:var(--muted);line-height:1.45}
+  .card li b{color:var(--text)}
+  .card.kill li::before{content:"✕";position:absolute;left:0;color:var(--enemy);font-weight:700}
+  .card.open li::before{content:"?";position:absolute;left:0;color:var(--cta);font-weight:800;font-family:var(--mono)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;font-family:var(--mono);font-size:10px;color:var(--dim)}
+  .legend span{display:flex;align-items:center;gap:5px}
+  .swatch{width:20px;height:11px;border-radius:3px;display:inline-block}
+
+  footer{padding:30px 0 60px;color:var(--dim);font-size:11px;font-family:var(--mono);border-top:1px solid var(--line);margin-top:46px;line-height:1.7}
+  footer b{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <div class="eyebrow">infinite warfield · 디자인 세션 · <b>흐름 중심 와이어프레임</b></div>
+  <h1>스테이지 선택 → 편성 → 전투</h1>
+  <p class="sub">"정적 존 배치"가 아니라 <b>플레이어 여정(코어 루프)</b>부터 설계한 가로(landscape) 와이어. 메인 = 스테이지 선택·진행 중심 / 편성 = 확인·조정(덱 유지) + 적 위협 응수 / 전투 HUD = 난전 가독.</p>
+  <div class="updated">갱신 <b>2026-06-25</b> · 편성 공간 재배분(덱 우선 62%·2줄 로스터·전투시작 우하단·취소 인접) + 전투 HUD 일시정지/설정 생략 판단 · 매체 게이트 #8 = 레이아웃 = 캔버스 OK</div>
+
+  <div class="pivot">
+    <h3>↻ 전제 정정 — 왜 이전 보드를 버렸나</h3>
+    <p>이전 보드는 <s>메인 영웅 프레즌스 + 영웅 배치 A/B/C</s> 가 전제였음. 폐기 이유 = ① 영웅 선택은 <b>편성(스테이지 후)</b>에서 일어남 → 메인 영웅 진열은 오해 유발 ② 이 장르(코스트 실시간 소환 레인배틀)의 주인공은 영웅 portrait 가 아니라 <b>스테이지 진행 + 덱</b> ③ 덱은 <b>적을 보고</b> 짜는 게 전략적 정답(응수) → 메인 사전 편성은 "이른 결정". <b>새 전제: 메인 = 스테이지 선택 중심 · 편성 = 스테이지 맥락 안에서.</b></p>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+  <!-- ===== CORE LOOP ===== -->
+  <div class="seclabel"><span class="n">0</span> 코어 루프 — 플레이어 여정</div>
+  <div class="loop">
+    <div class="loopflow">
+      <div class="node"><div class="nk">진입</div><div class="nt">Intro</div><div class="nd">타이틀 → 시작</div></div>
+      <div class="arrow">→</div>
+      <div class="node hub"><div class="nk">★ 허브</div><div class="nt">메인 (스테이지 선택)</div><div class="nd">진행도·재화·다음 스테이지 카드</div></div>
+      <div class="arrow">→<br><span>선택+1탭</span></div>
+      <div class="node prep"><div class="nk">★ 편성</div><div class="nt">확인 / 조정</div><div class="nd">현재 덱 유지 + 적 위협 프리뷰</div></div>
+      <div class="arrow">→<br><span>전투 시작</span></div>
+      <div class="node"><div class="nk">코어 재미</div><div class="nt">전투</div><div class="nd">실시간 코스트 소환</div></div>
+      <div class="arrow">→</div>
+      <div class="node"><div class="nk">보상</div><div class="nt">결과</div><div class="nd">다음 / 재도전</div></div>
+    </div>
+    <div class="branch">
+      <span class="t">└ 루프:</span> 결과 → 허브 <b>(다음 스테이지)</b> &nbsp;·&nbsp; <span class="t">막히면 →</span> 편성에서 <b>적 위협 보고 덱 조정</b> &nbsp;또는&nbsp; <span class="t">메인 →</span> <b>강화</b>(유닛 영구 성장)·<b>환생</b>(테마 선택) 후 재도전
+    </div>
+    <div class="loopmeta">
+      <div class="lm"><div class="lmk">① 진입 마찰 최소</div><p>기본 = 허브에서 <b>1탭</b>으로 다음 전투(덱 유지). 방치형 = "다음 전투까지 탭 수"가 리텐션.</p></div>
+      <div class="lm"><div class="lmk">② 편성 = 온디맨드</div><p>한번 짠 덱은 <b>유지</b>. 편성 화면은 "백지 재구성"이 아니라 <b>확인/조정</b> 단계.</p></div>
+      <div class="lm"><div class="lmk">③ 응수는 막힐 때</div><p>적 위협 텔레그래프 → 카운터 덱. <b>적을 보고</b> 짜는 게 전략 핵심.</p></div>
+      <div class="lm"><div class="lmk">④ 허브 주인공 = 진행</div><p>스테이지 여정 + 환생이 "성장 중" 신호. 영웅 portrait 아님.</p></div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 1: MAIN ===== -->
+  <div class="seclabel"><span class="n">1</span> 메인 허브 — 스테이지 선택·진행 중심</div>
+  <div class="screen">
+    <div>
+      <div class="frame">
+        <div class="topbar">
+          <span class="prog">플레이어 Lv.12 · 환생 Lv.3</span>
+          <span class="res">💰 9,850 · 🔹 2,450 · 💎 580</span>
+        </div>
+        <div class="body">
+          <div class="menucol">
+            <div class="mbtn">강화</div>
+            <div class="mbtn">환생</div>
+            <div class="mbtn">업적</div>
+          </div>
+          <div class="center">
+            <div class="arrowl">◀</div>
+            <div class="cover">
+              <div class="stagecard far">22</div>
+              <div class="stagecard near">23</div>
+              <div class="stagecard cur">
+                <div class="stg">STAGE 24</div>
+                <div class="thm">🔥 Combat 테마</div>
+                <div class="thr">⚠ 적: 중장갑</div>
+                <div class="cta">▶ 전투</div>
+              </div>
+              <div class="stagecard near"><span class="lk">🔒</span>25</div>
+              <div class="stagecard far">26</div>
+            </div>
+            <div class="arrowr">▶</div>
+            <div class="scrollnav">· · ○ ○ ● ○ ○ · ·　스와이프 / 탭</div>
+          </div>
+          <div class="menucol r">
+            <div class="mbtn">미션</div>
+            <div class="mbtn">상점</div>
+          </div>
+        </div>
+      </div>
+      <p class="scaption">가로 16:9 · 중앙 = 스테이지 코버플로우(현재 카드 지배적) · 좌우 = 메타 메뉴 스택</p>
+    </div>
+    <div class="notes">
+      <h4><span class="pin">메인</span> 설계 포인트</h4>
+      <ul>
+        <li class="keep"><b>주인공 = 스테이지 여정</b> <span class="pr">paranoia#1 재해석</span> 메타3요소 = 진행 프레즌스(스테이지)·주 CTA(전투)·진행 티저(환생/재화). 영웅이 아니라 "어디까지 왔나".</li>
+        <li class="keep"><b>전투 CTA = 선택 카드 위 위계 최상</b> <span class="pr">엄지존</span> 글로우 처리·중앙 하단 엄지 도달 영역.</li>
+        <li><b>현재 카드 = STAGE·테마·적 위협 hint</b> 한 장에. 카드 탭 = 센터로 스크롤(선택), CTA = 편성 진입.</li>
+        <li><b>잠금</b> = maxCleared+1 초과(🔒). 현재 스테이지 하이라이트.</li>
+        <li class="kill"><b>덱 편성 UI 없음</b> 덱은 다음(편성) 화면 = 적 보고 짜는 게 맞음.</li>
+        <li class="kill"><b>영웅 portrait 없음</b> A/B/C 배치 질문 폐기.</li>
+        <li class="warn"><b>스토어 스샷</b> <span class="pr">paranoia#7</span> 이 화면이 "테마별 여정"으로 매력 전달 가능한지 = 아트(테마 배경·카드) M3 적용 시 판정.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: PREPARE ===== -->
+  <div class="seclabel"><span class="n">2</span> 편성 — 확인 / 조정 (덱 유지) + 적 위협 응수</div>
+  <div class="screen">
+    <div>
+      <div class="frame">
+        <div class="topbar">
+          <span class="prog">Stage 24 · Combat 테마</span>
+          <span style="color:var(--dim)">편성</span>
+        </div>
+        <div class="prepbody">
+          <div class="prepcol deckcol">
+            <div class="decklabel"><span>내 덱 (유지됨)</span><span>코스트 45/70 · <span class="syn">정령 2/4</span></span></div>
+            <div class="slots big">
+              <div class="slot hero filled">영웅</div>
+              <div class="slot filled">U2</div>
+              <div class="slot filled">U3</div>
+              <div class="slot filled">U4</div>
+              <div class="slot filled">U5</div>
+              <div class="slot">＋</div>
+              <div class="slot">＋</div>
+              <div class="slot">＋</div>
+            </div>
+            <div class="rosterlabel">보유 유닛 — 2줄 · 좌우 스크롤 · 탭 → 빈 슬롯</div>
+            <div class="roster2">
+              <div class="roster">
+                <span class="nav">◀</span>
+                <div class="runit"></div><div class="runit"></div><div class="runit"></div><div class="runit"></div><div class="runit"></div>
+                <div class="runit"></div><div class="runit"></div><div class="runit"></div><div class="runit"></div>
+                <span class="nav">▶</span>
+              </div>
+              <div class="roster">
+                <span class="nav">　</span>
+                <div class="runit"></div><div class="runit"></div><div class="runit"></div><div class="runit"></div><div class="runit"></div>
+                <div class="runit"></div><div class="runit locked"></div><div class="runit locked"></div><div class="runit locked"></div>
+                <span class="nav">　</span>
+              </div>
+            </div>
+          </div>
+          <div class="prepcol enemycol">
+            <div class="threatbox">
+              <div class="th">적 진형 미리보기</div>
+              <div class="formation">
+                <div class="fpos front"></div><div class="fpos front"></div><div class="fpos front"></div>
+                <div class="fpos"></div><div class="fpos"></div><div class="fpos"></div>
+              </div>
+              <div class="th" style="color:var(--cta)">⚠ 중장갑 · 마법취약</div>
+              <div class="hint">↳ 마법딜러 추천</div>
+            </div>
+            <div class="actions">
+              <div class="cancelbtn">← 취소 (뒤로)</div>
+              <div class="startbtn">▶ 전투 시작</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="scaption">덱 영역 우선(~62%) = 큰 슬롯 + 2줄 로스터 스크롤 / 우측 = 적 진형 미리보기(상) + 취소·전투 시작(하·우하단) · 전투 좌우(아군 좌·적 우)와 일치</p>
+    </div>
+    <div class="notes">
+      <h4><span class="pin">편성</span> 설계 포인트 — 핵심 화면</h4>
+      <ul>
+        <li class="keep"><b>덱 영역 우선 (~62%)</b> <span class="pr">UX 판단</span> 편성 = 주 인터랙션 → 덱에 공간 더·슬롯 크게. 적 진형 = 참조(우측 컴팩트).</li>
+        <li class="keep"><b>로스터 = 2줄 가로 스크롤</b> <span class="pr">사용자</span> 보유 37유닛 = 1줄이면 스크롤 과다 → 2줄로 한눈·스크롤 절반.</li>
+        <li class="keep"><b>전투 시작 = 우하단</b> <span class="pr">사용자</span> 오른손 엄지 · "덱 빌드(좌) → 적 확인(우) → 시작(우하)" 흐름.</li>
+        <li class="keep"><b>취소(뒤로) = 전투 시작 위</b> <span class="pr">사용자</span> 상단서 이동. ★ 미스탭 가드 = 취소 작게·점선(2차) / 전투 시작 크게·글로우(1차) 위계 분리.</li>
+        <li class="keep"><b>좌 덱 / 우 적</b> 전투(아군 좌·적 우)와 일치. 적 = 진형 미리보기 + 위협 표기(상설·진형형·CEO Q5).</li>
+        <li><b>확인/조정 모델</b> 덱 유지 → 바로 시작·위협 보고 바꿀 때만. 첫 슬롯 영웅 전용·코스트 + 시너지 [정령 2/4].</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 3: BATTLE HUD ===== -->
+  <div class="seclabel"><span class="n">3</span> 전투 HUD — 난전 가독 (paranoia#5)</div>
+  <div class="screen">
+    <div>
+      <div class="frame battle">
+        <div class="topbar">
+          <span class="prog">Stage 24</span>
+          <span style="color:var(--neon-m)">정령 4 / 탱커 2</span>
+          <span style="color:var(--muted)">00:43</span>
+        </div>
+        <div class="field">
+          <div class="side l">
+            <span class="sidelabel" style="left:6px;color:var(--ally)">아군 소환 영역</span>
+            <div class="mob a"></div><div class="mob a"></div><div class="mob a"></div>
+            <div class="mob a boss"></div><div class="mob a"></div><div class="mob a"></div>
+            <div class="mob a"></div><div class="mob a"></div>
+          </div>
+          <div class="side">
+            <span class="sidelabel" style="right:6px;color:var(--enemy)">적 영역</span>
+            <div class="mob e"></div><div class="mob e"></div><div class="mob e"></div>
+            <div class="mob e boss"></div><div class="mob e"></div><div class="mob e"></div>
+            <div class="mob e"></div><div class="mob e"></div>
+          </div>
+        </div>
+        <div class="hudbot">
+          <div class="hgauge">
+            <div class="glabel">코스트 35 / 70</div>
+            <div class="gbar"></div>
+          </div>
+          <div class="deckhud">
+            <div class="dslot">U1</div><div class="dslot">U2</div><div class="dslot">U3</div><div class="dslot">U4</div><div class="dslot">U5</div>
+          </div>
+          <div class="skillz">
+            <div class="backbtn">←</div>
+            <div class="skbtn">⚡</div>
+          </div>
+        </div>
+      </div>
+      <p class="scaption">상단 = Stage·시너지HUD·타이머 / 전장 = 다크(좌 아군·우 적) / 하단 = 코스트(좌)·덱슬롯(중·엄지존)·스킬(우)</p>
+    </div>
+    <div class="notes">
+      <h4><span class="pin">전투</span> 난전 가독 룰</h4>
+      <ul>
+        <li class="keep"><b>전장 = 다크 유지</b> <span class="pr">정체성</span> 네온이 HP바·코스트·피드백 가독을 안 잡아먹게 누름.</li>
+        <li><b>가는 HP바 · 영웅만 큰 바</b> 15v15 난전에 수십 개 바가 떠도 키 유닛만 강조.</li>
+        <li><b>시너지HUD = 우상단</b> 전장 중앙 회피(겹침 방지) · plat <code>SynergyHud</code> -96f 가로 재배치.</li>
+        <li><b>피드백 텍스트 상승 높이 캡</b> 코스트/스킬 영역 침범 금지 · MaxLive 캡.</li>
+        <li><b>하단 3분할</b> 코스트(좌·정보, 데드존)·덱슬롯(중·탭소환, 엄지존 44pt)·스킬(우·오른손 엄지·쿨다운 원형).</li>
+        <li class="kill"><b>일시정지·설정 버튼 = 없음</b> <span class="pr">UX 판단</span> 실시간 단판(~1–3분) = 멈춰 생각 = 긴장 해침. 설정 = 메인 / 앱 백그라운드 = 자동 일시정지(버튼 X) / 이탈 = ← 뒤로(확인 1회). HUD 최소 = 난전 가독 #5.</li>
+        <li class="warn"><b>plat 정합</b> <span class="pr">escalate#6</span> battleFieldArea·slotParent 가로 재측정 = M3 step-5.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== CHANGE / OPEN ===== -->
+  <div class="seclabel"><span class="n">4</span> 변경점 · 열린 결정</div>
+  <div class="grid2">
+    <div class="card kill">
+      <h3>이전 보드 대비 폐기·정정</h3>
+      <ul>
+        <li><b>메인 영웅 프레즌스</b> 폐기 → 스테이지 진행 프레즌스로 대체.</li>
+        <li><b>영웅 배치 A/B/C</b>(캐러셀/슬롯/1기크게) 질문 자체 폐기 — 폰 검토 불요.</li>
+        <li><b>메인 사전 덱 편성</b> 폐기 → 편성은 스테이지 후 맥락.</li>
+        <li><b>heroImage vs playerAvatar 배선</b> 결정 폐기(둘 다 안 씀) — escalate#6에서 제거.</li>
+        <li><b>asset-manifest "Main 영웅 프레즌스 = 출시필수"</b> = 허위 요건 → 정정 escalate 필요.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ 결정 완료 (2026-06-25 인터뷰)</h3>
+      <ul>
+        <li><b>✓ 흐름 보드 승인</b> · <b>스테이지 = 코버플로우</b> · <b>편성 좌우 = 좌 덱/우 적</b>.</li>
+        <li><b>✓ 위협 = 적 진형 미리보기 + 위협 표기</b>(상설·진형형·CEO Q5).</li>
+        <li><b>✓ 편성 공간 = 덱 우선(~62%)</b> · <b>로스터 2줄</b> · <b>전투 시작 우하단</b> · <b>취소 = 전투 시작 위</b>(미스탭 가드 = 위계 분리).</li>
+        <li><b>✓ 전투 HUD 일시정지·설정 버튼 없음</b> — 설정=메인 · 자동 일시정지 · 이탈=뒤로.</li>
+        <li style="color:var(--dim)">잔여(M3·CEO) = Q2 VFX 출시 범위 · Q6 업적 아이콘 (에셋 스코프).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--cta)"></span> 주 CTA(전투)</span>
+    <span><span class="swatch" style="border:1.5px solid var(--neon-c)"></span> 키 존(주인공)</span>
+    <span><span class="swatch" style="border:1px dashed var(--line3)"></span> 일반 존(placeholder)</span>
+    <span><span class="swatch" style="border:1px solid var(--ally)"></span> 아군</span>
+    <span><span class="swatch" style="border:1px solid var(--enemy)"></span> 적/위협</span>
+    <span>🔒 잠금</span>
+  </div>
+
+  <footer>
+    <b>infinite warfield · 흐름 중심 와이어프레임</b> · 갱신 2026-06-25 (스테이지→편성 흐름 확정)<br>
+    SoT = design/infinite-warfield/wireframes.md · 아트 appeal(영웅·유닛·이펙트 실물) = 매체 게이트 #8 = AI 렌더로만 판정(본 보드 박스는 placeholder)<br>
+    비공개(unlisted) · 출시 전 · 직접 URL 접근 전용
+  </footer>
+</main>
+</body>
+</html>

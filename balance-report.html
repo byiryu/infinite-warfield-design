@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>IWF 밸런싱 보고서</title>
+<style>
+  :root{
+    --ground:#14181c;--panel:#1b2228;--panel2:#212a31;--line:#2d383f;--text:#dde4e1;--muted:#8a9691;
+    --crit:#c2565b;--high:#e8a33d;--ok:#56c2d0;--gold:#d8b768;--dealer:#c2565b;--support:#56c2d0;--tank:#d8b768;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:ui-sans-serif,system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  a{color:var(--ok)}
+  header{border-bottom:1px solid var(--line);padding:34px 0 24px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:10px 0 0;font-size:clamp(24px,4vw,38px);font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+  .gen{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:12px}
+  .flags{display:grid;gap:9px;margin:22px 0}
+  .flag{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--crit);border-radius:4px;padding:12px 15px;font-size:13.5px}
+  .flag.bug{border-left-color:var(--high)}
+  .flag .t{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--crit)}
+  .flag.bug .t{color:var(--high)}
+  .flag b{color:var(--text)} .flag code{font-family:var(--mono);font-size:11.5px;background:var(--panel2);padding:1px 4px;border-radius:2px;color:var(--text)}
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .shead{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .shead h2{margin:0;font-size:19px;text-transform:uppercase;font-family:var(--mono);letter-spacing:.04em}
+  .shead .note{color:var(--muted);font-size:12.5px}
+  .tbl-scroll{overflow-x:auto;margin:8px 0}
+  table{width:100%;border-collapse:collapse;font-size:12px;min-width:720px}
+  th{position:sticky;top:0;text-align:right;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:6px 7px;border-bottom:1px solid var(--line);background:var(--ground)}
+  th.l,td.l{text-align:left}
+  td{padding:5px 7px;border-bottom:1px solid var(--panel2);font-family:var(--mono);text-align:right;white-space:nowrap}
+  tr:hover td{background:var(--panel)}
+  .role{font-size:9.5px;font-weight:700;padding:1px 5px;border-radius:2px}
+  .role.D{background:rgba(194,86,91,.16);color:var(--dealer)} .role.S{background:rgba(86,194,208,.14);color:var(--support)} .role.T{background:rgba(216,183,104,.14);color:var(--tank)}
+  .hot{color:var(--crit);font-weight:700} .warn{color:var(--high)} .dim{color:var(--muted)}
+  .tag{font-size:10px;color:var(--crit);font-family:var(--mono)}
+  .curve{display:grid;gap:6px;font-family:var(--mono);font-size:12.5px;margin:10px 0}
+  .crow{display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center}
+  .bar{height:12px;background:var(--panel2);border-radius:2px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--high)}
+  .findings{display:grid;gap:8px;margin-top:14px}
+  .fd{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:11px 14px;font-size:13px}
+  .fd .sev{font-family:var(--mono);font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:2px;margin-right:8px}
+  .sev.critical{background:rgba(194,86,91,.18);color:var(--crit)} .sev.high{background:rgba(232,163,61,.16);color:var(--high)} .sev.medium{background:rgba(138,150,145,.16);color:var(--muted)}
+  .fd b{color:var(--text)} .fd code{font-family:var(--mono);font-size:11px;color:var(--text)}
+  footer{padding:24px 0 56px;color:var(--muted);font-size:11.5px;font-family:var(--mono)}
+  @media(max-width:700px){.crow{grid-template-columns:70px 1fr auto}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="eyebrow">infinite warfield · 게임 밸런싱 보고서</div>
+  <h1>유닛 · 스테이지 · 경제 밸런싱</h1>
+  <div class="gen">PM 6에이전트 정조준 분석 · 2026-06-23 · 코드/JSON 실측(추측 0) · 진단·권고(확정=인터뷰) · 원본 = <a href="unit-codex.html">유닛 코덱스</a> · <a href="audit/">아키텍처 감사</a></div>
+  <div class="flags">
+    <div class="flag"><div class="t">구조 결함 1 · critical</div><b>본편(1~50) 난이도 곡선 부재</b> — 250/250 스테이지 <code>statMultiplier=1.0</code> 평탄. 난이도 변수 = 적 수 8→15 단조 증가 단일축뿐. 플레이어는 +145% 무한 강화하는데 적은 base 고정 → 강화 몇 단계면 본편 무저항(성장⊥난이도 디커플).</div>
+    <div class="flag"><div class="t">구조 결함 2 · critical</div><b>딜러 코스트-효율 역전</b> — DPS/cost가 cost3(~19) &gt; cost4(~13) &gt; cost5(8.5). <b>저코스트일수록 효율 높음 = cost3 스팸이 수학적 지배전략.</b> 전투경제(1.2초 간격)도 견제 못 함. 플랫 가산 강화로 만렙엔 절대 DPS 340~396 수렴 = 코스트 위계 붕괴.</div>
+    <div class="flag"><div class="t">구조 결함 3 · high</div><b>보스 스테이지 무차별</b> — 10/20/30/40/50이 직전 일반 + 영웅 1체 삽입이 전부(statMult 1.0이라 영웅도 미강화). necro·spirit·beast·machine 보스 formation = StandardLine 단일. '보스전' 비트 부재.</div>
+    <div class="flag"><div class="t">구조 결함 4 · critical (★ counter-deck 퍼즐)</div><b>카운터 축 부재 — 미러 풀 + 단일 방어</b> — 적 풀 = 플레이어 풀 100% 미러(unitID {1,2,3,100~133}) + <code>CalculateDamage</code>가 물리/마법 둘 다 단일 <code>baseDef</code> 경감(<code>magicResist</code> 필드 전무). counter/weakness 게임코드 0건. → "이 적엔 이 덱"의 축이 0 = 무슨 덱이든 스탯이면 통과 = 퍼즐 해 유일하지 않음. <b>인터뷰: D3 방어 2축화(armor/magicResist) + D2 위협 아키타입 4종(재배치)으로 교정.</b></div>
+    <div class="flag bug"><div class="t">버그 1 · 외부화 전 수정</div><b>일반 유닛 60렙 강화 비용 = 0</b> — <code>GeneralUnitStatEnhanceData.cs</code> UpgradeCosts 배열이 59개(60 아님). <code>GetUpgradeCost(60)</code>이 length 초과로 <code>return 0</code> → 공짜 강화. 외부화로 동결 시 영구화.</div>
+    <div class="flag bug"><div class="t">버그 2 · 데이터 결손 의심</div><b>crit 전 37유닛 baseCritRate=0</b> → crit 시스템·<code>critMultiplier 1.5</code> 완전 미가동(죽은 코드?). + <code>MagicalAtkBonus = PhysicalAtkBonus</code> 동일 배열 = 마법딜러 강화 차별화 0.</div>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+  <section>
+    <div class="shead"><h2>유닛 파워버짓</h2><span class="note">37유닛(영웅3+일반34·더미 제외) · eHP=HP×(1+DEF/100) · DPS=max(물공,마공)×공속 · 효율=÷cost</span></div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th class="l">유닛</th><th class="l">역할</th><th class="l">테마</th><th>코스트</th><th>HP</th><th>DEF</th><th>ATK</th><th>공속</th><th>DPS</th><th>eHP</th><th>DPS/c</th><th>eHP/c</th></tr></thead>
+      <tbody>
+        <tr><td class="l">Warrior <span class="dim">영웅</span></td><td class="l"><span class="role D">D</span></td><td class="l dim">Combat</td><td>0</td><td>1200</td><td>60</td><td>120</td><td>1.0</td><td>127</td><td>1920</td><td class="dim">—</td><td class="dim">—</td></tr>
+        <tr><td class="l">Dark Mage <span class="dim">영웅</span></td><td class="l"><span class="role D">D</span></td><td class="l dim">Necro</td><td>0</td><td>800</td><td>30</td><td>150</td><td>0.9</td><td>138</td><td>1040</td><td class="dim">—</td><td class="dim">—</td></tr>
+        <tr><td class="l">Summoner <span class="dim">영웅</span></td><td class="l"><span class="role D">D</span></td><td class="l dim">Spirit</td><td>0</td><td>900</td><td>35</td><td>120</td><td>.85</td><td>105</td><td>1215</td><td class="dim">—</td><td class="dim">—</td></tr>
+        <tr><td class="l">Battle Sniper</td><td class="l"><span class="role D">D</span></td><td class="l dim">Combat</td><td>3</td><td>180</td><td>20</td><td>70</td><td>0.8</td><td>58.8</td><td>216</td><td class="hot">19.6</td><td>72</td></tr>
+        <tr><td class="l">Twinblade Rogue</td><td class="l"><span class="role D">D</span></td><td class="l dim">Combat</td><td>3</td><td>200</td><td>30</td><td>55</td><td>1.0</td><td>57.8</td><td>260</td><td class="hot">19.2</td><td>87</td></tr>
+        <tr><td class="l">Tactical Drone</td><td class="l"><span class="role D">D</span></td><td class="l dim">Machine</td><td>3</td><td>200</td><td>20</td><td>60</td><td>0.9</td><td>56.7</td><td>240</td><td class="hot">18.9</td><td>80</td></tr>
+        <tr><td class="l">Spirit Claw</td><td class="l"><span class="role D">D</span></td><td class="l dim">Spirit</td><td>4</td><td>260</td><td>30</td><td>58</td><td>1.0</td><td>62.3</td><td>338</td><td>15.6</td><td>84</td></tr>
+        <tr><td class="l">Flurry Swordsman</td><td class="l"><span class="role D">D</span></td><td class="l dim">Combat</td><td>4</td><td>300</td><td>35</td><td>55</td><td>1.1</td><td>62.0</td><td>405</td><td>15.5</td><td>101</td></tr>
+        <tr><td class="l">Elementalist</td><td class="l"><span class="role D">D</span></td><td class="l dim">Spirit</td><td>4</td><td>240</td><td>20</td><td>60</td><td>1.0</td><td>61.5</td><td>288</td><td>15.4</td><td>72</td></tr>
+        <tr><td class="l">Charging Berserker</td><td class="l"><span class="role D">D</span></td><td class="l dim">Beast</td><td>4</td><td>272</td><td>34</td><td>58</td><td>1.0</td><td>59.4</td><td>364</td><td>14.9</td><td>91</td></tr>
+        <tr><td class="l">Hunting Arrow</td><td class="l"><span class="role D">D</span></td><td class="l dim">Beast</td><td>4</td><td>280</td><td>30</td><td>60</td><td>0.9</td><td>58.0</td><td>364</td><td>14.5</td><td>91</td></tr>
+        <tr><td class="l">Beast Claw</td><td class="l"><span class="role D">D</span></td><td class="l dim">Beast</td><td>4</td><td>310</td><td>35</td><td>55</td><td>1.0</td><td>57.8</td><td>418</td><td>14.4</td><td>105</td></tr>
+        <tr><td class="l">Forest Pulse</td><td class="l"><span class="role D">D</span></td><td class="l dim">Spirit</td><td>4</td><td>250</td><td>30</td><td>55</td><td>.95</td><td>53.6</td><td>325</td><td>13.4</td><td>81</td></tr>
+        <tr><td class="l">Shadow Spirit Shooter</td><td class="l"><span class="role D">D</span></td><td class="l dim">Necro</td><td>4</td><td>250</td><td>30</td><td>47</td><td>0.9</td><td>43.4</td><td>325</td><td>10.8</td><td>81</td></tr>
+        <tr><td class="l">Blood Raider</td><td class="l"><span class="role D">D</span></td><td class="l dim">Necro</td><td>4</td><td>280</td><td>40</td><td>43</td><td>0.9</td><td>41.6</td><td>392</td><td>10.4</td><td>98</td></tr>
+        <tr><td class="l">Steel Hound <span class="tag">약체</span></td><td class="l"><span class="role D">D</span></td><td class="l dim">Machine</td><td>4</td><td>240</td><td>30</td><td>33</td><td>0.8</td><td class="warn">27.7</td><td>312</td><td class="warn">6.9</td><td>78</td></tr>
+        <tr><td class="l">Dark Archer <span class="tag">c5 단독·최저효율딜러</span></td><td class="l"><span class="role D">D</span></td><td class="l dim">Necro</td><td>5</td><td>220</td><td>25</td><td>46</td><td>0.9</td><td>42.4</td><td>275</td><td class="warn">8.5</td><td>55</td></tr>
+        <tr><td class="l">King of the Jungle</td><td class="l"><span class="role T">T</span></td><td class="l dim">Beast</td><td>4</td><td>500</td><td>60</td><td>35</td><td>0.7</td><td>25.1</td><td>800</td><td>6.3</td><td>200</td></tr>
+        <tr><td class="l">Lion of Justice</td><td class="l"><span class="role T">T</span></td><td class="l dim">Beast</td><td>4</td><td>480</td><td>65</td><td>30</td><td>.75</td><td>23.1</td><td>792</td><td>5.8</td><td>198</td></tr>
+        <tr><td class="l">Iron Golem</td><td class="l"><span class="role T">T</span></td><td class="l dim">Combat</td><td>4</td><td>425</td><td>68</td><td>34</td><td>0.6</td><td>20.4</td><td>714</td><td>5.1</td><td>179</td></tr>
+        <tr><td class="l">Undead Summoner</td><td class="l"><span class="role T">T</span></td><td class="l dim">Necro</td><td>3</td><td>370</td><td>40</td><td>20</td><td>0.9</td><td>18.4</td><td>518</td><td>6.1</td><td>173</td></tr>
+        <tr><td class="l">Shield Guardian</td><td class="l"><span class="role T">T</span></td><td class="l dim">Combat</td><td>4</td><td>400</td><td>70</td><td>40</td><td>0.7</td><td>28.0</td><td>680</td><td>7.0</td><td>170</td></tr>
+        <tr><td class="l">Circle of Life</td><td class="l"><span class="role T">T</span></td><td class="l dim">Spirit</td><td>3</td><td>320</td><td>50</td><td>24</td><td>0.9</td><td>22.1</td><td>480</td><td>7.4</td><td>160</td></tr>
+        <tr><td class="l">Overheated Juggernaut</td><td class="l"><span class="role T">T</span></td><td class="l dim">Machine</td><td>4</td><td>400</td><td>60</td><td>45</td><td>0.7</td><td>32.3</td><td>640</td><td>8.1</td><td>160</td></tr>
+        <tr><td class="l">Magnetic Hauler</td><td class="l"><span class="role T">T</span></td><td class="l dim">Machine</td><td>4</td><td>380</td><td>65</td><td>40</td><td>0.8</td><td>32.8</td><td>627</td><td>8.2</td><td>157</td></tr>
+        <tr><td class="l">Forest Guardian</td><td class="l"><span class="role T">T</span></td><td class="l dim">Spirit</td><td>4</td><td>368</td><td>69</td><td>34</td><td>1.03</td><td>35.9</td><td>622</td><td>9.0</td><td>155</td></tr>
+        <tr><td class="l">Blood Spreader <span class="tag">탱커인데 eHP/c 절반</span></td><td class="l"><span class="role T">T</span></td><td class="l dim">Necro</td><td>4</td><td>290</td><td>38</td><td>30</td><td>.95</td><td>29.2</td><td>400</td><td>7.3</td><td class="warn">100</td></tr>
+        <tr><td class="l">War Drummer</td><td class="l"><span class="role S">S</span></td><td class="l dim">Combat</td><td>8</td><td>300</td><td>50</td><td>50</td><td>0.9</td><td>46.1</td><td>450</td><td class="dim">5.8</td><td>56</td></tr>
+        <tr><td class="l">Life Cycler</td><td class="l"><span class="role S">S</span></td><td class="l dim">Spirit</td><td>8</td><td>280</td><td>35</td><td>50</td><td>0.9</td><td>46.1</td><td>378</td><td class="dim">5.8</td><td>47</td></tr>
+        <tr><td class="l">Purifying Druid</td><td class="l"><span class="role S">S</span></td><td class="l dim">Spirit</td><td>8</td><td>290</td><td>30</td><td>50</td><td>0.9</td><td>46.1</td><td>377</td><td class="dim">5.8</td><td>47</td></tr>
+        <tr><td class="l">Soul Mediator</td><td class="l"><span class="role S">S</span></td><td class="l dim">Necro</td><td>8</td><td>280</td><td>30</td><td>45</td><td>0.9</td><td>41.5</td><td>364</td><td class="dim">5.2</td><td>46</td></tr>
+        <tr><td class="l">Hex Priest</td><td class="l"><span class="role S">S</span></td><td class="l dim">Necro</td><td>7</td><td>270</td><td>30</td><td>40</td><td>1.0</td><td>41.0</td><td>351</td><td class="dim">5.9</td><td>50</td></tr>
+        <tr><td class="l">Crushing Hand</td><td class="l"><span class="role S">S</span></td><td class="l dim">Combat</td><td>8</td><td>320</td><td>40</td><td>51</td><td>.72</td><td>37.6</td><td>448</td><td class="dim">4.7</td><td>56</td></tr>
+        <tr><td class="l">Jungle Healer</td><td class="l"><span class="role S">S</span></td><td class="l dim">Beast</td><td>8</td><td>300</td><td>30</td><td>50</td><td>.85</td><td>43.6</td><td>390</td><td class="dim">5.4</td><td>49</td></tr>
+        <tr><td class="l">Nature's Guardian</td><td class="l"><span class="role S">S</span></td><td class="l dim">Beast</td><td>8</td><td>320</td><td>40</td><td>35</td><td>.85</td><td>30.5</td><td>448</td><td class="dim">3.8</td><td>56</td></tr>
+        <tr><td class="l">Binding Raycaster <span class="tag">CC 희소(stun)</span></td><td class="l"><span class="role S">S</span></td><td class="l dim">Machine</td><td>7</td><td>300</td><td>30</td><td>40</td><td>0.9</td><td>36.9</td><td>390</td><td class="dim">5.3</td><td>56</td></tr>
+        <tr><td class="l dim">… Hex/Magnetic 등 서포트 9~10체 동급</td><td class="l"><span class="role S">S</span></td><td class="l dim">—</td><td>7~8</td><td colspan="8" class="l dim">전원 DPS/c 3.8~5.9 최하위 — 유틸(힐5·CC1·버프1·디버프3)이 본체나 정량 필드 부재로 밸런싱 불가</td></tr>
+      </tbody>
+    </table></div>
+    <div class="findings">
+      <div class="fd"><span class="sev critical">CRITICAL</span><b>코스트 효율 역전</b> — 효율 격차 5.3배(딜러 c3 19.6 ↔ 서포트 c8 3.8). cost4 18체 과밀(49%)·c5 1체·<b>c6 부재</b> = 코스트 곡선 구멍. <b>권고:</b> cost4~5 상향 또는 cost3 하향으로 우상향 곡선 + 플랫 가산→base 비례(%) 강화 전환(만렙 티어 유지).</div>
+      <div class="fd"><span class="sev high">HIGH</span><b>플랫 가산 강화의 만렙 붕괴</b> — 보너스가 base 비례 아닌 절대 가산(+145Atk). L60에 약체 Steel Hound 10×↑·강유닛 5.8× → 절대 DPS 340~396 수렴 = 엔드게임 "아무거나 키워도 같음".</div>
+      <div class="fd"><span class="sev medium">MEDIUM</span><b>스킬 슬롯 61% 공백</b> — 일반 34체 전원 passiveSkill1만(passive2·active 빈칸), 영웅3만 3슬롯. 이펙트 16종 중 9종 단일 인스턴스. = 콘텐츠 깊이 얕음(확장 여지). Support 평가축(힐량/CC/버프) 정량 필드 부재.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><h2>스테이지 난이도 곡선</h2><span class="note">5테마×50=250 전수 실측 (RawData/*.json)</span></div>
+    <div class="findings">
+      <div class="fd"><span class="sev critical">CRITICAL</span><b>statMultiplier 250/250 전부 1.0</b> — 적 스탯 커브 = 0. 1~50 난이도 변수 = <b>적 수 8→15 단조 증가 단일축뿐</b>. stage1 적과 stage50 적 개체 스탯 완전 동일.</div>
+      <div class="fd"><span class="sev high">HIGH</span><b>초반 15판 완전 평탄</b> — 적 수가 stage 1~15 전부 <b>8 고정</b>(15판 무변화), 16부터 +1 시작. = 신규 유저·FUN GATE 이탈 최대 위험 구간.</div>
+      <div class="fd"><span class="sev high">HIGH</span><b>51+ treadmill</b> — 동일 250 배치 무한 재순환(레이아웃·기믹·조합 0), 테마만 시각 회전. 난이도 = 10스테이지당 +10%·환생당 +20% 선형 무한. 장기 리텐션 훅 부재.</div>
+      <div class="fd"><span class="sev medium">MEDIUM</span><b>완전 미러</b> — 적 풀 = 플레이어 풀 100% 동일(37 ID·영웅까지 적으로). 적 전용 유닛 0. + 스테이지 삼중소스(RawData활성/Main SO死/Generator dead) canonical화 미해소.</div>
+    </div>
+    <div class="curve">
+      <div class="dim" style="font-size:11px">적 수 곡선 (유일한 난이도 축) — combat/necro 기준</div>
+      <div class="crow"><span>1~15판</span><div class="bar"><i style="width:53%"></i></div><span>8 고정 (평탄)</span></div>
+      <div class="crow"><span>16~30판</span><div class="bar"><i style="width:67%"></i></div><span>9 → 11</span></div>
+      <div class="crow"><span>31~50판</span><div class="bar"><i style="width:100%"></i></div><span>12 → 15 (boss 50)</span></div>
+    </div>
+    <p class="note" style="margin-top:12px">★ <b>권고(D2 인터뷰):</b> 적 수 단일축은 다수 동시전투 = Draw Call/배터리 부담(unity paranoia #1). 스탯커브 병용(10스테이지당 +8~12%·보스 +25~40% 스파이크)이 모바일 친화. 곡선 계수는 stages 외부화 후 빌드 없이 튜닝.</p>
+  </section>
+
+  <section>
+    <div class="shead"><h2>경제 · 성장 · 메타</h2><span class="note">강화 60레벨 곡선 · 전투경제 · 재화 source/sink · 환생</span></div>
+    <div class="findings">
+      <div class="fd"><span class="sev high">HIGH</span><b>강화 ROI 후반 붕괴</b> — Atk이득/100g: lv1=4.00 → lv10=1.23 → lv30=0.40 → lv60=0.15 (<b>27배 둔화</b>). 비용은 일반 완전 선형(+50/lv). 스탯이득 체감 vs 비용 선형 = 후반 강화 '돈 먹는 하마'. 한 스탯 30렙=24,750G.</div>
+      <div class="fd"><span class="sev high">HIGH</span><b>재화 source ≪ sink</b> — 1테마세트(1~50) 수입 5,687G ÷ 유닛1체 균등60강화 19,500G = <b>0.29×</b>(1체 풀강에 ~3.4세트). 34체 전부 = 663,000G. 초중반 성장 정체 강함.</div>
+      <div class="fd"><span class="sev high">HIGH</span><b>환생 발산</b> — 적 배율 +20%/레벨 무한 선형 vs 플레이어 단일스탯 강화상한 +145%(2.45× 천장). <b>rb≥6부터 적 배율이 강화상한 초과 = high-rb 무한 벽</b>. 방치형 메타루프 성립 핵심(실데이터 검증 필요).</div>
+      <div class="fd"><span class="sev medium">MEDIUM</span><b>전투경제 스팸 미제어</b> — 시작35/회복2.5초(만충14초)/15체. cost3=1.2초 간격 소환 → 저코스트 스팸을 경제가 견제 못 함. cost4 18체 과밀과 결합.</div>
+    </div>
+    <div class="curve" style="margin-top:14px">
+      <div class="dim" style="font-size:11px">환생 적 배율 (stage 1 기준) vs 플레이어 강화 천장 ×2.45</div>
+      <div class="crow"><span>rb 0</span><div class="bar"><i style="width:33%;background:var(--ok)"></i></div><span>×1.0</span></div>
+      <div class="crow"><span>rb 5</span><div class="bar"><i style="width:67%;background:var(--high)"></i></div><span>×2.0</span></div>
+      <div class="crow"><span>rb 6+</span><div class="bar"><i style="width:80%;background:var(--crit)"></i></div><span class="hot">×2.2+ &gt; 강화 천장 2.45 근접·초과</span></div>
+      <div class="crow"><span>rb 10</span><div class="bar"><i style="width:100%;background:var(--crit)"></i></div><span class="hot">×3.0 (벽)</span></div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="shead"><h2>처리 방향</h2></div>
+    <div class="findings">
+      <div class="fd"><span class="sev critical">P0</span><b>버그 2건 즉시 수정</b> (UpgradeCosts 59→60 · crit=0 결손/의도 확정) — 외부화 전.</div>
+      <div class="fd"><span class="sev high">P0</span><b>밸런싱 노브 외부화</b> — 강화곡선·경제·스테이지 statMult를 <code>data/infinite-warfield/</code> JSON으로 → 빌드 없이 튜닝. <a href="unit-codex.html">코덱스</a>처럼 재생성.</div>
+      <div class="fd"><span class="sev medium">P1</span><b>구조 결함 1~3</b> = FUN GATE 입력으로 최소 선반영(cost 곡선·statMult 곡선·보스 차별), 세부 수치는 외부화 후 실데이터 튜닝. <b>정밀 밸런싱은 P0 재미검증 후</b>(MVP-first — 사전검증 비대화 회피).</div>
+      <div class="fd"><span class="sev critical">코어</span><b>구조 결함 4 (카운터 축) = counter-deck 퍼즐 성립의 근본</b> — 인터뷰 D1~D4 확정: <b>D1</b> [B] 시너지+위협응수+보스비트 우선(코드≈0)→FUN GATE 후 [A]상성곱 한 테마 / <b>D2</b> 위협 아키타입 4종(재배치·미러 깨기) / <b>D3</b> 방어 2축화(armor/magicResist·공식 분기 1곳) / <b>D4</b> FUN GATE 후 점진(빈슬롯 카운터 시그니처·boss 기믹). 값 착수 = FUN GATE step-slice 통과 후. 상세 = balance-plan 결함④ · spec §7.1.</div>
+    </div>
+  </section>
+
+  <footer>infinite warfield · 밸런싱 보고서 (2026-06-23 스냅샷) · 데이터 SoT = data/infinite-warfield/(외부화 후) · 재산출 = 강화/경제 외부화 + 보고 생성기(향후)</footer>
+</main>
+</body>
+</html>

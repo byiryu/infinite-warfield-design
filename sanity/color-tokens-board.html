@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>IWF — 색 토큰 (5테마 + 시스템 팔레트)</title>
+<style>
+:root{
+  --bg:#0d1117;
+  --panel:#141b22;
+  --panel2:#1a2332;
+  --panel3:#0a1018;
+  --border:#243040;
+  --border-hi:#304a60;
+  --text:#d4dde8;
+  --muted:#5c7080;
+  --muted2:#3a4e60;
+
+  /* 5테마 */
+  --theme-combat:#E03A5C;
+  --theme-necro:#9D3EE8;
+  --theme-spirit:#5DDD7E;
+  --theme-spirit-vfx:#4EC879;
+  --theme-machine:#00D4FF;
+  --theme-beast:#E06B14;
+  /* 피드백 */
+  --fb-eff:#8AE05A;
+  --fb-blk:#9AA7B5;
+  --fb-crit:#FFC23D;
+  /* 진영 / 방어축 */
+  --friendly:#4FA3FF;
+  --enemy:#FF5B5B;
+  --armor:#4FA3FF;
+  --magic:#C87FFF;
+  /* 위협 5 */
+  --t-fort:#8AB4FF;
+  --t-swarm:#F5C842;
+  --t-ranged:#C08DFF;
+  --t-debuff:#54E87A;
+  --t-boss:#FF5E55;
+  /* 네온 메타 (잠정) */
+  --neon-mag:#E84DD4;
+  --neon-cyan:#36D6E0;
+
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
+.page{max-width:1180px;margin:0 auto;padding:52px 24px 80px}
+
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+h1{font-size:clamp(22px,4vw,32px);font-weight:800;letter-spacing:-.02em;color:#e8f0f8}
+h1 span{background:linear-gradient(90deg,var(--neon-mag),var(--neon-cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{color:var(--muted);font-size:13px;margin-top:8px}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.1em;background:var(--panel);border:1px solid var(--border);border-radius:3px;padding:3px 9px;color:var(--muted)}
+.badge.go{border-color:var(--theme-spirit);color:var(--theme-spirit)}
+
+.sec-head{display:flex;align-items:center;gap:12px;margin:46px 0 18px}
+.sec-head .sec-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text);font-weight:700;white-space:nowrap}
+.sec-head .sec-rule{flex:1;height:1px;background:var(--border)}
+.sec-head .sec-note{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap}
+
+/* 대형 테마 스와치 */
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.sw-card{background:var(--panel);border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.sw-chip{height:96px;position:relative;display:flex;align-items:flex-end;padding:10px}
+.sw-chip::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(0,0,0,.35))}
+.sw-anchor{position:relative;z-index:1;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.92);text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.sw-body{padding:11px 13px 13px}
+.sw-token{font-family:var(--mono);font-size:12px;font-weight:700}
+.sw-hex{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:1px}
+.sw-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
+.sw-note b{color:var(--text)}
+.vfx-flag{display:inline-block;font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.06em;background:color-mix(in srgb,var(--theme-spirit-vfx) 18%,transparent);border:1px solid color-mix(in srgb,var(--theme-spirit-vfx) 40%,transparent);color:var(--theme-spirit-vfx);padding:1px 6px;border-radius:3px;margin-top:5px}
+
+/* 작은 스와치 행 */
+.sw-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.sw-mini{background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:10px;display:flex;gap:10px;align-items:center}
+.sw-dot{width:34px;height:34px;border-radius:6px;flex-shrink:0;border:1px solid rgba(255,255,255,.1)}
+.sw-mini-info{min-width:0}
+.sw-mini-token{font-family:var(--mono);font-size:11px;font-weight:700}
+.sw-mini-hex{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.sw-mini-lbl{font-size:10.5px;color:var(--muted);margin-top:1px}
+
+.grp{margin-bottom:18px}
+.grp-h{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.grp-h .src{color:var(--muted2);font-size:8px}
+
+/* ─── 색 충돌 회피 ─── */
+.clash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.clash-card{background:var(--panel);border:1px solid var(--border);border-radius:9px;padding:16px;border-top:2px solid #ff8585}
+.clash-card.solved{border-top-color:var(--fb-eff)}
+.clash-title{font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.clash-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
+.clash-pair{display:flex;gap:8px;margin-bottom:10px}
+.clash-sw{flex:1;border-radius:6px;padding:10px 8px;text-align:center;position:relative}
+.clash-sw .cs-hex{font-family:var(--mono);font-size:10px;font-weight:700;color:rgba(0,0,0,.7)}
+.clash-sw .cs-lbl{font-family:var(--mono);font-size:8px;color:rgba(0,0,0,.6);margin-top:1px}
+.clash-vs{display:flex;align-items:center;font-family:var(--mono);font-size:10px;color:var(--muted)}
+.clash-fix{font-size:11.5px;color:var(--text);background:color-mix(in srgb,var(--fb-eff) 7%,transparent);border:1px solid color-mix(in srgb,var(--fb-eff) 22%,transparent);border-radius:5px;padding:8px 10px;line-height:1.45}
+.clash-fix b{color:var(--fb-eff)}
+/* 셰이프 구별 미니 */
+.shape-demo{display:flex;gap:8px;margin-top:8px;align-items:center}
+.shape-box{width:38px;height:38px;display:flex;align-items:center;justify-content:center}
+.shape-angular{background:var(--theme-machine);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.shape-curve{border:3px solid var(--neon-cyan);border-radius:50%}
+.shape-cap{font-family:var(--mono);font-size:8px;color:var(--muted)}
+
+/* ─── 다크 전장 가독 ─── */
+.legib{background:var(--panel3);border:1px solid var(--border);border-radius:9px;padding:20px;position:relative;overflow:hidden}
+.legib::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.02),transparent 40%)}
+.legib-row{display:flex;flex-wrap:wrap;gap:14px;position:relative}
+.legib-chip{display:flex;flex-direction:column;align-items:center;gap:5px}
+.legib-orb{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;color:#0a1018}
+.legib-orb.rim{color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.55),0 0 14px var(--rc)}
+.legib-name{font-family:var(--mono);font-size:9px;color:var(--muted)}
+
+.note-box{background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:13px 16px;margin-top:14px;font-size:12px;color:var(--muted);line-height:1.6}
+.note-box b{color:var(--text)}
+
+.foot{font-family:var(--mono);font-size:10px;color:var(--muted);border-top:1px solid var(--border);padding-top:16px;margin-top:48px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="eyebrow">byiryu studio · infinite warfield · 디자인 시스템</div>
+<h1>색 토큰 — <span>5테마 + 시스템 팔레트</span></h1>
+<p class="lede">color 토큰 정식화 (트리오 흡수 확정). SoT = design-system.md §1. spacing/font/컴포넌트 = M3 와이어 동행(프리즈).</p>
+<div class="meta-row">
+  <span class="badge">의미론 토큰 + hex 병기 · color_{hex} 규칙</span>
+  <span class="badge go">color 만 정식 · 그 외 M3</span>
+  <span class="badge">매체게이트 #8 무관 · 토큰 도메인</span>
+  <span class="badge">unlisted · 2026-06-26</span>
+</div>
+
+<!-- ═══ 5테마 색 ═══ -->
+<div class="sec-head">
+  <span class="sec-label">5테마 색</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">테마 정체성 = 카운터 신호 · 머리/무기 부위로 표현</span>
+</div>
+
+<div class="theme-grid">
+  <div class="sw-card">
+    <div class="sw-chip" style="background:var(--theme-combat)"><span class="sw-anchor">아르덴</span></div>
+    <div class="sw-body">
+      <div class="sw-token">theme_combat</div>
+      <div class="sw-hex">#E03A5C</div>
+      <div class="sw-note">마젠타 강철 · Combat / 즉발 물리·자가증폭</div>
+    </div>
+  </div>
+  <div class="sw-card">
+    <div class="sw-chip" style="background:var(--theme-necro)"><span class="sw-anchor">베스라</span></div>
+    <div class="sw-body">
+      <div class="sw-token">theme_necro</div>
+      <div class="sw-hex">#9D3EE8</div>
+      <div class="sw-note">보라 · Necro / DoT·흡혈. <b>림라이트 강제</b>(배경 명도차)</div>
+    </div>
+  </div>
+  <div class="sw-card">
+    <div class="sw-chip" style="background:var(--theme-spirit)"><span class="sw-anchor">에이라</span></div>
+    <div class="sw-body">
+      <div class="sw-token">theme_spirit</div>
+      <div class="sw-hex">#5DDD7E</div>
+      <div class="sw-note">에메랄드 · Spirit / 힐·정령. <b>대표색</b>(UI·텔레그래프)</div>
+      <span class="vfx-flag">인게임 VFX → theme_spirit_vfx #4EC879</span>
+    </div>
+  </div>
+  <div class="sw-card">
+    <div class="sw-chip" style="background:var(--theme-machine)"><span class="sw-anchor" style="color:#06121f">standalone</span></div>
+    <div class="sw-body">
+      <div class="sw-token">theme_machine</div>
+      <div class="sw-hex">#00D4FF</div>
+      <div class="sw-note">시안 · Machine / CC·견인. <b>각형 셰이프</b>(neon_cyan 구별)</div>
+    </div>
+  </div>
+  <div class="sw-card">
+    <div class="sw-chip" style="background:var(--theme-beast)"><span class="sw-anchor">standalone</span></div>
+    <div class="sw-body">
+      <div class="sw-token">theme_beast</div>
+      <div class="sw-hex">#E06B14</div>
+      <div class="sw-note">주황 · Beast / 돌진·흡혈. Combat hue 30° 분리</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 시스템 색 ═══ -->
+<div class="sec-head">
+  <span class="sec-label">시스템 색 (기확정 수렴)</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">물/마 구분 = 테마색 아님 · 전투 피드백·방어축</span>
+</div>
+
+<div class="grp">
+  <div class="grp-h">전투 피드백 3색 <span class="src">· juice-look-guide §④</span></div>
+  <div class="sw-row">
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--fb-eff)"></div><div class="sw-mini-info"><div class="sw-mini-token">feedback_effective</div><div class="sw-mini-hex">#8AE05A</div><div class="sw-mini-lbl">효과적!(약점축 적중)·라임</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--fb-blk)"></div><div class="sw-mini-info"><div class="sw-mini-token">feedback_blocked</div><div class="sw-mini-hex">#9AA7B5</div><div class="sw-mini-lbl">버팀/중장갑(저강조)·스틸그레이</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--fb-crit)"></div><div class="sw-mini-info"><div class="sw-mini-token">feedback_critical</div><div class="sw-mini-hex">#FFC23D</div><div class="sw-mini-lbl">치명타!·앰버골드</div></div></div>
+  </div>
+</div>
+
+<div class="grp">
+  <div class="grp-h">진영색 + 방어 2축 <span class="src">· juice-look-guide · 위협 텔레그래프</span></div>
+  <div class="sw-row">
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--friendly)"></div><div class="sw-mini-info"><div class="sw-mini-token">faction_friendly</div><div class="sw-mini-hex">#4FA3FF</div><div class="sw-mini-lbl">아군 글로우</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--enemy)"></div><div class="sw-mini-info"><div class="sw-mini-token">faction_enemy</div><div class="sw-mini-hex">#FF5B5B</div><div class="sw-mini-lbl">적</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--armor)"></div><div class="sw-mini-info"><div class="sw-mini-token">axis_armor</div><div class="sw-mini-hex">#4FA3FF</div><div class="sw-mini-lbl">물리방어(friendly 직교 재사용)</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--magic)"></div><div class="sw-mini-info"><div class="sw-mini-token">axis_magic</div><div class="sw-mini-hex">#C87FFF</div><div class="sw-mini-lbl">마법저항·마젠타계</div></div></div>
+  </div>
+</div>
+
+<div class="grp">
+  <div class="grp-h">위협 5색 <span class="src">· threat-telegraph-board</span></div>
+  <div class="sw-row">
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--t-fort)"></div><div class="sw-mini-info"><div class="sw-mini-token">threat_fortress</div><div class="sw-mini-hex">#8AB4FF</div><div class="sw-mini-lbl">철벽·스틸블루</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--t-swarm)"></div><div class="sw-mini-info"><div class="sw-mini-token">threat_swarm</div><div class="sw-mini-hex">#F5C842</div><div class="sw-mini-lbl">러시군집·황금경보</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--t-ranged)"></div><div class="sw-mini-info"><div class="sw-mini-token">threat_ranged</div><div class="sw-mini-hex">#C08DFF</div><div class="sw-mini-lbl">원거리폭격·미스틱보라</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--t-debuff)"></div><div class="sw-mini-info"><div class="sw-mini-token">threat_debuffer</div><div class="sw-mini-hex">#54E87A</div><div class="sw-mini-lbl">디버퍼·독초록</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--t-boss)"></div><div class="sw-mini-info"><div class="sw-mini-token">threat_boss</div><div class="sw-mini-hex">#FF5E55</div><div class="sw-mini-lbl">혼합보스·적오렌지</div></div></div>
+  </div>
+</div>
+
+<div class="grp">
+  <div class="grp-h">네온 메타 / 다크 전장 <span class="src">· ★ 보드 잠정값 · 정식 = M3 step-5</span></div>
+  <div class="sw-row">
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--neon-mag)"></div><div class="sw-mini-info"><div class="sw-mini-token">neon_magenta</div><div class="sw-mini-hex">#E84DD4 <span style="color:var(--muted2)">(잠정)</span></div><div class="sw-mini-lbl">메타 주강조</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:var(--neon-cyan)"></div><div class="sw-mini-info"><div class="sw-mini-token">neon_cyan</div><div class="sw-mini-hex">#36D6E0 <span style="color:var(--muted2)">(잠정)</span></div><div class="sw-mini-lbl">메타 보조강조</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:#0D1117;border-color:var(--border-hi)"></div><div class="sw-mini-info"><div class="sw-mini-token">dark_bg</div><div class="sw-mini-hex">#0D1117 <span style="color:var(--muted2)">(잠정)</span></div><div class="sw-mini-lbl">전장 베이스</div></div></div>
+    <div class="sw-mini"><div class="sw-dot" style="background:#141B22;border-color:var(--border-hi)"></div><div class="sw-mini-info"><div class="sw-mini-token">dark_panel</div><div class="sw-mini-hex">#141B22 <span style="color:var(--muted2)">(잠정)</span></div><div class="sw-mini-lbl">패널</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ 색 충돌 회피 (핵심) ═══ -->
+<div class="sec-head">
+  <span class="sec-label">★ 색 충돌 회피</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">paranoia #5 난전 가독 / #6 브랜드 토큰</span>
+</div>
+
+<div class="clash-grid">
+
+  <!-- ① Spirit ↔ feedback -->
+  <div class="clash-card solved">
+    <div class="clash-title">① Spirit ↔ 효과적 피드백 <span style="font-family:var(--mono);font-size:9px;color:var(--fb-eff)">SOLVED</span></div>
+    <div class="clash-sub">둘 다 초록 계열 → 난전서 "효과적!" 텍스트와 Spirit VFX 혼동</div>
+    <div class="clash-pair">
+      <div class="clash-sw" style="background:#5DDD7E"><div class="cs-hex">#5DDD7E</div><div class="cs-lbl">theme_spirit (UI)</div></div>
+      <div class="clash-vs">vs</div>
+      <div class="clash-sw" style="background:#8AE05A"><div class="cs-hex">#8AE05A</div><div class="cs-lbl">feedback_effective</div></div>
+    </div>
+    <div class="clash-pair">
+      <div class="clash-sw" style="background:#4EC879;flex:0 0 50%"><div class="cs-hex">#4EC879</div><div class="cs-lbl">theme_spirit_vfx (인게임)</div></div>
+      <div class="clash-vs" style="flex:1;justify-content:center;color:var(--fb-eff)">← 분리</div>
+    </div>
+    <div class="clash-fix">인게임 VFX = <b>#4EC879</b> (포화도↓·hue 42~48° 시프트·bloom 셰이프 분리). 대표색 #5DDD7E 는 UI·텔레그래프에 유지.</div>
+  </div>
+
+  <!-- ② Machine ↔ neon_cyan -->
+  <div class="clash-card solved">
+    <div class="clash-title">② Machine ↔ neon_cyan <span style="font-family:var(--mono);font-size:9px;color:var(--fb-eff)">SOLVED</span></div>
+    <div class="clash-sub">둘 다 시안 → "시안 = 기계?" vs "시안 = 메타 UI?" 혼동</div>
+    <div class="clash-pair">
+      <div class="clash-sw" style="background:#00D4FF"><div class="cs-hex">#00D4FF</div><div class="cs-lbl">theme_machine</div></div>
+      <div class="clash-vs">vs</div>
+      <div class="clash-sw" style="background:#36D6E0"><div class="cs-hex">#36D6E0</div><div class="cs-lbl">neon_cyan</div></div>
+    </div>
+    <div class="shape-demo">
+      <div class="shape-box"><div class="shape-angular" style="width:30px;height:30px"></div></div>
+      <span class="shape-cap">시안 + 각형 격자 = 기계</span>
+      <div class="shape-box"><div class="shape-curve" style="width:28px;height:28px"></div></div>
+      <span class="shape-cap">시안 + 원호 = 메타 UI</span>
+    </div>
+    <div class="clash-fix"><b>형태로 구별</b> — 색이 아니라 셰이프. Machine = 각형(angular)·격자 / 메타 UI = 곡선·원호.</div>
+  </div>
+
+  <!-- ③ Beast ↔ Combat ↔ critical -->
+  <div class="clash-card solved">
+    <div class="clash-title">③ Beast ↔ Combat ↔ 치명타 <span style="font-family:var(--mono);font-size:9px;color:var(--fb-eff)">SOLVED</span></div>
+    <div class="clash-sub">주황(Beast) ↔ 마젠타(Combat) hue 근접 + Beast 흡혈 ↔ 치명타 골드</div>
+    <div class="clash-pair">
+      <div class="clash-sw" style="background:#E06B14"><div class="cs-hex">#E06B14</div><div class="cs-lbl">theme_beast</div></div>
+      <div class="clash-sw" style="background:#E03A5C"><div class="cs-hex">#E03A5C</div><div class="cs-lbl">theme_combat</div></div>
+      <div class="clash-sw" style="background:#FFC23D"><div class="cs-hex">#FFC23D</div><div class="cs-lbl">critical</div></div>
+    </div>
+    <div class="clash-fix">Beast ↔ Combat = <b>hue 30° 분리</b>(주황 vs 마젠타) · Beast 흡혈 ↔ critical = <b>형태/z-order 분리</b>(흡혈 실선 vs 플로팅 텍스트).</div>
+  </div>
+</div>
+
+<!-- ═══ 다크 전장 가독 ═══ -->
+<div class="sec-head">
+  <span class="sec-label">다크 전장 위 가독</span>
+  <div class="sec-rule"></div>
+  <span class="sec-note">전장 베이스 #0D1117 · Necro 림라이트 검증</span>
+</div>
+
+<div class="legib">
+  <div class="legib-row">
+    <div class="legib-chip"><div class="legib-orb" style="background:var(--theme-combat)">CMB</div><span class="legib-name">combat</span></div>
+    <div class="legib-chip"><div class="legib-orb rim" style="background:var(--theme-necro);--rc:#9D3EE8">NEC</div><span class="legib-name">necro · 림라이트</span></div>
+    <div class="legib-chip"><div class="legib-orb" style="background:var(--theme-spirit-vfx)">SPR</div><span class="legib-name">spirit_vfx</span></div>
+    <div class="legib-chip"><div class="legib-orb" style="background:var(--theme-machine)">MCH</div><span class="legib-name">machine</span></div>
+    <div class="legib-chip"><div class="legib-orb" style="background:var(--theme-beast)">BST</div><span class="legib-name">beast</span></div>
+    <div class="legib-chip"><div class="legib-orb" style="background:var(--friendly)">ALY</div><span class="legib-name">friendly</span></div>
+    <div class="legib-chip"><div class="legib-orb" style="background:var(--enemy)">ENM</div><span class="legib-name">enemy</span></div>
+  </div>
+  <div class="note-box" style="margin-top:16px">
+    <b>Necro #9D3EE8 = 어두운 보라</b> → 다크 전장(#0D1117) 위 명도차 부족 → <b>림라이트(흰 테두리+글로우) 강제</b>로 실루엣 분리. 나머지 5색은 다크 위 충분한 대비. 진영색(friendly/enemy)은 테마색과 직교 = HP바/소속 표시 전용.
+  </div>
+</div>
+
+<div class="note-box">
+  <b>스코프</b> — 본 보드 = <b>color 토큰만</b>(트리오 흡수로 값 확정). spacing/font/컴포넌트 9슬라이스·네온 메타 hex 정밀값 = M3 step-5 와이어 동행(프리즈 가드). 매체게이트 #8 = 색 토큰 = 시스템/토큰 도메인(아트 appeal 아님·캔버스 OK).
+</div>
+
+<div class="foot">
+  2026-06-26 · 색 토큰 (5테마 + 시스템 팔레트) · SoT = design-system.md §1 · 5테마 = trio 흡수 확정 · 피드백/진영 = juice-look-guide · 위협 = threat-telegraph-board<br>
+  plat = SynergyResolver.cs:286 하드코딩 → theme_* 토큰 정합(M3 VFX) · 위협/축 = M3 step-5 ShowFormation · 이 보드 = 토큰 도메인
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>IWF 정밀 감사 보고서</title>
+<style>
+  :root{
+    --ground:#14181c;--panel:#1b2228;--panel2:#212a31;--line:#2d383f;
+    --text:#dde4e1;--muted:#8a9691;
+    --good:#56c2d0;--wrong:#c2565b;--lack:#e8a33d;--gold:#d8b768;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:ui-sans-serif,system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+  a{color:var(--good)}
+  header{border-bottom:1px solid var(--line);padding:34px 0 26px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:10px 0 0;font-size:clamp(24px,4vw,38px);font-weight:800;letter-spacing:-.01em;text-transform:uppercase}
+  .verdict{font-size:16px;margin-top:16px;color:var(--text)}
+  .verdict b{color:var(--gold)}
+  .updated{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:14px}
+  /* polarization bar */
+  .polar{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:22px 0 4px;border:1px solid var(--line);border-radius:5px;overflow:hidden;font-family:var(--mono);font-size:12px}
+  .polar div{padding:12px 14px}
+  .polar .hi{background:linear-gradient(90deg,rgba(86,194,208,.12),transparent)}
+  .polar .lo{background:linear-gradient(270deg,rgba(194,86,91,.12),transparent);text-align:right}
+  .polar .n{font-size:20px;font-weight:800;display:block}
+  .hi .n{color:var(--good)}.lo .n{color:var(--wrong)}
+  /* flags */
+  .flags{display:grid;gap:10px;margin:22px 0}
+  .flag{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--wrong);border-radius:4px;padding:13px 16px;font-size:13.5px}
+  .flag .t{font-family:var(--mono);font-size:11px;color:var(--wrong);font-weight:700;letter-spacing:.06em}
+  .flag.fix{border-left-color:var(--gold)}.flag.fix .t{color:var(--gold)}
+  .flag b{color:var(--text)}
+  /* area report */
+  section{padding:30px 0;border-bottom:1px solid var(--line)}
+  .shead{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+  .shead h2{margin:0;font-size:19px;text-transform:uppercase;font-family:var(--mono);letter-spacing:.04em}
+  .gwl{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .col{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:14px;border-top:3px solid var(--line)}
+  .col.g{border-top-color:var(--good)}.col.w{border-top-color:var(--wrong)}.col.l{border-top-color:var(--lack)}
+  .col h3{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .col.g h3{color:var(--good)}.col.w h3{color:var(--wrong)}.col.l h3{color:var(--lack)}
+  .col ul{margin:0;padding:0;list-style:none}
+  .col li{font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--panel2);color:var(--muted)}
+  .col li:last-child{border:none}
+  .col li b{color:var(--text)}
+  .col code{font-family:var(--mono);font-size:11px;color:var(--text);background:var(--panel2);padding:1px 4px;border-radius:2px}
+  /* improvement plan */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:14px}
+  th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:7px 9px;border-bottom:1px solid var(--line)}
+  td{padding:9px 9px;border-bottom:1px solid var(--panel2);vertical-align:top}
+  tr:hover td{background:var(--panel)}
+  .pri{font-family:var(--mono);font-weight:700;font-size:11px}
+  .p0{color:var(--wrong)}.p1{color:var(--lack)}.p2{color:var(--muted)}
+  .ms{font-family:var(--mono);font-size:11px;color:var(--gold);white-space:nowrap}
+  footer{padding:26px 0 56px;color:var(--muted);font-size:11.5px;font-family:var(--mono)}
+  @media(max-width:720px){.gwl{grid-template-columns:1fr}.polar{grid-template-columns:1fr}.lo{text-align:left}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="eyebrow">infinite warfield · 정밀 감사 보고서</div>
+  <h1>아키텍처 · 유닛 · 시스템 정밀 진단</h1>
+  <p class="verdict">한 줄: <b>"엔진은 완성형, 게임은 미완"</b> — 데이터·전투·스킬·FSM은 70~100% 구축됐으나, 재미 검증·아트·UI·서버는 0%. 시스템이 탄탄할수록 <b>재미 검증이 0인 게 최대 리스크</b>(없으면 아트·서버 투자 전 피벗이 가장 싸다).</p>
+  <div class="updated">PM 주관 6에이전트 정밀 감사 · 2026-06-23 · 코드/SO/json 직접 실측 · 진단만(확정=인터뷰)</div>
+  <div class="polar">
+    <div class="hi"><span class="n">70–100%</span>데이터 · 전투공식 · 16스킬엔진 · FSM 7상태 · 255스테이지 · 환생/강화 메타</div>
+    <div class="lo"><span class="n">0%</span>재미 검증(FUN GATE) · 아트(SPUM 차용) · 프로덕션 UI(디버그뿐) · 서버 · 게임필(juice)</div>
+  </div>
+</div></header>
+
+<main class="wrap">
+
+  <section style="border-bottom:none;padding-bottom:8px">
+    <div class="shead"><h2>즉시 처리 — 신규 확정</h2></div>
+    <div class="flags">
+      <div class="flag"><div class="t">P0 · 출시 빌드 블로커 (신규)</div><b>UnitSpawner.cs:4 무가드 <code style="color:#dde4e1">using UnityEditor;</code></b> — 런타임 핵심 파일이라 스트립 안 됨 → 플레이어 빌드 CS0234 컴파일 실패. 5분 수정. asmdef 테스트 인프라(Runtime 참조)의 선결 조건이기도 함.</div>
+      <div class="flag"><div class="t">P0 · 크릿 100배 가시 버그 (3역할 교차확인)</div><b>StatPanel.cs:48 <code style="color:#dde4e1">GetEnhancedCritChance()*100</code></b> — 반환값이 이미 %(0~100)인데 ×100 → 강화창 크릿 "1500%" 표시, +/- 클릭 시 같은 파일 :93이 정상 계산해 15%로 점프(단일 파일 내 모순). 1줄 수정 + 골든테스트.</div>
+      <div class="flag fix"><div class="t">정정 · PM 가정 3건 반증</div><b>① 일반유닛 35→34</b>(+dummy 별도) <b>② "이펙트 3종 0회"→ 16종 전부 ≥1회</b>(다수 1 SO 니치) <b>③ ResetAll 빌드버그 = 출시블로커 아님</b>(호출처 에디터 전용·환생 미연결 → P1 잠재트랩으로 하향) <b>④ SO38 vs 프리팹22 = 공유 컨테이너+Legacy 폴백 설계로 정상</b>(크래시 아님·비주얼 백로그).</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><h2>아키텍처</h2></div>
+    <div class="gwl">
+      <div class="col g"><h3>잘됨</h3><ul>
+        <li><b>3계층 정합</b> — <code>UnitData SO</code>→<code>UnitInstance</code> 런타임복제+업그레이드→<code>BattleUnit</code>, 관심사 분리 깨끗</li>
+        <li><b>데미지 공식 견고</b> — DEF/(DEF+100)×DR×crit, 전 구간 음수·오버플로 클램프</li>
+        <li><b>이벤트 구동 스킬</b> — SkillProcessor 중앙 디스패치 + 16이펙트 정적 클래스 = 데이터 주도 확장 골격</li>
+      </ul></div>
+      <div class="col w"><h3>잘못</h3><ul>
+        <li><b>★ P0 빌드 블로커</b> <code>UnitSpawner.cs:4</code> 무가드 using UnityEditor</li>
+        <li>크릿 단위를 계산 함수에 하드코딩(<code>statIndex==5 ×100</code>) = 향후 100배 틀어짐 안티패턴</li>
+        <li>문서 drift — <code>SYSTEM_OVERVIEW:32</code> "모든 매니저 DontDestroyOnLoad" 부정확(BattleManager=씬 스코프)</li>
+        <li>직렬화 필드 오타 baked(<code>cleansEffects·areaBrustEffects</code>) — 리네임 비용 커 인지만</li>
+      </ul></div>
+      <div class="col l"><h3>부족</h3><ul>
+        <li><b>테스트 인프라 전무</b> — asmdef 0·NUnit 0(__Test는 런타임 스캐폴드) → Runtime+EditModeTests 2개 신설 필요</li>
+        <li>namespace 부분채택(17/187) → 중복 클래스명(UnitListManager 2곳) 혼동</li>
+        <li>husk 폴더 <code>BalttlePrepare/</code> 에디터 삭제 필요</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><h2>하이라키</h2></div>
+    <div class="gwl">
+      <div class="col g"><h3>잘됨</h3><ul>
+        <li>매니저-씬 매핑 정합 — DontDestroyOnLoad 4 + BattleManager 씬 스코프(올바름)</li>
+        <li>대부분 Find가 Awake 1회 캐싱 → 핫패스 외 결합 관리됨</li>
+        <li><b>스폰 비주얼 추상화 단일점</b> <code>UnitSpawner.SetupVisualAndFlipRoot</code> = SPUM→2D Anim 교체가 1점 작업</li>
+        <li>FSM 깔끔 — IUnitState + 7상태, taunt/stun 우선순위 가드 명확</li>
+      </ul></div>
+      <div class="col w"><h3>잘못</h3><ul>
+        <li><b>BattleManager 726L God object</b> — 스폰·타이머·스킬틱·승리조건4·통계 7+ 책임 혼재</li>
+        <li><b>전투 핫패스 매 프레임 할당</b> — <code>MoveState.Update→EnumerateAllUnits</code>가 타겟없는 유닛마다 Find+new List(16)+Sort. 15v15 = 모바일 GC</li>
+        <li><code>CombatDebugLogs=true</code> 빌드 하드코딩 = 매 공격 문자열보간 GC</li>
+      </ul></div>
+      <div class="col l"><h3>부족</h3><ul>
+        <li><code>.Instance</code> 정적 접근 135회 = 수동 싱글톤 결합 광범위(주입·캐싱 후보)</li>
+        <li>1차 완화 = EnumerateAllUnits 주입참조 + MoveState 타게팅 매프레임→0.1~0.2s throttle</li>
+        <li>실기기 프로파일(풀링 전 병목 확정)</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><h2>유닛 (스탯 · 스킬)</h2></div>
+    <div class="gwl">
+      <div class="col g"><h3>잘됨</h3><ul>
+        <li><b>데이터 무결성</b> — 원본 json ↔ 38 SO 스탯·스킬 전수 일치(마이그레이션 신뢰)</li>
+        <li>스킬 엔진 16이펙트 전부 데이터 연결(빈 스킬 0/43) — 콘텐츠 추가 = 코드 0줄</li>
+        <li>null 슬롯·prefab null 런타임 안전(전 경로 가드)</li>
+      </ul></div>
+      <div class="col w"><h3>잘못</h3><ul>
+        <li><b>★ P0 크릿 표시</b> StatPanel:48 ×100 → 1500% 오표시</li>
+        <li><b>코스트 효율 쏠림</b> — cost3 딜러 DPS/c 18+ vs 약체 4.8 (≈4배·저코스트 스팸 위험)</li>
+        <li><b>U111 탱커 이상치</b> — eHP/cost 100 = 동급 절반</li>
+      </ul></div>
+      <div class="col l"><h3>부족</h3><ul>
+        <li><b>★ 빌드 다양성 공백</b> — 일반34 passive2 0/34·active 0/34(passive1 단일 슬롯 의존). 영웅3만 3슬롯</li>
+        <li>이펙트 폭 얕음(9종 각 1 SO 시그니처) → 빈 슬롯 재조합 = 코드 0줄 확장</li>
+        <li>support 평가축 부재(힐/CC/버프 → atk효율로 약체 오판)</li>
+        <li>크릿/데미지 골든테스트 부재 · 21유닛 비주얼 폴백</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><h2>게임 시스템 · 레벨</h2></div>
+    <div class="gwl">
+      <div class="col g"><h3>잘됨</h3><ul>
+        <li>전투 엔진 견고 — 승패 명확(영웅사망/시간초과 ↔ 적전멸)</li>
+        <li>환생 성장 메타 정합(강화=영구누적·rebirthLevel +20% 동반 = 무한루프 뼈대)</li>
+        <li>코스트 경제 단순명료(35/70/2.5초/15체) + 적 무코스트 비대칭 = 결정 텐션</li>
+      </ul></div>
+      <div class="col w"><h3>잘못</h3><ul>
+        <li><b>stage 1~50 난이도 곡선 부재</b> — 250 SO statMultiplier=1.0, 적 수(8→15)만으로 난이도 = 거칢</li>
+        <li>CombatDebugLogs 빌드 GC누수 · dummy U999999 풀 혼입 위험</li>
+      </ul></div>
+      <div class="col l"><h3>부족</h3><ul>
+        <li><b>★ 51+ 엔드게임 깊이 0</b> — 기존 250 순환+곱셈만(새 기믹/조합 0)·환생 선택지=테마뿐</li>
+        <li>미활용 TriggerType(PassiveAlways/OnDamaged/Manual) 데이터 0회</li>
+        <li><b>FUN GATE 판정 기준 미정의</b> — 코어루프 재미검증 0%. 페이스 계측(전투시간·소환빈도·코스트고갈) 부재</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section style="border-bottom:none">
+    <div class="shead"><h2>개선 PLAN</h2><span class="note" style="color:var(--muted);font-size:12.5px">기존 M0.5~M4 step에 흡수(중복 신설 0) · IWF PLAN = SoT</span></div>
+    <table>
+      <thead><tr><th>개선 항목</th><th>영역</th><th>우선</th><th>마일스톤</th></tr></thead>
+      <tbody>
+        <tr><td>UnitSpawner using 제거 (빌드 블로커)</td><td>arch</td><td><span class="pri p0">P0</span></td><td class="ms">M0.5</td></tr>
+        <tr><td>StatPanel 크릿 ×100 제거 + 단위 spec + 골든테스트</td><td>units</td><td><span class="pri p0">P0</span></td><td class="ms">M1</td></tr>
+        <tr><td>CombatDebugLogs 가드 + dummy 풀 제외</td><td>systems</td><td><span class="pri p0">P0</span></td><td class="ms">M0.5</td></tr>
+        <tr><td>asmdef 2개 + 데미지/크릿/코스트/FSM 골든테스트</td><td>arch</td><td><span class="pri p1">P1</span></td><td class="ms">M1</td></tr>
+        <tr><td>핫패스 throttle(EnumerateAllUnits 주입·MoveState 0.1~0.2s)</td><td>hierarchy</td><td><span class="pri p1">P1</span></td><td class="ms">M1</td></tr>
+        <tr><td>ResetAll 선제수정(P1 하향) — envelope과 자연해소</td><td>systems</td><td><span class="pri p1">P1</span></td><td class="ms">M1</td></tr>
+        <tr><td>빈 슬롯 역할별 대표 2~3종 콘텐츠(니치 이펙트 재조합)</td><td>units</td><td><span class="pri p1">P1</span></td><td class="ms">M2</td></tr>
+        <tr><td>stage 1~50 난이도 곡선(EnemyStatScaler 완만)</td><td>systems</td><td><span class="pri p1">P1</span></td><td class="ms">M2</td></tr>
+        <tr><td>support 평가축 + U111 이상치 선정정</td><td>units</td><td><span class="pri p1">P1</span></td><td class="ms">M1→M2</td></tr>
+        <tr><td>juice 3종 + 페이스 계측 + FUN GATE 기준</td><td>systems</td><td><span class="pri p1">P1</span></td><td class="ms">FUN GATE</td></tr>
+        <tr><td>God object 분해 · namespace · 풀링(골든테스트 후·동작불변)</td><td>hierarchy</td><td><span class="pri p2">P2</span></td><td class="ms">M0.5·M1</td></tr>
+        <tr><td>51+ 엔드게임 깊이 idea(리텐션 백로그)</td><td>systems</td><td><span class="pri p2">P2</span></td><td class="ms">M2</td></tr>
+        <tr><td>문서 drift 정정 · husk 폴더 삭제 · dossier 수치</td><td>arch</td><td><span class="pri p2">P2</span></td><td class="ms">M0.5</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>infinite warfield · 정밀 감사 보고서 · SoT = projects/infinite-warfield_unity/PLAN.md(개선 step) · _docs/projects/infinite-warfield/pm.md(dossier) · 에셋 = <a href="../asset-tracker.html">에셋 트래커 →</a></footer>
+</main>
+</body>
+</html>

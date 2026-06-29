@@ -1,0 +1,10 @@
+#!/bin/bash
+# infinite-warfield-design 공개 레포 보호 hook
+# 설치: cp hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+# (1) author 검증  (2) 고아 페이지/죽은 링크 차단 (인덱스 정합 강제)
+name=$(git config user.name); email=$(git config user.email)
+if [ "$name" != "byiryu" ] || [ "$email" != "byiryustudio@gmail.com" ]; then
+  echo "✋ author 위반: $name <$email> — byiryu <byiryustudio@gmail.com> 필수"; exit 1
+fi
+./check_orphans.sh || { echo "✋ 고아 페이지/죽은 링크 — 인덱스 정합 후 재커밋"; exit 1; }
+exit 0
