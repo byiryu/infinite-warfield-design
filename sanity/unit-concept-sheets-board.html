@@ -186,14 +186,15 @@
   <div class="box">
     <p><b>스코프 = 정적 5체 먼저, 애니는 게이트 통과 + 룩 승인 후 (권고).</b> 이유: 애니는 유닛당 6종 × 5체 = ~30 gen + 멀티턴이라, 룩이 바뀌면 매몰. <b>아르덴이 이미 애니 파이프라인(생성→MCP 6애니→export)을 ✅ 증명</b>했으니 5체에 재증명 불요. 먼저 "이 5진영 룩이 난전서 읽히나"(게이트)를 통과시키고, 그 룩으로만 애니에 투자.</p>
     <p class="step">
-      <span class="n">1</span> <b>컨셉 시트</b> — <span class="me">디자인 세션</span> <span class="pill ok">✅ 이 보드</span><br>
-      <span class="n">2</span> <b>컨셉아트 5장</b> — <span class="you">외부 AI (사용자)</span> · 위 프롬프트 시드 사용<br>
-      <span class="n">3</span> <b>PixelLab Characters 생성 5체</b> — 웹앱(Pro+Concept·appeal) <span class="kv">또는</span> MCP create_character(텍스트·빠른 게이트용·standard chibi)<br>
+      <span class="n">1</span> <b>컨셉 시트</b> — <span class="me">디자인 세션</span> <span class="pill ok">✅ 이 보드 (v2)</span><br>
+      <span class="n">2</span> <b>제미나이 컨셉아트 5장</b> — <span class="you">사용자</span> · 각 카드 v2 프롬프트 · isolated 배경<br>
+      <span class="n">3</span> <b>웹앱 Characters 생성 5체</b> — <span class="you">사용자</span> · <b>Pro + Concept(이미지) + Camera View=Sidescroller</b> (아르덴 방식)<br>
+      <span class="n">3b</span> <b>MCP로 캐릭터 확인·검수</b> — <span class="me">디자인 세션</span> · <code>list_characters</code>/<code>get_character</code> (영웅 중복·실루엣·팔레트·isolated 점검)<br>
       <span class="n">4</span> <b>난전 가독 보드 + 게이트 판정</b> (A 실루엣 / B 베이스링) — <span class="me">디자인 세션</span><br>
       <span class="n">5</span> <b>MCP 애니 6종 + export</b> — <span class="me">디자인 세션</span> · <b>게이트 통과 후</b><br>
       <span class="n">6</span> <b>Unity 1체 테스트 → 37체 양산</b> — <span class="you">plat</span> (test-1-then-batch)
     </p>
-    <p class="kv">⚠️ MCP create_character = 텍스트 프롬프트만(컨셉 이미지 입력 X). 컨셉아트-구동 appeal = 웹앱 Characters 크리에이터 몫 / MCP = 빠른 텍스트 생성·애니 담당. <b>단계 건너뛰고 생성부터 = 금지</b>(아르덴 "밋밋" 교훈).</p>
+    <p class="kv">⚠️ <b>확정 경로 (2026-06-30):</b> 이미지-구동 애니 캐릭터는 MCP 불가 — <code>create_character</code>=텍스트 전용 · <code>create_portrait_character</code>=이미지 받지만 출력이 비-애니 스프라이트(PixelLab 에이전트 검증). → <b>웹앱 Characters(Pro+Concept)가 생성 담당(사용자)·MCP는 확인/애니/export 담당</b>. chibi 비율 = <b>컨셉 이미지가 운반</b>(Pro는 proportions 파라미터 무시하지만 Concept 이미지의 치비를 따름). <b>단계 건너뛰고 생성부터 = 금지</b>(아르덴 "밋밋" 교훈).</p>
   </div>
 
   <p class="note">
