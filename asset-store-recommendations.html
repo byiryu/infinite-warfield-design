@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>에셋 스토어 도입 후보 — Infinite Warfield</title>
+<style>
+  :root{--ground:#14181c;--panel:#1b2228;--line:#2d383f;--text:#dde4e1;--muted:#8a9691;--amber:#e8a33d;--cyan:#56c2d0;--green:#6fcf7a;--red:#e07a6b;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:ui-sans-serif,system-ui,-apple-system,sans-serif;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.62}
+  .wrap{max-width:820px;margin:0 auto;padding:44px 20px 64px}
+  a{color:var(--cyan);text-decoration:none} a:hover{text-decoration:underline}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:10px 0 0;font-size:clamp(24px,5vw,34px);font-weight:800;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin-top:10px;font-size:14px}
+  .principle{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--cyan);border-radius:0 7px 7px 0;padding:13px 16px;margin:20px 0 8px;font-size:13.5px}
+  .principle b{color:var(--text)}
+  .sec{display:flex;align-items:baseline;gap:10px;margin:34px 0 6px}
+  .sec .label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+  .sec .rule{flex:1;height:1px;background:var(--line)}
+  .sec .hint{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .g .label{color:var(--green)} .y .label{color:var(--amber)} .r .label{color:var(--red)}
+  .item{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:13px 16px;margin:9px 0}
+  .item.g{border-left:3px solid var(--green)} .item.y{border-left:3px solid var(--amber)} .item.r{border-left:3px solid var(--red);background:transparent}
+  .item h3{margin:0 0 3px;font-size:15px}
+  .item .meta{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:5px}
+  .item p{margin:4px 0 0;font-size:13px;color:#c3ccc8}
+  .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;padding:1px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin-left:4px}
+  .tag.free{color:var(--green);border-color:#2f5a37} .tag.paid{color:var(--amber);border-color:#5a4626}
+  .cav{color:var(--amber);font-size:12px;margin-top:5px} .cav::before{content:"⚠ "}
+  .prio{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:14px 18px;margin-top:14px}
+  .prio ol{margin:6px 0 0;padding-left:20px} .prio li{margin:3px 0;font-size:13.5px}
+  .note{color:var(--muted);font-size:11px;font-family:var(--mono);margin-top:30px;border-top:1px solid var(--line);padding-top:12px}
+  .back{font-family:var(--mono);font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← 디자인 보드</a>
+  <div class="eyebrow">byiryu studio · 도구 리서치</div>
+  <h1>에셋 스토어 도입 후보</h1>
+  <p class="sub">Unity Asset Store에서 우리 게임에 도움될 에셋(유/무료). PM 리서치 · 2026-06-30.</p>
+
+  <div class="principle">
+    <b>스타일 정합 원칙.</b> 우리 게임 = <b>픽셀 · 치비 · "네온 신스웨이브 메타 ⊥ 다크 전장" · PixelLab 커스텀 캐릭터</b>.
+    → 에셋 스토어는 <b>스타일을 안 타는 영역(오디오·툴링·인프라)에서 최고 가성비</b>, 스타일 매칭이 필요한 것(VFX·UI·배경)은 <b>픽셀/치비 정합을 프리뷰로 직접 확인</b>(매체 게이트 #8), 커스텀 아트와 충돌하는 캐릭터는 <b>사지 않는다.</b>
+  </div>
+
+  <!-- 🟢 강력추천 -->
+  <div class="sec g"><span class="label">🟢 강력 추천</span><span class="rule"></span><span class="hint">스타일 무관 · 1인이 못 만드는 것</span></div>
+
+  <div class="item g">
+    <h3>오디오 — SFX + BGM 번들 <span class="tag paid">유료</span></h3>
+    <div class="meta">M10 · 현재 0 · 1인 작곡 불가 = 최고 가성비</div>
+    <p>
+      · <a href="https://assetstore.unity.com/packages/audio/music/rpg-music-and-sfx-assets-full-bundle-261162">RPG music and SFX – FULL BUNDLE</a> — BGM+SFX 통합(5테마 분위기·전투)<br>
+      · <a href="https://assetstore.unity.com/packages/audio/sound-fx/weapons/battle-sound-library-magic-melee-fantasy-rpg-176417">Battle Sound Library – Magic & Melee</a> — 마법/근접 전투 SFX·런타임 랜덤 조합(난전 적합)<br>
+      · <a href="https://assetstore.unity.com/packages/audio/sound-fx/rpg-fantasy-sounds-bundle-379678">RPG & Fantasy Sounds Bundle</a>
+    </p>
+  </div>
+
+  <div class="item g">
+    <h3>DOTween (Pro) — 게임필/트윈 <span class="tag paid">유료(저렴)</span> <span class="tag free">+무료판</span></h3>
+    <div class="meta">juice · UI 애니 · 전투 피드백 (M9 step-4)</div>
+    <p>소환 팝·히트 임팩트·HUD 모션·메뉴 전환의 표준 트윈/시퀀스. Unity Animator는 juice엔 무겁다는 게 중론 → DOTween 권장. <a href="https://assetstore.unity.com/packages/tools/visual-scripting/dotween-pro-32416">DOTween Pro</a> (무료 DOTween도 충분·Pro=비주얼 에디터).</p>
+    <p style="color:var(--muted)">※ <a href="https://feel.moremountains.com/">Feel(MoreMountains)</a> = 피드백 토탈솔루션이나 1인 MVP엔 DOTween만으로 충분(과투자 경계).</p>
+  </div>
+
+  <div class="item g">
+    <h3>무료 공식 인프라 <span class="tag free">무료</span></h3>
+    <div class="meta">에셋 스토어 "검색"보다 Package Manager — 전부 무료</div>
+    <p><b>Google Mobile Ads(AdMob)</b> · <b>Unity IAP</b> · <b>Firebase</b>(수익화·분석·M10) · <b>TextMeshPro</b> · <b>Unity 2D Animation</b>(이미 채택) · <b>풀링 = Unity 내장 <code>ObjectPool&lt;T&gt;</code></b>(별도 에셋 불요·M9 step-3) · <b>한글 폰트 = Pretendard</b>(OFL 무료)·Noto Sans KR.</p>
+  </div>
+
+  <!-- 🟡 추천 -->
+  <div class="sec y"><span class="label">🟡 추천</span><span class="rule"></span><span class="hint">픽셀/치비 스타일 매칭 프리뷰 필수</span></div>
+
+  <div class="item y">
+    <h3>2D VFX — 스킬 이펙트 <span class="tag paid">유료</span></h3>
+    <div class="meta">16 스킬 이펙트 패밀리 · M9 VFX 레인 · 현재 0 = 큰 노동 절감 잠재</div>
+    <p>우리 16 패밀리(슬래시·버스트·DoT·힐·스턴·버프·흡혈…)를 <b>시드</b> + 5테마 틴트 변주:<br>
+      · <a href="https://assetstore.unity.com/packages/vfx/particles/2d-rpg-effects-84498">2D RPG Effects</a> · <a href="https://assetstore.unity.com/packages/vfx/particles/2d-magic-attack-effects-97953">2D Magic & Attack Effects</a><br>
+      · itch.io <a href="https://magusvfx.itch.io/2d-vfx-pack-slashes-and-impacts">MagusVFX 2D Slashes & Impacts</a> / <a href="https://magusvfx.itch.io/2d-vfx-pack-casting-and-buffs">Casting & Buffs</a> (~$5·에픽세븐풍 2D)
+    </p>
+    <p class="cav">대부분의 "RPG VFX"는 HD 파티클 → 픽셀과 충돌. <b>2D 스프라이트시트</b> VFX만 고르고, PixelLab 픽셀 룩과 어우러지는지 = 디자인 세션 매체 게이트 #8 프리뷰 판정.</p>
+  </div>
+
+  <div class="item y">
+    <h3>2D 배경 — 5테마 전투 배경 <span class="tag paid">유료</span></h3>
+    <div class="meta">5테마 전투 배경 · 현재 0</div>
+    <p>
+      · <a href="https://assetstore.unity.com/publishers/11784">Mokawyler — 2D Pixel Art (Dark Fantasy / Parallax) 팩</a> — <b>픽셀 매체 정합</b>·다크 전장 톤<br>
+      · 대안 <a href="https://craftpix.net/categorys/game-backgrounds/">CraftPix 2D Game Backgrounds</a> (픽셀 판타지 다수)
+    </p>
+    <p class="cav">5테마 distinct = recolor/변주 필요. 픽셀 해상도·치비 스케일 정합 프리뷰.</p>
+  </div>
+
+  <!-- 🔴 가드 -->
+  <div class="sec r"><span class="label">🔴 주의 / 사지 말 것</span><span class="rule"></span><span class="hint">충돌 · 커스텀</span></div>
+  <div class="item r">
+    <p><b>캐릭터 유닛 팩 = 사지 마라</b> — PixelLab 커스텀(치비·5테마·확정 파이프라인)과 충돌. 37종은 우리가 생성.</p>
+    <p><b>UI 키트 = 부분만</b> — <a href="https://assetstore.unity.com/packages/2d/gui/gui-pro-fantasy-rpg-170168">GUI Pro Fantasy RPG</a>·<a href="https://assetstore.unity.com/packages/2d/gui/2d-mobile-game-ui-kit-355774">2D Mobile Game UI Kit</a> 등이 있으나, 우리 정체성(네온 메타 ⊥ 다크·치비)은 나무/판타지 우드 키트와 충돌. → <b>아이콘/프레임 컴포넌트 base로만</b> 쓰고 네온 톤 retheme. 통째 적용 = 정체성 깨짐.</p>
+    <p><b>시스템류(세이브·시너지·위협·코스트) = 커스텀</b> — 이미 설계/구현 중·에셋 불요.</p>
+  </div>
+
+  <!-- 우선순위 -->
+  <div class="sec"><span class="label" style="color:var(--text)">우선순위 (1인 MVP)</span><span class="rule"></span></div>
+  <div class="prio">
+    <ol>
+      <li><b>무료 인프라</b>(AdMob/IAP/Firebase/Pretendard/내장 풀링) — 지금 확보(비용 0)</li>
+      <li><b>DOTween</b> — juice/UI(저렴·즉효)</li>
+      <li><b>오디오 번들 1~2종</b> — M10 직전(작곡 불가 영역)</li>
+      <li><b>2D VFX · 픽셀 배경</b> — 디자인 세션 스타일 프리뷰 통과 시(M9 페어)</li>
+    </ol>
+  </div>
+
+  <p class="note">
+    PM 리서치 · 2026-06-30 · Unity Asset Store 검색 종합 · 가격/정합 = 직접 프리뷰 확인<br>
+    링크는 외부(Asset Store/itch/CraftPix) · 캐릭터 = PixelLab 커스텀(에셋 스토어 비대상)<br>
+    SoT 정합 = asset-tracker(에셋 인벤토리) ⊥ 본 보드(외부 도입 후보)
+  </p>
+</div>
+</body>
+</html>
