@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>INFINITE WARFIELD · 디자인 언어 (UI 비주얼 시스템)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+ --void:#0A0E14;--bg:#0D1117;--panel:#141B22;--panel2:#1B2530;--line:#2A3642;--line2:#374756;
+ --text:#E7ECF2;--muted:#8A97A6;--dim:#5d6b7a;
+ --mag:#E84DD4;--maghot:#FF2D95;--cyan:#36D6E0;--cyanhot:#22E0E8;
+ --combat:#E03A5C;--necro:#9D3EE8;--spirit:#5DDD7E;--machine:#00D4FF;--beast:#E06B14;
+ --fx-eff:#8AE05A;--fx-blk:#9AA7B5;--fx-crit:#FFC23D;--ally:#4FA3FF;--enemy:#FF5B5B;
+ --gold:#FFC23D;
+ --r-sm:6px;--r-md:10px;--r-lg:14px;
+ --disp:"Audiowide",sans-serif;--tech:"Chakra Petch",ui-monospace,monospace;
+ --body:"Pretendard","Pretendard Variable",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--void);color:var(--text);font-family:var(--body);line-height:1.6;
+ background-image:radial-gradient(ellipse 90% 40% at 50% -5%,rgba(232,77,212,.10),transparent 60%),radial-gradient(ellipse 80% 40% at 50% 105%,rgba(54,214,224,.08),transparent 60%)}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+a{color:var(--cyan)}
+/* hero */
+.hero{position:relative;text-align:center;padding:60px 0 30px;overflow:hidden}
+.hero .grid{position:absolute;left:-25%;right:-25%;bottom:0;height:150px;background-image:repeating-linear-gradient(90deg,rgba(54,214,224,.22) 0 1px,transparent 1px 54px),repeating-linear-gradient(0deg,rgba(232,77,212,.18) 0 1px,transparent 1px 36px);transform:perspective(320px) rotateX(65deg);transform-origin:bottom;opacity:.42;mask-image:linear-gradient(transparent,#000 72%)}
+.eyebrow{font-family:var(--tech);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--cyan);position:relative}
+.hero h1{font-family:var(--disp);font-size:clamp(22px,4.6vw,36px);margin:14px 0 0;letter-spacing:.02em;position:relative;background:linear-gradient(95deg,var(--mag),#fff 48%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 12px rgba(232,77,212,.45))}
+.hero .tag{position:relative;color:var(--muted);margin-top:12px;font-size:13.5px;font-family:var(--tech)}
+.status{position:relative;font-family:var(--tech);font-size:11px;color:var(--fx-crit);margin-top:8px}
+/* sections */
+.section{display:flex;align-items:baseline;gap:10px;margin:48px 0 6px}
+.section .n{font-family:var(--tech);font-size:11px;color:var(--cyan);font-weight:700}
+.section .l{font-family:var(--tech);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.section .h{font-family:var(--tech);font-size:10px;color:var(--muted)}
+.section .r{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.lead{color:#c2ccd6;font-size:13.5px;margin:8px 0 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;margin-top:14px}
+/* two-zone */
+.zones{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:640px){.zones{grid-template-columns:1fr}}
+.zone{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+.zone .head{font-family:var(--tech);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:9px 14px;font-weight:700}
+.zone .demo{height:188px;position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;overflow:hidden}
+.zone .desc{font-size:12px;color:var(--muted);padding:11px 14px;border-top:1px solid var(--line);font-family:var(--tech);line-height:1.7}
+/* META zone */
+.z-meta .head{color:var(--mag);background:linear-gradient(90deg,rgba(232,77,212,.14),transparent)}
+.z-meta .demo{background:radial-gradient(circle at 50% 130%,rgba(54,214,224,.14),transparent 55%),linear-gradient(160deg,#12101e,#0a0a14)}
+.z-meta .demo .floor{position:absolute;left:-15%;right:-15%;bottom:0;height:90px;background-image:repeating-linear-gradient(90deg,rgba(54,214,224,.2) 0 1px,transparent 1px 40px);transform:perspective(240px) rotateX(68deg);transform-origin:bottom;opacity:.4;mask-image:linear-gradient(transparent,#000)}
+/* BATTLE zone */
+.z-batt .head{color:var(--ally);background:linear-gradient(90deg,rgba(79,163,255,.12),transparent)}
+.z-batt .demo{background:linear-gradient(#0d1117,#0a0d12)}
+.z-batt .demo .gl{position:absolute;left:0;right:0;bottom:30px;height:1px;background:rgba(255,255,255,.06)}
+/* CTA */
+.cta{font-family:var(--tech);font-weight:700;letter-spacing:.04em;border:none;border-radius:var(--r-md);padding:13px 30px;font-size:15px;color:#0a0a12;cursor:pointer;
+ background:linear-gradient(95deg,var(--maghot),var(--cyanhot));box-shadow:0 0 18px rgba(232,77,212,.5),0 0 34px rgba(54,214,224,.3);position:relative;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 16px rgba(232,77,212,.45),0 0 30px rgba(54,214,224,.25)}50%{box-shadow:0 0 26px rgba(232,77,212,.7),0 0 48px rgba(54,214,224,.45)}}
+.btn2{font-family:var(--tech);font-weight:600;letter-spacing:.04em;border:1px solid var(--cyan);border-radius:var(--r-md);padding:11px 24px;font-size:14px;color:var(--cyan);background:rgba(54,214,224,.06);cursor:pointer}
+.btn3{font-family:var(--tech);font-weight:600;border:1px solid var(--line2);border-radius:var(--r-md);padding:11px 22px;font-size:14px;color:var(--text);background:var(--panel2);cursor:pointer}
+.curbar{display:flex;gap:8px}
+.chip{font-family:var(--tech);font-weight:600;font-size:12px;display:flex;align-items:center;gap:5px;background:rgba(10,12,20,.7);border:1px solid var(--line);border-radius:20px;padding:4px 11px}
+/* battle HUD bits */
+.hpbar{width:54px;height:5px;border-radius:3px;background:#222c36;overflow:hidden;position:relative}
+.hpbar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.cost{font-family:var(--tech);font-weight:700;color:var(--cyan);font-size:13px;display:flex;align-items:center;gap:4px}
+.gauge{width:130px;height:9px;border-radius:5px;background:#1a2530;overflow:hidden;border:1px solid var(--line)}
+.gauge i{display:block;height:100%;width:62%;background:linear-gradient(90deg,#1f7a8c,var(--cyan));border-radius:5px}
+.slots{display:flex;gap:6px}
+.slot{width:34px;height:34px;border-radius:8px;border:1px solid var(--line2);background:var(--panel2);display:flex;align-items:center;justify-content:center;font-family:var(--tech);font-size:10px;color:var(--dim)}
+.slot.on{border-color:var(--cyan);box-shadow:0 0 8px rgba(54,214,224,.4);color:var(--cyan)}
+.unit{width:30px;height:30px;border-radius:50% 50% 46% 46%;position:relative}
+.unit::after{content:"";position:absolute;inset:-3px;border-radius:inherit;border:2px solid var(--c);filter:drop-shadow(0 0 4px var(--c));opacity:.9}
+/* swatches */
+.sw-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.sw{width:118px;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--panel)}
+.sw .col{height:46px}.sw .t{padding:6px 9px;font-family:var(--tech);font-size:10px;line-height:1.5}
+.sw .t b{color:#fff;font-size:11px}.sw .t span{color:var(--muted)}
+.grouplab{font-family:var(--tech);font-size:11px;color:var(--muted);margin:16px 0 2px;letter-spacing:.08em;text-transform:uppercase}
+/* type */
+.type-row{display:flex;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.type-row .meta{font-family:var(--tech);font-size:10px;color:var(--muted);width:160px;flex:none}
+.compo{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:14px}
+.tok{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tok .t{font-family:var(--tech);font-size:11px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:5px 10px;color:var(--muted)}
+.tok .t b{color:var(--text)}
+.foot{margin-top:46px;font-family:var(--tech);font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.9}
+.foot b{color:var(--text)}
+small.note{display:block;color:var(--dim);font-family:var(--tech);font-size:10.5px;margin-top:6px}
+</style></head><body>
+
+<div class="hero">
+ <div class="grid"></div>
+ <div class="eyebrow">byiryu studio · 디자인 언어</div>
+ <h1>UI 비주얼 시스템</h1>
+ <p class="tag">GDD 아트 바이블 기반 · 2존 시스템 · 전 화면 공유 토대</p>
+ <p class="status">● 진행 중 · 디자인 언어 정초 (design-system 스텁 → 실 UI 킷) · 검토 대기</p>
+</div>
+
+<div class="wrap">
+
+<!-- 1. TWO-ZONE -->
+<div class="section"><span class="n">01</span><span class="l">2존 시스템 (정체성의 핵)</span><span class="r"></span><span class="h">gdd Part 2.1 / 3.1</span></div>
+<p class="lead">GDD 아트 바이블 <b>"전장은 어둡다 / 캐릭터는 빛난다"</b> → UI도 <b>2존</b>으로 갈린다. 이 *대비 규칙*이 차별점(흔한 네온이 아니라 "메타 네온 ↔ 전투 다크"의 전환).</p>
+<div class="zones">
+ <div class="zone z-meta">
+  <div class="head">META · 네온 지휘소</div>
+  <div class="demo"><div class="floor"></div>
+   <div class="curbar"><span class="chip" style="color:var(--gold)">◆ 1,240</span><span class="chip" style="color:var(--cyan)">❖ 38</span><span class="chip" style="color:var(--muted)">환생 Lv.7</span></div>
+   <button class="cta">▶ 전투 시작</button>
+   <span style="font-family:var(--tech);font-size:10px;color:var(--mag)">네온 글로우 · 신스웨이브 그리드 · 마젠타+시안</span>
+  </div>
+  <div class="desc">인트로·메인·편성·결과·강화·환생·미션·상점.<br>네온(마젠타+시안)·발광·그리드·수집/성장 보상감.</div>
+ </div>
+ <div class="zone z-batt">
+  <div class="head">BATTLE · 다크 전장</div>
+  <div class="demo"><div class="gl"></div>
+   <div style="display:flex;gap:18px;align-items:center">
+    <div style="text-align:center"><div class="unit" style="--c:var(--ally);background:#3a4654"></div><div class="hpbar" style="margin-top:5px"><i style="width:72%;background:var(--ally)"></i></div></div>
+    <div style="text-align:center"><div class="unit" style="--c:var(--enemy);background:#4a3a3a"></div><div class="hpbar" style="margin-top:5px"><i style="width:45%;background:var(--enemy)"></i></div></div>
+   </div>
+   <div class="cost">◆ COST <span style="color:#fff">7</span><div class="gauge"><i></i></div></div>
+   <div class="slots"><div class="slot on">소환</div><div class="slot on">소환</div><div class="slot">+</div><div class="slot">+</div><div class="slot">+</div></div>
+  </div>
+  <div class="desc">전투 화면만.<br>다크·묵직·가독 1순위. 아군/적 = 림(파랑/빨강). 테마색·네온 클러터 X (게이트 확정).</div>
+ </div>
+</div>
+<small class="note">★ 게이트 확정: 전투 = 림라이트(아군 #4FA3FF/적 #FF5B5B) + 실루엣 · 테마 진영색 = 계획(META) UI 전용. 네온은 META 존에만.</small>
+
+<!-- 2. COLOR -->
+<div class="section"><span class="n">02</span><span class="l">색 (Color)</span><span class="r"></span><span class="h">design-system §1</span></div>
+<p class="grouplab">네온 메타 + 다크 베이스 (META 존)</p>
+<div class="sw-grid">
+ <div class="sw"><div class="col" style="background:#E84DD4"></div><div class="t"><b>neon_magenta</b><br><span>#E84DD4 · 메타 주강조</span></div></div>
+ <div class="sw"><div class="col" style="background:#36D6E0"></div><div class="t"><b>neon_cyan</b><br><span>#36D6E0 · 메타 보조</span></div></div>
+ <div class="sw"><div class="col" style="background:#0D1117"></div><div class="t"><b>dark_bg</b><br><span>#0D1117 · 전장 베이스</span></div></div>
+ <div class="sw"><div class="col" style="background:#141B22"></div><div class="t"><b>dark_panel</b><br><span>#141B22 · 패널</span></div></div>
+</div>
+<p class="grouplab">테마 진영색 — ★ 계획 UI 전용 (편성·유닛상세·텔레그래프 · 전투 X)</p>
+<div class="sw-grid">
+ <div class="sw"><div class="col" style="background:#E03A5C"></div><div class="t"><b>theme_combat</b><br><span>#E03A5C</span></div></div>
+ <div class="sw"><div class="col" style="background:#9D3EE8"></div><div class="t"><b>theme_necro</b><br><span>#9D3EE8</span></div></div>
+ <div class="sw"><div class="col" style="background:#5DDD7E"></div><div class="t"><b>theme_spirit</b><br><span>#5DDD7E</span></div></div>
+ <div class="sw"><div class="col" style="background:#00D4FF"></div><div class="t"><b>theme_machine</b><br><span>#00D4FF</span></div></div>
+ <div class="sw"><div class="col" style="background:#E06B14"></div><div class="t"><b>theme_beast</b><br><span>#E06B14</span></div></div>
+</div>
+<p class="grouplab">전투 신호 — 아군/적 림 + 피드백 (BATTLE 존)</p>
+<div class="sw-grid">
+ <div class="sw"><div class="col" style="background:#4FA3FF"></div><div class="t"><b>faction_friendly</b><br><span>#4FA3FF · 아군 림</span></div></div>
+ <div class="sw"><div class="col" style="background:#FF5B5B"></div><div class="t"><b>faction_enemy</b><br><span>#FF5B5B · 적 림</span></div></div>
+ <div class="sw"><div class="col" style="background:#8AE05A"></div><div class="t"><b>fx_effective</b><br><span>#8AE05A · 효과적</span></div></div>
+ <div class="sw"><div class="col" style="background:#9AA7B5"></div><div class="t"><b>fx_blocked</b><br><span>#9AA7B5 · 버팀</span></div></div>
+ <div class="sw"><div class="col" style="background:#FFC23D"></div><div class="t"><b>fx_critical</b><br><span>#FFC23D · 치명</span></div></div>
+</div>
+
+<!-- 3. TYPE -->
+<div class="section"><span class="n">03</span><span class="l">타이포그래피</span><span class="r"></span><span class="h">display · body · numeric</span></div>
+<div class="card">
+ <div class="type-row"><div class="meta">DISPLAY · Audiowide<br>타이틀·헤더·로고</div><div style="font-family:var(--disp);font-size:30px;background:linear-gradient(95deg,var(--mag),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent">INFINITE WARFIELD</div></div>
+ <div class="type-row"><div class="meta">BODY · Pretendard<br>UI 본문·버튼·설명(KR/EN)</div><div><div style="font-size:18px;font-weight:700">조합을 발견하고, 환생으로 더 강해진다</div><div style="font-size:13px;color:var(--muted)">멈출 수 없는 소환 전략 · The Infinite Warfield</div></div></div>
+ <div class="type-row"><div class="meta">NUMERIC · Chakra Petch<br>코스트·HP·타이머·재화</div><div style="font-family:var(--tech);font-weight:700;font-size:22px;letter-spacing:.02em">◆ 7 · HP 1,240 · ⏱ 0:48 · Lv.7</div></div>
+</div>
+<small class="note">Pretendard = 스튜디오 한글 표준(CDN) · Audiowide/Chakra Petch = 테크노 display/numeric(로고 톤 정합). 본문 가독 = 기둥①.</small>
+
+<!-- 4. COMPONENTS -->
+<div class="section"><span class="n">04</span><span class="l">컴포넌트</span><span class="r"></span><span class="h">버튼·패널·HUD·재화·바</span></div>
+<p class="grouplab">버튼 (META)</p>
+<div class="compo">
+ <button class="cta">▶ 전투 시작</button>
+ <button class="btn2">편성</button>
+ <button class="btn3">취소</button>
+</div>
+<small class="note">주 CTA = 네온 그라디언트+글로우+펄스(지배적 위계·기둥 = 주 CTA) / 보조 = 시안 아웃라인 / 중립 = 다크 필.</small>
+<p class="grouplab">재화 칩 (3종)</p>
+<div class="compo">
+ <span class="chip" style="color:var(--gold)">◆ 골드 1,240</span>
+ <span class="chip" style="color:var(--spirit)">✦ 조각 38</span>
+ <span class="chip" style="color:var(--cyan)">❖ 크리스탈 12</span>
+</div>
+<p class="grouplab">전투 HUD (BATTLE · 다크·가독)</p>
+<div class="card" style="background:linear-gradient(#0d1117,#0a0d12)">
+ <div class="compo" style="gap:24px">
+  <div class="cost">◆ COST <span style="color:#fff">7</span><div class="gauge"><i></i></div></div>
+  <div class="slots"><div class="slot on">A</div><div class="slot on">B</div><div class="slot">+</div><div class="slot">+</div></div>
+  <div style="display:flex;gap:14px">
+   <div style="text-align:center"><div class="unit" style="--c:var(--ally);background:#3a4654"></div><div class="hpbar" style="margin-top:5px"><i style="width:72%;background:var(--ally)"></i></div></div>
+   <div style="text-align:center"><div class="unit" style="--c:var(--enemy);background:#4a3a3a"></div><div class="hpbar" style="margin-top:5px"><i style="width:45%;background:var(--enemy)"></i></div></div>
+  </div>
+ </div>
+</div>
+<small class="note">코스트 게이지·덱 슬롯(탭 소환)·HP바(아군 파랑/적 빨강 림과 정합)·키유닛만 풀 HP. 난전 가독 = 기둥①·#5.</small>
+<p class="grouplab">진척 바 (성장 — 환생/스테이지)</p>
+<div class="card"><div style="display:flex;align-items:center;gap:12px"><span style="font-family:var(--tech);font-size:11px;color:var(--mag)">환생 Lv.7</span><div class="gauge" style="width:100%"><i style="width:48%;background:linear-gradient(90deg,var(--mag),var(--maghot))"></i></div><span style="font-family:var(--tech);font-size:11px;color:var(--muted)">48%</span></div></div>
+<small class="note">성장 = '느낌'(기둥④) — 진척 바는 네온 충전감·수치 점프 연출 동반.</small>
+
+<!-- 5. MOTION -->
+<div class="section"><span class="n">05</span><span class="l">모션 · 게임필 톤</span><span class="r"></span><span class="h">시그니처 3 (gdd Part 8)</span></div>
+<div class="card">
+ <p style="margin:0 0 8px"><b style="color:var(--cyan)">시그니처 게임필 3</b> = 폴리시 우선순위 (gdd Part 8.1)</p>
+ <p style="margin:6px 0;font-size:13.5px">① <b>시너지 발동감</b> — 조합 '터질' 때 발광·연쇄·HUD 반응(빌드 발견의 심장) · ② <b>환생 쾌감</b> — 재도약 수치 점프·네온 충전(성장) · ③ <b>소환감</b> — 등장 팝·코스트 소비(코어 루프 매 순간).</p>
+ <p style="margin:6px 0 0;font-family:var(--tech);font-size:11.5px;color:var(--muted)">UI 모션 = 주 CTA 네온 펄스(위 데모) · 칩/패널 등장 스태거 · 절제(난전 가독 우선·화려 < 가독). 차순위 = 카운터 적중·타격감.</p>
+</div>
+
+<!-- 6. TOKENS -->
+<div class="section"><span class="n">06</span><span class="l">스페이싱 · 라운드 · 엘리베이션</span><span class="r"></span><span class="h">토큰</span></div>
+<div class="tok">
+ <span class="t">space <b>4 · 8 · 12 · 16 · 24 · 32</b></span>
+ <span class="t">radius <b>sm 6 · md 10 · lg 14</b></span>
+ <span class="t">패널 elev <b>0 1px line + inner glow</b></span>
+ <span class="t">CTA glow <b>0 0 18px mag / 34px cyan</b></span>
+ <span class="t">max-width(모바일 가로) <b>safe-area + 엄지존</b></span>
+</div>
+
+<p class="foot">
+ INFINITE WARFIELD · UI 비주얼 시스템 (디자인 언어) · 2026-06-30 · 디자인 세션<br>
+ <b>2존 = 정체성:</b> META(네온 신스웨이브 마젠타+시안) ⊥ BATTLE(다크·가독·아군/적 림). gdd 아트 바이블 일체.<br>
+ ★ 매체 게이트 #8 = UI/레이아웃/컴포넌트 = 디자인 도메인 → HTML/CSS 직접 OK (캐릭터 appeal = PixelLab).<br>
+ SoT(.md) = design-system.md (본 보드 = 시각 정초·토큰 본문은 §) · gdd Part 2.1/3.1/8 · 다음 = wireframes 리프레시 → 인트로/메인 스킨.<br>
+ 폰트 = Pretendard(KR·CDN) · Audiowide/Chakra Petch(Google Fonts) · 정밀 hex = §1.
+</p>
+</div></body></html>
