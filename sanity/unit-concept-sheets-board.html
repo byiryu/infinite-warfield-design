@@ -83,6 +83,7 @@
     <p><b>① 배경 제거 — isolated 캐릭터:</b> 컨셉아트/스프라이트는 <b>투명·단색 배경의 고립된 캐릭터</b>여야 한다(전장 배경 X). 다크 전장은 plat이 인게임에서 렌더 — 스프라이트에 포함하면 안 됨. 전 프롬프트 <code>"dark battlefield backdrop"</code> → <b><code>"isolated on plain transparent background, no scene"</code></b>.</p>
     <p><b>② 영웅 차별화 — 일반 유닛 ≠ 영웅 (gdd Part 3.1):</b> 영웅 distinction(전용 아우라·망토·과대 시그니처 무기·크기 +20~40%·림라이트)은 <b>영웅 예약</b>. 일반 유닛은 <b>졸병/정규군 톤</b> = 아우라 X · 망토 X · 과장/화염 무기 X · 수수한 장비. <span class="pill warn">★ 발견 (사용자)</span> Combat 졸병 첫 생성이 영웅 <b>아르덴(불검·크림슨 망토·뿔투구·마젠타 아우라)</b>과 중복 → 화염 무기/망토/특수 아우라/대검 <b>전면 금지</b>로 수정. (Necro 일반 ↔ 베스라 보라 orbit · Spirit 일반 ↔ 에이라 에메랄드 링도 동일 가드.)</p>
     <p><b>③ 본체 테마색 도색 X (gdd Part 3.2):</b> 진영색은 off-unit(베이스 링/UI)만 — 본체는 자연/컨셉 팔레트.</p>
+    <p><b>④ chibi 강제 <span class="pill warn">★ Spirit 1차 = realistic로 빠짐</span>:</b> 제미나이가 사실적 비율로 갈 수 있음 → 프롬프트 앞을 <code>super-deformed chibi (SD), oversized head + chunky stout body, NOT realistic/tall/lanky</code>로 강화. 치비는 컨셉 이미지 단계에서 락(웹앱 Pro가 이미지 비율을 따름). 참조 게임 = 브롤스타즈·워크래프트 럼블 비율(외주 브리프). ✅ <b>배경 = 제미나이 투명 출력 정상 확인</b>(별도 제거 불요).</p>
   </div>
 
   <!-- CONCEPT SHEETS -->
@@ -100,7 +101,7 @@
     <div class="row"><span class="lab">시그니처 1요소</span><span class="val">거대 각진 방패(몸 절반) — "정규군 방패병" 단일 실루엣 키. <b>(시그니처 = 무기 아님 = 방패.)</b></span></div>
     <div class="row"><span class="lab">off-unit 색 / 본체 팔레트</span><span class="val"><code>theme_combat #E03A5C</code> = 베이스 링/UI만. <b>본체 = 강철·철색 자연 팔레트</b>(마젠타 도색 X).</span></div>
     <div class="row"><span class="lab">컨셉아트 프롬프트 시드 v2 (영웅 차별화·배경 제거 반영)</span>
-      <div class="prompt">chibi pixel-art common foot soldier (rank-and-file, NOT a hero/champion), ~2.5 heads tall, plain steel plate armor with minimal trim, oversized angular kite shield covering half the body (the shield is the defining feature — defensive tank), plain closed great-helm (NO horns), short plain one-handed sword secondary (NO greatsword, NO fire/flames, NO glow), NO cape, NO aura, ordinary stoic soldier, natural steel/iron palette (NO magenta/red tint on body), isolated on plain transparent background (no scene/backdrop), clean bold readable silhouette, side view</div>
+      <div class="prompt">super-deformed chibi (SD, oversized head + chunky stout body, NOT realistic/tall/lanky) pixel-art common foot soldier (rank-and-file, NOT a hero/champion), ~2.5 heads tall, plain steel plate armor with minimal trim, oversized angular kite shield covering half the body (the shield is the defining feature — defensive tank), plain closed great-helm (NO horns), short plain one-handed sword secondary (NO greatsword, NO fire/flames, NO glow), NO cape, NO aura, ordinary stoic soldier, natural steel/iron palette (NO magenta/red tint on body), isolated on plain transparent background (no scene/backdrop), clean bold readable silhouette, side view</div>
     </div>
   </div>
 
@@ -115,7 +116,7 @@
     <div class="row"><span class="lab">시그니처 1요소</span><span class="val">해골 얼굴 + 피 묻은 발톱/단검 — "언데드 공격수" 즉독.</span></div>
     <div class="row"><span class="lab">off-unit 색 / 본체 팔레트</span><span class="val"><code>theme_necro #9D3EE8</code> = 베이스 링/UI만 · <b>림라이트 강제</b>(다크 전장 명도차). <b>본체 = 뼈·회색·마른 살 자연 팔레트</b>.</span></div>
     <div class="row"><span class="lab">컨셉아트 프롬프트 시드</span>
-      <div class="prompt">chibi pixel-art common undead raider (rank-and-file, NOT a hero, NO boss aura/purple orbit), ~2.5 heads, exposed skeletal ribs and skull face, tattered ragged hood, blood-stained claws and short dagger, gaunt aggressive lunging pose, bone/grey natural palette (NO purple tint on body), subtle edge rim-light only, isolated on plain transparent background (no scene), jagged asymmetric silhouette, side view</div>
+      <div class="prompt">super-deformed chibi (SD, oversized head + chunky stout body, NOT realistic/tall/lanky) pixel-art common undead raider (rank-and-file, NOT a hero, NO boss aura/purple orbit), ~2.5 heads, exposed skeletal ribs and skull face, tattered ragged hood, blood-stained claws and short dagger, gaunt aggressive lunging pose, bone/grey natural palette (NO purple tint on body), subtle edge rim-light only, isolated on plain transparent background (no scene), jagged asymmetric silhouette, side view</div>
     </div>
   </div>
 
@@ -126,11 +127,12 @@
       <div class="meta">ID117 · Tank · form=Spirit · 근접 · cost 4 · 패시브 「숲의 분노」(피격 시 20% 광역 도발)</div>
     </div>
     <div class="row"><span class="lab">정체성</span><span class="val">영원불변의 자연 정령 — "본질은 변하지 않는다." 숲을 의인화한 수호 탱커, 든든하고 고요한 톤.</span></div>
-    <div class="row"><span class="lab">실루엣 언어 (Spirit = 흐르는 유기)</span><span class="val"><b>나무껍질·이끼 몸통 + 흐르는 잎/덩굴</b>. 가지뿔, 둥근 유기적 머리. <b>부드러운 곡선 실루엣</b> = 각진 Combat·들쭉날쭉 Necro와 형태로 대비.</span></div>
-    <div class="row"><span class="lab">시그니처 1요소</span><span class="val">가지뿔 + 흐르는 잎 망토 — "살아있는 숲" 즉독.</span></div>
-    <div class="row"><span class="lab">off-unit 색 / 본체 팔레트</span><span class="val"><code>theme_spirit #5DDD7E</code>(UI) / 인게임 VFX <code>#4EC879</code>. <b>본체 = 나무·이끼·흙색 자연 팔레트</b>(에메랄드 도색 X).</span></div>
-    <div class="row"><span class="lab">컨셉아트 프롬프트 시드</span>
-      <div class="prompt">chibi pixel-art common forest guardian spirit (rank-and-file, NOT a hero, NO emerald aura/ring), ~2.5 heads, body of living bark and moss, flowing vine-and-leaf foliage (organic, not a hero cape), branch-like antlers, rounded soft organic silhouette, earthy wood/moss/soil natural palette (NO green theme tint as paint), isolated on plain transparent background (no scene), smooth curved outline, side view</div>
+    <div class="row"><span class="lab">실루엣 언어 (Spirit = 흐르는 유기·통통)</span><span class="val"><b>둥글고 통통한 나무껍질 몸통 + 풍성한 잎/이끼</b>. 작은 가지뿔, 큰 둥근 머리. <b>부드러운 곡선·통통 실루엣</b> = 각진 Combat·들쭉날쭉 Necro와 형태로 대비.</span></div>
+    <div class="row"><span class="lab">★ chibi·Necro 차별화 (사용자 피드백 — 1차 실패)</span><span class="val">1차 생성 = <b>사실적 비율 + 해골/너덜 느낌(Necro 침범)</b>으로 실패. 수정: <b>SD 치비(큰 머리·통통 몸)</b> · <b>해골·갈비뼈·wispy 가닥 덩굴 금지</b> · <b>둥글고 통통 + 풍성한 잎 + 살아있고 친근 + 건강한 밝은 초록</b>(음산/언데드 X). 정령 = 생명·평온이지 죽음 아님.</span></div>
+    <div class="row"><span class="lab">시그니처 1요소</span><span class="val">작은 가지뿔 + 풍성한 잎 — "살아있는 친근한 숲" 즉독.</span></div>
+    <div class="row"><span class="lab">off-unit 색 / 본체 팔레트</span><span class="val"><code>theme_spirit #5DDD7E</code>(UI) / 인게임 VFX <code>#4EC879</code>. <b>본체 = 건강한 나무·이끼·밝은 초록 자연 팔레트</b>(에메랄드 도색 X · 회색/보라 X).</span></div>
+    <div class="row"><span class="lab">컨셉아트 프롬프트 시드 v3 (chibi·Necro 차별화)</span>
+      <div class="prompt">super-deformed chibi pixel-art forest guardian spirit, ~2.5 heads tall, OVERSIZED round head + small STOUT ROUNDED chunky body (cute mascot proportions — NOT realistic, NOT tall, NOT lanky, NOT gaunt/skeletal/ribby), sturdy little treant covered in LUSH full green leaves and soft moss (NOT stringy wispy vines), friendly benevolent serene LIVING nature guardian, healthy bright wood + vivid green palette (NO purple/grey, NOT creepy/undead), small rounded branch antlers, thick stubby limbs, isolated transparent background, clean rounded soft silhouette, side view</div>
     </div>
   </div>
 
@@ -145,7 +147,7 @@
     <div class="row"><span class="lab">시그니처 1요소</span><span class="val">달아오른 과열 코어(붉은-주황 균열 발광) + 풍화 골렘 동체 — Beast의 유기 윤곽과 <b>재질로</b> 분리.</span></div>
     <div class="row"><span class="lab">off-unit 색 / 본체 팔레트</span><span class="val"><code>theme_machine #00D4FF</code>(시안·각형·UI/베이스링만). <b>코어 발광은 유닛 고유 디자인 요소 = 컨셉색 자유</b>(과열=붉은/주황). 본체 = 풍화 금속·녹슨 청동 자연 팔레트.</span></div>
     <div class="row"><span class="lab">컨셉아트 프롬프트 시드</span>
-      <div class="prompt">chibi pixel-art common ancient automaton juggernaut unit (rank-and-file, not a boss), ~2.5 heads, weathered massive thick metal plates (NOT sleek cyber/neon), Horizon-Zero-Dawn lost-tech vibe, glowing energy core in chest with overheated red-orange cracks, heavy bulky golem silhouette, rusted bronze/weathered-metal natural palette, isolated on plain transparent background (no scene), side view</div>
+      <div class="prompt">super-deformed chibi (SD, oversized head + chunky stout body, NOT realistic/tall/lanky) pixel-art common ancient automaton juggernaut unit (rank-and-file, not a boss), ~2.5 heads, weathered massive thick metal plates (NOT sleek cyber/neon), Horizon-Zero-Dawn lost-tech vibe, glowing energy core in chest with overheated red-orange cracks, heavy bulky golem silhouette, rusted bronze/weathered-metal natural palette, isolated on plain transparent background (no scene), side view</div>
     </div>
   </div>
 
@@ -160,7 +162,7 @@
     <div class="row"><span class="lab">시그니처 1요소</span><span class="val">짐승 두상 + 거대 발톱 — "야수 공격수" 즉독.</span></div>
     <div class="row"><span class="lab">off-unit 색 / 본체 팔레트</span><span class="val"><code>theme_beast #E06B14</code>(주황·UI/베이스링만). <b>본체 = 털색(갈/황갈) 자연 팔레트</b>. Combat(hue 30°)·흡혈 z-order 주의.</span></div>
     <div class="row"><span class="lab">컨셉아트 프롬프트 시드</span>
-      <div class="prompt">chibi pixel-art common beastfolk claw fighter (rank-and-file, not a boss), ~2.5 heads, furred muscular werecreature, wolf/panther head, oversized claws, dynamic aggressive pounce stance, organic fur texture (NOT metal — clearly alive, distinct from machine), brown/tawny natural fur palette (NO orange theme tint as paint), isolated on plain transparent background (no scene), wild dynamic silhouette, side view</div>
+      <div class="prompt">super-deformed chibi (SD, oversized head + chunky stout body, NOT realistic/tall/lanky) pixel-art common beastfolk claw fighter (rank-and-file, not a boss), ~2.5 heads, furred muscular werecreature, wolf/panther head, oversized claws, dynamic aggressive pounce stance, organic fur texture (NOT metal — clearly alive, distinct from machine), brown/tawny natural fur palette (NO orange theme tint as paint), isolated on plain transparent background (no scene), wild dynamic silhouette, side view</div>
     </div>
   </div>
 
