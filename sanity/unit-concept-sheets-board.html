@@ -85,6 +85,7 @@
     <p><b>③ 본체 테마색 도색 X (gdd Part 3.2):</b> 진영색은 off-unit(베이스 링/UI)만 — 본체는 자연/컨셉 팔레트.</p>
     <p><b>④ chibi 강제 (사실적 드리프트 방지):</b> 제미나이가 사실적 비율로 갈 수 있음 → <code>~2.5–3 heads chibi, NOT realistic/tall/lanky</code> 유지. 단 <b>"super-deformed cute mascot"은 과교정</b>(너무 귀여워짐) → <b>grounded chibi</b>(아래 ⑤ 앵커 수준).</p>
     <p><b>⑤ ★★ 스타일 일관성 (2026-06-30 사용자 피드백 — MCP 4기가 방패병과 불일치):</b> <b>스타일 앵커 = 방패 수호병</b>(웹앱 Pro+Concept · char <code>4aef4a70</code> · 사용자 승인 룩). 모든 유닛이 이 룩에 맞아야 함 = <b>grounded 치비(~2.5–3등신·디테일 있게·과하게 cute/super-deformed 금지)</b>. <b>레버 = Gemini에 방패 수호병 이미지를 스타일 레퍼런스로 첨부</b>("이 아트 스타일로 [유닛] 그려줘") → 같은 라인/셰이딩/디테일. ★ <b>MCP standard = 너무 단순·귀여움·일관성 X = keeper 불가</b>(검증: MCP는 이미지 ref/seed 미지원·PixelLab 에이전트 확인). <b>chibi + 정교 = 웹앱 Pro+Concept만.</b> ✅ 배경 = 제미나이 투명 정상.</p>
+    <p><b>⑥ 손무기 = 베이크 (✅ 2026-06-30 검증):</b> Character Creator는 <i>손에 든 무기</i>를 드롭(body-fitted만 생존 — 방패·발톱·코어·잎). 해법 = 베이스 생성 → <code>create_character_state("holding a [무기]")</code>로 무기 베이크(8방향 일관) → V3 커스텀 애니(템플릿은 무기 깜빡임). <b>✅ 검증 = necro 단검 8방향 일관 베이크 성공</b>(char <code>359fdc4a</code>·east/west 칼날 또렷). 런타임 합성(별도 무기+본 부착) = 프레임-기반(본 없음)이라 부적합. <b>손무기 유닛만 +1 state gen</b> · 컨셉 단계엔 무기 크게/또렷이(작은 손무기일수록 드롭).</p>
   </div>
 
   <!-- CONCEPT SHEETS -->
