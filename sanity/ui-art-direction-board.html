@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>무한의 전장 · UI 아트디렉션 + Gemini 프롬프트 (일러스트)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Cinzel:wght@700&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+ --stone-0:#F4F7FB;--stone-1:#E7ECF2;--stone-2:#DAE3EE;--sky:#3A6EA5;--ink:#15212E;--muted:#56697D;--dim:#8A9BAD;--line:#C7D4E2;--line2:#B0C0D2;
+ --gold:#FFD24D;--gold-deep:#F0992D;--gold-lite:#FFE9A8;--bronze:#B89B5E;--dark:#0D1117;
+ --combat:#E03A5C;--necro:#9D3EE8;--spirit:#5DDD7E;--machine:#00D4FF;--beast:#E06B14;
+ --tech:"Chakra Petch",ui-monospace,monospace;--body:"Pretendard",system-ui,sans-serif;--disp:"Black Han Sans",sans-serif;
+ --shadow:0 2px 4px rgba(21,33,46,.06),0 10px 30px rgba(21,33,46,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:var(--body);line-height:1.65;background:var(--stone-0);
+ background-image:radial-gradient(ellipse 120% 60% at 50% -10%,rgba(58,110,165,.14),transparent 60%),radial-gradient(ellipse 80% 50% at 50% 108%,rgba(255,210,77,.08),transparent 62%)}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
+.pgh{text-align:center;padding:44px 20px 8px}
+.pgh .eyebrow{font-family:var(--tech);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--sky);font-weight:600}
+.pgh h1{font-family:var(--disp);font-size:clamp(24px,4.6vw,38px);margin:8px 0 0;color:var(--ink);letter-spacing:.02em}
+.pgh .tag{color:var(--muted);margin-top:10px;font-size:13px;font-family:var(--tech)}
+.status{font-family:var(--tech);font-size:11px;color:var(--gold-deep);margin-top:6px;font-weight:600}
+.section{display:flex;align-items:baseline;gap:10px;margin:42px 0 4px}
+.section .n{font-family:var(--tech);font-size:12px;color:var(--sky);font-weight:700}
+.section .l{font-family:var(--tech);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.section .r{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.section .h{font-family:var(--tech);font-size:10px;color:var(--muted)}
+.lead{color:var(--muted);font-size:13.5px;margin:8px 0 0}.lead b{color:var(--ink)}
+.identity{background:linear-gradient(160deg,#fff,#eef3f9);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:18px 20px;margin-top:14px;box-shadow:var(--shadow)}
+.identity .one{font-family:var(--body);font-weight:800;font-size:15px;color:var(--ink);margin:0 0 4px;line-height:1.5}
+.identity .one em{color:var(--gold-deep);font-style:normal}
+.identity p{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.moves{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+@media(max-width:600px){.moves{grid-template-columns:1fr}}
+.moves div{font-size:12px;color:var(--muted)}.moves b{color:var(--ink)}
+.diag{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:14px;font-size:12.5px;color:var(--muted);box-shadow:var(--shadow)}
+.diag b{color:var(--ink)}.diag .kill{color:var(--combat);font-weight:700}
+/* faction chips */
+.facs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fac{display:flex;align-items:center;gap:6px;font-family:var(--tech);font-size:11px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--ink)}
+.fac .d{width:11px;height:11px;border-radius:3px}
+/* direction */
+.dir{background:#fff;border:1px solid var(--line);border-radius:14px;margin-top:16px;overflow:hidden;box-shadow:var(--shadow)}
+.dir.rec{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 10px 28px rgba(240,153,45,.14)}
+.dir .hd{padding:15px 18px 6px}
+.dir .cn{font-family:var(--tech);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);font-weight:700}
+.dir h3{font-family:var(--body);font-weight:800;font-size:18px;margin:3px 0 4px;color:var(--ink)}
+.dir .oneln{font-size:12.5px;color:var(--muted);margin:0}
+.dir .body{padding:4px 18px 16px}
+.dir ul{margin:8px 0 0;padding-left:15px}.dir li{font-size:12px;color:var(--muted);margin:4px 0;line-height:1.55}.dir li b{color:var(--ink)}
+.prompt{position:relative;background:#0d1117;border:1px solid #26313d;border-radius:10px;margin:12px 0 0;padding:13px 14px;overflow-x:auto}
+.prompt .plab{font-family:var(--tech);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:7px}
+.prompt code{font-family:var(--tech);font-size:11px;line-height:1.65;color:#c9d4df;white-space:pre-wrap;word-break:break-word;display:block}
+.badge{display:inline-block;font-family:var(--tech);font-size:9.5px;font-weight:700;color:#3a2600;background:var(--gold);border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.foot{margin-top:42px;font-family:var(--tech);font-size:11px;color:var(--muted);border-top:1px solid var(--line2);padding-top:14px;line-height:1.9}
+.foot b{color:var(--ink)}
+small.note{display:block;color:var(--dim);font-family:var(--tech);font-size:10.5px;margin-top:8px}
+</style></head><body>
+
+<div class="pgh">
+ <div class="eyebrow">byiryu studio · UI 아트디렉션 (일러스트) · 4-에이전트 패널</div>
+ <h1>무한의 전장 UI 정체성 + Gemini 프롬프트</h1>
+ <p class="tag">플랫/픽셀 2안 반려 → 정체성 정의부터 · 인게임=픽셀 유지 / UI=일러스트</p>
+ <p class="status">● 아트디렉션 확정 대기 · 프롬프트로 Gemini 생성 → 실물 반복</p>
+</div>
+
+<div class="wrap">
+
+<!-- diagnosis -->
+<div class="section"><span class="n">◆</span><span class="l">진단 — 왜 2안이 정체성이 없었나</span><span class="r"></span></div>
+<div class="diag">
+ <b>근본 원인 = 재질(플랫/픽셀)이 아니라 "세계관 부재".</b> 두 시안 다 정체성을 가장 얕은 레이어(<span class="kill">색·재질</span>)에서만 만졌고, 정작 정체성이 사는 곳(<b>모티프·프레임 은유·분위기</b>)이 비었다. 플랫=스톡 하늘+둥근 흰 카드=SaaS 유틸 문법 / 픽셀=남의 PixelLab 킷(LOAD/NEW 더미)=원천적 무명. <b>경쟁작 통찰:</b> 흥행 UI가 제네릭을 탈출한 유일한 법 = <b>세계관 로어에서 재질을 역산</b>(AFK=선술집 목재·오딘=바이킹 룬석). → "무한 전장은 어떤 물질로 이뤄졌나?" = <b>차가운 룬각석(밝은 쿨 스톤)</b>.
+</div>
+
+<!-- identity -->
+<div class="section"><span class="n">★</span><span class="l">확정 제안 — 무한의 전장 UI 정체성</span><span class="r"></span><span class="h">4-에이전트 종합</span></div>
+<div class="identity">
+ <p class="one">"차원 관문 앞의 <em>작전 지휘소</em> — 밝은 <em>룬각석 콘솔</em> 위에서, 아래로는 어두운 <em>무한 전장</em>이 영원히 타오른다."</p>
+ <p>재질 = 페인터리 일러스트 위 <b>차가운 룬각석 + 브론즈 룬 상감 + 홈 발광</b>(무한 차원의 물질). 팔레트 = design-system §1 밝은 쿨 + 골드/브론즈. 인게임 픽셀 유닛은 다크 전투 인셋에 거주(2존 대비의 일부).</p>
+ <div class="moves">
+  <div><b>① 무한전장·차원균열·룬</b> = 배경/프레임 언어(예쁜 하늘 금지·끝없는 지평/균열/룬 관문)</div>
+  <div><b>② 5세력 = 문장(crest)+재질 모티프</b> (색 라벨 dot 아님 — 나란히 놓으면 색 빼도 구별)</div>
+  <div><b>③ 2존 = 재질 대비 + 한 화면 다크 인셋</b> (밝은 콘솔에 어두운 전장 창이 뚫림·격리 금지)</div>
+  <div><b>④ 지휘소 은유</b> = 전황 테이블·차원 관문·각석 콘솔 (버튼/카드 아님 = 석판/관문/계기판)</div>
+ </div>
+</div>
+<div class="facs">
+ <span class="fac"><span class="d" style="background:var(--combat)"></span>Combat · 교차검/방패 · 각진 강철</span>
+ <span class="fac"><span class="d" style="background:var(--necro)"></span>Necro · 두개골/낫 · 부식 브론즈</span>
+ <span class="fac"><span class="d" style="background:var(--spirit)"></span>Spirit · 잎/룬고리 · 옥·수정</span>
+ <span class="fac"><span class="d" style="background:var(--machine)"></span>Machine · 톱니/코어 · 풍화금속(NOT 네온)</span>
+ <span class="fac"><span class="d" style="background:var(--beast)"></span>Beast · 발톱/송곳니 · 거친 뼈·가죽</span>
+</div>
+<small class="note">★ ∞ 기호는 로고서 폐기(범주 오류) → UI 서명 형상 = <b>룬 관문/차원 균열/각석</b> (∞ 아님). Machine = Horizon 로스트테크(풍화 금속+코어), 네온 사이버 아님.</small>
+
+<!-- directions -->
+<div class="section"><span class="n">▣</span><span class="l">3방향 + 바로 쓸 Gemini/Midjourney 프롬프트</span><span class="r"></span><span class="h">프레임 은유가 다름</span></div>
+<p class="lead">셋 다 위 정체성(룬각석·5세력 문장·2존 다크 인셋·∞없는 무한)을 공유하되 <b>지휘소 프레임 은유</b>가 다르다. 아래 프롬프트를 Gemini/Midjourney에 그대로 붙여 각 1~2장 생성 → 실물로 비교(매체게이트 #8 = appeal은 실렌더 판정).</p>
+
+<!-- D1 -->
+<div class="dir rec">
+ <div class="hd"><div class="cn">방향 1 · ★ 권고 (paranoia #1 위계 최강)</div><h3>차원 관문 지휘소 (Threshold Gate) <span class="badge">2존 서사화</span></h3>
+  <p class="oneln">화면 전체가 거대 룬 관문 아치 = UI 프레임. 문 너머 밝은 쿨 하늘 + 어두운 무한 전장. "밝은 관문 ↔ 다크 전장"이 프레임 자체.</p></div>
+ <div class="body">
+  <ul><li><b>프레임</b> = 룬각석+브론즈 관문 아치(키스톤·좌우 문장 필라·문지방 CTA)</li><li><b>무한/환생</b> = 포털 너머 소실점 무한 전장 + 아치 둘레 룬 순환(환생=관문 재진입)</li><li><b>2존</b> = 밝은 석재 아치 ⊥ 포털 안 다크 전장(#0D1117·아군청/적적 림)</li></ul>
+  <div class="prompt"><div class="plab">Gemini / Midjourney 프롬프트 (복사)</div><code>Painterly illustrated mobile game main-menu UI concept, landscape 16:9. "Threshold gate command post": a colossal rune-etched cold-stone and bronze gateway arch frames the whole screen — keystone, twin rune-pillars carved with five faction crests, a stone threshold at the bottom. Beyond the arch a bright cool sky opens onto a glowing dimensional portal revealing a DARK infinite battlefield receding to a vanishing point (endless, borderless). Rune-light streams cyclically around the arch (rebirth as dimensional law). A commander stands on the threshold seen from behind. Bright cool command-post palette: light rune-stone #E7ECF2, cool blue-grey #9BB0C8, sky #3A6EA5, bronze frame #B89B5E, dominant gold rune CTA glow #FFD24D; the battlefield beyond the portal is dark #0D1117 with faint ally-blue #4FA3FF and enemy-red #FF5B5B rim lights — a BRIGHT stone gate framing a DARK battle (two-zone material contrast in ONE screen). Five faction crests carved into the pillars: crimson-steel crossed swords, violet skull-scythe, emerald leaf-rune, cyan weathered ancient-machine core (lost-tech, NOT neon), orange feral claw. Glow lives only inside carved grooves. Ornate but readable, high-key stone, cool volumetric portal light, ceremonial. Semi-realistic painterly rendering, engraved serif headers, high texture fidelity. NOT pixel art, NOT flat vector, NOT neon synthwave, NOT warm brown tavern. High production mobile RPG UI, ArtStation quality.</code></div>
+ </div>
+</div>
+
+<!-- D2 -->
+<div class="dir">
+ <div class="hd"><div class="cn">방향 2 · 전략·중후 (메뉴 밀도 강)</div><h3>마법 전황 테이블 (Arcane War Table)</h3>
+  <p class="oneln">밝은 석조 지휘실의 대형 원형 전황 테이블 위로 무한 차원 지도가 살아 움직인다. 룬 서클 환생. 손에 잡히는 전략감.</p></div>
+ <div class="body">
+  <ul><li><b>프레임</b> = 밝은 룬석 지휘실 + 원형 전황 테이블(하이앵글)·황동 기둥·아치창 쿨광</li><li><b>무한/환생</b> = 경계 없는 안개 지도(무한) + 중앙 룬 서클(쓰러진 말 정화 재배치=환생)</li><li><b>2존</b> = 밝은 테이블 ⊥ 위협 프리뷰 다크 인셋</li></ul>
+  <div class="prompt"><div class="plab">Gemini / Midjourney 프롬프트 (복사)</div><code>Painterly illustrated mobile game main-hub UI concept, landscape 16:9. "Arcane war table" command hall: high-angle view over a huge circular magic war-table inside a BRIGHT cool rune-etched stone command hall, tall arched windows pouring cool daylight, marble walls, bronze pillars. The table surface is a LIVING map of an infinite dimension — stage nodes as terrain markers, routes fading into fog toward a borderless vanishing edge (endless). A central glowing rune-circle where fallen unit tokens are drawn in, purified into rune-light and re-placed (rebirth = dimensional law); concentric gold rings light one by one. Five factions present ONLY as carved sigils, banners and terrain material: crimson-steel sword crest, violet scythe-rift, emerald tree-runes, cyan weathered-bronze gear-core (ancient lost-tech, NOT neon), orange claw-prints. Bright cool palette: light stone #E7ECF2, cool stone #9BB0C8, sky window light #3A6EA5, bronze #B89B5E, dominant gold seal CTA #FFD24D; a dark battle inset viewport #0D1117 cut into the bright table (two-zone material contrast). Rune-etched stone and bronze rivet material (the eternal dimension's substance), tactile boardgame feel, engraved serif labels, heraldic sigil icons, high texture fidelity. High-key interior, volumetric window light, strategic weighty mood. Semi-realistic painterly, soft shadows. NOT pixel, NOT flat, NOT neon, NOT brown-gold tavern. Mobile strategy UI, ArtStation quality.</code></div>
+ </div>
+</div>
+
+<!-- D3 -->
+<div class="dir">
+ <div class="hd"><div class="cn">방향 3 · 재질 앵커 (경쟁작 #1 추천)</div><h3>각인된 전장 콘솔 (Graven Warfield Console)</h3>
+  <p class="oneln">UI = 무한 차원의 물질인 룬각석 슬랩으로 만든 유물 지휘 콘솔. 음각 홈 골드 발광·승리를 돌에 새김. 재질 충실도 최강.</p></div>
+ <div class="body">
+  <ul><li><b>프레임</b> = 풍화 밝은 룬석 슬랩 + 브론즈 트림 + 음각 룬(홈 안에서만 발광=밝은 표면 유지)</li><li><b>무한/환생</b> = 콘솔에 뚫린 창으로 아래 끝없는 다크 전장·환생=새 균열 개방</li><li><b>2존</b> = 밝은 각석 콘솔 위 ⊥ 창 아래 어두운 무한 전장</li></ul>
+  <div class="prompt"><div class="plab">Gemini / Midjourney 프롬프트 (복사)</div><code>Painterly illustrated mobile game UI panel set, landscape 16:9. "Graven warfield console": the meta UI is a living relic command console made of weathered LIGHT COOL rune-stone slabs with bronze trim — the very material of the eternal battle dimension. Deep intaglio rune engravings glow faint gold inside the carved grooves; chipped worn bronze edges. Five faction crests carved as circular sigils into the stone: crimson-steel crossed swords, violet skull-ring, emerald leaf-crystal, cyan weathered gear-core (ancient lost-tech, NOT neon cyber), orange feral claw — each glowing in its groove when active. A dark inset viewport #0D1117 is cut through the bright stone console, looking DOWN into an endless dark battlefield burning below (two-zone: bright carved console above, dark infinite war below). Bright cool palette: light rune-stone #E7ECF2, cool grey-blue #9BB0C8, sky ambiance #3A6EA5, bronze #B89B5E, dominant gold carved CTA #FFD24D; glow lives ONLY inside the engraved grooves so the surface stays bright and readable. Inlaid gemstone currency chips, gold-lava progress channel carved into stone. God-of-War rune-wall craftsmanship but BRIGHT and cool, extreme texture fidelity. Semi-realistic painterly rendering, soft carved shadows, engraved serif. NOT pixel art, NOT flat vector, NOT neon, NOT warm brown tavern. High-end mobile RPG UI, ArtStation quality.</code></div>
+ </div>
+</div>
+
+<!-- guidance -->
+<div class="section"><span class="n">▶</span><span class="l">생성 가이드 + 다음</span><span class="r"></span></div>
+<p class="lead">
+· <b>추천 = 방향 1(관문) + 3(각석 콘솔) 각 1~2장 먼저 생성</b>해 A/B 비교(둘이 정체성 축이 가장 뚜렷). 마음에 들면 방향 2도.<br>
+· 생성 후 <b>같은 화면에 밝은 콘솔 ⊥ 다크 전장 인셋이 공존</b>하는지 · 5세력 문장이 읽히는지 · 텍스트 지워도 "무한 전장"이 읽히는지(블라인드 테스트) 확인.<br>
+· 마음에 드는 톤 나오면 → 그걸 앵커로 <b>화면별 프롬프트</b>(인트로/메인/편성/결과) 배리에이션 + design-system에 UI 정체성 흡수 → plat 구현 spec.<br>
+· 조정 = "더 밝게 / 관문 말고 콘솔 / 균열 강조" 등 짚어주시면 프롬프트 수정.
+</p>
+
+<p class="foot">
+ 무한의 전장 · UI 아트디렉션 + Gemini 프롬프트 · 2026-07-01 · 디자인 세션 (4-에이전트: 경쟁작 분석·정체성 정의·컨셉 디자이너 2)<br>
+ <b>핵심 = 세계관 로어에서 재질 역산</b>(룬각석) · 4 시그니처 무브 · ∞ 폐기(로고 정합) · 인게임 픽셀 유지·UI 일러스트.<br>
+ ★ 매체 게이트 #8 = UI appeal = 실렌더(Gemini)로 판정 → 본 보드는 아트디렉션+프롬프트(생성=사용자·외부 도구).<br>
+ SoT = design-system §1/§2(팔레트) · gdd Part 2.1/2.2/3 · 확정 시 UI 정체성 흡수.
+</p>
+</div></body></html>
