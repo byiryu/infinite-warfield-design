@@ -6,32 +6,35 @@
 <meta name="robots" content="noindex, nofollow">
 <title>infinite warfield · 디자인 보드</title>
 <style>
-  :root{--ground:#14181c;--panel:#1b2228;--line:#2d383f;--text:#dde4e1;--muted:#8a9691;--amber:#e8a33d;--cyan:#56c2d0;
+  :root{--ground:#14181c;--panel:#1b2228;--line:#2d383f;--text:#dde4e1;--muted:#8a9691;--amber:#e8a33d;--cyan:#56c2d0;--gold:#d8b768;
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--sans:ui-sans-serif,system-ui,-apple-system,sans-serif;}
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.6}
-  .wrap{max-width:760px;margin:0 auto;padding:48px 22px}
+  .wrap{max-width:820px;margin:0 auto;padding:48px 22px}
   .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
   h1{margin:10px 0 0;font-size:clamp(26px,5vw,40px);font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
   .sub{color:var(--muted);margin-top:12px;font-size:14px}
   .status{font-family:var(--mono);font-size:11px;color:var(--amber);margin-top:8px}
-  .section{display:flex;align-items:baseline;gap:10px;margin:36px 0 4px}
+  .now{margin-top:18px;background:linear-gradient(90deg,rgba(232,163,61,.12),transparent);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:5px;padding:12px 16px;font-size:13px}
+  .now b{color:var(--amber);font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+  .section{display:flex;align-items:baseline;gap:10px;margin:38px 0 4px}
+  .section .num{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:700}
   .section .label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--text);font-weight:700}
   .section .hint{font-family:var(--mono);font-size:10px;color:var(--muted)}
   .section .rule{flex:1;height:1px;background:var(--line)}
-  .cards{display:grid;gap:14px;margin-top:14px}
-  a.card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 22px;color:var(--text);transition:border-color .15s,transform .15s}
+  .cards{display:grid;gap:12px;margin-top:14px}
+  @media(min-width:640px){.cards.two{grid-template-columns:1fr 1fr}}
+  a.card{display:block;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 20px;color:var(--text);transition:border-color .15s,transform .15s}
   a.card:hover{border-color:var(--cyan);transform:translateY(-1px)}
-  a.card .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan)}
-  a.card h2{margin:6px 0 4px;font-size:18px}
-  a.card p{margin:0;color:var(--muted);font-size:13px}
-  a.card.wip{border-style:dashed;border-color:#3a4650;background:transparent;opacity:.62}
-  a.card.wip:hover{opacity:1;border-color:var(--amber)}
-  a.card.wip .k{color:var(--amber)}
-  a.card.archived{opacity:.42;background:transparent;border-style:dashed}
-  a.card.archived:hover{opacity:.7;transform:none;border-color:var(--line)}
+  a.card .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--cyan)}
+  a.card h2{margin:6px 0 4px;font-size:16px}
+  a.card p{margin:0;color:var(--muted);font-size:12.5px}
+  a.card .stale{color:var(--amber)}
+  a.card.archived{opacity:.5;background:transparent;border-style:dashed}
+  a.card.archived:hover{opacity:.85;transform:none;border-color:var(--line)}
   a.card.archived .k{color:var(--muted)}
-  .note{margin-top:34px;font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.8}
+  a.card.archived h2{font-size:14px}
+  .note{margin-top:38px;font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.8}
   .note a{color:var(--cyan)}
 </style>
 </head>
@@ -39,187 +42,85 @@
 <div class="wrap">
   <div class="eyebrow">byiryu studio · 디자인 보드</div>
   <h1>infinite warfield</h1>
-  <p class="sub">좌우 대치 코스트 기반 실시간 유닛 소환 (2D 모바일). 활성 개발 — weaver 홀드.</p>
-  <p class="status">● 공개 · GitHub Pages (infinite-warfield-design) · 진행 중 = 비활성 표기</p>
+  <p class="sub">좌우 대치 코스트 기반 실시간 유닛 소환 (2D 모바일). 활성 개발.</p>
+  <p class="status">● 공개 · GitHub Pages (infinite-warfield-design) · 갱신 2026-07-01</p>
+  <div class="now"><b>▶ 다음</b> &nbsp;편성 화면 프로덕션 목업 (확정 UI 킷 재사용) → 전투 HUD(다크) → 메타 화면.</div>
 
   <div class="section">
-    <span class="label">진행 중 · 검토/결정 대기</span>
+    <span class="num">①</span>
+    <span class="label">확정 · 프로덕션 (메인 허브)</span>
     <span class="rule"></span>
-    <span class="hint">비활성 — 미확정</span>
+    <span class="hint">현행 · plat 구현 스펙</span>
   </div>
   <div class="cards">
-    <a class="card wip" href="sanity/main-screen-bright-board.html">
-      <div class="k">★ 메인 화면 — 밝은 톤 2버전 (C/D 좁히기)</div>
-      <h2>C 따뜻(양피지·우드) vs D 쿨(스톤·하늘) →</h2>
-      <p>밝음 확정(C/D·사용자) → 실제 메인 허브(가로·스테이지 선택)에 입힘. 둘 다 다크 전투 인셋(유닛)으로 2존 성립·골드 CTA. 차이=온도(따뜻/쿨). 온도 좁히기 → 컨셉(프레임·5세력 문장·로고 톤) 전개 + 인트로 → PM 상신.</p>
+    <a class="card" href="sanity/main-hub-confirmed-board.html">
+      <div class="k">★★ 메인 허브 프로덕션 목업</div>
+      <h2>5테마 배경 ✅ + A 코버플로우 크롬 →</h2>
+      <p>확정 배경 5테마(대장간·납골·성림·공동·소굴) 위 실제 UI 크롬(상단바·메뉴·코버플로우·골드 CTA) = plat M8/M9 구현 스펙 + 라이브 모션 오버레이.</p>
     </a>
-    <a class="card wip" href="sanity/ui-tone-options-board.html">
-      <div class="k">★ UI 톤 — 베이스 밝기 스펙트럼 (탐색·좁히기)</div>
-      <h2>A 다크 아케인 · B 황혼 · C 양피지·우드 · D 라이트 스톤·하늘 →</h2>
-      <p>"밝은 느낌 좋겠다·다크/밝은 베이스 모두 보자"(사용자) → 다크→밝음 4단계. 네온 폐기(유닛 불일치). 유닛=전투(다크) 인셋 고정·META 밝기만 변주(2존). 밝기 베이스 좁히기 → 그 위에 컨셉 전개(확정 아님) → PM 상신(GDD Part 2.1 톤 재정합).</p>
+    <a class="card" href="sanity/main-hub-uikit-board.html">
+      <div class="k">★★ UI 킷 (실제작 · 이모지 아님)</div>
+      <h2>SVG 아이콘 12 + 크롬 토큰 + 버튼 컴포넌트 →</h2>
+      <p>아이콘 12종·크롬 색 토큰 6·버튼(100×82·상태·터치≥44pt). design-system §1/§2 흡수 완료. 5테마 전 화면 공통 재사용.</p>
     </a>
-    <a class="card wip" href="sanity/design-language-board.html">
-      <div class="k">UI 비주얼 시스템 (디자인 언어 · ★밝은 쿨 D 재빌드)</div>
+    <a class="card" href="sanity/main-hub-uikit-5theme-board.html">
+      <div class="k">UI 킷 × 5테마 가독 QA (통과)</div>
+      <h2>다크 크롬이 5배경 전부에서 읽히나 →</h2>
+      <p>밝은 Spirit·시안 Machine·크림슨 Combat 등 전부에서 또렷·골드 CTA 지배·focal 안 가림. 통과.</p>
+    </a>
+    <a class="card" href="sanity/necro-live-board.html">
+      <div class="k">라이브 배경 모션 (▶ 폰에서 작동)</div>
+      <h2>빛·안개·파티클만 움직임 · 구조물 정지 →</h2>
+      <p>Unity Additive 스프라이트·Particle System·셰이더 맥동 1:1 매핑. 영상(mp4) 없이 무료. 폰/브라우저서 실제 작동(스크린샷=정지).</p>
+    </a>
+    <a class="card" href="sanity/design-language-board.html">
+      <div class="k">디자인 언어 (밝은 쿨)</div>
       <h2>2존 시스템 · 색 · 타이포 · 컴포넌트 · 모션 →</h2>
-      <p>GDD 기반 디자인 언어 정초(design-system §1 색·§2 타이포/스페이싱/컴포넌트 정식화): 2존(META 밝은 쿨 ⊥ BATTLE 다크)·라이트 스톤/하늘+골드 CTA·타이포(Pretendard+Cinzel 잠정)·컴포넌트·모션·토큰. 구 네온 폐기(gdd Part 2.1·CEO). display 폰트 = 로고 #3서 확정.</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-compare-board.html">
-      <div class="k">★ 메인 허브 스테이지 선택 비교 — (a)코버플로우 vs (c)지도 여정 (권고 c)</div>
-      <h2>같은 배경/크롬 · 중앙 스테이지 선택 방식만 A/B →</h2>
-      <p>(a)=카드 코버플로우(와이어 §1·지도 덮음·중복) vs (c)=지도 여정(전황 테이블 지도 = 스테이지 여정·현재 노드 골드 하이라이트+상단 정보+🔒+‹›패닝·지도 다 보임). 권고 = (c) — hero 아트 살리고 "기능이 세계관을 연기"·더 프리미엄. 사용자 택1 대기.</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-uikit-5theme-board.html">
-      <div class="k">★ UI 킷 × 5테마 배경 비교 — 크롬 가독 QA (흡수 전 검증)</div>
-      <h2>동일 UI 크롬(아이콘·버튼·색) + 구역 배너 테마 액센트 × 5배경 →</h2>
-      <p>UI 킷을 design-system 흡수하기 전, 크롬(브론즈/골드·아이콘·버튼)이 5테마 전부에서 읽히는지 QA. 결론=통과: 다크 크롬 = 밝은 Spirit·시안 Machine·따뜻한 Beast·크림슨 Combat 위 전부 또렷(밝은 배경선 오히려 대비↑)·골드 CTA 지배적·구역 배너 테마 액센트·focal 안 가림. Beast(앰버)만 골드와 근접색이나 브론즈 프레임이 분리.</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-uikit-board.html">
-      <div class="k">★★ 메인 허브 프로덕션 UI 킷 — 아이콘·버튼·색·조립 (실제작·이모지 아님)</div>
-      <h2>SVG 아이콘 12종 + 크롬 색 토큰 + 버튼 컴포넌트(확대·상태) + 조립 허브 →</h2>
-      <p>플레이스홀더(이모지)→실제 게임 UI/UX. 아이콘 12종 SVG 실제작(강화·환생·업적·미션·상점·전투·골드·조각·크리스탈·별·자물쇠·루프·골드 프레임 안 크림 글리프) + 크롬 색 토큰 6(다크 패널·브론즈·골드·크림) + 버튼 확대(100×82·터치≥44pt)·상태(normal/pressed)·뱃지 + Necro 위 조립. = CSS/SVG 그대로 plat M8/M9 구현 스펙·5테마 전 화면 공통 재사용. 매체게이트#8=UI 그래픽 도메인(직접 제작 OK).</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-confirmed-board.html">
-      <div class="k">★★ 메인 허브 확정 — 5테마 배경 ✅ + A 코버플로우 프로덕션 목업</div>
-      <h2>5테마 배경 코히런스 + Necro 위 실제 UI 크롬(상단바·메뉴·코버플로우·CTA) →</h2>
-      <p>사용자 5테마 배경 확정(Gemini·제각각 분위기 씬): Combat 대장간 홀·Necro 납골 대전당·Spirit 세계수 성림·Machine 기계 대공동·Beast 야수 소굴. 코히런스=페인터리+중앙 focal+테마 글로우. 확정 Necro 배경 위에 A 코버플로우 크롬 얹은 프로덕션 목업(= plat M8/M9 스펙). + 라이브 모션 오버레이 spec(배경별). ▶ 다음=배경별 크롬 적용+모션 spec→편성·전투HUD 확장.</p>
-    </a>
-    <a class="card wip" href="sanity/necro-live-board.html">
-      <div class="k">★ 네크로 라이브 배경 데모 — "특정 부분만 살아 움직이기" (▶ 폰에서 실제 작동)</div>
-      <h2>옥좌 보랏빛 맥동 + 혼령 티끌 + 유령 드리프트 + 달빛 셔머 · 토글 →</h2>
-      <p>Unity 라이브 2D 원리 시뮬. 딱딱한 구조물(옥좌·기둥)은 정지·빛/에너지/안개/파티클만 움직임 = "살아있는" 느낌. 대부분 이미지 안 자르고 위에 레이어만 얹어서 됨(컷 필요=촛불/구조물 자체만). HTML/CSS/JS 데모 ↔ Unity(Additive 스프라이트·Particle System·셰이더 맥동) 1:1 매핑. 영상(mp4)보다 가벼움. ★ 폰/브라우저에서 열면 실제로 움직임(스크린샷=정지).</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-stage-select-board.html">
-      <div class="k">★ 메인 허브 스테이지 선택 3안 비교 — 테마 배경 위 (권고 A)</div>
-      <h2>A 하단 코버플로우 스트립 · B 챕터→그리드 · C 미니멀 스테퍼 →</h2>
-      <p>노드 지도 제거 → 테마 배경을 히어로로. 그 위에 스테이지 선택 UI를 어떻게 얹을까 3안 실물 비교. A=하단 스트립(배경 살림+별점 브라우징·권고) / B=그리드 오버레이(진행 조망 최고·배경 가림) / C=스테퍼(가장 프리미엄·브라우징 약). 배경=확정 전황 테이블(Necro 플레이스홀더). ⏳ 6테마 결정=PM 세션. 사용자 택1 대기.</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-region-board.html">
-      <div class="k">★ 메인 허브 (c) 지도 여정 + 5구역/환생 스케일링 — "지도 한정 vs 스테이지 무한" 해법</div>
-      <h2>현재 구역만 존화 · rim 5문장=구역 인덱스 · 환생=무한 루프 →</h2>
-      <p>지도가 한정인데 스테이지는 250+/무한인 문제 해법. 지도 1장을 <b>현재 구역 창(window)</b>으로 존화(노드 몇 개만) + rim 5문장(Combat/Necro/Spirit/Machine/Beast)=구역 인덱스+진행 + 환생=같은 월드 재도전 무한 루프. ★ MVP=새 배경 이미지 0(재생성 불필요·지도 재사용+스포트라이트/줌). 선택(나중)=구역별 테마 지도 5장=전투 배경 5테마 아트 트랙과 동일. 사용자 (c) 확정 대기.</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-final-board.html">
-      <div class="k">메인 허브 — 일러 배경 + UI (코버플로우판·비교 대상 a)</div>
-      <h2>전황 테이블 배경 + 상단바·좌우 메뉴·스테이지 코버플로우·골드 전투 CTA →</h2>
-      <p>확정 배경(5진영·깨끗) 위에 실제 UI 조립. 크롬(버튼·칩·CTA) = 배경 재질(룬석/브론즈/골드) 이식 → 배경과 하나로·유틸감 0. 배경 요소=UI(지도 노드=스테이지·5문장=진영·룬서클=환생). paranoia #1 3요소 충족. CSS = plat M8/M9 구현 스펙. ▶ 다음 = 편성·전투HUD·결과 화면 확장.</p>
-    </a>
-    <a class="card wip" href="sanity/battle-coherence-board.html">
-      <div class="k">★ 전투 화면 코히런스 (de-risk) — 다크 픽셀 난전 (통과 ✓)</div>
-      <h2>일러 META ⊥ 픽셀 BATTLE의 진짜 시험대 · 좌우 3v3 →</h2>
-      <p>"일러+픽셀 공존 괜찮나" 최종 검증. 다크 테마 전장 + 좌우 3v3 픽셀 난전(림라이트 아군청/적적) + 완전 HUD. 결론=통과: 난전 가독(paranoia #5) ✓·전투 자체 juicy(낚시 아님) ✓·2존이 화면 단위로 성립(전투 내 일러+픽셀 충돌 0) ✓. 조건=전투 배경 다크·픽셀 친화 유지. → 방향(일러 META+픽셀 전투) 확정 안전.</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-illustrated-board.html">
-      <div class="k">메인 허브 — 형태 확인 (구·텍스트 구운 배경 · main-hub-final로 대체됨)</div>
-      <h2>전황 테이블 배경 위 상단바·좌우 메뉴·스테이지 카드·골드 CTA →</h2>
-      <p>플레이스홀더 X — 실제 Gemini 배경 위에 UI를 배경 재질(룬석·브론즈·골드)로 스킨해 형태/배치/위계 시각 확인. 배경 요소=UI(노드=스테이지·인셋=전투·룬서클=환생·5문장=진영). ⚠ 배경 주석 텍스트=AI 아티팩트→깨끗한 재생성 필요. 크롬=형태 확인용 CSS(최종=일러스트 프로덕션).</p>
-    </a>
-    <a class="card wip" href="sanity/ui-coherence-check-board.html">
-      <div class="k">UI 코히런스 검증 — 전황 테이블 × 5 픽셀 유닛 (부합 O 조건부)</div>
-      <h2>일러스트 허브(META) ↔ 다크 픽셀 유닛(BATTLE) 한 게임으로 읽히나 →</h2>
-      <p>Gemini 생성 "전황 테이블" 메인 배경 × 기제작 5진영 키퍼 부합 실물 검증. 결론=부합 O — 세계(5문장 1:1 매칭)·2존(밝은 일러스트⊥다크 픽셀 인셋)·톤 정합 ✓. 단 ⚠ 충실도 갭 관리(유닛 다크 격리·포트레이트 일러스트·전투배경 톤 통일) + Machine 코어 시안 정합.</p>
-    </a>
-    <a class="card wip" href="sanity/ui-art-direction-board.html">
-      <div class="k">UI 아트디렉션 + Gemini 프롬프트 (4-에이전트·일러스트 · 전황테이블 선택됨)</div>
-      <h2>정체성: "차원 관문 앞 작전 지휘소·룬각석 콘솔" + 3방향 프롬프트 →</h2>
-      <p>플랫/픽셀 2안 반려(정체성 부재) → 4-에이전트 패널(경쟁작 분석·정체성 정의·컨셉 2). 근본=세계관 로어서 재질 역산(룬각석). 4 시그니처 무브·5세력 문장·2존 다크 인셋·∞폐기. 3방향(관문★/전황테이블/각석콘솔) + 바로 쓸 Gemini 프롬프트. ▶ 프롬프트로 생성→실물 비교. 인게임=픽셀 유지·UI=일러스트.</p>
-    </a>
-    <a class="card wip" href="sanity/ui-kit-pilot-board.html">
-      <div class="k">픽셀 UI 킷 파일럿 — (반려: 올드·제네릭·정체성 없음 → 일러스트로 전환)</div>
-      <h2>쿨 스톤 패널 + 골드/브론즈 각인 + 젬 버튼 →</h2>
-      <p>"플랫 CSS는 픽셀 게임과 재질 안 닿음"(사용자) → PixelLab create_ui_asset로 실제 픽셀 UI 킷 생성·스타일 검증. 밝은 쿨 판타지 지휘소 = 픽셀아트. ▶ 방향 OK면 개별 프로덕션 에셋(프레임/버튼/아이콘·한글) → 실제 하이브리드 메인 허브 조합.</p>
-    </a>
-    <a class="card wip" href="sanity/main-hub-visual-board.html">
-      <div class="k">UI 화면 비주얼 #1 — 메인 허브 (밝은 쿨·레이아웃 스펙 · 하이브리드 재조합 예정)</div>
-      <h2>상단 재화바 · 좌 강화/환생/업적 · 중앙 스테이지 코버플로우+전투 CTA · 우 미션/상점 →</h2>
-      <p>로고 파킹(B 확정·정밀화 보류) → UI 화면 비주얼 전환. 확정 와이어(§3)를 밝은 쿨 META 디자인 언어(§1/§2)로 프로덕션 목업. 2존(허브 밝은 쿨 ⊥ 스테이지 프리뷰 다크 인셋·적 림)·paranoia #1 3요소 충족·plat M8/M9 구현 spec. ▶ 다음 = 편성/전투HUD(다크)/메타 화면.</p>
-    </a>
-    <a class="card wip" href="sanity/logo-b-lane-clash-board.html">
-      <div class="k">로고 B 정밀화 — 레인 클래시 (실 캐릭터 · B 확정·정밀화 보류)</div>
-      <h2>아르덴(파랑 림) vs Necro(빨강 림) + 골드 충돌 →</h2>
-      <p>B 방향 선택 → v3 스키매틱 실루엣을 실제 픽셀 SD 캐릭터로 교체(아르덴 char 2b180175 · Necro 359fdc4a). 다크 전장·아군청/적적 림·"무한의 전장" 워드마크. 축소 가독 + 캐릭터 앱아이콘(권고 아르덴 포트레이트·텍스트 X). 매체게이트 #8 준수(실 스프라이트). ▶ 매치업/포즈/아이콘 정밀화 대기.</p>
-    </a>
-    <a class="card wip" href="sanity/logo-concept-board.html">
-      <div class="k">로고 컨셉 v3 — 무한의 전장 (5-에이전트 패널·∞ 폐기 · B 선택됨)</div>
-      <h2>A 다크포지(각인)★ · B 레인클래시 · C 차원균열 · D 각석문장 →</h2>
-      <p>ABC(v2) 전면 반려 → 5-에이전트 패널(아트디렉터 진단 + 경쟁작 12작 + 디자이너 3) 종합. ∞ 폐기·다크 정박·한글 "전장" 주인공·5세력 색 액센트·아이콘≠로고. 서로 다른 4축 + 앱아이콘 전략. 권고 = A 다크 포지(각인 한글·패널 수렴).</p>
-    </a>
-    <a class="card wip" href="sanity/unit-concept-sheets-board.html">
-      <div class="k">★ 5진영 일반 유닛 컨셉 시트 (P0 step 1 · 검토 대기)</div>
-      <h2>수호 방패병 · 피의 맹습자 · 숲의 수호자 · 과열 장갑병 · 야수의 발톱 →</h2>
-      <p>난전 진영 가독 P0 — 진영별 대표 로스터 유닛 1기씩 정체성·실루엣 언어·시그니처·off-unit 색·컨셉아트 프롬프트 시드(v2). ★ 공통 생성 가드(배경 제거·영웅 차별화·본체 도색 X — 사용자 피드백: Combat 졸병↔아르덴 중복 해소). form≠진영 인사이트·스코프(정적 먼저·애니 게이트 후). SoT = gdd Part 3.2 · units.json.</p>
-    </a>
-    <a class="card wip" href="sanity/art-direction-rethink-board.html">
-      <div class="k">★ 아트 방향 백지 재분석 — 4렌즈 패널 (결정 대기)</div>
-      <h2>테마 · 스타일 · 매체 · 배경 · UI · 로고 →</h2>
-      <p>"기존 결정 무시·새로 한다면?" 4렌즈(시장·아트·UI/UX·데블스) 병렬 종합. 정면 충돌 = 매체(appeal vs 1인 생산성). 권고 = 픽셀 고수 + 스타일 피벗(밝은-고채도-굵은아웃라인-치비 + 영웅 distinction) + $0 결정 테스트. CEO 인터뷰 4건 대기.</p>
-    </a>
-    <a class="card wip" href="sanity/arden-distinction-p0-board.html">
-      <div class="k">✅ 아르덴 풀세트 완성 — 6애니 + export</div>
-      <h2>아르덴 — 불검 백전노장 (인게임 에셋) →</h2>
-      <p>✅ 정본 확정. 6애니(idle 정면·walk·attack 오버헤드·skill 무릎+검 땅에 박기·hit·death) + 8방향 + export zip(60파일) + 포트레이트. 인게임 에셋 완비 → plat Unity 통합 대기. 파이프라인 = 36체 표준. SoT = ideas/2026-06-26-hero-theme-foundation-decisions.md.</p>
-    </a>
-    <a class="card archived" href="sanity/arden-skill-ab.html">
-      <div class="k">✅ 이력 — 아르덴 스킬 (C 확정)</div>
-      <h2>격류 호령 = 무릎+검 땅에 박기 →</h2>
-      <p>RESOLVED — C 확정(무릎 꿇고 양손 검 땅에 박기→땅 갈라짐·절제). A(팔 올림)·B(맨주먹) 기각. 정본 = 아르덴 풀세트 보드 skill. (A/B/C 비교 이력)</p>
-    </a>
-    <a class="card archived" href="sanity/arden-style-reference-board.html">
-      <div class="k">✅ 이력 — 스타일 레퍼런스 (픽셀 확정)</div>
-      <h2>치비 톤 레퍼런스 5종 →</h2>
-      <p>RESOLVED — 매체=픽셀·아르덴 정본 확정으로 종결. 레퍼런스/매체 결정 여정 이력. 확정 = 아르덴 풀세트 보드.</p>
-    </a>
-    <a class="card wip" href="sanity/meta-screens-wireframe-board.html">
-      <div class="k">메타 화면 (결정 대기)</div>
-      <h2>결과 · 강화 · 환생 · 업적 · 미션 · 상점 →</h2>
-      <p>그 외 전 메타 화면 재설계. 미션·상점 MVP 범위 = 리드 결정 대기.</p>
-    </a>
-    <a class="card archived" href="sanity/art-direction-board.html">
-      <div class="k">✅ 이력 — 아트 디렉션 재검토 (매체=픽셀 확정)</div>
-      <h2>레퍼런스 + 매체 결정 →</h2>
-      <p>RESOLVED — chibi·픽셀 확정(일러스트/3D 전환 철회). realistic→chibi 진단·레퍼런스 7종·매체 비교 이력. 확정 = 아르덴 풀세트 보드.</p>
-    </a>
-    <a class="card archived" href="sanity/arden-view-board.html">
-      <div class="k">✅ 이력 — 아르덴 view (side 채택·확정)</div>
-      <h2>side vs low top-down(3/4) →</h2>
-      <p>RESOLVED — side 채택·픽셀 확정(아르덴 정본 = side). 이 보드의 "부위 본생성→사람리깅" 경로는 폐기(파이프라인 = Characters→MCP animate). 이력 보존.</p>
+      <p>META 밝은 쿨 ⊥ BATTLE 다크. design-system §1(색)/§2(타이포·스페이싱·컴포넌트) 정초. 구 네온 폐기.</p>
     </a>
   </div>
 
   <div class="section">
-    <span class="label">디자인 · 확정</span>
+    <span class="num">②</span>
+    <span class="label">확정 · 시스템 & 와이어</span>
     <span class="rule"></span>
-    <span class="hint">승인 · 현행</span>
+    <span class="hint">승인 · SoT</span>
   </div>
-  <div class="cards">
-    <a class="card" href="sanity/legibility-gate-board.html">
-      <div class="k">✅ 난전 진영 가독 게이트 (P0 · 확정)</div>
-      <h2>전투 = 림라이트(아군/적 색) · 테마색 = 계획 UI →</h2>
-      <p>5진영 melee 키퍼 다크 전장 ~32px. 확정: C 림라이트(아군 #4FA3FF/적 #FF5B5B)+실루엣 / 테마 진영색 = 편성·유닛상세·텔레그래프 전용(전투 제외·클러터 회피). gdd off-unit 원칙 유지. 37 양산 룩 락.</p>
-    </a>
+  <div class="cards two">
     <a class="card" href="sanity/main-hud-wireframe-board.html">
       <div class="k">흐름 와이어</div>
       <h2>메인 · 편성 · 전투 HUD →</h2>
       <p>스테이지 선택 → 편성(확인/조정) → 전투. 흐름·레이아웃 확정. 난전 가독(paranoia #5).</p>
     </a>
+    <a class="card" href="sanity/commander-select-wireframe-board.html">
+      <div class="k">온보딩 영웅 선택</div>
+      <h2>아르덴 · 베스라 · 에이라 →</h2>
+      <p>첫 진입 3종 1택(추천·강제 없음)·덱 테마 글로우·kit 3슬롯. SoT = spec §6.B②/§8.</p>
+    </a>
+    <a class="card" href="sanity/meta-screens-wireframe-board.html">
+      <div class="k">메타 6화면 와이어</div>
+      <h2>결과 · 강화 · 환생 · 업적 · 미션 · 상점 →</h2>
+      <p>메타 화면 구조 SoT. 미션·상점 MVP 범위 = 리드 결정 대기.</p>
+    </a>
+    <a class="card" href="sanity/legibility-gate-board.html">
+      <div class="k">난전 진영 가독 게이트 (P0)</div>
+      <h2>전투 = 림라이트 · 테마색 = 계획 UI →</h2>
+      <p>C 림라이트(아군 #4FA3FF/적 #FF5B5B)+실루엣 채택. 테마색 = 편성·텔레그래프 전용. 37 양산 룩 락.</p>
+    </a>
     <a class="card" href="sanity/threat-formation-board.html">
-      <div class="k">위협 편성 (M2 step-1 게이트)</div>
+      <div class="k">위협 편성 (M2 게이트 통과)</div>
       <h2>5종 대표 편성 · bias · 별점 →</h2>
-      <p>위협 5종 대표 편성(37 미러 풀)·약점축 bias·카운터(5테마 색)·별점 매핑 + 보스 5테마(기존 3영웅 객원·D2 확정)·분포 곡선·하이브리드 저작. ✅ 게이트 통과(06-29)·plat step-2~5 양산 언블록. SoT = spec §7.0b-1/§2/§6.B⑥.</p>
+      <p>위협 5종·약점축 bias·카운터(5테마 색)·보스 5테마. plat step-2~5 양산 언블록.</p>
     </a>
     <a class="card" href="sanity/threat-telegraph-board.html">
       <div class="k">위협 텔레그래프</div>
       <h2>5 아키타입 라벨 · 아이콘 · 2축 언어 →</h2>
-      <p>철벽·러시·폭격·디버퍼·보스 — 색/아이콘/카운터 힌트·별점 자동매핑 디렉션. 카운터 매핑 = 5테마 영웅 정합. BattlePrepare ShowFormation 확장.</p>
-    </a>
-    <a class="card" href="sanity/commander-select-wireframe-board.html">
-      <div class="k">온보딩 영웅 선택</div>
-      <h2>아르덴 · 베스라 · 에이라 →</h2>
-      <p>첫 진입 영웅 3종 1택(추천·강제 없음)·선택 시 덱 테마 글로우·kit 3슬롯·해금 진척. SoT = spec §6.B②/§8.</p>
+      <p>철벽·러시·폭격·디버퍼·보스 — 색/아이콘/카운터 힌트·별점 매핑. ShowFormation 확장.</p>
     </a>
     <a class="card" href="sanity/color-tokens-board.html">
       <div class="k">색 토큰</div>
       <h2>5테마 + 시스템 팔레트 →</h2>
-      <p>5테마 색·피드백·진영·방어축·위협5 정식 토큰 + 색 충돌 회피 3건(Spirit/Machine/Beast). SoT = design-system.md §1.</p>
+      <p>5테마·피드백·진영·방어축·위협5 정식 토큰 + 충돌 회피 3건. SoT = design-system §1.</p>
     </a>
     <a class="card" href="sanity/juice-board.html">
       <div class="k">juice 룩</div>
@@ -234,45 +135,65 @@
   </div>
 
   <div class="section">
+    <span class="num">③</span>
+    <span class="label">확정 · 캐릭터 & 아트</span>
+    <span class="rule"></span>
+    <span class="hint">현행</span>
+  </div>
+  <div class="cards">
+    <a class="card" href="sanity/arden-distinction-p0-board.html">
+      <div class="k">✅ 아르덴 풀세트 (인게임 에셋)</div>
+      <h2>불검 백전노장 — 6애니 + 8방향 + 포트레이트 →</h2>
+      <p>정본 확정. 6애니(idle·walk·attack·skill·hit·death) + export(60파일). 36체 표준 파이프라인. plat Unity 통합 대기.</p>
+    </a>
+    <a class="card" href="sanity/unit-concept-sheets-board.html">
+      <div class="k">5진영 유닛 컨셉 시트</div>
+      <h2>방패병 · 맹습자 · 수호자 · 장갑병 · 발톱 →</h2>
+      <p>진영별 대표 1기 정체성·실루엣 언어·시그니처·off-unit 색·컨셉아트 프롬프트 시드. SoT = gdd Part 3.2.</p>
+    </a>
+    <a class="card" href="sanity/logo-b-lane-clash-board.html">
+      <div class="k">로고 B — 레인 클래시 (확정·정밀화 파킹)</div>
+      <h2>아르덴 vs Necro 실 캐릭터 + 골드 충돌 →</h2>
+      <p>B 방향 확정. 아군청/적적 림·"무한의 전장" 워드마크. 정밀화(매치업·포즈·앱아이콘)는 에셋 성숙 후.</p>
+    </a>
+  </div>
+
+  <div class="section">
+    <span class="num">④</span>
     <span class="label">자료 · 분석</span>
     <span class="rule"></span>
     <span class="hint">추적 · 진단</span>
   </div>
-  <div class="cards">
+  <div class="cards two">
     <a class="card" href="game-pitch.html">
-      <div class="k">★ 게임 소개서 / 기획서</div>
-      <h2>누가봐도 한눈에 — 컨셉·스타일·캐릭터·시스템 →</h2>
-      <p>게임 한 장 소개. 코어 루프·비주얼 아이덴티티(네온 메타 ⊥ 다크·5테마 색)·진영/캐릭터 컨셉(영웅 3 + 아르덴 실아트)·플레이 흐름(와이어)·핵심 시스템(시너지 8·위협 5·성장). 쇼케이스/공유용. 2026-06-30.</p>
+      <div class="k">게임 소개서 / 기획서</div>
+      <h2>한눈에 — 컨셉·스타일·캐릭터·시스템 →</h2>
+      <p>쇼케이스/공유용. 비주얼 아이덴티티 = 밝은 쿨 META ⊥ 다크 전장·5테마 색. 코어 루프·시너지·위협·성장.</p>
     </a>
     <a class="card" href="overview.html">
       <div class="k">게임 개요</div>
       <h2>한눈에 보기 — 전체 요약 →</h2>
-      <p>장르·코어 재미·플레이·유닛/영웅·전투 2축·시너지·성장 메타·경제·로드맵·미결. 종합 스냅샷.</p>
+      <p>장르·코어 재미·플레이·유닛/영웅·전투 2축·시너지·성장 메타·경제·로드맵. 종합 스냅샷.</p>
     </a>
     <a class="card" href="asset-tracker.html">
-      <div class="k">에셋 인벤토리 (✅ 픽셀 파이프라인 정합)</div>
+      <div class="k">에셋 인벤토리</div>
       <h2>필요 에셋 · 우선순위 →</h2>
-      <p>5카테고리 전체 + 현황 + 우선순위. 캐릭터 = 전체 생성(컨셉아트→PixelLab Characters→MCP animate·아르덴 ✅·부위/리깅/SPUM 폐기). 갱신 2026-06-30.</p>
+      <p>5카테고리 전체 + 현황 + 우선순위. 캐릭터 = 컨셉아트→PixelLab→MCP animate(아르덴 ✅). 갱신 2026-06-30.</p>
     </a>
     <a class="card" href="asset-store-recommendations.html">
-      <div class="k">에셋 스토어 도입 후보</div>
+      <div class="k">에셋 스토어 후보</div>
       <h2>Unity Asset Store 추천 (유/무료) →</h2>
-      <p>🟢 강력추천(오디오·DOTween·무료 인프라) · 🟡 추천(2D VFX·픽셀 배경·스타일 매칭 프리뷰) · 🔴 가드(캐릭터 X·UI 부분). 스타일 정합 원칙 + 우선순위. PM 리서치 2026-06-30.</p>
+      <p>🟢 오디오·DOTween · 🟡 2D VFX·픽셀 배경 · 🔴 캐릭터 X. 스타일 정합 원칙 + 우선순위.</p>
     </a>
     <a class="card" href="unit-codex.html">
       <div class="k">유닛 코덱스</div>
       <h2>유닛 스탯 · 스킬 →</h2>
       <p>전 37유닛 스탯·스킬. 파생 뷰(SoT=SO).</p>
     </a>
-    <a class="card" href="unit-redesign-board.html">
-      <div class="k">유닛 재설계 제안 · 리뷰</div>
-      <h2>이름·스킬·스탯·태그 (CEO 리뷰) →</h2>
-      <p>38종 현재→제안 한눈에. 변경강도 색코딩(유지11·라벨10·신규16)·시너지/텔레그래프 정합·태그 신규. SoT=unit-redesign-proposal.md.</p>
-    </a>
     <a class="card" href="balance-report.html">
       <div class="k">밸런싱 보고서</div>
       <h2>유닛 · 스테이지 · 경제 →</h2>
-      <p>파워버짓·난이도 곡선·경제 분석. 구조 결함 3 + 버그 2.</p>
+      <p>파워버짓·난이도 곡선·경제 분석.</p>
     </a>
     <a class="card" href="audit/">
       <div class="k">정밀 감사</div>
@@ -282,22 +203,69 @@
   </div>
 
   <div class="section">
-    <span class="label">구버전</span>
+    <span class="num">⑤</span>
+    <span class="label">이력 (archive)</span>
     <span class="rule"></span>
-    <span class="hint">대체됨 · 참고용</span>
+    <span class="hint">대체됨 · rejected 옵션 참고용</span>
   </div>
-  <div class="cards">
+  <div class="cards two">
+    <a class="card archived" href="sanity/logo-concept-board.html">
+      <div class="k">로고 v3 (∞ 폐기 · B 선택됨)</div>
+      <h2>A 다크포지 · B 레인클래시 · C 차원균열 · D 각석문장</h2>
+      <p>5-에이전트 패널. ∞ 폐기·한글 주인공. B 채택 이력.</p>
+    </a>
+    <a class="card archived" href="sanity/art-direction-rethink-board.html">
+      <div class="k">아트 방향 백지 재분석</div>
+      <h2>4렌즈 패널 (시장·아트·UX·데블스)</h2>
+      <p>픽셀 고수 + 스타일 피벗(치비) 결론 이력.</p>
+    </a>
+    <a class="card archived" href="sanity/art-direction-board.html">
+      <div class="k">아트 디렉션 (매체=픽셀 확정)</div>
+      <h2>레퍼런스 + 매체 결정</h2>
+      <p>realistic→chibi·픽셀 확정 여정. 확정 = 아르덴 풀세트.</p>
+    </a>
+    <a class="card archived" href="sanity/ui-art-direction-board.html">
+      <div class="k">UI 아트디렉션 (일러 전환)</div>
+      <h2>정체성 정의 + Gemini 프롬프트</h2>
+      <p>플랫/픽셀 반려 → 일러스트 UI 방향 도출 이력.</p>
+    </a>
+    <a class="card archived" href="sanity/arden-view-board.html">
+      <div class="k">아르덴 view (side 확정)</div>
+      <h2>side vs low top-down</h2>
+      <p>side 채택. 부위→리깅 경로는 폐기(파이프라인=Characters→MCP).</p>
+    </a>
+    <a class="card archived" href="sanity/arden-skill-ab.html">
+      <div class="k">아르덴 스킬 (C 확정)</div>
+      <h2>격류 호령 = 무릎+검 땅에 박기</h2>
+      <p>C 확정·A/B 기각. 정본 = 아르덴 풀세트.</p>
+    </a>
+    <a class="card archived" href="sanity/arden-style-reference-board.html">
+      <div class="k">스타일 레퍼런스 (픽셀 확정)</div>
+      <h2>치비 톤 레퍼런스 5종</h2>
+      <p>매체=픽셀 결정 여정.</p>
+    </a>
+    <a class="card archived" href="sanity/battle-coherence-board.html">
+      <div class="k">전투 코히런스 (통과)</div>
+      <h2>일러 META ⊥ 픽셀 BATTLE de-risk</h2>
+      <p>일러+픽셀 공존 방향 확정 판정 이력.</p>
+    </a>
     <a class="card archived" href="sanity/flow-wireframe-board.html">
       <div class="k">7화면 플로우 (초안)</div>
-      <h2>인트로→메인→편성→전투→결과→강화→환생 →</h2>
-      <p>메인 영웅 로스터 전제 폐기 → 「흐름 와이어」로 대체. 7화면 개관 참고용.</p>
+      <h2>인트로→메인→편성→전투→결과→강화→환생</h2>
+      <p>흐름 와이어로 대체. 개관 참고용.</p>
+    </a>
+    <a class="card archived" href="unit-redesign-board.html">
+      <div class="k">유닛 재설계 제안 (흡수 완료)</div>
+      <h2>이름 · 스킬 · 스탯 · 태그</h2>
+      <p>spec §8.0 흡수 완료. 현행 뷰 = 유닛 코덱스.</p>
     </a>
   </div>
 
   <p class="note">
-    갱신 2026-06-30 · 디자인 보드 레포 = infinite-warfield-design (공개·GitHub Pages)<br>
+    갱신 2026-07-01 · 정리(41차 후): 45→35 보드 · 사장 반복 10 삭제(~14MB 회수·git 복구 가능)<br>
+    디자인 보드 레포 = infinite-warfield-design (공개·GitHub Pages)<br>
     SoT(.md) = projects/infinite-warfield/design/ · spec/PLAN = projects/infinite-warfield/<br>
-    진행 중 = 비활성(점선) · 확정 = 활성 · 고아 0 (check_orphans.sh pre-commit 강제)
+    이력(⑤) = 대체됨·점선 표기 · 고아 0 (check_orphans.sh pre-commit 강제)
   </p>
 </div>
 </body>
