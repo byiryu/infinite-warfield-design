@@ -71,20 +71,20 @@ body{margin:0;color:var(--ink);font-family:var(--body);line-height:1.6;backgroun
 .center{position:absolute;left:18%;right:18%;top:16%;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4%}
 .cf{display:flex;align-items:center;justify-content:center;gap:2%;width:100%}
 .card{border-radius:14px;overflow:hidden;flex:none;box-shadow:var(--shadow);border:1px solid var(--line2)}
-.card.side{width:16%;aspect-ratio:3/4;opacity:.5;filter:saturate(.7);transform:scale(.9)}
+.card.side{width:12%;aspect-ratio:3/4;opacity:.5;filter:saturate(.7);transform:scale(.9)}
 .card.side .thumb{height:100%}
-.card.cur{width:46%;aspect-ratio:16/11;border:2px solid var(--gold);box-shadow:0 8px 26px rgba(240,153,45,.24),0 0 0 1px var(--gold)}
+.card.cur{width:56%;aspect-ratio:16/12;border:2px solid var(--gold);box-shadow:0 8px 26px rgba(240,153,45,.24),0 0 0 1px var(--gold)}
 .thumb{position:relative;background:linear-gradient(180deg,#1b2431,#0d1117);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
-.card.cur .thumb{height:64%}
+.card.cur .thumb{height:56%}
 .thumb .glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 90%,rgba(157,62,232,.4),transparent 65%)}
 .thumb .en{position:relative;z-index:2;width:22%;height:60%;margin-bottom:6%;border-radius:40% 40% 30% 30%;background:#05070a;box-shadow:0 0 0 2px var(--enemy,#FF5B5B),0 0 8px rgba(255,91,91,.5)}
 .thumb .en2{width:15%;height:44%;opacity:.8}
 .thumb .rim{position:absolute;bottom:6%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(240,153,45,.5),transparent)}
-.card.cur .info{height:36%;background:#fff;padding:3% 5%;display:flex;flex-direction:column;justify-content:center;gap:3%}
-.stg{display:flex;align-items:baseline;gap:8px}
-.stg .no{font-family:var(--disp);font-size:clamp(16px,2.6vw,30px);color:var(--ink);line-height:.9}
-.stg .th{font-family:var(--tech);font-weight:700;font-size:clamp(9px,1.2vw,13px);color:var(--necro);background:rgba(157,62,232,.12);border-radius:6px;padding:2px 8px}
-.threat{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--tech);font-size:clamp(8px,1.05vw,11px)}
+.card.cur .info{height:44%;background:#fff;padding:2.6% 5%;display:flex;flex-direction:column;justify-content:center;gap:5%}
+.stg{display:flex;align-items:center;gap:2.5%;flex-wrap:nowrap}
+.stg .no{font-family:var(--disp);font-size:clamp(15px,2.3vw,26px);color:var(--ink);line-height:.95;white-space:nowrap;flex:none}
+.stg .th{font-family:var(--tech);font-weight:700;font-size:clamp(8px,1.05vw,12px);color:var(--necro);background:rgba(157,62,232,.12);border-radius:6px;padding:3px 9px;white-space:nowrap}
+.threat{display:flex;gap:8px;flex-wrap:wrap;font-family:var(--tech);font-size:clamp(8px,1.05vw,11px)}
 .threat .t{display:flex;align-items:center;gap:3px;color:var(--muted)}
 .threat .t b{color:var(--ink)}
 .threat .dot{width:7px;height:7px;border-radius:2px;display:inline-block}
@@ -175,7 +175,7 @@ small.note2{display:block;color:var(--dim);font-family:var(--tech);font-size:10.
   <!-- annotation pins -->
   <div class="pin" style="top:2.5%;right:1.5%">① 진행 티저 (재화·환생)</div>
   <div class="pin" style="top:46%;left:50%;transform:translateX(-50%)">② 스테이지 여정 = 1화면 1주인공</div>
-  <div class="pin" style="bottom:15%;left:50%;transform:translateX(-50%)"><b>③ 주 CTA</b> 골드 지배·엄지존</div>
+  <div class="pin" style="bottom:2.5%;left:50%;transform:translateX(-50%)"><b>③ 주 CTA</b> 골드 지배·엄지존</div>
  </div>
 </div>
 <small class="note2">가로 16:9 · 실제 폰에선 풀스크린 · 상단바 재화/환생 · 좌 강화·환생·업적 / 우 미션·상점 · 중앙 스테이지 코버플로우 + 전투 CTA (영웅 프레즌스 폐기·덱은 편성에서)</small>
