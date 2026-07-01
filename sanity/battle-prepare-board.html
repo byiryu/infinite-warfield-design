@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>편성 화면 프로덕션 목업 · infinite warfield</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --panel-chrome:#161F2B;--panel-deep:#0F1620;--dark-panel:#141B22;--dark-bg:#0D1117;
+    --bronze:#B89B5E;--bronze-lo:#7c6838;--gold:#FFD24D;--gold-deep:#F0992D;--cream:#F3E6C4;--ink:#4A2C05;
+    --friend:#4FA3FF;--enemy:#FF5B5B;
+    --necro:#9D3EE8;--combat:#E03A5C;--spirit:#5DDD7E;--machine:#00D4FF;--beast:#E06B14;
+    --fortress:#8AB4FF;--armor:#4FA3FF;--magic:#C87FFF;
+    --txt:#E6ECF3;--muted:#8FA0B4;--line:#2d383f;--ground:#0c1116;--card:#151d27;
+    --sans:'Pretendard',ui-sans-serif,system-ui,sans-serif;--display:'Cinzel',serif;--num:'Chakra Petch',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--ground);color:var(--txt);font-family:var(--sans);line-height:1.55;padding:44px 20px 90px}
+  .wrap{max-width:1160px;margin:0 auto}
+  .eyebrow{font-family:var(--num);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(24px,4.4vw,36px);font-weight:800;letter-spacing:-.01em;margin:8px 0 0}
+  .sub{color:var(--muted);font-size:14px;margin-top:10px;max-width:760px}
+  .status{font-family:var(--num);font-size:11px;color:var(--gold);margin-top:8px}
+  .backlink{font-family:var(--num);font-size:11px;color:var(--friend);text-decoration:none}
+
+  /* ===== 목업 스크린 (16:9 · cqw 비례 스케일) ===== */
+  .frame{margin:26px 0 0;border:1px solid var(--line);border-radius:12px;padding:14px;background:#0a0e13}
+  .screen{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;
+    container-type:inline-size;
+    background:
+      radial-gradient(120% 90% at 50% 8%, rgba(157,62,232,.20), transparent 55%),
+      radial-gradient(90% 70% at 50% 96%, rgba(120,40,180,.16), transparent 60%),
+      linear-gradient(180deg,#0e0a16,#0a0710 60%,#0c0912)}
+  .screen::after{content:"";position:absolute;inset:0;background:radial-gradient(140% 100% at 50% 40%,transparent 60%,rgba(0,0,0,.5));pointer-events:none}
+
+  /* 상단 바 */
+  .topbar{position:absolute;top:0;left:0;right:0;height:8.4cqw;display:flex;align-items:center;justify-content:space-between;
+    padding:0 2cqw;z-index:5;
+    background:linear-gradient(180deg,rgba(15,22,32,.94),rgba(15,22,32,.55));border-bottom:.15cqw solid rgba(184,155,94,.4)}
+  .tb-left{display:flex;align-items:center;gap:1.6cqw}
+  .back{display:flex;align-items:center;gap:.4cqw;height:5cqw;padding:0 1.5cqw;border-radius:1.4cqw;font-family:var(--num);
+    font-size:1.55cqw;color:var(--cream);background:linear-gradient(180deg,#26313f,#141c26);border:.18cqw solid var(--bronze);cursor:pointer}
+  .stage{display:flex;flex-direction:column;line-height:1.15}
+  .stage .s-name{font-family:var(--display);font-size:2.2cqw;font-weight:800;color:#fff}
+  .stage .s-sub{font-family:var(--num);font-size:1.35cqw;color:var(--necro);letter-spacing:.04em;filter:brightness(1.35)}
+  .tb-right{display:flex;gap:1cqw}
+  .chip{display:inline-flex;align-items:center;gap:.55cqw;height:4.6cqw;padding:0 1.3cqw 0 .8cqw;border-radius:2.6cqw;
+    font-family:var(--num);font-weight:600;font-size:1.55cqw;color:var(--cream);
+    background:linear-gradient(180deg,#1c2634,#111925);border:.16cqw solid var(--bronze)}
+  .chip svg{width:2.3cqw;height:2.3cqw}
+  .chip.reborn{background:linear-gradient(135deg,rgba(150,70,220,.85),rgba(90,40,150,.85));border-color:#c79bf0}
+
+  /* 본문 그리드 */
+  .body{position:absolute;top:8.4cqw;left:0;right:0;bottom:0;display:grid;grid-template-columns:62fr 38fr;gap:1.4cqw;padding:1.6cqw;z-index:3}
+  .col{display:flex;flex-direction:column;gap:1.3cqw;min-height:0}
+  .panel{background:linear-gradient(180deg,rgba(22,31,43,.92),rgba(15,22,32,.92));border:.16cqw solid rgba(184,155,94,.55);
+    border-radius:1.4cqw;padding:1.2cqw 1.3cqw;display:flex;flex-direction:column;min-height:0;
+    box-shadow:0 .4cqw 1.4cqw rgba(0,0,0,.4)}
+  .p-head{display:flex;align-items:center;gap:.8cqw;font-weight:800;font-size:1.75cqw;color:#fff;margin-bottom:.8cqw}
+  .p-head .cnt{font-family:var(--num);font-size:1.4cqw;color:var(--muted);font-weight:600}
+  .p-head .spacer{flex:1}
+
+  /* 시너지 필 */
+  .syn{display:inline-flex;align-items:center;font-family:var(--num);font-size:1.35cqw;font-weight:700;
+    height:2.7cqw;padding:0 1cqw;border-radius:1.4cqw;letter-spacing:.02em}
+  .syn.spirit{color:#0c2b18;background:var(--spirit)}
+  .syn.combat{color:#fff;background:rgba(224,58,92,.85);border:.14cqw solid #ff6f8a}
+
+  /* 덱 슬롯 */
+  .deck-panel{flex:1.05}
+  .slots{display:flex;gap:1.1cqw;flex:1;align-items:stretch}
+  .slot{flex:1;position:relative;border-radius:1.2cqw;background:linear-gradient(180deg,#0f151d,#0b1018);
+    border:.16cqw solid #263140;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+  .slot .idx{position:absolute;top:.4cqw;left:.5cqw;font-family:var(--num);font-size:1.15cqw;color:#5f6f80;z-index:2}
+  .unit{flex:1;display:flex;align-items:flex-end;justify-content:center;position:relative;padding-top:1cqw}
+  .fig{width:5.4cqw;height:6.4cqw;position:relative;margin-bottom:.3cqw}
+  .fig .head{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2.4cqw;height:2.4cqw;border-radius:50%;background:#6a7686}
+  .fig .torso{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:4cqw;height:4.2cqw;border-radius:1.2cqw 1.2cqw .5cqw .5cqw;background:#59636f}
+  .friend .fig .head,.friend .fig .torso{filter:drop-shadow(0 0 .1cqw #fff)}
+  .friend{box-shadow:inset 0 0 0 .28cqw var(--friend),inset 0 0 2.2cqw rgba(79,163,255,.30)}
+  .enemy-rim{box-shadow:inset 0 0 0 .28cqw var(--enemy),inset 0 0 2.2cqw rgba(255,91,91,.30)}
+  .slot .meta{background:rgba(9,13,18,.9);padding:.5cqw .4cqw;text-align:center;border-top:.14cqw solid #202a36}
+  .slot .nm{font-size:1.35cqw;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .slot .cost{font-family:var(--num);font-size:1.3cqw;color:var(--gold);font-weight:700}
+  .tdot{position:absolute;top:.5cqw;right:.5cqw;width:1.5cqw;height:1.5cqw;border-radius:50%;border:.16cqw solid rgba(255,255,255,.7);z-index:2}
+  .hero-slot{border-color:var(--gold);box-shadow:0 0 2cqw rgba(255,210,77,.28)}
+  .hero-badge{position:absolute;top:.45cqw;left:50%;transform:translateX(-50%);font-family:var(--num);font-size:1.05cqw;font-weight:700;
+    color:var(--ink);background:linear-gradient(180deg,#ffe684,var(--gold-deep));padding:.15cqw .8cqw;border-radius:1cqw;z-index:3;letter-spacing:.06em}
+  .slot.empty{border-style:dashed;border-color:#38414d;background:rgba(255,255,255,.015);align-items:center;justify-content:center}
+  .slot.empty .plus{font-size:4cqw;color:#4a5666;font-weight:300;line-height:1}
+  .slot.empty .add{font-family:var(--num);font-size:1.3cqw;color:#5a6675;margin-top:.4cqw}
+
+  /* 로스터 */
+  .roster-panel{flex:.85}
+  .filters{display:flex;gap:.6cqw}
+  .filters .f{font-family:var(--num);font-size:1.25cqw;padding:.35cqw 1cqw;border-radius:1.2cqw;color:var(--muted);
+    background:rgba(255,255,255,.04);border:.14cqw solid #28323f;cursor:pointer}
+  .filters .f.on{color:var(--ink);background:linear-gradient(180deg,#ffe684,var(--gold-deep));border-color:#fff2c8;font-weight:700}
+  .roster-scroll{flex:1;overflow-x:auto;overflow-y:hidden;display:grid;grid-auto-flow:column;grid-template-rows:1fr 1fr;
+    gap:.9cqw;padding:.3cqw .3cqw 1cqw;scrollbar-width:thin;scrollbar-color:var(--bronze) transparent}
+  .roster-scroll::-webkit-scrollbar{height:.9cqw}
+  .roster-scroll::-webkit-scrollbar-thumb{background:var(--bronze);border-radius:1cqw}
+  .rc{width:8.6cqw;position:relative;border-radius:1cqw;background:linear-gradient(180deg,#1a2330,#10161f);border:.15cqw solid #2a3542;
+    display:flex;flex-direction:column;overflow:hidden;cursor:pointer}
+  .rc .rfig{height:4.6cqw;display:flex;align-items:flex-end;justify-content:center;position:relative;background:rgba(8,12,17,.6)}
+  .rc .rfig .fig{width:3.6cqw;height:4.4cqw;margin-bottom:.2cqw}
+  .rc .rfig .fig .head{width:1.7cqw;height:1.7cqw}.rc .rfig .fig .torso{width:2.8cqw;height:2.9cqw}
+  .rc .rmeta{padding:.35cqw .4cqw;text-align:center;background:rgba(9,13,18,.85)}
+  .rc .rnm{font-size:1.15cqw;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rc .rcost{font-family:var(--num);font-size:1.15cqw;color:var(--gold);font-weight:700}
+  .rc .tdot{width:1.2cqw;height:1.2cqw;top:.4cqw;right:.4cqw}
+  .rc.locked{filter:grayscale(.8) brightness(.5)}
+  .rc .lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3}
+  .rc .lock svg{width:2.6cqw;height:2.6cqw;color:#c3ccd6}
+  .rc .newb{position:absolute;top:.35cqw;left:.35cqw;font-family:var(--num);font-size:1cqw;font-weight:800;letter-spacing:.05em;
+    color:#0c2b18;background:var(--spirit);padding:.1cqw .55cqw;border-radius:.7cqw;z-index:3}
+  .rc.in-deck{opacity:.45}
+  .rc.in-deck::after{content:"편성됨";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--num);font-size:1.15cqw;color:#fff;background:rgba(9,13,18,.55);z-index:2}
+
+  /* 적 편성 + 위협 */
+  .enemy-panel{flex:0 1 auto;min-height:0}
+  .formation{flex:0 0 auto;display:flex;flex-direction:column;gap:.35cqw;justify-content:center;
+    background:radial-gradient(90% 80% at 70% 40%,rgba(255,91,91,.10),transparent);border-radius:1cqw;padding:.55cqw .6cqw;margin-bottom:.7cqw}
+  .frow{display:flex;gap:.7cqw;justify-content:center}
+  .frow.back{opacity:.92}
+  .eu{width:3.6cqw;height:4.1cqw;border-radius:.8cqw;background:linear-gradient(180deg,#1a1013,#120b0d);position:relative;
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:.22cqw}
+  .eu .fig{width:2.5cqw;height:3.1cqw}.eu .fig .head{width:1.25cqw;height:1.25cqw;background:#8a6b6f}.eu .fig .torso{width:1.95cqw;height:2cqw;background:#6f5257}
+  .frow-lbl{font-family:var(--num);font-size:1.1cqw;color:var(--muted);text-align:center}
+  .threat{flex:0 0 auto;background:rgba(11,16,22,.75);border:.15cqw solid rgba(138,180,255,.5);border-radius:1cqw;padding:.8cqw}
+  .th-head{display:flex;align-items:center;gap:.6cqw;font-weight:800;font-size:1.5cqw;color:var(--fortress);margin-bottom:.5cqw}
+  .th-head .ic{width:2.2cqw;height:2.2cqw;display:flex;align-items:center;justify-content:center;border-radius:.6cqw;
+    background:rgba(138,180,255,.16);border:.14cqw solid var(--fortress)}
+  .th-head .ic svg{width:1.6cqw;height:1.6cqw;color:var(--fortress)}
+  .axes{display:flex;flex-direction:column;gap:.4cqw;margin-bottom:.6cqw}
+  .axis{display:flex;align-items:center;gap:.6cqw;font-family:var(--num);font-size:1.2cqw}
+  .axis .albl{width:10cqw;color:var(--muted)}
+  .axis .bar{flex:1;height:1cqw;border-radius:1cqw;background:rgba(255,255,255,.06);overflow:hidden}
+  .axis .fill{height:100%;border-radius:1cqw}
+  .axis.armor .fill{background:var(--armor)}.axis.magic .fill{background:var(--magic)}
+  .axis .val{font-weight:700;width:5cqw;text-align:right}
+  .hint{font-size:1.25cqw;color:#dfe6ee;background:rgba(79,163,255,.10);border-left:.3cqw solid var(--armor);
+    padding:.5cqw .7cqw;border-radius:.6cqw;margin-bottom:.6cqw}
+  .hint b{color:var(--armor)}
+  .counters{display:flex;flex-wrap:wrap;gap:.4cqw;align-items:center}
+  .counters .clbl{font-family:var(--num);font-size:1.1cqw;color:var(--muted)}
+  .cchip{font-family:var(--num);font-size:1.1cqw;font-weight:700;padding:.2cqw .7cqw;border-radius:1cqw;color:#fff}
+
+  /* CTA 블록 (우하단) */
+  .cta-block{display:flex;flex-direction:column;align-items:flex-end;gap:.6cqw;margin-top:auto}
+  .cancel{font-family:var(--num);font-size:1.4cqw;color:var(--muted);background:transparent;border:.15cqw dashed #46515e;
+    padding:.5cqw 1.6cqw;border-radius:1.2cqw;cursor:pointer}
+  .cta{display:inline-flex;align-items:center;gap:.8cqw;padding:1.15cqw 2.8cqw;border-radius:1.5cqw;cursor:pointer;
+    background:linear-gradient(180deg,#FFE684,var(--gold-deep));border:.22cqw solid #fff2c8;color:var(--ink);
+    font-family:var(--display);font-size:2.3cqw;font-weight:800;letter-spacing:.02em;
+    box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.45);animation:pulse 2.4s ease-in-out infinite}
+  .cta svg{width:2.4cqw;height:2.4cqw}
+  @keyframes pulse{0%,100%{box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.4)}50%{box-shadow:0 .5cqw 3.4cqw rgba(255,190,70,.72)}}
+
+  /* ===== 주석 ===== */
+  .section{display:flex;align-items:baseline;gap:10px;margin:40px 0 6px}
+  .section .num{font-family:var(--num);font-size:12px;color:var(--gold);font-weight:700}
+  .section .label{font-family:var(--num);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+  .section .rule{flex:1;height:1px;background:var(--line)}
+  .notes{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:14px}
+  @media(max-width:720px){.notes{grid-template-columns:1fr}}
+  .n{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .n .k{font-family:var(--num);font-size:11px;letter-spacing:.06em;color:var(--gold);font-weight:700}
+  .n h3{font-size:15px;margin:5px 0 4px}
+  .n p{font-size:13px;color:var(--muted)}
+  .n p b{color:var(--txt)}
+  .swatch{display:inline-block;width:9px;height:9px;border-radius:2px;vertical-align:middle;margin-right:3px}
+  .note{margin-top:38px;font-family:var(--num);font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.9}
+  .note a{color:var(--friend)}
+</style>
+</head>
+<body>
+<!-- UI 킷 아이콘 소스 (design/ui-kit-icons.svg) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-battle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l9 9"/><path d="M20 4l-9 9"/><path d="M13 13l3 3"/><path d="M11 13l-3 3"/><path d="M3.5 18.5l2 2"/><path d="M20.5 18.5l-2 2"/></g></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor"/><circle cx="12" cy="12" r="6" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2"/></symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l3 6-9 12L3 9z" fill="currentColor"/><path d="M3 9h18M9 3l3 6 3-6M12 21l-3-12M12 21l3-12" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1.4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.3"/></symbol>
+  <symbol id="i-fortress" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <a class="backlink" href="../index.html">‹ 디자인 보드</a>
+  <div class="eyebrow" style="margin-top:14px">byiryu studio · 편성 · Battle Prepare</div>
+  <h1>편성 화면 — 프로덕션 목업</h1>
+  <p class="sub">확정 흐름(스테이지 선택 → <b>편성(확인/조정)</b> → 전투)의 핵심 화면. 확정 UI 킷(다크 크롬·브론즈·골드 CTA·아이콘)을 편성 레이아웃에 적용한 plat M8/M9 구현 스펙. 유닛 = 림라이트 placeholder(최종 = 실 스프라이트).</p>
+  <p class="status">● 검토 대기 · Necro 테마 스테이지 예시 · 가로 1280×720 기준 (폰에서 로스터 실제 가로 스크롤)</p>
+
+  <div class="frame">
+    <div class="screen">
+      <!-- 상단 바 -->
+      <div class="topbar">
+        <div class="tb-left">
+          <button class="back">‹ 뒤로</button>
+          <div class="stage"><span class="s-name">납골 대전당</span><span class="s-sub">구역 3 · 스테이지 3-7</span></div>
+        </div>
+        <div class="tb-right">
+          <div class="chip"><svg style="color:var(--gold)"><use href="#i-coin"/></svg>124,800</div>
+          <div class="chip"><svg style="color:#c9d4e0"><use href="#i-coin"/></svg>2,340</div>
+          <div class="chip reborn"><svg style="color:#e7d2ff"><use href="#i-gem"/></svg>28</div>
+        </div>
+      </div>
+
+      <!-- 본문 -->
+      <div class="body">
+        <!-- 좌: 내 덱 + 로스터 -->
+        <div class="col">
+          <div class="panel deck-panel">
+            <div class="p-head">내 덱
+              <span class="syn spirit">정령 2/4</span>
+              <span class="syn combat">전투 2</span>
+              <span class="spacer"></span>
+              <span class="cnt">5 슬롯 · 코스트 소환</span>
+            </div>
+            <div class="slots">
+              <!-- 0 = 영웅 전용 -->
+              <div class="slot hero-slot">
+                <div class="idx">0</div><div class="hero-badge">영웅</div>
+                <span class="tdot" style="background:var(--combat)"></span>
+                <div class="unit friend"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+                <div class="meta"><div class="nm">아르덴</div><div class="cost">— 고정</div></div>
+              </div>
+              <div class="slot">
+                <div class="idx">1</div><span class="tdot" style="background:var(--spirit)"></span>
+                <div class="unit friend"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+                <div class="meta"><div class="nm">숲의 수호자</div><div class="cost">3</div></div>
+              </div>
+              <div class="slot">
+                <div class="idx">2</div><span class="tdot" style="background:var(--spirit)"></span>
+                <div class="unit friend"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+                <div class="meta"><div class="nm">정령술사</div><div class="cost">4</div></div>
+              </div>
+              <div class="slot">
+                <div class="idx">3</div><span class="tdot" style="background:var(--combat)"></span>
+                <div class="unit friend"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+                <div class="meta"><div class="nm">수호 방패병</div><div class="cost">2</div></div>
+              </div>
+              <div class="slot empty">
+                <div class="idx">4</div><div class="plus">+</div><div class="add">탭 → 추가</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel roster-panel">
+            <div class="p-head" style="margin-bottom:.7cqw">보유 유닛 <span class="cnt">· 23 / 37</span>
+              <span class="spacer"></span>
+              <div class="filters"><span class="f on">전체</span><span class="f">탱커</span><span class="f">딜러</span><span class="f">서포터</span></div>
+            </div>
+            <div class="roster-scroll">
+              <div class="rc"><span class="newb">NEW</span><span class="tdot" style="background:var(--beast)"></span><div class="rfig"><div class="fig friend" style="box-shadow:none"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">야수의 발톱</div><div class="rcost">2</div></div></div>
+              <div class="rc in-deck"><span class="tdot" style="background:var(--combat)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">수호 방패병</div><div class="rcost">2</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--necro)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">피의 맹습자</div><div class="rcost">3</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--machine)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">과열 장갑병</div><div class="rcost">4</div></div></div>
+              <div class="rc in-deck"><span class="tdot" style="background:var(--spirit)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">정령술사</div><div class="rcost">4</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--combat)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">창병</div><div class="rcost">2</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--necro)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">사령술사</div><div class="rcost">5</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--machine)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">포격 드론</div><div class="rcost">3</div></div></div>
+              <div class="rc in-deck"><span class="tdot" style="background:var(--spirit)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">숲의 수호자</div><div class="rcost">3</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--beast)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">늑대 기수</div><div class="rcost">3</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--combat)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">궁수</div><div class="rcost">2</div></div></div>
+              <div class="rc"><span class="tdot" style="background:var(--necro)"></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">역병술사</div><div class="rcost">4</div></div></div>
+              <div class="rc locked"><div class="lock"><svg><use href="#i-lock"/></svg></div><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">???</div><div class="rcost">—</div></div></div>
+              <div class="rc locked"><div class="lock"><svg><use href="#i-lock"/></svg></div><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">???</div><div class="rcost">—</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우: 적 편성 + 위협 + CTA -->
+        <div class="col">
+          <div class="panel enemy-panel">
+            <div class="p-head">적 편성 <span class="cnt">· 미리보기</span></div>
+            <div class="formation">
+              <div class="frow-lbl">후열 (원거리·서포트)</div>
+              <div class="frow back">
+                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+              </div>
+              <div class="frow">
+                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+              </div>
+              <div class="frow-lbl">전열 (중장갑 벽)</div>
+            </div>
+            <div class="threat">
+              <div class="th-head"><span class="ic"><svg><use href="#i-fortress"/></svg></span>철벽 · 중장갑(물리방어)</div>
+              <div class="axes">
+                <div class="axis armor"><span class="albl">물리방어</span><div class="bar"><div class="fill" style="width:86%"></div></div><span class="val" style="color:var(--armor)">높음</span></div>
+                <div class="axis magic"><span class="albl">마법저항</span><div class="bar"><div class="fill" style="width:24%"></div></div><span class="val" style="color:var(--magic)">낮음</span></div>
+              </div>
+              <div class="hint">→ <b>마법 딜러·방어무시</b> 유닛 추천 (물리 딜은 튕김)</div>
+              <div class="counters"><span class="clbl">카운터</span>
+                <span class="cchip" style="background:var(--necro)">부패</span>
+                <span class="cchip" style="background:var(--spirit)">마법딜</span>
+                <span class="cchip" style="background:var(--machine);color:#06303a">관통</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-block">
+            <button class="cancel">취소</button>
+            <button class="cta"><svg><use href="#i-battle"/></svg>전투 시작</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 설계 논리 ===== -->
+  <div class="section"><span class="num">◆</span><span class="label">설계 논리 (확정 SoT = wireframes §5)</span><span class="rule"></span></div>
+  <div class="notes">
+    <div class="n"><div class="k">확인 / 조정 모델</div><h3>덱은 유지(persist) · 1탭 전투 시작</h3><p>지난 전투 덱 그대로 → 적 위협 보고 <b>바꾸고 싶을 때만</b> 조정. 백지 재구성 강제 X = 반복 그라인딩 마찰 보호. 덱은 여기서만 짠다(메인 사전 편성 없음).</p></div>
+    <div class="n"><div class="k">공간 멘탈 모델</div><h3>좌 = 내 덱 · 우 = 적 (전투와 일치)</h3><p>전투의 아군 좌·적 우와 좌우 정합. 덱 영역 우선(~62%·주 인터랙션·슬롯 크게) / 적 진형 = 참조(~38% 컴팩트).</p></div>
+    <div class="n"><div class="k">로스터</div><h3>덱 하단 2줄 가로 스크롤</h3><p>보유 37유닛 → 1줄은 스크롤 과다 → <b>2줄</b>. 탭 → 빈 슬롯 편입 · 신규 해금 <span class="swatch" style="background:var(--spirit)"></span>NEW · 미해금 🔒 · 편성된 유닛 dim. 별도 도감 화면 없음.</p></div>
+    <div class="n"><div class="k">위협 텔레그래프 (CEO Q5)</div><h3>적 진형 프리뷰 + 2축 언어</h3><p>적 편성 위치 상설 프리뷰 + 위협 아키타입 라벨. <b>2축 언어</b>("중장갑/마법취약") + 응수 hint("→ 마법 딜러 추천") + 카운터 테마(5테마 색). 팝업 → <b>상설</b> 격상.</p></div>
+    <div class="n"><div class="k">난전 가독 · 림라이트 (P0 게이트)</div><h3><span class="swatch" style="background:var(--friend)"></span>아군 파랑 / <span class="swatch" style="background:var(--enemy)"></span>적 빨강</h3><p>편성부터 전투까지 일관된 진영 식별. 유닛은 다크 인셋에 거주(밝은 크롬 위 픽셀 배치 X) = 가독 보호. 테마색 = off-unit 신호(테마칩·위협·카운터).</p></div>
+    <div class="n"><div class="k">터치 인체공학 (paranoia #3)</div><h3>전투 시작 = 우하단 엄지존</h3><p>"덱 빌드 → 적 확인 → 시작" 오른손 흐름. <b>취소 = 전투 시작 위</b>(작게·점선 = 미스탭 가드) ⊥ 전투 시작(크게·골드 글로우·펄스 = 1차 위계). 덱 슬롯·로스터 카드 ≥44pt.</p></div>
+  </div>
+
+  <!-- ===== UI 킷 재사용 ===== -->
+  <div class="section"><span class="num">◆</span><span class="label">확정 UI 킷 재사용 (design-system §1/§2)</span><span class="rule"></span></div>
+  <div class="notes">
+    <div class="n"><div class="k">크롬 토큰</div><h3>다크 반투명 패널 + 브론즈 프레임</h3><p><span class="swatch" style="background:#161F2B"></span>panel_chrome · <span class="swatch" style="background:#B89B5E"></span>gold_frame · <span class="swatch" style="background:#F3E6C4"></span>icon_cream 글리프. 메인 허브와 동일 크롬 = 전 화면 일관.</p></div>
+    <div class="n"><div class="k">컴포넌트</div><h3>재화 칩 · 슬롯 · 주 CTA · 아이콘</h3><p>재화 칩 3(h36) · <b>주 CTA</b> 골드 그라디언트(<span class="swatch" style="background:#FFD24D"></span>→<span class="swatch" style="background:#F0992D"></span>)+글로우+펄스+교차검(i-battle) · 아이콘 SVG 소스(i-coin·i-gem·i-lock·i-battle) 재사용.</p></div>
+    <div class="n"><div class="k">타이포</div><h3>Cinzel · Pretendard · Chakra Petch</h3><p>스테이지명·CTA = display(Cinzel 잠정) / 본문·유닛명 = Pretendard / 코스트·재화·bias = numeric(Chakra Petch).</p></div>
+    <div class="n"><div class="k">배경</div><h3>스테이지 테마 씬 (여기선 Necro 근사)</h3><p>편성 = META 존(일러 테마 배경 + 다크 크롬). 스테이지 테마(Necro 보라)에 맞춰 배경 톤 = off-unit 신호. 최종 = 확정 일러 배경(톤 근사는 목업용).</p></div>
+  </div>
+
+  <!-- ===== plat 정합 ===== -->
+  <div class="section"><span class="num">◆</span><span class="label">plat 핸드오프 (M8/M9 구현)</span><span class="rule"></span></div>
+  <div class="notes">
+    <div class="n"><div class="k">매니저 배선</div><h3>BattlePrepareManager 계열</h3><p><b>BattlePrepareManager</b>(전투시작/취소·battleStart CTA·스테이지 정보) · <b>DeckSlotManager</b>(5슬롯·0번 영웅 고정·시너지 텍스트 append <code>[정령 2/4]</code>) · <b>UnitListManager</b>(로스터 가로 2행·신규 해금 진입) · <b>EnemyUnitPreviewManager.ShowFormation</b>(진형 프리뷰 + 위협 라벨·팝업→상설) · <b>ThreatTelegraph</b>(2축 측정·색).</p></div>
+    <div class="n"><div class="k">escalate #6 (가로 재배선)</div><h3>기존 위치값 3건 정합</h3><p><b>BattleDeckUIManager.slotParent</b> 가로 재배선(엄지존·≥44pt) · <b>PlayerInputHandler</b> battleFieldArea 가로 재측정 · <b>SynergyHud</b> 위치. 색 = threat_*/axis_*/faction 토큰(§1).</p></div>
+    <div class="n"><div class="k">가드</div><h3>영웅 1 + 일반 1↑ · 0번 영웅 전용</h3><p>0번 슬롯 = 영웅 고정(영웅 사망 = 패배) · 최소 영웅1+일반1. 로스터 탭 → 빈 슬롯 편입.</p></div>
+    <div class="n"><div class="k">매체 게이트 #8</div><h3>레이아웃/HUD = 캔버스 OK</h3><p>본 목업 = 슬롯 배치·로스터·위협·크롬·터치 = 레이아웃 도메인. 유닛 <b>appeal</b>은 판정 대상 아님(림라이트 placeholder) → 최종 = 실 픽셀 스프라이트(아르덴 ✅·37 양산).</p></div>
+  </div>
+
+  <p class="note">
+    편성 화면 프로덕션 목업 · 검토 대기 · 2026-07-01<br>
+    SoT = wireframes.md §5 (레이아웃 확정) · design-system.md §1/§2 (UI 킷) · ui-kit-icons.svg (아이콘) · threat-telegraph-board (위협 색) · legibility-gate-board (림라이트)<br>
+    plat 페어 = M8/M9 UI 구현 (BattlePrepareManager 계열 · escalate #6 가로 재배선)<br>
+    <a href="../index.html">‹ 디자인 보드로</a>
+  </p>
+</div>
+</body>
+</html>

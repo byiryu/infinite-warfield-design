@@ -30,6 +30,8 @@
   a.card h2{margin:6px 0 4px;font-size:16px}
   a.card p{margin:0;color:var(--muted);font-size:12.5px}
   a.card .stale{color:var(--amber)}
+  a.card.wip{border-color:var(--amber);background:linear-gradient(180deg,rgba(232,163,61,.07),transparent)}
+  a.card.wip .k{color:var(--amber)}
   a.card.archived{opacity:.5;background:transparent;border-style:dashed}
   a.card.archived:hover{opacity:.85;transform:none;border-color:var(--line)}
   a.card.archived .k{color:var(--muted)}
@@ -44,7 +46,21 @@
   <h1>infinite warfield</h1>
   <p class="sub">좌우 대치 코스트 기반 실시간 유닛 소환 (2D 모바일). 활성 개발.</p>
   <p class="status">● 공개 · GitHub Pages (infinite-warfield-design) · 갱신 2026-07-01</p>
-  <div class="now"><b>▶ 다음</b> &nbsp;편성 화면 프로덕션 목업 (확정 UI 킷 재사용) → 전투 HUD(다크) → 메타 화면.</div>
+  <div class="now"><b>▶ 다음</b> &nbsp;편성 = 검토 대기 → 전투 HUD(다크) → 결과·강화·환생·미션·상점 → 인트로.</div>
+
+  <div class="section">
+    <span class="num">◆</span>
+    <span class="label">진행 중 · 검토 대기</span>
+    <span class="rule"></span>
+    <span class="hint">폰 검토 → 확정 시 ①로</span>
+  </div>
+  <div class="cards">
+    <a class="card wip" href="sanity/battle-prepare-board.html">
+      <div class="k">★ 편성 화면 프로덕션 목업 (NEW)</div>
+      <h2>덱(좌) · 적 위협(우) · 로스터 2줄 · 전투 시작 →</h2>
+      <p>확정 UI 킷(다크 크롬·브론즈·골드 CTA·아이콘) 적용 프로덕션 목업. 확인/조정 모델·좌덱우적 공간모델·위협 텔레그래프 2축·림라이트·전투 시작 우하단 엄지존. = plat M8/M9 편성 구현 스펙. 검토 후 ①로.</p>
+    </a>
+  </div>
 
   <div class="section">
     <span class="num">①</span>
@@ -262,7 +278,7 @@
   </div>
 
   <p class="note">
-    갱신 2026-07-01 · 정리(41차 후): 45→35 보드 · 사장 반복 10 삭제(~14MB 회수·git 복구 가능)<br>
+    갱신 2026-07-01 · 정리: 사장 반복 10 삭제(~14MB 회수·git 복구 가능) + 편성 목업 추가 = 36 보드<br>
     디자인 보드 레포 = infinite-warfield-design (공개·GitHub Pages)<br>
     SoT(.md) = projects/infinite-warfield/design/ · spec/PLAN = projects/infinite-warfield/<br>
     이력(⑤) = 대체됨·점선 표기 · 고아 0 (check_orphans.sh pre-commit 강제)
