@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>전투 HUD 프로덕션 목업 · infinite warfield</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --bronze:#B89B5E;--gold:#FFD24D;--gold-deep:#F0992D;--cream:#F3E6C4;--ink:#4A2C05;
+    --friend:#4FA3FF;--enemy:#FF5B5B;--go:#7DFFA0;
+    --necro:#9D3EE8;--combat:#E03A5C;--spirit:#5DDD7E;--machine:#00D4FF;--beast:#E06B14;
+    --hp:#54E87A;--hp-lo:#FFC23D;--cost:#4FA3FF;
+    --txt:#E6ECF3;--muted:#8FA0B4;--line:#2d383f;--ground:#0c1116;--card:#151d27;
+    --sans:'Pretendard',ui-sans-serif,system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--ground);color:var(--txt);font-family:var(--sans);line-height:1.55;padding:44px 20px 90px}
+  .wrap{max-width:1160px;margin:0 auto}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(24px,4.4vw,36px);font-weight:800;letter-spacing:-.01em;margin:8px 0 0}
+  .sub{color:var(--muted);font-size:14px;margin-top:10px;max-width:840px}
+  .status{font-size:11px;font-weight:700;color:var(--gold);margin-top:8px}
+  .backlink{font-size:11px;font-weight:600;color:var(--friend);text-decoration:none}
+  .frame{margin:22px 0 0;border:1px solid var(--line);border-radius:12px;padding:14px;background:#0a0e13}
+  .frame-cap{font-size:12px;font-weight:700;color:var(--cream);margin:0 0 10px}
+  .frame-cap span{color:var(--muted);font-weight:600}
+
+  /* ===== 전투 화면 (다크 전장) ===== */
+  .screen{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;container-type:inline-size;background:#05070b}
+  /* 배경 = placeholder 다크 전장 (Necro 예시 · 실제 = Gemini 생성) */
+  .bf{position:absolute;inset:0;
+    background:
+      radial-gradient(80% 55% at 50% 30%, rgba(157,62,232,.16), transparent 60%),
+      linear-gradient(180deg,#0a0713 0%,#0b0912 45%,#0e0b14 60%,#080608 100%)}
+  .bf .far{position:absolute;left:0;right:0;top:34%;height:26%;
+    background:repeating-linear-gradient(90deg,rgba(60,40,90,.18) 0 3cqw,transparent 3cqw 9cqw);filter:blur(.4cqw);opacity:.5}
+  .bf .ground{position:absolute;left:0;right:0;bottom:0;height:44%;
+    background:linear-gradient(180deg,rgba(30,22,38,.0),rgba(14,10,18,.75) 40%,rgba(8,6,10,.95));border-top:.12cqw solid rgba(120,90,160,.18)}
+  .bf .vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 42%,transparent 55%,rgba(0,0,0,.6));pointer-events:none}
+  .bf .wm{position:absolute;left:1.4cqw;top:44%;font-size:1.3cqw;color:rgba(160,140,200,.4);font-weight:700;letter-spacing:.1em}
+
+  /* 상단 HUD */
+  .hud-top{position:absolute;top:0;left:0;right:0;display:flex;align-items:flex-start;justify-content:space-between;padding:1.3cqw 1.6cqw;z-index:6;gap:1cqw}
+  .htl{display:flex;align-items:center;gap:1cqw}
+  .back-s{width:4.6cqw;height:4.6cqw;border-radius:1.1cqw;display:flex;align-items:center;justify-content:center;font-size:2.2cqw;font-weight:800;
+    color:var(--cream);background:linear-gradient(180deg,rgba(38,49,63,.9),rgba(20,28,38,.9));border:.16cqw solid var(--bronze);cursor:pointer}
+  /* 영웅 HP (패배 조건 = 상시 강조) */
+  .hero-hp{display:flex;align-items:center;gap:.8cqw;background:rgba(9,13,18,.72);border:.16cqw solid rgba(255,210,77,.5);border-radius:1.2cqw;padding:.5cqw .9cqw .5cqw .5cqw}
+  .hero-port{width:4.4cqw;height:4.4cqw;border-radius:.9cqw;position:relative;overflow:hidden;background:linear-gradient(180deg,#241a10,#140f0a);
+    box-shadow:inset 0 0 0 .2cqw var(--gold)}
+  .hero-port .f{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.6cqw;height:3.2cqw;background:#6a7686;border-radius:.8cqw .8cqw 0 0}
+  .hero-hp .col{display:flex;flex-direction:column;gap:.35cqw;min-width:14cqw}
+  .hero-hp .lab{font-size:1.15cqw;font-weight:800;color:var(--gold);display:flex;justify-content:space-between}
+  .hero-hp .lab .star{color:#ffe8a8;font-weight:700}
+  .bar{height:1.5cqw;border-radius:.8cqw;background:rgba(0,0,0,.55);overflow:hidden;box-shadow:inset 0 0 0 .1cqw rgba(255,255,255,.1)}
+  .bar > i{display:block;height:100%;border-radius:.8cqw}
+  .hero-hp .bar > i{background:linear-gradient(90deg,#3ad06a,var(--hp))}
+
+  .htc{display:flex;flex-direction:column;align-items:center;gap:.4cqw;padding-top:.2cqw}
+  .timer{display:flex;align-items:center;gap:.6cqw;font-size:2.4cqw;font-weight:800;color:#fff;background:rgba(9,13,18,.6);padding:.2cqw 1.2cqw;border-radius:1.2cqw;border:.14cqw solid rgba(255,255,255,.12)}
+  .timer .tstar{font-size:1.2cqw;font-weight:700;color:#ffe8a8}
+  .enemy-left{font-size:1.35cqw;font-weight:700;color:#ffb0b0;background:rgba(60,20,24,.5);padding:.15cqw .9cqw;border-radius:1cqw;border:.12cqw solid rgba(255,91,91,.4)}
+
+  .htr{display:flex;flex-direction:column;align-items:flex-end;gap:.6cqw}
+  .synergy{display:flex;gap:.6cqw}
+  .syn{display:inline-flex;align-items:center;font-weight:700;font-size:1.3cqw;height:2.7cqw;padding:0 1cqw;border-radius:1.4cqw}
+  .syn.spirit{color:#0c2b18;background:var(--spirit)}
+  .syn.combat{color:#fff;background:rgba(224,58,92,.9)}
+  .speed{display:flex;align-items:center;gap:.4cqw;font-size:1.35cqw;font-weight:800;color:var(--gold);background:rgba(9,13,18,.6);
+    padding:.3cqw 1cqw;border-radius:1.1cqw;border:.14cqw solid rgba(255,210,77,.4);cursor:pointer}
+
+  /* 전장 유닛 */
+  .field{position:absolute;left:0;right:0;top:16%;bottom:15.5%;z-index:3}
+  .side{position:absolute;bottom:0;display:flex;align-items:flex-end;gap:.4cqw;padding:0 2cqw 1cqw}
+  .side.ally{left:0}.side.enemy{right:0;flex-direction:row-reverse}
+  .u{position:relative;display:flex;flex-direction:column;align-items:center;gap:.35cqw}
+  .u .hpb{width:3.4cqw;height:.7cqw;border-radius:.5cqw;background:rgba(0,0,0,.6);overflow:hidden}
+  .u .hpb > i{display:block;height:100%;background:var(--hp)}
+  .u .hpb.lo > i{background:var(--hp-lo)}
+  .u .fig{width:3.4cqw;height:4.6cqw;position:relative}
+  .u .fig .h{position:absolute;top:0;left:50%;transform:translateX(-50%);width:1.7cqw;height:1.7cqw;border-radius:50%;background:#7f8b98}
+  .u .fig .b{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.7cqw;height:3.1cqw;border-radius:.9cqw .9cqw .3cqw .3cqw;background:#69737f}
+  .u.a .fig{filter:drop-shadow(0 0 .12cqw #fff)}
+  .u.a .fig .h,.u.a .fig .b{box-shadow:0 0 0 .22cqw var(--friend),0 0 1.4cqw rgba(79,163,255,.6)}
+  .u.e .fig .h,.u.e .fig .b{box-shadow:0 0 0 .22cqw var(--enemy),0 0 1.4cqw rgba(255,91,91,.6);background:#6f5257}
+  .u.e .fig .h{background:#8a6b6f}
+  /* 영웅 = 크게 + 골드 아우라 */
+  .u.hero .fig{width:5cqw;height:6.6cqw}
+  .u.hero .fig .h{width:2.4cqw;height:2.4cqw}.u.hero .fig .b{width:4cqw;height:4.6cqw}
+  .u.hero .fig .h,.u.hero .fig .b{box-shadow:0 0 0 .26cqw var(--friend),0 0 2.4cqw rgba(255,210,77,.7)}
+  .u.hero::after{content:"";position:absolute;bottom:-.3cqw;left:50%;transform:translateX(-50%);width:5.6cqw;height:1.4cqw;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(255,210,77,.55),transparent);filter:blur(.2cqw)}
+  .u.hero .hpb{width:5cqw;height:1cqw}
+  .u.hero .hpb > i{background:linear-gradient(90deg,#3ad06a,var(--hp))}
+  .u .crown{position:absolute;top:-2cqw;left:50%;transform:translateX(-50%);font-size:1.4cqw;color:var(--gold)}
+
+  /* 피드백 텍스트 (높이 캡 · MaxLive 8) */
+  .fb{position:absolute;font-weight:800;z-index:5;text-shadow:0 .1cqw .3cqw rgba(0,0,0,.9);font-size:1.9cqw}
+  .fb.crit{color:var(--hp-lo);font-size:2.4cqw}
+  .fb.mag{color:#c79bf0}
+  .fb.eff{color:var(--go)}
+
+  /* 소환 클릭영역 힌트 (좌) */
+  .summon-zone{position:absolute;left:0;top:16%;bottom:15.5%;width:42%;z-index:2;
+    background:linear-gradient(90deg,rgba(79,163,255,.05),transparent);border-right:.12cqw dashed rgba(79,163,255,.14)}
+  .summon-zone .z-lab{position:absolute;left:1.6cqw;top:1.2cqw;font-size:1.2cqw;font-weight:700;color:rgba(120,175,255,.55)}
+
+  /* 하단 HUD (엄지존) */
+  .hud-bot{position:absolute;left:0;right:0;bottom:0;height:15.5%;z-index:6;display:flex;align-items:center;justify-content:space-between;
+    padding:0 1.6cqw 1cqw;gap:1.2cqw;background:linear-gradient(0deg,rgba(6,8,12,.86),rgba(6,8,12,.35) 70%,transparent)}
+  /* 코스트 게이지 (좌하) */
+  .cost{flex:0 0 auto;display:flex;flex-direction:column;gap:.4cqw;width:22cqw}
+  .cost .clab{display:flex;justify-content:space-between;font-size:1.35cqw;font-weight:800}
+  .cost .clab b{color:var(--cost);font-size:1.7cqw}.cost .clab .mx{color:var(--muted);font-weight:600}
+  .cost .cbar{height:2.2cqw;border-radius:1.1cqw;background:rgba(0,0,0,.55);overflow:hidden;box-shadow:inset 0 0 0 .12cqw rgba(79,163,255,.35)}
+  .cost .cbar > i{display:block;height:100%;width:50%;background:linear-gradient(90deg,#2f7fd6,var(--cost));border-radius:1.1cqw;position:relative}
+  .cost .cbar > i::after{content:"";position:absolute;right:0;top:0;bottom:0;width:1.2cqw;background:rgba(255,255,255,.4);filter:blur(.3cqw)}
+  .cost .tick{font-size:1.1cqw;color:var(--muted)}
+
+  /* 덱 슬롯 (중하 · 탭-소환 · 44pt) */
+  .slots{flex:1;display:flex;justify-content:center;gap:1.1cqw}
+  .slot{width:9.4cqw;height:10.5cqw;border-radius:1.3cqw;position:relative;cursor:pointer;overflow:hidden;
+    background:linear-gradient(180deg,rgba(22,31,43,.96),rgba(12,17,24,.96));border:.18cqw solid #2f3b49;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:.4cqw}
+  .slot .sfig{position:absolute;top:1.2cqw;left:50%;transform:translateX(-50%);width:3.2cqw;height:4cqw}
+  .slot .sfig .h{position:absolute;top:0;left:50%;transform:translateX(-50%);width:1.6cqw;height:1.6cqw;border-radius:50%;background:#7f8b98}
+  .slot .sfig .b{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:2.5cqw;height:2.6cqw;border-radius:.7cqw;background:#69737f}
+  .slot .snm{font-size:1.2cqw;font-weight:700;color:#dfe6ee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:8.6cqw}
+  .slot .scost{position:absolute;top:.4cqw;right:.5cqw;display:flex;align-items:center;gap:.2cqw;font-size:1.35cqw;font-weight:800;color:var(--cost);
+    background:rgba(6,10,16,.85);padding:.05cqw .55cqw;border-radius:.8cqw}
+  .slot.ready{border-color:var(--cost);box-shadow:0 0 1.2cqw rgba(79,163,255,.35)}
+  .slot.nocost{filter:grayscale(.7) brightness(.55)}
+  .slot.nocost::after{content:"코스트 부족";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.2cqw;font-weight:700;color:#ff9aa6;background:rgba(6,10,16,.55)}
+  .slot.cool::before{content:"";position:absolute;inset:0;background:conic-gradient(rgba(6,10,16,.78) 38%,transparent 0);z-index:2}
+  .slot.cool .cd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.6cqw;font-weight:800;color:#fff;z-index:3}
+
+  /* 스킬 버튼 (우하 · 영웅 액티브 · 쿨다운) */
+  .skill{flex:0 0 auto;width:11cqw;height:11cqw;border-radius:50%;position:relative;cursor:pointer;
+    background:radial-gradient(circle at 50% 38%,#ffe27a,#e0892a 70%,#7a4a12);border:.3cqw solid #fff0c0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 2.4cqw rgba(255,180,60,.5)}
+  .skill svg{width:4.4cqw;height:4.4cqw;color:#4a2c05}
+  .skill .sk-nm{font-size:1.1cqw;font-weight:800;color:#4a2c05;margin-top:.1cqw}
+  .skill .ring{position:absolute;inset:-.3cqw;border-radius:50%;background:conic-gradient(var(--gold) 74%,rgba(0,0,0,.55) 0)}
+  .skill .core{position:absolute;inset:.5cqw;border-radius:50%;background:radial-gradient(circle at 50% 38%,#ffe27a,#e0892a 70%,#7a4a12);display:flex;flex-direction:column;align-items:center;justify-content:center}
+
+  /* ===== 주석 ===== */
+  .section{display:flex;align-items:baseline;gap:10px;margin:40px 0 6px}
+  .section .num{font-size:12px;color:var(--gold);font-weight:800}
+  .section .label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+  .section .rule{flex:1;height:1px;background:var(--line)}
+  .notes{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:14px}
+  @media(max-width:720px){.notes{grid-template-columns:1fr}}
+  .n{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .n.hl{border-color:rgba(255,210,77,.5);background:linear-gradient(180deg,rgba(255,210,77,.05),var(--card))}
+  .n .k{font-size:11px;letter-spacing:.06em;color:var(--gold);font-weight:800}
+  .n h3{font-size:15px;margin:5px 0 4px;font-weight:800}
+  .n p{font-size:13px;color:var(--muted)}
+  .n p b{color:var(--txt)}
+  .prompt{background:#0d1219;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-top:12px}
+  .prompt h4{font-size:13px;font-weight:800;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+  .prompt .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .prompt code{display:block;white-space:pre-wrap;font-size:12px;line-height:1.6;color:#cdd7e2;font-family:ui-monospace,Menlo,monospace}
+  .prompt .common{color:#8FA0B4;font-size:12px;margin-bottom:8px}
+  .note{margin-top:38px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.9}
+  .note a{color:var(--friend)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-skill" viewBox="0 0 24 24"><path fill="currentColor" d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12z"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <a class="backlink" href="../index.html">‹ 디자인 보드</a>
+  <div class="eyebrow" style="margin-top:14px">byiryu studio · 전투 · Battle HUD</div>
+  <h1>전투 HUD — 프로덕션 목업 v1</h1>
+  <p class="sub"><b>다크 전장 + 난전 가독(paranoia #5)</b>이 정체성의 핵. 15v15 스트레스 위에 HUD가 안 뭉개지게 — 가는 HP바(영웅만 크게)·피드백 높이 캡·시너지 우상단(전장 중앙 회피)·하단 엄지존(코스트·덱슬롯 44pt·스킬). <b>아군 청 림 / 적 적 림</b>(테마색은 배경 앰비언트 = off-unit). 배경 = placeholder(Necro 예시) → 5테마 프롬프트로 Gemini 생성.</p>
+  <p class="status">● 검토 대기 v1 · Necro 배경 placeholder · wireframes §4 골격 + 거부 해소 3건 반영 · 배틀 배경 프롬프트 5테마(하단) · escalate #6 = 가로 재배치</p>
+
+  <div class="frame">
+    <p class="frame-cap">① 전투 HUD <span>— 다크 전장 · 좌 아군(청 림)/우 적(적 림) · 하단 엄지존 HUD · 배경=placeholder</span></p>
+    <div class="screen">
+      <!-- 배경 (placeholder 다크 전장) -->
+      <div class="bf"><div class="far"></div><div class="ground"></div><div class="vig"></div><div class="wm">배경 placeholder · 실제 = Gemini 5테마</div></div>
+
+      <!-- 좌 소환 클릭영역 힌트 -->
+      <div class="summon-zone"><div class="z-lab">소환 영역 (탭)</div></div>
+
+      <!-- 상단 HUD -->
+      <div class="hud-top">
+        <div class="htl">
+          <div class="back-s">‹</div>
+          <div class="hero-hp">
+            <div class="hero-port"><div class="f"></div></div>
+            <div class="col">
+              <div class="lab"><span>아르덴</span><span class="star">HP 68% · ★50%↑</span></div>
+              <div class="bar"><i style="width:68%"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="htc">
+          <div class="timer">00:43 <span class="tstar">★60초</span></div>
+          <div class="enemy-left">적 8 남음</div>
+        </div>
+        <div class="htr">
+          <div class="speed">▶▶ ×2</div>
+          <div class="synergy"><span class="syn spirit">정령 4</span><span class="syn combat">전투 2</span></div>
+        </div>
+      </div>
+
+      <!-- 전장 (난전) -->
+      <div class="field">
+        <!-- 아군 (좌·청 림·영웅 크게) -->
+        <div class="side ally">
+          <div class="u hero a"><span class="crown">♛</span><div class="hpb"><i style="width:68%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u a"><div class="hpb"><i style="width:100%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u a"><div class="hpb lo"><i style="width:40%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u a"><div class="hpb"><i style="width:85%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u a"><div class="hpb"><i style="width:100%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u a"><div class="hpb lo"><i style="width:55%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+        </div>
+        <!-- 적 (우·적 림) -->
+        <div class="side enemy">
+          <div class="u e"><div class="hpb"><i style="width:100%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u e"><div class="hpb"><i style="width:90%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u e"><div class="hpb lo"><i style="width:35%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u e"><div class="hpb"><i style="width:100%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u e"><div class="hpb"><i style="width:75%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+          <div class="u e"><div class="hpb"><i style="width:100%"></i></div><div class="fig"><div class="h"></div><div class="b"></div></div></div>
+        </div>
+        <!-- 피드백 (높이 캡 · 유닛 근처만) -->
+        <div class="fb crit" style="left:63%;bottom:34%">1240!</div>
+        <div class="fb mag" style="left:70%;bottom:28%">막힘</div>
+        <div class="fb eff" style="left:56%;bottom:40%">효과!</div>
+        <div class="fb" style="left:24%;bottom:30%;color:#fff">86</div>
+      </div>
+
+      <!-- 하단 HUD -->
+      <div class="hud-bot">
+        <div class="cost">
+          <div class="clab"><span>코스트</span><span><b>35</b><span class="mx"> / 70</span></span></div>
+          <div class="cbar"><i></i></div>
+          <div class="tick">+2 / 초 회복</div>
+        </div>
+        <div class="slots">
+          <div class="slot ready"><span class="scost">3</span><div class="sfig"><div class="h"></div><div class="b"></div></div><span class="snm">역병술사</span></div>
+          <div class="slot ready"><span class="scost">2</span><div class="sfig"><div class="h"></div><div class="b"></div></div><span class="snm">궁수</span></div>
+          <div class="slot nocost"><span class="scost">5</span><div class="sfig"><div class="h"></div><div class="b"></div></div><span class="snm">사령술사</span></div>
+          <div class="slot cool"><div class="cd">3</div><span class="scost">4</span><div class="sfig"><div class="h"></div><div class="b"></div></div><span class="snm">골렘</span></div>
+          <div class="slot ready"><span class="scost">2</span><div class="sfig"><div class="h"></div><div class="b"></div></div><span class="snm">방패병</span></div>
+        </div>
+        <div class="skill">
+          <div class="ring"></div>
+          <div class="core"><svg><use href="#i-skill"/></svg><span class="sk-nm">화염 강타</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 존/규칙 -->
+  <div class="section"><span class="num">◆</span><span class="label">존 배치 (wireframes §4) + 난전 가독 룰</span><span class="rule"></span></div>
+  <div class="notes">
+    <div class="n hl"><div class="k">paranoia #5 = 정체성의 핵</div><h3>다크로 눌러 가독 확보</h3><p>"네온 화려" 아님 = <b>전장을 다크로 눌러</b> 림라이트/HP바/피드백이 안 잡아먹히게. 가는 HP바 + <b>영웅 바만 크게</b> + 피드백 높이 캡 + 이펙트 동시다발 캡.</p></div>
+    <div class="n"><div class="k">상단</div><h3>영웅 HP · 타이머 · 시너지</h3><p>좌상 = <b>영웅 HP</b>(패배 조건·★50% 마커) + 뒤로 · 중앙상 = <b>타이머</b>(★60초 마커) + 적 남은 수 · 우상 = <b>시너지 HUD</b>(전장 중앙 회피·거부해소 #1) + 배속.</p></div>
+    <div class="n"><div class="k">하단 엄지존</div><h3>코스트 · 덱슬롯 · 스킬</h3><p>좌하 <b>코스트 게이지</b>(+회복속도) · 중하 <b>덱슬롯 탭-소환</b>(코스트 배지·부족 dim·쿨다운 링·44pt 거부해소 #3) · 우하 <b>영웅 스킬</b>(쿨다운 원형).</p></div>
+    <div class="n"><div class="k">유닛 = 림라이트</div><h3>아군 청 / 적 적 · 테마색 X</h3><p>전투 유닛 = <b>아군 #4FA3FF / 적 #FF5B5B</b> 림(즉독). 영웅 = 크게 + 골드 아우라 + ♛. 테마색은 <b>배경 앰비언트</b>(off-unit·gdd Part 3.2). 실 스프라이트 = M9 PixelLab.</p></div>
+    <div class="n"><div class="k">일시정지 = 없음</div><h3>실시간 단판</h3><p>일시정지/설정 버튼 X(장르 정합·§111) · 설정=메인 · 백그라운드=자동 일시정지 · 이탈=← 뒤로(확인 1회). 배속 ×2 = 제안(그라인딩 완화·확정 필요).</p></div>
+    <div class="n"><div class="k">star 조건 라이브</div><h3>HUD가 별 목표를 실시간 표시</h3><p>편성서 본 ★3조건(클리어/영웅 HP≥50%/60초)이 전투 HUD에 <b>라이브 마커</b>로 — 영웅 HP바 ★50%↑·타이머 ★60초. 목표 달성 감을 실시간 제공.</p></div>
+  </div>
+
+  <!-- 거부 해소 3건 -->
+  <div class="section"><span class="num">◆</span><span class="label">paranoia #5 거부 해소 3건 (plat escalate #6 · 가로 재배치)</span><span class="rule"></span></div>
+  <div class="notes">
+    <div class="n"><div class="k">#1 SynergyHud</div><h3>-96f → 우상단</h3><p>구 세로 유물 위치(-96f)가 가로서 stageInfo/전장 중앙과 충돌 → <b>우상단 고정</b>(전장 중앙 금지). plat = `SynergyHud.cs:50` 위치 재정의.</p></div>
+    <div class="n"><div class="k">#2 CombatFeedbackText</div><h3>상승 높이 캡</h3><p>MaxLive 8이 코스트/스킬 존과 충돌 → <b>상승 높이 제한</b>(유닛 근처만·HUD 안 침범). plat = `CombatFeedbackText.cs:19`.</p></div>
+    <div class="n"><div class="k">#3 덱슬롯 44pt</div><h3>가로 재배선</h3><p>5칸 슬롯 = 1280×720서 슬롯당 ~140px = 44pt 달성 가능(엄지존·탭-소환). plat = `BattleDeckUIManager.slotParent` 가로 재배선.</p></div>
+    <div class="n"><div class="k">소환 영역</div><h3>PlayerInputHandler 가로 재측정</h3><p>좌 소환 클릭영역(`PlayerInputHandler.cs:33-45` battleFieldArea) 가로 재측정. 탭-소환 위치/레인. plat 정합.</p></div>
+  </div>
+
+  <!-- 배틀 배경 프롬프트 5테마 -->
+  <div class="section"><span class="num">◆</span><span class="label">전투 배경 프롬프트 5테마 (Gemini 생성용 · 사용자)</span><span class="rule"></span></div>
+  <p style="color:var(--muted);font-size:13px;margin:4px 0 10px"><b>메인 허브 배경(밝은 페인터리·40차 확정)과 다름</b> — 전투 배경 = <b>다크 전장 아레나</b>(픽셀 유닛이 위에서 싸우므로 어둡고 절제·유닛 가독 1순위). 같은 세계(테마 일관)지만 기능적. <b>테마색 = 앰비언트 글로우만</b>(유닛=청/적 림이라 배경이 테마색 담당 = off-unit 신호). 16:9 · 캐릭터/텍스트 없음 · 하단 ~30%와 모서리 = 어둡고 단순(UI 세이프존).</p>
+  <div class="prompt">
+    <p class="common"><b>공통 꼬리 (전 테마 append):</b> <code>16:9 landscape dark side-scrolling battle arena background. Clear horizontal GROUND BAND across lower-middle where troops line up left vs right. Low-key moody lighting, deep shadows, muted midtones so bright rim-lit units read clearly on top. Darkest & simplest in bottom ~30% and screen corners (UI safe zone — no key detail there). Atmospheric depth: far background, midground silhouettes, foreground ground. Theme color as AMBIENT glow only, not on the ground plane. No characters, no creatures, no text, no UI, no logo. Painterly game art, subtle.</code></p>
+    <h4><span class="sw" style="background:#E03A5C"></span>Combat — 크림슨</h4>
+    <code>Ruined war fortress courtyard at dusk, broken banners and toppled siege scaffolds in silhouette, embers drifting in the air, scorched stone ground. Crimson (#E03A5C) ambient glow from distant fires.</code>
+    <h4><span class="sw" style="background:#9D3EE8"></span>Necro — 보라</h4>
+    <code>Underground bone cathedral / crypt battlefield, towering skull pillars and hanging chains in shadow, faint drifting fog, cracked tomb-stone ground. Violet (#9D3EE8) ambient grave-light glow.</code>
+    <h4><span class="sw" style="background:#5DDD7E"></span>Spirit — 에메랄드 (절제)</h4>
+    <code>Dark enchanted grove at night beneath a giant world-tree, glowing spores and dim will-o-wisps, mossy root ground. Emerald (#5DDD7E) ambient glow kept LOW and muted (not bright/floral).</code>
+    <h4><span class="sw" style="background:#00D4FF"></span>Machine — 시안</h4>
+    <code>Dark ancient machine hall / gear cavern, dormant colossal gears and pipes in silhouette, sparse cold energy conduits, metal-plated ground. Cyan (#00D4FF) ambient glow from cold machinery.</code>
+    <h4><span class="sw" style="background:#E06B14"></span>Beast — 앰버</h4>
+    <code>Dark savage canyon den at dusk, jagged rock spires and bone totems in silhouette, packed-earth ground. Amber (#E06B14) ambient glow from a low fire pit.</code>
+  </div>
+
+  <!-- plat 핸드오프 -->
+  <div class="section"><span class="num">◆</span><span class="label">plat 핸드오프 (M9)</span><span class="rule"></span></div>
+  <div class="notes">
+    <div class="n"><div class="k">배경 5테마</div><h3>Gemini 생성 → client import</h3><p>사용자 Gemini 생성(위 프롬프트) → `Assets/Art/Backgrounds/battle_{theme}.png` import(부재). 스테이지 테마 → 배경 매핑. 라이브 모션(파티클/셰이더) = asset-manifest §라이브 배경 모션(선택·M9 후).</p></div>
+    <div class="n"><div class="k">HUD 재배치</div><h3>escalate #6 (SynergyHud·Feedback·덱슬롯·소환영역)</h3><p>가로 재배치 4건(위) = M9 HUD 구현 시 일괄 정합. 전투 유닛 림라이트 셰이더(아군/적) = 26차 확정.</p></div>
+    <div class="n"><div class="k">배속 ×2</div><h3>제안 = 확정 필요</h3><p>실시간 배속 토글(그라인딩 완화·장르 표준). 시간 스케일 = 밸런스 영향(코스트 회복·star 60초 조건과 상호작용) → PM 확정 대상. 미확정 시 제거.</p></div>
+    <div class="n"><div class="k">star 라이브 마커</div><h3>HUD ↔ StageData 목표</h3><p>영웅 HP바 ★50%·타이머 ★60초 = StageData 3별 목표(spec §6.B⑥)와 바인딩. 편성 ★목표 → 전투 라이브 → 결과 획득의 일관 루프.</p></div>
+  </div>
+
+  <p class="note">
+    전투 HUD 프로덕션 목업 v1 · 검토 대기 · 2026-07-01<br>
+    SoT = wireframes.md §4(존·거부해소·난전룰) · design-system §1(림라이트 아군/적·다크) · 배경 프롬프트 5테마(위·asset-manifest 기록 예정)<br>
+    plat 페어 = M9 (BattleUIManager·CostUIManager·BattleDeckUIManager·SynergyHud·CombatFeedbackText·PlayerInputHandler 가로 재배치 escalate #6 · 배경 import)<br>
+    <a href="../index.html">‹ 디자인 보드로</a>
+  </p>
+</div>
+</body>
+</html>
