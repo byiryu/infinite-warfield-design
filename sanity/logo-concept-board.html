@@ -2,169 +2,222 @@
 <html lang="ko"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>INFINITE WARFIELD · 로고 컨셉</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@600;800;900&family=Chakra+Petch:wght@600;700&family=Cinzel:wght@700;900&family=Anton&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<title>INFINITE WARFIELD · 로고 컨셉 (밝은 쿨 D)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cinzel+Decorative:wght@700;900&family=Marcellus&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
 :root{
- --bg:#070710;--bg2:#0c0c1a;--panel:#11111f;--line:#262640;--text:#e7e7f2;--muted:#8a8aa8;
- --mag:#FF2D95;--cyan:#22E0E8;--mag2:#E84DD4;--cyan2:#36D6E0;--amber:#e8a33d;
- --mono:"Chakra Petch",ui-monospace,monospace;--sans:ui-sans-serif,system-ui,sans-serif;
+ --stone-0:#F4F7FB;--stone-1:#E7ECF2;--stone-2:#DAE3EE;--surface:#9BB0C8;
+ --sky:#3A6EA5;--sky-soft:#5E86B5;--ink:#15212E;--muted:#56697D;--dim:#8A9BAD;
+ --line:#C7D4E2;--line2:#B0C0D2;
+ --gold:#FFD24D;--gold-deep:#F0992D;--bronze:#B89B5E;
+ --dark-bg:#0D1117;--dark-panel:#141B22;--dark-line:#2A3642;
+ --combat:#E03A5C;--necro:#9D3EE8;--spirit:#5DDD7E;--machine:#00D4FF;--beast:#E06B14;
+ --r-md:10px;--r-lg:14px;
+ --disp:"Cinzel",serif;--tech:"Chakra Petch",ui-monospace,monospace;
+ --body:"Pretendard","Pretendard Variable",system-ui,sans-serif;
+ --shadow:0 2px 4px rgba(21,33,46,.06),0 8px 24px rgba(21,33,46,.09);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;
- background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(255,45,149,.12),transparent 60%),radial-gradient(ellipse 70% 50% at 50% 110%,rgba(34,224,232,.10),transparent 60%);}
+body{margin:0;color:var(--ink);font-family:var(--body);line-height:1.6;background:var(--stone-0);
+ background-image:
+  radial-gradient(ellipse 120% 60% at 50% -10%,rgba(58,110,165,.16),transparent 60%),
+  radial-gradient(ellipse 80% 50% at 50% 108%,rgba(255,210,77,.10),transparent 62%),
+  repeating-linear-gradient(0deg,rgba(58,110,165,.035) 0 1px,transparent 1px 7px);}
 .wrap{max-width:900px;margin:0 auto;padding:0 22px 90px}
-/* synthwave hero */
-.hero{position:relative;text-align:center;padding:64px 0 38px;overflow:hidden}
-.hero .grid{position:absolute;left:-20%;right:-20%;bottom:0;height:170px;
- background-image:repeating-linear-gradient(90deg,rgba(34,224,232,.25) 0 1px,transparent 1px 56px),repeating-linear-gradient(0deg,rgba(255,45,149,.22) 0 1px,transparent 1px 38px);
- transform:perspective(340px) rotateX(64deg);transform-origin:bottom;opacity:.5;mask-image:linear-gradient(transparent,#000 70%)}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--cyan2);position:relative}
-.hero h1{font-family:"Audiowide",sans-serif;font-size:clamp(30px,7vw,62px);margin:14px 0 0;letter-spacing:.04em;position:relative;
- background:linear-gradient(95deg,var(--mag),#fff 45%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent;
- filter:drop-shadow(0 0 14px rgba(255,45,149,.55)) drop-shadow(0 0 30px rgba(34,224,232,.35))}
-.hero .tag{position:relative;color:var(--muted);margin-top:14px;font-size:13.5px;font-family:var(--mono);letter-spacing:.04em}
-.note0{position:relative;font-family:var(--mono);font-size:11px;color:var(--amber);margin-top:10px}
-.section{display:flex;align-items:baseline;gap:10px;margin:46px 0 4px}
-.section .l{font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
-.section .h{font-family:var(--mono);font-size:10px;color:var(--muted)}
-.section .r{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+a{color:var(--sky)}
+/* hero */
+.hero{position:relative;text-align:center;padding:64px 22px 34px;overflow:hidden}
+.hero .contour{position:absolute;inset:0;opacity:.5;pointer-events:none;
+ background-image:
+  radial-gradient(circle at 50% 120%,transparent 40%,rgba(58,110,165,.12) 40.4%,transparent 41%),
+  radial-gradient(circle at 50% 120%,transparent 56%,rgba(58,110,165,.09) 56.4%,transparent 57%);
+ mask-image:linear-gradient(#000,transparent 88%)}
+.eyebrow{font-family:var(--tech);font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--sky);position:relative;font-weight:600}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(26px,6vw,52px);margin:14px 0 0;letter-spacing:.06em;color:var(--ink);position:relative;text-shadow:0 1px 0 #fff}
+.hero h1 .gold{color:var(--gold-deep)}
+.hero .rule{width:132px;height:3px;margin:16px auto 0;border-radius:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-deep),transparent)}
+.hero .tag{position:relative;color:var(--muted);margin-top:14px;font-size:13.5px;font-family:var(--tech)}
+.status{position:relative;font-family:var(--tech);font-size:11px;color:var(--gold-deep);margin-top:8px;font-weight:600}
+/* section */
+.section{display:flex;align-items:baseline;gap:10px;margin:48px 0 4px}
+.section .n{font-family:var(--tech);font-size:11px;color:var(--sky);font-weight:700}
+.section .l{font-family:var(--tech);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.section .h{font-family:var(--tech);font-size:10px;color:var(--muted)}
+.section .r{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.lead{color:var(--muted);font-size:13.5px;margin:8px 0 0}.lead b{color:var(--ink)}
 /* concept card */
-.card{background:linear-gradient(160deg,var(--panel),#0a0a14);border:1px solid var(--line);border-radius:14px;margin-top:18px;overflow:hidden}
-.stage{position:relative;min-height:210px;display:flex;align-items:center;justify-content:center;padding:34px 20px;
- background:radial-gradient(circle at 50% 120%,rgba(34,224,232,.10),transparent 55%),#08080f;border-bottom:1px solid var(--line);overflow:hidden}
-.stage .floor{position:absolute;left:-15%;right:-15%;bottom:0;height:120px;background-image:repeating-linear-gradient(90deg,rgba(34,224,232,.18) 0 1px,transparent 1px 48px),repeating-linear-gradient(0deg,rgba(255,45,149,.14) 0 1px,transparent 1px 34px);transform:perspective(300px) rotateX(66deg);transform-origin:bottom;opacity:.4;mask-image:linear-gradient(transparent,#000)}
-.meta{padding:18px 22px}
-.meta .cn{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan2);font-weight:700}
-.meta h2{margin:4px 0 8px;font-size:19px}
-.meta p{margin:0;color:#c2c2d6;font-size:13.5px}
-.meta .pro{color:var(--muted);font-size:12px;margin-top:8px;font-family:var(--mono)}
-/* app icon mini */
-.icon{position:absolute;right:18px;bottom:18px;width:62px;height:62px;border-radius:14px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);background:#0a0a16;box-shadow:0 4px 18px rgba(0,0,0,.5)}
-.iconlab{position:absolute;right:18px;bottom:6px;font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.1em}
-
-/* ===== A — NEON HORIZON ===== */
-.lA{font-family:"Audiowide",sans-serif;text-align:center;line-height:.96;position:relative;z-index:2}
-.lA .t1{display:block;font-size:clamp(26px,6vw,46px);letter-spacing:.06em;background:linear-gradient(180deg,#fff,var(--mag));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px rgba(255,45,149,.7))}
-.lA .t2{display:block;font-size:clamp(34px,8vw,62px);letter-spacing:.02em;background:linear-gradient(180deg,var(--cyan),#1aa3c9);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(34,224,232,.7))}
-.lA .sun{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,149,.5),transparent 62%);filter:blur(2px);z-index:1}
-/* ===== B — INFINITE CREST ===== */
-.lB{text-align:center;position:relative;z-index:2}
-.lB .word{font-family:"Cinzel",serif;font-weight:900;font-size:clamp(20px,4.6vw,32px);letter-spacing:.14em;color:#e9e3d6;margin-top:10px;text-shadow:0 0 10px rgba(34,224,232,.4)}
-.lB .sub{font-family:"Cinzel",serif;font-size:11px;letter-spacing:.5em;color:var(--mag2);margin-top:2px}
-/* ===== C — DARK FORGE ===== */
-.lC{font-family:"Anton",sans-serif;text-align:center;line-height:.9;position:relative;z-index:2;letter-spacing:.01em}
-.lC .row{font-size:clamp(40px,9.5vw,76px);color:#15151f;
- text-shadow:-1px -1px 0 var(--mag),1px -1px 0 var(--mag),1px 1px 0 var(--cyan),-1px 1px 0 var(--cyan),0 0 18px rgba(255,45,149,.5),0 0 34px rgba(34,224,232,.35);
- -webkit-text-stroke:1px rgba(255,255,255,.18)}
-/* ===== D — ENDLESS ===== */
-.lD{display:flex;align-items:center;gap:22px;position:relative;z-index:2;flex-wrap:wrap;justify-content:center}
-.lD .word{font-family:"Rajdhani",sans-serif;font-weight:700;font-size:clamp(26px,5.5vw,44px);line-height:.95;letter-spacing:.04em}
-.lD .word b{display:block;background:linear-gradient(90deg,var(--mag),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lD .word span{display:block;font-size:.42em;letter-spacing:.42em;color:var(--muted);font-weight:600}
-svg .glowm{filter:drop-shadow(0 0 6px rgba(255,45,149,.8))}
-svg .glowc{filter:drop-shadow(0 0 6px rgba(34,224,232,.8))}
-.foot{margin-top:42px;font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.9}
-.foot b{color:var(--text)}.foot a{color:var(--cyan2)}
-.pick{background:linear-gradient(160deg,#16101c,#0a0a14);border:1px solid #3a2440;border-radius:12px;padding:16px 20px;margin-top:22px}
-.pick b{color:#fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);margin-top:18px;overflow:hidden;box-shadow:var(--shadow)}
+.card.rec{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 8px 26px rgba(240,153,45,.16)}
+.stage{position:relative;min-height:216px;display:flex;align-items:center;justify-content:center;gap:26px;padding:30px 22px;flex-wrap:wrap;overflow:hidden;border-bottom:1px solid var(--line)}
+.stage.light{background:radial-gradient(circle at 50% -20%,rgba(58,110,165,.14),transparent 60%),linear-gradient(165deg,#fbfdff,var(--stone-1))}
+.icon{width:96px;height:96px;border-radius:22px;flex:none;box-shadow:0 6px 18px rgba(21,33,46,.22);overflow:hidden}
+.iconlab{font-family:var(--tech);font-size:9.5px;color:var(--muted);text-align:center;margin-top:7px;letter-spacing:.08em}
+.meta{padding:16px 22px 20px}
+.meta .cn{font-family:var(--tech);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);font-weight:700}
+.meta h3{font-family:var(--disp);font-weight:700;font-size:20px;margin:3px 0 8px;color:var(--ink)}
+.meta p{margin:0;font-size:13px;color:var(--muted)}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-top:12px}
+@media(max-width:560px){.pc{grid-template-columns:1fr}.stage{gap:16px}}
+.pc div{font-size:12px;line-height:1.6}
+.pc .pro b{color:var(--spirit);filter:brightness(.8)}.pc .con b{color:var(--gold-deep)}
+.badge{display:inline-block;font-family:var(--tech);font-size:9.5px;font-weight:700;letter-spacing:.05em;color:#3a2600;background:var(--gold);border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.usetag{font-family:var(--tech);font-size:10.5px;color:var(--muted);margin-top:10px;border-top:1px dashed var(--line);padding-top:9px}
+.usetag b{color:var(--ink)}
+/* font strip */
+.fontrow{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.fontrow:last-child{border-bottom:none}
+.fontrow .fl{font-family:var(--tech);font-size:10px;color:var(--muted);width:180px;flex:none;line-height:1.5}
+.fw{font-size:26px;letter-spacing:.05em;color:var(--ink)}
+.foot{margin-top:48px;font-family:var(--tech);font-size:11px;color:var(--muted);border-top:1px solid var(--line2);padding-top:16px;line-height:1.9}
+.foot b{color:var(--ink)}
+small.note{display:block;color:var(--dim);font-family:var(--tech);font-size:10.5px;margin-top:6px}
 </style></head><body>
 
 <div class="hero">
- <div class="grid"></div>
- <div class="eyebrow">byiryu studio · 로고 컨셉 · 후보 비교</div>
- <h1>INFINITE WARFIELD</h1>
- <p class="tag">무한 전장 · 5 원형 세력 · 환생 — 네온 메타 ⊥ 다크 전장</p>
- <p class="note0">● 진행 중 · 후보 4안 → 사용자 선택 (워킹 타이틀 = Infinite Warfield)</p>
+ <div class="contour"></div>
+ <div class="eyebrow">byiryu studio · 게임 타이틀 로고</div>
+ <h1>INFINITE <span class="gold">WARFIELD</span></h1>
+ <div class="rule"></div>
+ <p class="tag">로고 컨셉 4안 · 밝은 쿨 D 재정초 · SVG</p>
+ <p class="status">● 구 네온 4안 폐기 (톤 전환·gdd Part 2.1) · display 폰트 = Cinzel 락 후보 · 선택 대기</p>
 </div>
 
 <div class="wrap">
 
-<div class="pick"><b>읽는 법:</b> 4개 컨셉 = 같은 타이틀의 다른 *방향*. 각 카드 = 로고 + 우하단 앱 아이콘 미니 + 근거. 게임 정체성(네온 메타 ⊥ 다크 전장·무한·5세력)에 어떻게 닿는지가 판단축. <b>하나 고르면</b> → 정밀화(벡터 확정·인트로/메인에 적용·앱 아이콘 파생).</div>
+<p class="lead" style="margin-top:26px"><b>재정초 배경.</b> 27차 로고 4안(A 네온호라이즌·C 다크포지 네온림 등)은 <b>네온 메타 톤</b> 전제였다 → 밝은 쿨 D 확정으로 <b>stale</b>. 아래 4안 = 밝은 쿨 판타지 지휘소(라이트 스톤/하늘 + 골드) 톤. 아트 바이블 <b>"전장은 어둡다 / 캐릭터는 빛난다"</b> + 코어 테마(무한 전장·환생·5 원형 세력)를 어떻게 담는지가 축.</p>
 
-<!-- A -->
-<div class="section"><span class="l">A · NEON HORIZON</span><span class="r"></span><span class="h">synthwave 워드마크</span></div>
+<!-- CONCEPT A -->
+<div class="section"><span class="n">A</span><span class="l">∞ 인시그니아 (Infinity Insignia)</span><span class="r"></span><span class="h">앱 아이콘 최적</span></div>
 <div class="card">
- <div class="stage">
-  <div class="floor"></div>
-  <div class="lA"><div class="sun"></div><span class="t1">INFINITE</span><span class="t2">WARFIELD</span></div>
-  <div class="icon"><div class="lA" style="transform:scale(.9)"><span class="t1" style="font-size:11px">INF</span><span class="t2" style="font-size:15px">WF</span></div></div>
-  <div class="iconlab">app icon</div>
+ <div class="stage light">
+  <svg width="300" height="150" viewBox="0 0 300 150" role="img" aria-label="Infinity insignia logo">
+   <defs>
+    <linearGradient id="ga" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE39A"/><stop offset=".5" stop-color="#FFD24D"/><stop offset="1" stop-color="#F0992D"/></linearGradient>
+   </defs>
+   <path d="M150,52 C120,20 74,26 74,58 C74,90 120,96 150,64 C180,96 226,90 226,58 C226,26 180,20 150,52 Z" fill="none" stroke="url(#ga)" stroke-width="13" stroke-linejoin="round"/>
+   <path d="M150,52 C120,20 74,26 74,58 C74,90 120,96 150,64 C180,96 226,90 226,58 C226,26 180,20 150,52 Z" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.5" stroke-linejoin="round"/>
+   <text x="150" y="128" text-anchor="middle" font-family="Cinzel,serif" font-weight="800" font-size="19" letter-spacing="2.5" fill="#15212E">INFINITE WARFIELD</text>
+  </svg>
+  <div><div class="icon"><svg width="96" height="96" viewBox="0 0 96 96"><defs><linearGradient id="gai" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d3350"/><stop offset="1" stop-color="#0d1117"/></linearGradient></defs><rect width="96" height="96" fill="url(#gai)"/><path d="M48,40 C36,26 18,29 18,44 C18,59 36,62 48,48 C60,62 78,59 78,44 C78,29 60,26 48,40 Z" fill="none" stroke="url(#ga)" stroke-width="8" stroke-linejoin="round"/></svg></div><div class="iconlab">app icon</div></div>
  </div>
- <div class="meta"><div class="cn">A · NEON HORIZON</div><h2>신스웨이브 워드마크</h2>
-  <p>마젠타→시안 네온 그라디언트 + 퍼스펙티브 그리드(신스웨이브 지평선). 캐주얼·네온 메타 정체성 *직격*. "멈출 수 없는" 질주감.</p>
-  <p class="pro">○ 메인/인트로 톤과 1:1 · 캐주얼 흥행 결 · 즉독 · ✕ 다크 전장 무게감은 약함</p>
+ <div class="meta">
+  <div class="cn">Concept A</div><h3>∞ 인시그니아</h3>
+  <p>무한대(∞) = <b style="color:var(--ink)">무한 전장 + 환생(차원의 법칙)</b>을 한 마크로. 게임 코어 서사와 직결·기억성 최상. 워드마크는 Cinzel 하단 정렬.</p>
+  <div class="pc"><div class="pro"><b>강점:</b> ∞ = 코어 테마 직결 · 앱 아이콘으로 완벽히 크롭 · 심볼 하나로 확장(로딩·워터마크)</div><div class="con"><b>약점:</b> ∞ 자체는 게임 장르(전투/소환) 암시 약함 · 흔히 쓰이는 기호(차별화 = 포지 질감·색으로)</div></div>
+  <div class="usetag">용도 = <b>앱 아이콘·인게임 타이틀·심볼 단독</b> · 아이콘 = 다크 배경 위 골드 ∞ (전장은 어둡다 + 빛나는 마크 = 아트 바이블)</div>
  </div>
 </div>
 
-<!-- B -->
-<div class="section"><span class="l">B · INFINITE CREST</span><span class="r"></span><span class="h">게임 크레스트</span></div>
+<!-- CONCEPT B -->
+<div class="section"><span class="n">B</span><span class="l">각인 크레스트 (Engraved Crest · 5세력)</span><span class="r"></span><span class="h">지휘소·문장</span></div>
 <div class="card">
- <div class="stage">
-  <div class="floor"></div>
-  <div class="lB">
-   <svg width="118" height="118" viewBox="0 0 118 118" fill="none">
-    <polygon points="59,8 104,40 87,96 31,96 14,40" stroke="#36D6E0" stroke-width="2.5" class="glowc" fill="rgba(34,224,232,.04)"/>
-    <path d="M40,59 C40,46 52,46 59,59 C66,72 78,72 78,59 C78,46 66,46 59,59 C52,72 40,72 40,59 Z" stroke="#FF2D95" stroke-width="3" class="glowm" fill="none"/>
-    <g fill="#E84DD4" class="glowm"><circle cx="59" cy="14" r="2.6"/><circle cx="98" cy="42" r="2.6"/><circle cx="83" cy="89" r="2.6"/><circle cx="35" cy="89" r="2.6"/><circle cx="20" cy="42" r="2.6"/></g>
-   </svg>
-   <div class="word">INFINITE WARFIELD</div><div class="sub">FIVE FORCES · ONE FIELD</div>
-  </div>
-  <div class="icon"><svg width="40" height="40" viewBox="0 0 118 118"><polygon points="59,8 104,40 87,96 31,96 14,40" stroke="#36D6E0" stroke-width="4" fill="none"/><path d="M42,59 C42,48 52,48 59,59 C66,70 76,70 76,59 C76,48 66,48 59,59 C52,70 42,70 42,59 Z" stroke="#FF2D95" stroke-width="5" fill="none"/></svg></div>
-  <div class="iconlab">app icon</div>
+ <div class="stage light">
+  <svg width="300" height="160" viewBox="0 0 300 160" role="img" aria-label="Five-faction crest logo">
+   <defs><linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE39A"/><stop offset="1" stop-color="#C89A3E"/></linearGradient></defs>
+   <g transform="translate(150,52)">
+    <!-- shield -->
+    <path d="M0,-42 L42,-30 L42,10 C42,34 22,48 0,58 C-22,48 -42,34 -42,10 L-42,-30 Z" fill="#EDF2F8" stroke="url(#gb)" stroke-width="5"/>
+    <!-- 5 faction wedges -->
+    <g opacity=".9">
+     <path d="M0,0 L0,-42 L26,-36 Z" fill="#E03A5C" opacity=".35"/>
+     <path d="M0,0 L26,-36 L42,-4 Z" fill="#00D4FF" opacity=".33"/>
+     <path d="M0,0 L42,-4 L20,44 Z" fill="#5DDD7E" opacity=".33"/>
+     <path d="M0,0 L20,44 L-20,44 Z" fill="#E06B14" opacity=".33"/>
+     <path d="M0,0 L-20,44 L-42,-4 Z" fill="#9D3EE8" opacity=".33"/>
+     <path d="M0,0 L-42,-4 L-26,-36 L0,-42 Z" fill="#3A6EA5" opacity=".25"/>
+    </g>
+    <path d="M0,-42 L42,-30 L42,10 C42,34 22,48 0,58 C-22,48 -42,34 -42,10 L-42,-30 Z" fill="none" stroke="url(#gb)" stroke-width="5"/>
+    <circle r="12" fill="#0D1117" stroke="url(#gb)" stroke-width="2.5"/>
+    <text y="4.5" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="15" fill="#FFD24D">∞</text>
+   </g>
+   <text x="150" y="140" text-anchor="middle" font-family="Cinzel,serif" font-weight="700" font-size="19" letter-spacing="3" fill="#15212E">INFINITE WARFIELD</text>
+  </svg>
+  <div><div class="icon"><svg width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" fill="#EDF2F8"/><g transform="translate(48,44) scale(.92)"><path d="M0,-42 L42,-30 L42,10 C42,34 22,48 0,58 C-22,48 -42,34 -42,10 L-42,-30 Z" fill="#fff" stroke="url(#gb)" stroke-width="5"/><path d="M0,0 L0,-42 L26,-36 Z" fill="#E03A5C" opacity=".35"/><path d="M0,0 L26,-36 L42,-4 Z" fill="#00D4FF" opacity=".33"/><path d="M0,0 L42,-4 L20,44 Z" fill="#5DDD7E" opacity=".33"/><path d="M0,0 L20,44 L-20,44 Z" fill="#E06B14" opacity=".33"/><path d="M0,0 L-20,44 L-42,-4 Z" fill="#9D3EE8" opacity=".33"/><circle r="12" fill="#0D1117" stroke="url(#gb)" stroke-width="2.5"/><text y="4.5" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="15" fill="#FFD24D">∞</text></g></svg></div><div class="iconlab">app icon</div></div>
  </div>
- <div class="meta"><div class="cn">B · INFINITE CREST</div><h2>5세력 엠블럼 크레스트</h2>
-  <p>5각(5 원형 세력) + 중앙 ∞(무한 전장·환생) + Cinzel 각인 서체. 다크 판타지 권위·전략 무게.</p>
-  <p class="pro">○ 5세력·전략 깊이·엠블럼 앱아이콘 강함 · ✕ 캐주얼 톤과 거리(전통 RPG 결)·소형서 디테일 손실</p>
+ <div class="meta">
+  <div class="cn">Concept B</div><h3>각인 크레스트 · 5세력</h3>
+  <p>문장(heraldry) = <b style="color:var(--ink)">5 원형 세력의 통합·지휘소 위엄</b>. 5분할에 테마색을 <b>off-unit 액센트</b>로만(도색 규칙 정합). 중앙 보스 = ∞. 골드 프레임.</p>
+  <div class="pc"><div class="pro"><b>강점:</b> 5세력 세계관 즉시 전달 · 문장 = 전략/지휘 장르감 · 골드+스톤 = 밝은 쿨 정합</div><div class="con"><b>약점:</b> 소형(아이콘)서 5분할 뭉갬 우려 · 요소 많음(단순화 필요) · 문장류 = 다소 흔함</div></div>
+  <div class="usetag">용도 = <b>인게임 타이틀·상점/스토어 문장·로딩 엠블럼</b> · 아이콘 = 크레스트 단독(∞ 보스 강조)</div>
  </div>
 </div>
 
-<!-- C -->
-<div class="section"><span class="l">C · DARK FORGE</span><span class="r"></span><span class="h">다크 메탈 + 네온 림 (★ 아트 바이블 일체)</span></div>
-<div class="card">
- <div class="stage">
-  <div class="floor"></div>
-  <div class="lC"><div class="row">INFINITE</div><div class="row">WARFIELD</div></div>
-  <div class="icon"><div class="lC"><div class="row" style="font-size:34px">IW</div></div></div>
-  <div class="iconlab">app icon</div>
+<!-- CONCEPT C — RECOMMEND -->
+<div class="section"><span class="n">C</span><span class="l">2존 포지 (Two-Zone Forge) — 아트 바이블 일체</span><span class="r"></span><span class="h">★ 권고</span></div>
+<div class="card rec">
+ <div class="stage light">
+  <svg width="330" height="178" viewBox="0 0 330 178" role="img" aria-label="Two-zone forge wordmark logo">
+   <defs>
+    <linearGradient id="gcgold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD24D"/><stop offset="1" stop-color="#F0992D"/></linearGradient>
+    <radialGradient id="gch" cx="50%" cy="0%" r="80%"><stop offset="0" stop-color="#F0992D" stop-opacity=".45"/><stop offset="1" stop-color="#F0992D" stop-opacity="0"/></radialGradient>
+   </defs>
+   <!-- lower dark zone (전장은 어둡다) -->
+   <rect x="0" y="94" width="330" height="84" rx="6" fill="#0d1117"/>
+   <rect x="0" y="94" width="330" height="34" fill="url(#gch)"/>
+   <!-- tiny silhouettes on the horizon -->
+   <g fill="#0a0d12"><rect x="88" y="87" width="5" height="8"/><rect x="104" y="86" width="4" height="9"/><rect x="222" y="87" width="5" height="8"/><rect x="238" y="86" width="4" height="9"/></g>
+   <line x1="18" y1="94" x2="312" y2="94" stroke="#F0992D" stroke-width="1.6" opacity=".85"/>
+   <!-- INFINITE in bright zone = dark ink + bronze rim (readable) -->
+   <text x="165" y="68" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="38" letter-spacing="6" fill="#15212E" stroke="#B89B5E" stroke-width=".7">INFINITE</text>
+   <!-- WARFIELD on dark ground = gold (빛난다) -->
+   <text x="165" y="152" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="38" letter-spacing="8" fill="url(#gcgold)">WARFIELD</text>
+  </svg>
+  <div><div class="icon"><svg width="96" height="96" viewBox="0 0 96 96"><defs><linearGradient id="gci" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dbe7f5"/><stop offset="0.5" stop-color="#aebfd2"/><stop offset="0.5" stop-color="#141b22"/><stop offset="1" stop-color="#0d1117"/></linearGradient></defs><rect width="96" height="96" fill="url(#gci)"/><line x1="10" y1="48" x2="86" y2="48" stroke="#F0992D" stroke-width="1.5" opacity=".8"/><text x="48" y="42" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="30" fill="#15212E">I</text><text x="48" y="82" text-anchor="middle" font-family="Cinzel,serif" font-weight="900" font-size="30" fill="#FFD24D">W</text></svg></div><div class="iconlab">app icon (2존)</div></div>
  </div>
- <div class="meta"><div class="cn">C · DARK FORGE</div><h2>다크 메탈 + 네온 림라이트</h2>
-  <p>묵직한 다크 메탈 글자에 마젠타+시안 <b>네온 림라이트 엣지</b> — 게임 아트 바이블 <b>"전장은 어둡다 / 캐릭터는 빛난다"</b>를 로고가 그대로 구현. 가장 "이 게임"다움.</p>
-  <p class="pro">○ 코어 아트 바이블·전장 다크 + 게이트서 확정한 네온 림과 *완전 일체*·무게+캐주얼 균형 · ✕ 가독은 A보다 살짝 아래</p>
- </div>
-</div>
-
-<!-- D -->
-<div class="section"><span class="l">D · ENDLESS</span><span class="r"></span><span class="h">∞ 심볼 모노그램 (앱 아이콘 우선)</span></div>
-<div class="card">
- <div class="stage">
-  <div class="floor"></div>
-  <div class="lD">
-   <svg width="150" height="92" viewBox="0 0 150 92" fill="none">
-    <defs><linearGradient id="gd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF2D95"/><stop offset="1" stop-color="#22E0E8"/></linearGradient></defs>
-    <path d="M40,46 C40,22 8,22 8,46 C8,70 40,70 56,46 C72,22 104,22 104,46 C104,70 72,70 56,46 Z" transform="translate(11,0)" stroke="url(#gd)" stroke-width="7" stroke-linecap="round" fill="none" style="filter:drop-shadow(0 0 8px rgba(34,224,232,.6))"/>
-    <path d="M120,30 L138,46 L120,62" stroke="#22E0E8" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" class="glowc"/>
-    <path d="M30,30 L12,46 L30,62" stroke="#FF2D95" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" class="glowm"/>
-   </svg>
-   <div class="word"><b>INFINITE</b><b>WARFIELD</b><span>endless war</span></div>
-  </div>
-  <div class="icon"><svg width="46" height="30" viewBox="0 0 150 92"><path d="M40,46 C40,22 8,22 8,46 C8,70 40,70 56,46 C72,22 104,22 104,46 C104,70 72,70 56,46 Z" transform="translate(11,0)" stroke="url(#gd)" stroke-width="11" fill="none" stroke-linecap="round"/></svg></div>
-  <div class="iconlab">app icon</div>
- </div>
- <div class="meta"><div class="cn">D · ENDLESS</div><h2>∞ 심볼 모노그램</h2>
-  <p>두 화살촉(마젠타/시안 = 두 세력 충돌)이 맞물려 ∞를 이룸 = 끝없는 전쟁·환생. 워드마크는 곁들이. <b>심볼 단독 = 앱 아이콘/스토어 썸네일 즉독.</b></p>
-  <p class="pro">○ 앱 아이콘·썸네일 최강(심볼 인지)·무한/환생 직결·확장성 · ✕ 타이틀 자체 임팩트는 A/C보다 약함</p>
+ <div class="meta">
+  <div class="cn">Concept C · ★ 권고</div><h3>2존 포지 <span class="badge">art-bible 일체</span></h3>
+  <p>로고 자체가 <b style="color:var(--ink)">2존 대비</b>를 형상화 — 위 "INFINITE"는 밝은 쿨(하늘 라이트, 골드 림) / 아래 "WARFIELD"는 <b>어두운 전장 위 골드</b>. 구 네온 림 → <b>골드 림</b>으로 계승. "전장은 어둡다 / 위는 밝다"가 타이틀에서 바로 읽힘.</p>
+  <div class="pc"><div class="pro"><b>강점:</b> 아트 바이블·2존 정체성 직접 인코딩(차별점) · 워드마크 중심 = 장르/이름 명확 · 인트로 시네마틱 강함</div><div class="con"><b>약점:</b> 앱 아이콘 = 워드마크 크롭 애매(→ IW 모노그램/∞로 분리) · 2줄 = 가로 좁은 배너선 축소</div></div>
+  <div class="usetag">용도 = <b>인게임 타이틀·인트로·메인 헤더</b> · 아이콘 = IW 모노그램(2존 split) 또는 A의 ∞ 조합 권장</div>
  </div>
 </div>
 
-<div class="pick" style="margin-top:30px"><b>디자인 권고:</b> 게임 정체성과 가장 일체 = <b>C (DARK FORGE)</b> — 게이트서 확정한 "다크+네온 림"을 로고가 선언. 캐주얼 흥행 가독 우선이면 <b>A (NEON HORIZON)</b>. <b>D</b>의 ∞ 심볼은 *어느 안을 골라도 앱 아이콘으로 병합* 추천(심볼 즉독). → <b>방향 1개 선택</b>(또는 "C 워드마크 + D 아이콘" 식 조합) 주시면 정밀화 + 인트로/메인 적용.</div>
+<!-- CONCEPT D -->
+<div class="section"><span class="n">D</span><span class="l">지평선 워필드 (Horizon Warfield)</span><span class="r"></span><span class="h">시네마틱 인트로</span></div>
+<div class="card">
+ <div class="stage" style="background:linear-gradient(180deg,#eaf1fa,#cdddf0 60%,#9fb6d0)">
+  <svg width="330" height="168" viewBox="0 0 330 168" role="img" aria-label="Horizon warfield logo">
+   <defs>
+    <linearGradient id="gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD24D"/><stop offset="1" stop-color="#F0992D"/></linearGradient>
+    <radialGradient id="gdsun" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".9"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient>
+   </defs>
+   <!-- perspective field lines converging to horizon -->
+   <g stroke="#3A6EA5" stroke-opacity=".35" stroke-width="1">
+    <line x1="165" y1="112" x2="10" y2="168"/><line x1="165" y1="112" x2="70" y2="168"/><line x1="165" y1="112" x2="130" y2="168"/>
+    <line x1="165" y1="112" x2="200" y2="168"/><line x1="165" y1="112" x2="260" y2="168"/><line x1="165" y1="112" x2="320" y2="168"/>
+   </g>
+   <ellipse cx="165" cy="112" rx="120" ry="30" fill="url(#gdsun)"/>
+   <line x1="45" y1="112" x2="285" y2="112" stroke="url(#gd)" stroke-width="2.5"/>
+   <!-- ∞ rising on horizon -->
+   <path d="M165,100 C156,90 142,92 142,102 C142,112 156,114 165,104 C174,114 188,112 188,102 C188,92 174,90 165,100 Z" fill="none" stroke="url(#gd)" stroke-width="4"/>
+   <text x="165" y="66" text-anchor="middle" font-family="Cinzel,serif" font-weight="800" font-size="22" letter-spacing="2" fill="#15212E" stroke="#fff" stroke-width=".5">INFINITE WARFIELD</text>
+  </svg>
+  <div><div class="icon"><svg width="96" height="96" viewBox="0 0 96 96"><defs><linearGradient id="gdi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdddf0"/><stop offset="1" stop-color="#3A6EA5"/></linearGradient></defs><rect width="96" height="96" fill="url(#gdi)"/><g stroke="#1d3350" stroke-opacity=".3"><line x1="48" y1="56" x2="14" y2="96"/><line x1="48" y1="56" x2="82" y2="96"/><line x1="48" y1="56" x2="30" y2="96"/><line x1="48" y1="56" x2="66" y2="96"/></g><line x1="16" y1="56" x2="80" y2="56" stroke="#FFD24D" stroke-width="3"/><path d="M48,48 C42,42 33,43 33,50 C33,57 42,58 48,52 C54,58 63,57 63,50 C63,43 54,42 48,48 Z" fill="none" stroke="#FFD24D" stroke-width="3.5"/></svg></div><div class="iconlab">app icon</div></div>
+ </div>
+ <div class="meta">
+  <div class="cn">Concept D</div><h3>지평선 워필드</h3>
+  <p>"Warfield"를 <b style="color:var(--ink)">무한히 뻗는 전장 지평선</b>으로 문자화 — 쿨 하늘 + 골드 지평선 + 소실점 원근(무한) + 떠오르는 ∞. 시네마틱 인트로 타이틀에 강함.</p>
+  <div class="pc"><div class="pro"><b>강점:</b> "무한 전장" 문자 그대로 시각화 · 밝은 쿨 하늘 = 톤 정합 · 인트로 애니 여지(지평선 진입)</div><div class="con"><b>약점:</b> 정보량 많아 소형서 약함 · 밝은 하늘 only = "전장은 어둡다" 결이 옅음(다크 전투 대비 약)</div></div>
+  <div class="usetag">용도 = <b>인트로 시네마틱·메인 배경 통합</b> · 아이콘 = 지평선+∞ 배지</div>
+ </div>
+</div>
+
+<!-- FONT LOCK -->
+<div class="section"><span class="n">✎</span><span class="l">Display 폰트 락 (§2 잠정 → 확정)</span><span class="r"></span><span class="h">로고가 브랜드 폰트를 정한다</span></div>
+<div class="card"><div class="meta" style="padding-top:18px">
+ <div class="fontrow"><div class="fl">Cinzel <span class="badge">권고</span><br>각석 세리프·고대 마이틱</div><div class="fw" style="font-family:'Cinzel',serif;font-weight:800">INFINITE WARFIELD</div></div>
+ <div class="fontrow"><div class="fl">Cinzel Decorative<br>장식 세리프(타이틀 전용)</div><div class="fw" style="font-family:'Cinzel Decorative',serif;font-weight:700">INFINITE WARFIELD</div></div>
+ <div class="fontrow"><div class="fl">Marcellus<br>가벼운 클래식(대안)</div><div class="fw" style="font-family:'Marcellus',serif">INFINITE WARFIELD</div></div>
+ <small class="note">권고 = <b style="color:var(--gold-deep)">Cinzel</b> (골드+스톤·지휘소 위엄 정합·헤더/타이틀 공용) · 본문 = Pretendard(불변) · 수치 = Chakra Petch(불변). 로고 선택 시 display 폰트 = §2 확정.</small>
+</div></div>
 
 <p class="foot">
- INFINITE WARFIELD · 로고 컨셉 4안 · 2026-06-30 · 디자인 세션<br>
- ★ 매체 게이트 #8 = 로고/타이포 = 그래픽 디자인 도메인(캐릭터 아트 appeal 아님) → HTML/SVG 직접 저작 OK<br>
- 용도 = 인게임 타이틀(인트로·메인) · 스토어/스튜디오 브랜드 treatment = 추후 marketing 파생 · 워킹 타이틀(앱명 출시 전 변경 가능)<br>
- SoT = design-system.md §1(네온 메타 색) · gdd Part 0·3 (비전·아트 바이블)
+ INFINITE WARFIELD · 로고 컨셉 (밝은 쿨 D) · 2026-07-01 · 디자인 세션<br>
+ <b>재정초:</b> 구 네온 4안(27차 `8305d02`) 폐기 → 밝은 쿨 판타지 지휘소 톤. <b>권고 = C 2존 포지</b>(아트 바이블 일체) + 아이콘은 A ∞ 조합.<br>
+ ★ 매체 게이트 #8 = 로고/그래픽/레이아웃 = 디자인 도메인 → SVG 직접 OK (캐릭터 appeal = PixelLab).<br>
+ SoT = design-system §2(타이포·display 락) · gdd Part 2.1(2존 톤)/2.2(5세력) · 다음 = 선택 → 정밀화 → 인트로/메인.<br>
+ 용도 = 인게임 타이틀 · 브랜드/스토어 treatment = 추후 marketing 파생 · 워킹 타이틀(앱명 출시 전 변경 가능).
 </p>
 </div></body></html>
