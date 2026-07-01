@@ -123,12 +123,12 @@
   .rc.in-deck::after{content:"편성됨";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.15cqw;font-weight:700;color:#fff;background:rgba(9,13,18,.55);z-index:2}
 
   /* 적 편성 (유닛만) + 위협 (라벨·hint·카운터·방어축 바 제거) */
-  .enemy-panel{flex:0 1 auto;min-height:0}
-  .formation{flex:0 0 auto;display:flex;flex-direction:column;gap:.9cqw;justify-content:center;background:radial-gradient(90% 80% at 60% 45%,rgba(255,91,91,.10),transparent);border-radius:1cqw;padding:1.1cqw .6cqw;margin-bottom:1cqw}
-  .frow{display:flex;gap:.8cqw;justify-content:center}
+  .enemy-panel{flex:1;min-height:0}
+  .formation{flex:1;display:flex;flex-direction:column;gap:1.4cqw;justify-content:center;background:radial-gradient(90% 80% at 60% 45%,rgba(255,91,91,.10),transparent);border-radius:1cqw;padding:1.4cqw .6cqw;margin-bottom:1cqw}
+  .frow{display:flex;gap:1cqw;justify-content:center}
   .frow.back{opacity:.92}
-  .eu{width:4.4cqw;height:5.1cqw;border-radius:.9cqw;background:linear-gradient(180deg,#1a1013,#120b0d);position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.3cqw}
-  .eu .fig{width:3cqw;height:3.8cqw}.eu .fig .head{width:1.5cqw;height:1.5cqw;background:#8a6b6f}.eu .fig .torso{width:2.3cqw;height:2.5cqw;background:#6f5257}
+  .eu{width:5.4cqw;height:6.3cqw;border-radius:1cqw;background:linear-gradient(180deg,#1a1013,#120b0d);position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.35cqw}
+  .eu .fig{width:3.7cqw;height:4.7cqw}.eu .fig .head{width:1.9cqw;height:1.9cqw;background:#8a6b6f}.eu .fig .torso{width:2.9cqw;height:3.1cqw;background:#6f5257}
   .enemy-rim{box-shadow:inset 0 0 0 .28cqw var(--enemy),inset 0 0 2.2cqw rgba(255,91,91,.30)}
   .threat{flex:0 0 auto;background:rgba(11,16,22,.75);border:.15cqw solid rgba(138,180,255,.5);border-radius:1cqw;padding:1cqw}
   .th-head{display:flex;align-items:center;gap:.7cqw;font-weight:800;font-size:1.7cqw;color:var(--fortress);margin-bottom:.7cqw}
@@ -140,12 +140,12 @@
   .counters .clbl{font-size:1.2cqw;color:var(--muted);font-weight:600}
   .cchip{font-size:1.2cqw;font-weight:700;padding:.25cqw .9cqw;border-radius:1cqw;color:#fff}
 
-  /* CTA (취소 삭제 — 상단 뒤로 존재) */
-  .cta-block{display:flex;justify-content:flex-end;margin-top:auto}
-  .cta{display:inline-flex;align-items:center;gap:.9cqw;white-space:nowrap;padding:1.4cqw 3cqw;border-radius:1.6cqw;cursor:pointer;
-    background:linear-gradient(180deg,#FFE684,var(--gold-deep));border:.22cqw solid #fff2c8;color:var(--ink);
-    font-size:2.3cqw;font-weight:800;letter-spacing:.02em;box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.45);animation:pulse 2.4s ease-in-out infinite}
-  .cta svg{width:2.7cqw;height:2.7cqw}
+  /* CTA (취소 삭제 — 상단 뒤로 존재 · 전폭 바로 확대) */
+  .cta-block{display:flex}
+  .cta{flex:1;display:flex;align-items:center;justify-content:center;gap:1cqw;white-space:nowrap;padding:2cqw 2cqw;border-radius:1.6cqw;cursor:pointer;
+    background:linear-gradient(180deg,#FFE684,var(--gold-deep));border:.24cqw solid #fff2c8;color:var(--ink);
+    font-size:2.9cqw;font-weight:800;letter-spacing:.02em;box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.45);animation:pulse 2.4s ease-in-out infinite}
+  .cta svg{width:3.2cqw;height:3.2cqw}
   @keyframes pulse{0%,100%{box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.4)}50%{box-shadow:0 .5cqw 3.4cqw rgba(255,190,70,.72)}}
 
   /* ===== 주석 ===== */
