@@ -14,7 +14,6 @@
     --necro:#9D3EE8;--combat:#E03A5C;--spirit:#5DDD7E;--machine:#00D4FF;--beast:#E06B14;
     --fortress:#8AB4FF;
     --txt:#E6ECF3;--muted:#8FA0B4;--line:#2d383f;--ground:#0c1116;--card:#151d27;
-    /* 폰트 = Pretendard 단일 (메인 허브 통일·weight 로 위계·Cinzel/Chakra 폐지) */
     --sans:'Pretendard',ui-sans-serif,system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;
   }
   *{box-sizing:border-box;margin:0}
@@ -55,8 +54,8 @@
     font-weight:700;font-size:1.55cqw;color:var(--cream);background:linear-gradient(180deg,#1c2634,#111925);border:.16cqw solid var(--bronze)}
   .chip svg{width:2.3cqw;height:2.3cqw}
 
-  /* 본문 그리드 */
-  .body{position:absolute;top:8.4cqw;left:0;right:0;bottom:0;display:grid;grid-template-columns:64fr 36fr;gap:1.4cqw;padding:1.6cqw;z-index:3}
+  /* 본문 그리드 (60/40 — 오른쪽 숨통) */
+  .body{position:absolute;top:8.4cqw;left:0;right:0;bottom:0;display:grid;grid-template-columns:60fr 40fr;gap:1.4cqw;padding:1.6cqw;z-index:3}
   .col{display:flex;flex-direction:column;gap:1.3cqw;min-height:0;min-width:0}
   .panel{background:linear-gradient(180deg,rgba(22,31,43,.92),rgba(15,22,32,.92));border:.16cqw solid rgba(184,155,94,.55);
     border-radius:1.4cqw;padding:1.2cqw 1.3cqw;display:flex;flex-direction:column;min-height:0;box-shadow:0 .4cqw 1.4cqw rgba(0,0,0,.4)}
@@ -105,39 +104,11 @@
   .deck-hero-wrap{display:flex;gap:1.1cqw;align-items:stretch}
   .divider{width:.16cqw;background:linear-gradient(180deg,transparent,rgba(184,155,94,.5),transparent);flex:0 0 auto;margin:.5cqw 0}
 
-  /* 로스터 = 영웅 그룹(맨 앞·고정) + 일반 유닛 스크롤 */
+  /* 로스터 = 영웅(맨 앞·같은 사이즈·같은 스크롤) + 일반 유닛 */
   .roster-panel{flex:1;min-height:0}
   .filters{display:flex;gap:.6cqw}
   .filters .f{font-size:1.25cqw;font-weight:600;padding:.35cqw 1cqw;border-radius:1.2cqw;color:var(--muted);background:rgba(255,255,255,.04);border:.14cqw solid #28323f;cursor:pointer}
   .filters .f.on{color:var(--ink);background:linear-gradient(180deg,#ffe684,var(--gold-deep));border-color:#fff2c8;font-weight:700}
-  .roster-body{flex:1;display:flex;gap:1cqw;min-height:0}
-
-  /* 영웅 그룹 = 항상 맨 앞·클릭 선택·미해금도 표시 */
-  .hero-group{flex:0 0 auto;display:flex;gap:.8cqw;align-items:stretch}
-  .hero-rc{width:8.8cqw;position:relative;border-radius:1cqw;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;
-    background:linear-gradient(180deg,#231d10,#15101c);border:.2cqw solid var(--gold);box-shadow:0 0 1.2cqw rgba(255,210,77,.22)}
-  .hero-rc .hbadge{position:absolute;top:.35cqw;left:50%;transform:translateX(-50%);z-index:5;font-size:1cqw;font-weight:800;letter-spacing:.08em;
-    color:var(--ink);background:linear-gradient(180deg,#ffe684,var(--gold-deep));padding:.12cqw .8cqw;border-radius:.9cqw}
-  .hero-rc .hfig{flex:1;min-height:5.4cqw;display:flex;align-items:flex-end;justify-content:center;position:relative;background:rgba(8,12,17,.5);padding-top:1.8cqw}
-  .hero-rc .hfig .fig{width:3.8cqw;height:5cqw;margin-bottom:.2cqw}
-  .hero-rc .hfig .fig .head{width:1.9cqw;height:1.9cqw}.hero-rc .hfig .fig .torso{width:3cqw;height:3.2cqw}
-  .hero-rc .hmeta{padding:.4cqw .3cqw;text-align:center;background:rgba(9,13,18,.88)}
-  .hero-rc .hnm{font-size:1.2cqw;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .hero-rc .hrole{font-size:1.05cqw;color:var(--muted);font-weight:600}
-  .hero-rc.selected{border-color:var(--go);box-shadow:0 0 1.4cqw rgba(125,255,160,.35)}
-  .hero-rc.selected .pick{position:absolute;top:.4cqw;right:.4cqw;z-index:5;width:2.1cqw;height:2.1cqw;border-radius:50%;
-    background:var(--go);color:#08331b;display:flex;align-items:center;justify-content:center;font-size:1.4cqw;font-weight:900}
-  .hero-rc.locked{border-color:#5b6472;box-shadow:none;filter:none}
-  .hero-rc.locked .hfig .fig{filter:grayscale(1) brightness(.4)}
-  .hero-rc.locked .hbadge{background:linear-gradient(180deg,#6a7382,#4a525f);color:#dfe6ee}
-  .hero-rc .lock{position:absolute;inset:0 0 3.2cqw 0;display:flex;align-items:center;justify-content:center;z-index:4}
-  .hero-rc .lock svg{width:2.8cqw;height:2.8cqw;color:#c3ccd6}
-  .hero-rc .unlock{background:rgba(9,13,18,.92)!important}
-  .hero-rc .unlock .hnm{color:#aeb8c4}
-  .hero-rc .unlock .hrole{color:var(--gold);font-weight:700}
-  .rgroup-div{flex:0 0 auto;width:.18cqw;background:linear-gradient(180deg,transparent,rgba(184,155,94,.6),transparent);margin:.4cqw 0}
-
-  /* 일반 유닛 스크롤 */
   .roster-scroll{flex:1;overflow-x:auto;overflow-y:hidden;display:grid;grid-auto-flow:column;grid-template-rows:1fr 1fr;gap:.9cqw;padding:.3cqw .3cqw 1cqw;scrollbar-width:thin;scrollbar-color:var(--bronze) transparent;min-width:0}
   .roster-scroll::-webkit-scrollbar{height:.9cqw}.roster-scroll::-webkit-scrollbar-thumb{background:var(--bronze);border-radius:1cqw}
   .rc{width:8.6cqw;position:relative;border-radius:1cqw;background:linear-gradient(180deg,#1a2330,#10161f);border:.15cqw solid #2a3542;display:flex;flex-direction:column;overflow:hidden;cursor:pointer}
@@ -150,44 +121,61 @@
   .rc .tbadge{width:1.9cqw;height:1.9cqw;top:.35cqw;right:.35cqw}.rc .tbadge svg{width:1.3cqw;height:1.3cqw}
   .rc.in-deck{opacity:.42}
   .rc.in-deck::after{content:"편성됨";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.15cqw;font-weight:700;color:#fff;background:rgba(9,13,18,.55);z-index:2}
+  /* 영웅 카드 = 같은 사이즈·골드 프레임 + 영웅 배지 */
+  .rc.hero{border-color:var(--gold);box-shadow:0 0 .9cqw rgba(255,210,77,.22)}
+  .rc .herob{position:absolute;top:.32cqw;left:.32cqw;z-index:4;font-size:1cqw;font-weight:800;letter-spacing:.05em;
+    color:var(--ink);background:linear-gradient(180deg,#ffe684,var(--gold-deep));padding:.08cqw .55cqw;border-radius:.7cqw}
+  .rc.hero .rcost{color:var(--muted);font-weight:700}
+  .rc.hero.sel{border-color:var(--go);box-shadow:0 0 1cqw rgba(125,255,160,.35)}
+  .rc.hero.sel .rcost{color:var(--go)}
+  .rc.hero.sel .rfig::after{content:"✓";position:absolute;top:.3cqw;right:.35cqw;z-index:4;width:1.8cqw;height:1.8cqw;border-radius:50%;
+    background:var(--go);color:#08331b;display:flex;align-items:center;justify-content:center;font-size:1.2cqw;font-weight:900}
+  .rc.hero.locked{border-color:#5b6472;box-shadow:none}
+  .rc.hero.locked .rfig .fig{filter:grayscale(1) brightness(.42)}
+  .rc.hero.locked .rcost{color:#c79bf0}
+  .rc.hero.locked .lock{position:absolute;inset:0 0 3.2cqw 0;display:flex;align-items:center;justify-content:center;z-index:3}
+  .rc.hero.locked .lock svg{width:2.4cqw;height:2.4cqw;color:#c3ccd6}
 
-  /* 적 편성 (유닛만) + 위협 */
-  .enemy-panel{flex:1;min-height:0}
-  .formation{flex:1;display:flex;flex-direction:column;gap:1.2cqw;justify-content:center;background:radial-gradient(90% 80% at 60% 45%,rgba(255,91,91,.10),transparent);border-radius:1cqw;padding:1cqw .6cqw;margin-bottom:.9cqw;min-height:0}
-  .frow{display:flex;gap:1cqw;justify-content:center}
-  .frow.back{opacity:.92}
-  .eu{width:5.2cqw;height:6cqw;border-radius:1cqw;background:linear-gradient(180deg,#1a1013,#120b0d);position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.35cqw}
-  .eu .fig{width:3.6cqw;height:4.5cqw}.eu .fig .head{width:1.9cqw;height:1.9cqw;background:#8a6b6f}.eu .fig .torso{width:2.9cqw;height:3cqw;background:#6f5257}
-  .enemy-rim{box-shadow:inset 0 0 0 .28cqw var(--enemy),inset 0 0 2.2cqw rgba(255,91,91,.30)}
-  .threat{flex:0 0 auto;background:rgba(11,16,22,.75);border:.15cqw solid rgba(138,180,255,.5);border-radius:1cqw;padding:.9cqw}
-  .th-head{display:flex;align-items:center;gap:.7cqw;font-weight:800;font-size:1.6cqw;color:var(--fortress);margin-bottom:.6cqw}
-  .th-head .ic{width:2.4cqw;height:2.4cqw;display:flex;align-items:center;justify-content:center;border-radius:.7cqw;background:rgba(138,180,255,.16);border:.14cqw solid var(--fortress)}
-  .th-head .ic svg{width:1.8cqw;height:1.8cqw;color:var(--fortress)}
-  .hint{font-size:1.35cqw;color:#dfe6ee;background:rgba(79,163,255,.10);border-left:.3cqw solid var(--friend);padding:.6cqw .8cqw;border-radius:.6cqw;margin-bottom:.7cqw}
+  /* 적 편성(위협) = ⓐ 상시 패널 = 위협 라벨+카운터 (진형 위치 = 미리보기 팝업 ⓑ) */
+  .enemy-panel{flex:0 0 auto}
+  .enemy-mini{display:flex;gap:.7cqw;justify-content:center;padding:.7cqw;margin-bottom:.9cqw;
+    background:radial-gradient(80% 80% at 50% 40%,rgba(255,91,91,.10),transparent);border-radius:.9cqw}
+  .em{width:3.6cqw;height:4.2cqw;border-radius:.8cqw;background:linear-gradient(180deg,#1a1013,#120b0d);position:relative;
+    box-shadow:inset 0 0 0 .22cqw var(--enemy),inset 0 0 1.4cqw rgba(255,91,91,.3);display:flex;align-items:flex-end;justify-content:center;padding-bottom:.25cqw}
+  .em .fig{width:2.5cqw;height:3.2cqw}.em .fig .head{width:1.4cqw;height:1.4cqw;background:#8a6b6f}.em .fig .torso{width:2cqw;height:2.1cqw;background:#6f5257}
+  .th-head{display:flex;align-items:center;gap:.7cqw;font-weight:800;font-size:1.7cqw;color:var(--fortress);margin-bottom:.7cqw}
+  .th-head .ic{width:2.6cqw;height:2.6cqw;display:flex;align-items:center;justify-content:center;border-radius:.7cqw;background:rgba(138,180,255,.16);border:.14cqw solid var(--fortress)}
+  .th-head .ic svg{width:1.9cqw;height:1.9cqw;color:var(--fortress)}
+  .hint{font-size:1.45cqw;color:#dfe6ee;background:rgba(79,163,255,.10);border-left:.3cqw solid var(--friend);padding:.7cqw .9cqw;border-radius:.6cqw;margin-bottom:.8cqw}
   .hint b{color:var(--friend)}
-  .counters{display:flex;flex-wrap:wrap;gap:.5cqw;align-items:center}
-  .counters .clbl{font-size:1.2cqw;color:var(--muted);font-weight:600}
-  .cchip{font-size:1.2cqw;font-weight:700;padding:.25cqw .9cqw;border-radius:1cqw;color:#fff}
+  .counters{display:flex;flex-wrap:wrap;gap:.5cqw;align-items:center;margin-bottom:1cqw}
+  .counters .clbl{font-size:1.25cqw;color:var(--muted);font-weight:600}
+  .cchip{font-size:1.25cqw;font-weight:700;padding:.28cqw 1cqw;border-radius:1cqw;color:#fff}
+  .preview-btn{display:flex;align-items:center;justify-content:center;gap:.7cqw;width:100%;padding:.9cqw;border-radius:1.1cqw;
+    font-size:1.55cqw;font-weight:700;color:var(--cream);background:linear-gradient(180deg,#26313f,#141c26);border:.18cqw solid var(--bronze);cursor:pointer}
+  .preview-btn svg{width:2.1cqw;height:2.1cqw;color:var(--enemy)}
+
+  /* 하단 고정 그룹 (목표 + CTA = 엄지존) */
+  .bottom-group{margin-top:auto;display:flex;flex-direction:column;gap:1.1cqw}
 
   /* ★ 스테이지 목표 (별 조건) = 편성 화면 통합 → 출격 팝업 대체 */
-  .goals{flex:0 0 auto;background:rgba(255,210,77,.07);border:.16cqw solid rgba(255,210,77,.55);border-radius:1cqw;padding:.85cqw 1cqw}
-  .g-head{display:flex;align-items:center;gap:.6cqw;font-weight:800;font-size:1.55cqw;color:var(--gold);margin-bottom:.55cqw}
-  .g-head .gh-ic{width:2cqw;height:2cqw}
-  .g-head .gcount{font-size:1.25cqw;color:var(--muted);font-weight:600;margin-left:auto}
-  .g-row{display:flex;align-items:center;gap:.7cqw;font-size:1.4cqw;font-weight:600;padding:.24cqw 0}
-  .g-row .gstar{width:1.95cqw;height:1.95cqw;flex:0 0 auto}
+  .goals{flex:0 0 auto;background:rgba(255,210,77,.07);border:.16cqw solid rgba(255,210,77,.55);border-radius:1cqw;padding:.9cqw 1.1cqw}
+  .g-head{display:flex;align-items:center;gap:.6cqw;font-weight:800;font-size:1.6cqw;color:var(--gold);margin-bottom:.6cqw}
+  .g-head .gh-ic{width:2.1cqw;height:2.1cqw}
+  .g-head .gcount{font-size:1.3cqw;color:var(--muted);font-weight:600;margin-left:auto}
+  .g-row{display:flex;align-items:center;gap:.7cqw;font-size:1.5cqw;font-weight:600;padding:.28cqw 0}
+  .g-row .gstar{width:2.1cqw;height:2.1cqw;flex:0 0 auto}
   .g-row.earned{color:#ffe8a8}.g-row.earned .gstar{color:var(--gold)}
   .g-row.todo{color:#b6c1ce}.g-row.todo .gstar{color:#59606d}
 
   /* CTA (출격 팝업 제거 → 전투 시작 = 1탭 직행) */
-  .cta-block{display:flex;flex:0 0 auto}
-  .cta{flex:1;display:flex;align-items:center;justify-content:center;gap:1cqw;white-space:nowrap;padding:1.9cqw 2cqw;border-radius:1.6cqw;cursor:pointer;
+  .cta{display:flex;align-items:center;justify-content:center;gap:1cqw;white-space:nowrap;padding:1.6cqw;border-radius:1.5cqw;cursor:pointer;
     background:linear-gradient(180deg,#FFE684,var(--gold-deep));border:.24cqw solid #fff2c8;color:var(--ink);
-    font-size:2.8cqw;font-weight:800;letter-spacing:.02em;box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.45);animation:pulse 2.4s ease-in-out infinite}
-  .cta svg{width:3.1cqw;height:3.1cqw}
+    font-size:2.7cqw;font-weight:800;letter-spacing:.02em;box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.45);animation:pulse 2.4s ease-in-out infinite}
+  .cta svg{width:3cqw;height:3cqw}
   @keyframes pulse{0%,100%{box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.4)}50%{box-shadow:0 .5cqw 3.4cqw rgba(255,190,70,.72)}}
 
-  /* 영웅 미선택 상태 (뷰 2) */
+  /* 영웅 미선택 상태 (뷰 ④) */
   .herostate{position:relative;width:100%;container-type:inline-size;border-radius:8px;overflow:hidden;padding:2.2cqw 2cqw;
     background:radial-gradient(120% 90% at 50% 12%,rgba(157,62,232,.18),transparent 55%),linear-gradient(180deg,#0e0a16,#0a0710)}
   .du.hero-empty{border-style:dashed;border-color:var(--gold);background:rgba(255,210,77,.06);align-items:center;justify-content:center;text-align:center;min-height:11.5cqw}
@@ -199,12 +187,29 @@
   .eh-hint{font-size:1.2cqw;color:#a98b4a;margin-top:.4cqw}
   .empty-slide-hint{display:flex;align-items:center;padding-left:2cqw;color:#5a6675;font-size:1.5cqw;font-weight:600}
 
-  /* 유닛 롱클릭 → 정보 다이얼로그 (모달·전체화면 아님) */
+  /* 모달 다이얼로그 공통 (②미리보기 · ③유닛정보) */
   .dlg-backdrop{position:absolute;inset:0;background:rgba(6,9,13,.72);z-index:8;display:flex;align-items:center;justify-content:center}
-  .dialog{width:66cqw;background:linear-gradient(180deg,#182230,#0f1620);border:.22cqw solid var(--bronze);border-radius:2cqw;
+  .dialog{background:linear-gradient(180deg,#182230,#0f1620);border:.22cqw solid var(--bronze);border-radius:2cqw;
     box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);overflow:hidden;position:relative}
   .dlg-x{position:absolute;top:1cqw;right:1cqw;width:3cqw;height:3cqw;border-radius:50%;background:rgba(255,255,255,.08);
-    border:.14cqw solid #37424f;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:2cqw;font-weight:700;cursor:pointer;z-index:3}
+    border:.14cqw solid #37424f;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:2cqw;font-weight:700;cursor:pointer;z-index:5}
+  .dlg-title{font-size:2.1cqw;font-weight:800;color:#fff;padding:1.4cqw 1.8cqw .2cqw;display:flex;align-items:center;gap:.8cqw}
+  .dlg-title .sub{font-size:1.3cqw;font-weight:600;color:var(--muted)}
+
+  /* ② 적진형 미리보기 팝업 (진형 위치만 · 카운터/위협 라벨 없음) */
+  .prev{width:64cqw}
+  .prev .field{margin:1cqw 1.8cqw 1.8cqw;border-radius:1.4cqw;padding:2.4cqw 1.6cqw;position:relative;
+    background:radial-gradient(90% 80% at 62% 42%,rgba(255,91,91,.12),transparent 60%),linear-gradient(180deg,#140b0d,#0c0709);border:.16cqw solid #34222a}
+  .prev .lane-tag{position:absolute;left:1.2cqw;font-size:1.2cqw;font-weight:700;color:#a9838a}
+  .prev .lane-tag.back{top:1.2cqw}.prev .lane-tag.front{bottom:1.2cqw}
+  .prev .frow{display:flex;gap:1.4cqw;justify-content:center;margin:1.2cqw 0}
+  .eu{width:6cqw;height:7cqw;border-radius:1cqw;background:linear-gradient(180deg,#1a1013,#120b0d);position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.4cqw}
+  .eu .fig{width:4cqw;height:5.2cqw}.eu .fig .head{width:2.1cqw;height:2.1cqw;background:#8a6b6f}.eu .fig .torso{width:3.2cqw;height:3.4cqw;background:#6f5257}
+  .enemy-rim{box-shadow:inset 0 0 0 .28cqw var(--enemy),inset 0 0 2.2cqw rgba(255,91,91,.30)}
+  .prev .note-b{font-size:1.35cqw;color:var(--muted);padding:0 1.8cqw 1.6cqw;line-height:1.6}
+
+  /* ③ 유닛 정보 다이얼로그 */
+  .info{width:66cqw}
   .dlg-in{display:flex;gap:1.6cqw;padding:1.8cqw}
   .dlg-art{flex:0 0 auto;width:20cqw;border-radius:1.4cqw;background:radial-gradient(90% 70% at 50% 40%,rgba(157,62,232,.24),transparent 60%),linear-gradient(180deg,#14101c,#0b0810);
     border:.16cqw solid #2a3542;display:flex;align-items:flex-end;justify-content:center;padding:1.4cqw 0 1cqw;position:relative;overflow:hidden}
@@ -228,6 +233,8 @@
   .st .sv.mag{color:var(--necro);filter:brightness(1.4)}
   .dlg-skill{font-size:1.4cqw;color:#dfe6ee;background:rgba(79,163,255,.08);border-left:.3cqw solid var(--friend);padding:.7cqw .9cqw;border-radius:.6cqw}
   .dlg-skill b{color:#fff}
+  .dlg-foot{font-size:1.3cqw;color:#aeb8c4;font-weight:600;display:flex;align-items:center;gap:.6cqw;flex-wrap:wrap}
+  .dlg-foot .fk{color:var(--muted);font-weight:700}.dlg-foot b{color:#fff}.dlg-foot .dot{color:#3a4657}
 
   /* ===== 주석 ===== */
   .section{display:flex;align-items:baseline;gap:10px;margin:40px 0 6px}
@@ -254,9 +261,8 @@
 <!-- UI 킷 아이콘 (design/ui-kit-icons.svg) + 테마 아이콘 (design/ui-theme-icons.svg) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <symbol id="i-battle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l9 9"/><path d="M20 4l-9 9"/><path d="M13 13l3 3"/><path d="M11 13l-3 3"/><path d="M3.5 18.5l2 2"/><path d="M20.5 18.5l-2 2"/></g></symbol>
-  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor"/><circle cx="12" cy="12" r="6" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="2"/></symbol>
-  <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l3 6-9 12L3 9z" fill="currentColor"/><path d="M3 9h18M9 3l3 6 3-6M12 21l-3-12M12 21l3-12" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1.4"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.3"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></symbol>
   <symbol id="i-fortress" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.6l2.85 6.2 6.75.62-5.1 4.5 1.5 6.63L12 18.6 5.9 21.55l1.5-6.63-5.1-4.5 6.75-.62z" fill="currentColor"/></symbol>
   <symbol id="i-star-o" viewBox="0 0 24 24"><path d="M12 2.6l2.85 6.2 6.75.62-5.1 4.5 1.5 6.63L12 18.6 5.9 21.55l1.5-6.63-5.1-4.5 6.75-.62z" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
@@ -273,14 +279,14 @@
 <div class="wrap">
   <a class="backlink" href="../index.html">‹ 디자인 보드</a>
   <div class="eyebrow" style="margin-top:14px">byiryu studio · 편성 · Battle Prepare</div>
-  <h1>편성 화면 — 프로덕션 목업 v2.3</h1>
-  <p class="sub"><b>출격 팝업 제거 → 별 조건을 편성 화면에 통합</b>(전투 시작 = 1탭 직행) · <b>영웅 유닛 = 로스터 맨 앞 고정</b>(클릭 선택·미해금도 표시) · 유닛 롱클릭 → 정보 다이얼로그. 코스트 예산 덱(spec §186) · Pretendard · 유닛 = 림라이트 placeholder.</p>
-  <p class="status">● 검토 대기 v2.3 · Necro 테마 예시 · 출격 팝업 제거 = 별 조건 편성 통합 · 영웅 로스터 맨 앞(선택/해금/잠금 3상태) · 유닛 정보 다이얼로그(모달)</p>
+  <h1>편성 화면 — 프로덕션 목업 v2.4</h1>
+  <p class="sub"><b>오른쪽 숨통</b> = 적 진형 그리드를 미리보기 팝업(ⓑ)으로 이관(PM 2표면 계약) → 상시 패널은 위협 요약만 · 목표+CTA 하단 고정 · 60/40. <b>영웅 = 일반과 같은 사이즈·같은 스크롤 맨 앞</b>(선택/교체/🔒). 출격 팝업 제거(별 조건 편성 통합·1탭 직행). 유닛 롱클릭 → 정보 다이얼로그.</p>
+  <p class="status">● 검토 대기 v2.4 · Necro 예시 · 적 진형 → 미리보기 팝업 이관(오른쪽 여백 확보) · 영웅 동일 사이즈 로스터 편입 · 목표+CTA 하단 엄지존</p>
 
   <div class="frame">
-    <p class="frame-cap">① 편성 화면 <span>— ★ 스테이지 목표(별 3조건)를 우측 하단 상시 노출 = 출격 팝업 불요</span></p>
+    <p class="frame-cap">① 편성 화면 <span>— 우측 = 적 위협 요약(상단) + ★ 목표 + 전투 시작(하단 엄지존). 적 진형 위치 = [적진형 미리보기] 버튼 → ②</span></p>
     <div class="screen">
-      <!-- 상단 바 (뒤로 = 취소 겸함) -->
+      <!-- 상단 바 -->
       <div class="topbar">
         <div class="tb-left">
           <button class="back">‹ 뒤로</button>
@@ -298,7 +304,7 @@
 
       <!-- 본문 -->
       <div class="body">
-        <!-- 좌: 덱(코스트 예산) + 로스터(영웅 맨 앞 + 일반) -->
+        <!-- 좌: 덱(코스트 예산) + 로스터(영웅 맨 앞·동일 사이즈 + 일반) -->
         <div class="col">
           <div class="panel deck-panel">
             <div class="p-head">내 덱
@@ -308,7 +314,6 @@
               <span class="cnt">코스트 예산 내 자유 편성</span>
             </div>
             <div class="deck-row">
-              <!-- 영웅 = 0번 고정 (예산 외) -->
               <div class="deck-hero-wrap">
                 <div class="du hero-slot">
                   <div class="hero-badge">영웅</div>
@@ -318,7 +323,6 @@
                 </div>
                 <div class="divider"></div>
               </div>
-              <!-- 일반 유닛 = 코스트 예산 내 (가로 슬라이드) -->
               <div class="deck-slide">
                 <div class="du"><div class="rm">✕</div><span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span><div class="unit friend"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="meta"><div class="nm">숲의 수호자</div><div class="cost">3</div></div></div>
                 <div class="du"><div class="rm">✕</div><span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span><div class="unit friend"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="meta"><div class="nm">정령술사</div><div class="cost">4</div></div></div>
@@ -336,86 +340,52 @@
               <span class="spacer"></span>
               <div class="filters"><span class="f on">전체</span><span class="f">탱커</span><span class="f">딜러</span><span class="f">서포터</span></div>
             </div>
-            <div class="roster-body">
-              <!-- 영웅 그룹 = 항상 맨 앞·클릭 선택·미해금도 보임 -->
-              <div class="hero-group">
-                <div class="hero-rc selected">
-                  <div class="hbadge">영웅</div><div class="pick">✓</div>
-                  <span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span>
-                  <div class="hfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-                  <div class="hmeta"><div class="hnm">아르덴</div><div class="hrole">Combat · 편성됨</div></div>
-                </div>
-                <div class="hero-rc">
-                  <div class="hbadge">영웅</div>
-                  <span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span>
-                  <div class="hfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-                  <div class="hmeta"><div class="hnm">베스라</div><div class="hrole">Necro · 교체 가능</div></div>
-                </div>
-                <div class="hero-rc locked">
-                  <div class="hbadge">영웅</div>
-                  <span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span>
-                  <div class="hfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-                  <div class="lock"><svg><use href="#i-lock"/></svg></div>
-                  <div class="hmeta unlock"><div class="hnm">에이라</div><div class="hrole">업적 해금</div></div>
-                </div>
-              </div>
-              <div class="rgroup-div"></div>
-              <!-- 일반 유닛 스크롤 (2행) -->
-              <div class="roster-scroll">
-                <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">야수의 발톱</div><div class="rcost">2</div></div></div>
-                <div class="rc in-deck"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">수호 방패병</div><div class="rcost">2</div></div></div>
-                <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">피의 맹습자</div><div class="rcost">3</div></div></div>
-                <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">과열 장갑병</div><div class="rcost">4</div></div></div>
-                <div class="rc in-deck"><span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">정령술사</div><div class="rcost">4</div></div></div>
-                <div class="rc"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">창병</div><div class="rcost">2</div></div></div>
-                <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">사령술사</div><div class="rcost">5</div></div></div>
-                <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">포격 드론</div><div class="rcost">3</div></div></div>
-                <div class="rc in-deck"><span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">숲의 수호자</div><div class="rcost">3</div></div></div>
-                <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">늑대 기수</div><div class="rcost">3</div></div></div>
-                <div class="rc"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">궁수</div><div class="rcost">2</div></div></div>
-                <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">역병술사</div><div class="rcost">4</div></div></div>
-                <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">강철 골렘</div><div class="rcost">4</div></div></div>
-                <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">광포한 발톱</div><div class="rcost">4</div></div></div>
-              </div>
+            <div class="roster-scroll">
+              <!-- 영웅 3종 = 맨 앞·같은 사이즈·같은 스크롤 (선택/교체/잠금 3상태) -->
+              <div class="rc hero sel"><div class="herob">영웅</div><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">아르덴</div><div class="rcost">편성됨</div></div></div>
+              <div class="rc hero"><div class="herob">영웅</div><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">베스라</div><div class="rcost">교체</div></div></div>
+              <div class="rc hero locked"><div class="herob">영웅</div><span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="lock"><svg><use href="#i-lock"/></svg></div><div class="rmeta"><div class="rnm">에이라</div><div class="rcost">🔒 해금</div></div></div>
+              <!-- 일반 유닛 -->
+              <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">야수의 발톱</div><div class="rcost">2</div></div></div>
+              <div class="rc in-deck"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">수호 방패병</div><div class="rcost">2</div></div></div>
+              <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">피의 맹습자</div><div class="rcost">3</div></div></div>
+              <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">과열 장갑병</div><div class="rcost">4</div></div></div>
+              <div class="rc in-deck"><span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">정령술사</div><div class="rcost">4</div></div></div>
+              <div class="rc"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">창병</div><div class="rcost">2</div></div></div>
+              <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">사령술사</div><div class="rcost">5</div></div></div>
+              <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">포격 드론</div><div class="rcost">3</div></div></div>
+              <div class="rc in-deck"><span class="tbadge tb-spirit"><svg><use href="#t-spirit"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">숲의 수호자</div><div class="rcost">3</div></div></div>
+              <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">늑대 기수</div><div class="rcost">3</div></div></div>
+              <div class="rc"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">궁수</div><div class="rcost">2</div></div></div>
+              <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">역병술사</div><div class="rcost">4</div></div></div>
+              <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">강철 골렘</div><div class="rcost">4</div></div></div>
+              <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">광포한 발톱</div><div class="rcost">4</div></div></div>
             </div>
           </div>
         </div>
 
-        <!-- 우: 적 편성(유닛만) + 위협 + ★ 목표 + CTA -->
+        <!-- 우: 적 위협 요약(상단) + [목표 + 전투 시작] 하단 고정 -->
         <div class="col">
           <div class="panel enemy-panel">
-            <div class="p-head">적 편성 <span class="cnt">· 미리보기</span></div>
-            <div class="formation">
-              <div class="frow back">
-                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-              </div>
-              <div class="frow">
-                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-                <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
-              </div>
+            <div class="p-head">적 편성 <span class="cnt">· 5기 · 위협</span></div>
+            <div class="th-head"><span class="ic"><svg><use href="#i-fortress"/></svg></span>철벽 · 중장갑</div>
+            <div class="hint">→ <b>마법·방어무시</b> 딜러 추천 (물리 튕김)</div>
+            <div class="counters"><span class="clbl">카운터</span>
+              <span class="cchip" style="background:var(--necro)">부패</span>
+              <span class="cchip" style="background:var(--spirit)">마법딜</span>
+              <span class="cchip" style="background:var(--machine);color:#06303a">관통</span>
             </div>
-            <div class="threat">
-              <div class="th-head"><span class="ic"><svg><use href="#i-fortress"/></svg></span>철벽 · 중장갑</div>
-              <div class="hint">→ <b>마법 딜러·방어무시</b> 유닛 추천 (물리 딜은 튕김)</div>
-              <div class="counters"><span class="clbl">카운터</span>
-                <span class="cchip" style="background:var(--necro)">부패</span>
-                <span class="cchip" style="background:var(--spirit)">마법딜</span>
-                <span class="cchip" style="background:var(--machine);color:#06303a">관통</span>
-              </div>
-            </div>
+            <button class="preview-btn"><svg><use href="#i-eye"/></svg>적진형 미리보기</button>
           </div>
 
-          <!-- ★ 스테이지 목표 = 출격 팝업 대체 (상시 노출·별 3조건) -->
-          <div class="goals">
-            <div class="g-head"><svg class="gh-ic" style="color:var(--gold)"><use href="#i-star"/></svg>스테이지 목표<span class="gcount">★ 1 / 3 획득</span></div>
-            <div class="g-row earned"><svg class="gstar"><use href="#i-star"/></svg>스테이지 클리어</div>
-            <div class="g-row todo"><svg class="gstar"><use href="#i-star-o"/></svg>영웅 HP 50% 이상 유지</div>
-            <div class="g-row todo"><svg class="gstar"><use href="#i-star-o"/></svg>60초 내 클리어</div>
-          </div>
-
-          <div class="cta-block">
+          <!-- 하단 고정 = 목표 + 전투 시작 (엄지존) -->
+          <div class="bottom-group">
+            <div class="goals">
+              <div class="g-head"><svg class="gh-ic" style="color:var(--gold)"><use href="#i-star"/></svg>스테이지 목표<span class="gcount">★ 1 / 3 획득</span></div>
+              <div class="g-row earned"><svg class="gstar"><use href="#i-star"/></svg>스테이지 클리어</div>
+              <div class="g-row todo"><svg class="gstar"><use href="#i-star-o"/></svg>영웅 HP 50% 이상 유지</div>
+              <div class="g-row todo"><svg class="gstar"><use href="#i-star-o"/></svg>60초 내 클리어</div>
+            </div>
             <button class="cta"><svg><use href="#i-battle"/></svg>전투 시작</button>
           </div>
         </div>
@@ -425,22 +395,51 @@
 
   <!-- 흐름 요약 -->
   <div class="flow">
-    <b>편성에서 나가는 문</b> (출격 팝업 제거 반영)<br>
-    · 로스터 유닛 <b>짧은 탭</b> <span class="arr">→</span> 덱 편입 (영웅→0번 / 일반→예산)<br>
-    · 유닛 <b>롱클릭</b> <span class="arr">→</span> 유닛 정보 다이얼로그 (모달·아래 ②)<br>
-    · <b>적진형 미리보기 버튼</b> <span class="arr">→</span> 미리보기 팝업 (적진영만·카운터 표기 X)<br>
-    · <b>전투 시작</b> <span class="arr">→</span> <span class="kill">출격 확인 팝업</span> <span class="arr">→</span> <b>전투 HUD</b> &nbsp;<i style="color:var(--go)">= 별 조건이 편성에 상시 노출되므로 팝업 생략·1탭 직행</i><br>
+    <b>편성에서 나가는 문</b><br>
+    · 로스터 유닛(영웅 포함) <b>짧은 탭</b> <span class="arr">→</span> 덱 편입 (영웅→0번 / 일반→예산)<br>
+    · 유닛 <b>롱클릭</b> <span class="arr">→</span> 유닛 정보 다이얼로그 (③)<br>
+    · <b>[적진형 미리보기]</b> 버튼 <span class="arr">→</span> 적진형 팝업 (②·적진영 위치만·카운터 표기 X)<br>
+    · <b>전투 시작</b> <span class="arr">→</span> <span class="kill">출격 팝업</span> <span class="arr">→</span> <b>전투 HUD</b> &nbsp;<i style="color:var(--go)">= 별 조건 편성 상시 노출 → 1탭 직행</i><br>
     · <b>뒤로</b> <span class="arr">→</span> 메인(스테이지 선택)
   </div>
 
-  <!-- ② 유닛 롱클릭 → 정보 다이얼로그 -->
-  <div class="section"><span class="num">②</span><span class="label">유닛 롱클릭 → 정보 다이얼로그 (모달 · 전체화면 아님)</span><span class="rule"></span></div>
-  <p style="color:var(--muted);font-size:13px;margin:4px 0 12px">로스터/덱 유닛(영웅 포함) 롱클릭 → 편성 위에 <b style="color:#E6ECF3">다이얼로그</b> 오버레이(화면 안 벗어남). 일러스트 또는 idle 스프라이트 + 레벨·스탯·역할·태그·스킬 요약. 닫기 = 바깥 탭 / X. plat = 기존 <code style="color:#cdd7e2">UnitInformationTootipPanel</code>.</p>
+  <!-- ② 적진형 미리보기 팝업 -->
+  <div class="section"><span class="num">②</span><span class="label">적진형 미리보기 팝업 (진형 위치만 · 카운터/위협 라벨 없음)</span><span class="rule"></span></div>
+  <p style="color:var(--muted);font-size:13px;margin:4px 0 12px">[적진형 미리보기] 버튼 → 모달. <b>어디에 뭐가 있나</b>(전열/후열 위치·소환 위치 계획용). PM 2표면 계약 ⓑ = <b>적진영 위치만</b> · 위협 라벨·카운터는 상시 패널(ⓐ) 담당이라 여기 표기 X.</p>
   <div class="frame">
-    <p class="frame-cap">② 유닛 정보 다이얼로그 <span>— 예: 역병술사(Necro · 마법 딜러)</span></p>
+    <p class="frame-cap">② 적진형 미리보기 <span>— 진형 위치(전열 3 · 후열 2)</span></p>
     <div class="screen">
       <div class="dlg-backdrop">
-        <div class="dialog">
+        <div class="dialog prev">
+          <div class="dlg-x">✕</div>
+          <div class="dlg-title">적진형 미리보기 <span class="sub">· 위치 계획용</span></div>
+          <div class="field">
+            <span class="lane-tag back">후열</span>
+            <div class="frow">
+              <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+              <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+            </div>
+            <div class="frow">
+              <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+              <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+              <div class="eu enemy-rim"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
+            </div>
+            <span class="lane-tag front">전열</span>
+          </div>
+          <p class="note-b">전열 3 · 후열 2 = 총 5기. 위협 라벨·카운터 = 편성 화면 상시 패널(적 편성)에서 확인. 여기선 소환 위치만 계획.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 유닛 롱클릭 → 정보 다이얼로그 -->
+  <div class="section"><span class="num">③</span><span class="label">유닛 롱클릭 → 정보 다이얼로그 (모달 · 전체화면 아님)</span><span class="rule"></span></div>
+  <p style="color:var(--muted);font-size:13px;margin:4px 0 12px">로스터/덱 유닛(영웅 포함) 롱클릭 → 편성 위에 다이얼로그 오버레이. <b style="color:#E6ECF3">전체 스탯</b>(HP·코스트·공격력 물/마·공격속도·사거리·이동속도·물리방어·마법저항) + 레벨·역할·태그·스킬·시너지 소속·DPS. 닫기 = 바깥 탭 / X. plat = 기존 <code style="color:#cdd7e2">UnitInformationTootipPanel</code>.</p>
+  <div class="frame">
+    <p class="frame-cap">③ 유닛 정보 다이얼로그 <span>— 전체 스탯 · 예: 역병술사(Necro · 마법 딜러)</span></p>
+    <div class="screen">
+      <div class="dlg-backdrop">
+        <div class="dialog info">
           <div class="dlg-x">✕</div>
           <div class="dlg-in">
             <div class="dlg-art">
@@ -459,11 +458,16 @@
               </div>
               <div class="dlg-stats">
                 <div class="st"><span class="sk">HP</span><span class="sv">480</span></div>
-                <div class="st"><span class="sk">공격</span><span class="sv mag">62 · 마법</span></div>
                 <div class="st"><span class="sk">코스트</span><span class="sv">4</span></div>
-                <div class="st"><span class="sk">사거리</span><span class="sv">원거리</span></div>
+                <div class="st"><span class="sk">공격력</span><span class="sv mag">62 · 마법</span></div>
+                <div class="st"><span class="sk">공격 속도</span><span class="sv">0.9 / 초</span></div>
+                <div class="st"><span class="sk">사거리</span><span class="sv">원거리 · 5.5</span></div>
+                <div class="st"><span class="sk">이동 속도</span><span class="sv">3.2</span></div>
+                <div class="st"><span class="sk">물리 방어</span><span class="sv">8</span></div>
+                <div class="st"><span class="sk">마법 저항</span><span class="sv">22</span></div>
               </div>
               <div class="dlg-skill"><b>부패 안개</b> — 범위 내 적에게 지속 마법 피해(DoT). 방어 무시 비례 → <b style="color:#c79bf0">철벽·중장갑</b> 카운터.</div>
+              <div class="dlg-foot"><span class="fk">시너지</span> 부패 전이 <b>Necro 2/4</b> <span class="dot">·</span> <span class="fk">강화</span> Lv 7 <span class="dot">·</span> <span class="fk">DPS</span> <b>~56</b></div>
             </div>
           </div>
         </div>
@@ -471,9 +475,9 @@
     </div>
   </div>
 
-  <!-- ③ 영웅 미선택 상태 -->
-  <div class="section"><span class="num">③</span><span class="label">영웅 슬롯 — 미선택 상태 (placeholder = "영웅")</span><span class="rule"></span></div>
-  <p style="color:var(--muted);font-size:13px;margin:4px 0 12px">첫 진입(온보딩 영웅 선택 전) 또는 영웅 변경 중 = 0번 슬롯이 비어 <b style="color:#FFD24D">"영웅"</b> placeholder(대시 골드). 로스터 맨 앞 <b>영웅 그룹</b>에서 클릭 → 0번 채움. 선택 후 = 위 ① 목업의 아르덴.</p>
+  <!-- ④ 영웅 미선택 상태 -->
+  <div class="section"><span class="num">④</span><span class="label">영웅 슬롯 — 미선택 상태 (placeholder = "영웅")</span><span class="rule"></span></div>
+  <p style="color:var(--muted);font-size:13px;margin:4px 0 12px">첫 진입(온보딩 전) 또는 영웅 변경 중 = 0번 슬롯이 비어 <b style="color:#FFD24D">"영웅"</b> placeholder(대시 골드). 로스터 맨 앞 영웅 카드에서 클릭 → 0번 채움. 선택 후 = 위 ① 목업의 아르덴.</p>
   <div class="frame">
     <div class="herostate">
       <div class="panel deck-panel">
@@ -494,31 +498,31 @@
     </div>
   </div>
 
-  <!-- v2.3 변경 -->
-  <div class="section"><span class="num">◆</span><span class="label">v2.3 변경 (사용자 결정)</span><span class="rule"></span></div>
+  <!-- v2.4 변경 -->
+  <div class="section"><span class="num">◆</span><span class="label">v2.4 변경 (사용자 피드백)</span><span class="rule"></span></div>
   <div class="notes">
-    <div class="n hl"><div class="k">★ 핵심 · 출격 팝업 제거</div><h3>별 조건 → 편성 화면 상시 통합</h3><p>출격 확인 팝업의 유일한 신규 정보 = <b>별 획득 조건</b>. 이걸 우측 <b>스테이지 목표</b> 스트립(CTA 바로 위)에 상시 노출 → 팝업 불요. <b>전투 시작 = 1탭 직행</b>(확인/조정 모델의 반복 그라인딩 마찰 최소 보존). 상단 스테이지 헤더에도 ★1/3 요약.</p></div>
-    <div class="n hl"><div class="k">★ 목표 = 덱 빌드에 영향</div><h3>편성 중 목표를 보고 전략</h3><p>별 조건(예: "60초 내" vs "영웅 HP 50%↑")이 <b>덱 구성 전략을 바꿈</b> → 커밋 직전이 아니라 편성 중에 보여야 정답. 상시 노출 = 팝업보다 더 나은 정보 배치.</p></div>
-    <div class="n"><div class="k">영웅 = 로스터 맨 앞</div><h3>보유 유닛에 영웅 포함·고정 앞</h3><p>로스터 첫 자리 = <b>영웅 그룹</b>(골드 프레임·큰 카드). <b>클릭 → 0번 영웅 슬롯</b>·다른 영웅 클릭 = 교체. 3상태 = <b style="color:var(--go)">편성됨(✓)</b> / 교체 가능 / <b>미해금(🔒 + 해금처)</b>. 일반 34는 잠금 없음(spec §376).</p></div>
-    <div class="n"><div class="k">유닛 정보</div><h3>롱클릭 → 모달 다이얼로그</h3><p>전체화면 아님. <b>일러스트/idle</b> + Lv · 스탯(HP·ATK 물/마·코스트·사거리) · 역할 · 태그 · 스킬 요약. 발견성(롱클릭=숨은 제스처·paranoia#3) = 온보딩 힌트로 안내.</p></div>
-    <div class="n"><div class="k">영웅 슬롯 유지</div><h3>0번 = 영웅 전용·사망=패배</h3><p>영웅은 로스터에서 고르지만 덱에선 <b>0번 고정 슬롯</b>(spec §120). 어느 유닛이 영웅인지 시각 구분 필수(<b>영웅 사망 = 패배</b>). 골드 프레임 + "영웅" 배지.</p></div>
-    <div class="n"><div class="k">계승 (v2.2)</div><h3>예산 덱 · 테마 아이콘 · 전체 해금</h3><p>코스트 예산(합 ≤ maxCost 70·spec §186) · 테마 아이콘 5종(dot 대체) · 일반 34 전체 해금 · Pretendard 단일. 태그 표기 = 별도 논의(MVP=텍스트).</p></div>
+    <div class="n hl"><div class="k">★ 오른쪽 숨통</div><h3>적 진형 그리드 → 미리보기 팝업 이관</h3><p>PM 2표면 계약: <b>적 진형 위치 = 미리보기 팝업(ⓑ)</b> / 상시 패널(ⓐ) = <b>위협 라벨+카운터만</b>. 상시 패널에서 큰 진형 그리드를 빼니 세로가 트임 → 우측 = [위협 요약] + [★ 목표] + [전투 시작] 3블록.</p></div>
+    <div class="n hl"><div class="k">★ 레이아웃</div><h3>60/40 + 목표·CTA 하단 고정</h3><p>컬럼 64/36 → <b>60/40</b>(우측 폭 +) · 위협 요약 = 상단 · <b>목표+전투시작 = 하단 엄지존 고정</b>(margin-top:auto). 중앙 여백 = 의도된 숨통.</p></div>
+    <div class="n"><div class="k">영웅 = 동일 사이즈</div><h3>같은 스크롤·같은 크기·맨 앞</h3><p>구 버전의 큰 별도 영웅 카드 폐기 → <b>일반 유닛과 같은 사이즈</b>로 로스터 스크롤 맨 앞 3장. 골드 프레임+"영웅" 배지로 구별. 3상태 = <b style="color:var(--go)">편성됨(✓)</b> / 교체 / <b>🔒 해금</b>.</p></div>
+    <div class="n"><div class="k">적진형 미리보기</div><h3>[미리보기] 버튼 → 팝업(②)</h3><p>상시 패널 하단 버튼 → 진형 위치 팝업(전열/후열). 위협 라벨·카운터는 표기 X(상시 패널 담당). "어디에 뭐가 있나" = 소환 위치 계획.</p></div>
+    <div class="n"><div class="k">계승 (v2.3)</div><h3>출격 팝업 제거 · 별 조건 통합</h3><p>별 3조건 = 우측 목표 스트립 상시 + 상단 ★1/3 → <b>전투 시작 1탭 직행</b>. 유닛 롱클릭 정보 다이얼로그(③).</p></div>
+    <div class="n"><div class="k">계승 (v2.2)</div><h3>예산 덱 · 테마 아이콘 · 전체 해금</h3><p>코스트 예산(합 ≤ maxCost 70·spec §186) · 테마 아이콘 5종 · 일반 34 전체 해금 · Pretendard. 태그 표기 = 별도 논의(MVP=텍스트).</p></div>
   </div>
 
   <!-- plat 정합 -->
   <div class="section"><span class="num">◆</span><span class="label">plat 핸드오프 (M8/M9) · SoT 동기화</span><span class="rule"></span></div>
   <div class="notes">
-    <div class="n"><div class="k">전투 시작 (단순화)</div><h3>OnClickBattleStart → 전투 직행</h3><p><b>출격 팝업 없음</b> = `BattlePrepareManager.OnClickBattleStart`(:99) 가 바로 전투 씬 진입(spec §253 집계 그릇 그대로). 팝업 화면/매니저 불요 = 구현 단순.</p></div>
-    <div class="n"><div class="k">스테이지 목표 UI</div><h3>StageData → 별 3조건 표시</h3><p>편성 우측 목표 스트립 = 스테이지 3별 목표(클리어 / 영웅HP≥X% / 시간≤T·spec §6.B⑥) + 기획득 별 read. plat = StageData 목표 필드 → 편성 목표 위젯 + 상단 ★n/3.</p></div>
-    <div class="n"><div class="k">로스터 = 영웅+일반</div><h3>UnitListManager 앞에 영웅 그룹</h3><p>로스터 맨 앞 = 해금 영웅(선택/교체) + 미해금 영웅(🔒·해금처). 클릭 → DeckSlotManager 0번 배치(영웅 전용). 일반 = 예산 슬롯. 해금 상태 = §6.B② 게이트.</p></div>
-    <div class="n"><div class="k">유닛 정보 다이얼로그</div><h3>UnitInformationTootipPanel</h3><p>롱클릭 제스처 → 기존 패널을 모달 다이얼로그로. 일러스트/idle · Lv(강화) · UnitData 스탯 · role · tags · 스킬 요약. 강화 메타와 Lv 연동.</p></div>
+    <div class="n"><div class="k">2표면 분리</div><h3>ShowFormation = 팝업 전용</h3><p>진형 위치 = <b>EnemyUnitPreviewManager.ShowFormation</b> → [미리보기] 버튼으로 여는 모달. 상시 패널(적 편성) = ThreatTelegraph 위협 라벨+counterHints 카운터 칩(위치 X). spec §7.0b-1 (f) 정합.</p></div>
+    <div class="n"><div class="k">전투 시작 (단순화)</div><h3>OnClickBattleStart → 전투 직행</h3><p>출격 팝업 없음 = `BattlePrepareManager.OnClickBattleStart`(:99) 바로 전투 씬(spec §253). 팝업 화면/매니저 불요.</p></div>
+    <div class="n"><div class="k">로스터 = 영웅+일반</div><h3>UnitListManager 맨 앞 영웅 3</h3><p>같은 리스트·같은 크기, 맨 앞 = 해금 영웅(선택/교체) + 미해금(🔒). 클릭 → DeckSlotManager 0번(영웅 전용). 해금 = §6.B② 게이트.</p></div>
+    <div class="n"><div class="k">스테이지 목표 UI</div><h3>StageData → 별 3조건 + Lv</h3><p>우측 목표 스트립 = 스테이지 3별 목표(spec §6.B⑥) + 기획득 read. 유닛 정보 Lv = 강화 메타 연동. plat = UnitInformationTootipPanel(롱클릭).</p></div>
   </div>
 
   <p class="note">
-    편성 화면 프로덕션 목업 v2.3 · 검토 대기 · 2026-07-01<br>
-    변경 = 출격 팝업 제거(별 조건 편성 통합·전투 시작 1탭) + 영웅 로스터 맨 앞 고정(미해금 포함) + 유닛 롱클릭 정보 다이얼로그<br>
-    SoT 반영 대기 = wireframes.md §5 (출격 팝업 제거·별 조건 편성 통합·영웅 로스터 배치·유닛 정보 다이얼로그)<br>
-    plat 페어 = M8/M9 (BattlePrepareManager · DeckSlotManager 0번 영웅 · UnitListManager 영웅그룹 · UnitInformationTootipPanel · StageData 목표)<br>
+    편성 화면 프로덕션 목업 v2.4 · 검토 대기 · 2026-07-01<br>
+    변경 = 적 진형 그리드 → 미리보기 팝업 이관(우측 여백) + 60/40 + 목표·CTA 하단 고정 + 영웅 동일 사이즈 로스터 편입<br>
+    SoT 반영 대기 = wireframes.md §5 (2표면·출격 팝업 제거·별 조건 통합·영웅 로스터·유닛 정보 다이얼로그)<br>
+    plat 페어 = M8/M9 (BattlePrepareManager · DeckSlotManager 0번 영웅 · UnitListManager · EnemyUnitPreviewManager.ShowFormation=팝업 · UnitInformationTootipPanel · StageData 목표)<br>
     <a href="../index.html">‹ 디자인 보드로</a>
   </p>
 </div>
