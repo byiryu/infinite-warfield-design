@@ -148,6 +148,18 @@
   .cta svg{width:3.2cqw;height:3.2cqw}
   @keyframes pulse{0%,100%{box-shadow:0 .5cqw 2.4cqw rgba(255,180,60,.4)}50%{box-shadow:0 .5cqw 3.4cqw rgba(255,190,70,.72)}}
 
+  /* 영웅 미선택 상태 (2번째 뷰) */
+  .herostate{position:relative;width:100%;container-type:inline-size;border-radius:8px;overflow:hidden;padding:2.2cqw 2cqw;
+    background:radial-gradient(120% 90% at 50% 12%,rgba(157,62,232,.18),transparent 55%),linear-gradient(180deg,#0e0a16,#0a0710)}
+  .du.hero-empty{border-style:dashed;border-color:var(--gold);background:rgba(255,210,77,.06);align-items:center;justify-content:center;text-align:center;min-height:11.5cqw}
+  .du.hero-empty .idx{color:#8a6f38}
+  .eh-fig{width:4.2cqw;height:5cqw;position:relative;opacity:.42;margin-bottom:.7cqw}
+  .eh-fig .head{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2cqw;height:2cqw;border-radius:50%;background:var(--gold)}
+  .eh-fig .torso{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3.3cqw;height:3.4cqw;border-radius:1cqw 1cqw .4cqw .4cqw;background:var(--gold)}
+  .eh-txt{font-size:2.1cqw;font-weight:800;color:var(--gold);letter-spacing:.06em;line-height:1}
+  .eh-hint{font-size:1.2cqw;color:#a98b4a;margin-top:.4cqw}
+  .empty-slide-hint{display:flex;align-items:center;padding-left:2cqw;color:#5a6675;font-size:1.5cqw;font-weight:600}
+
   /* ===== 주석 ===== */
   .section{display:flex;align-items:baseline;gap:10px;margin:40px 0 6px}
   .section .num{font-size:12px;color:var(--gold);font-weight:800}
@@ -192,7 +204,7 @@
   <div class="eyebrow" style="margin-top:14px">byiryu studio · 편성 · Battle Prepare</div>
   <h1>편성 화면 — 프로덕션 목업 v2</h1>
   <p class="sub">확정 흐름(스테이지 선택 → <b>편성(확인/조정)</b> → 전투)의 핵심 화면. 폰트 Pretendard 통일 · <b>코스트 예산 덱</b>(합 ≤ maxCost·spec §186) · 테마 아이콘(dot 대체) · 방어축 바/전후열 라벨/취소 제거. 유닛 = 림라이트 placeholder.</p>
-  <p class="status">● 검토 대기 v2 · Necro 테마 예시 · maxCost 70(잠정·재검) · 태그 표기 = 별도 논의</p>
+  <p class="status">● 검토 대기 v2.2 · Necro 테마 예시 · maxCost 70(잠정·재검) · 유닛 전체 해금(NEW/잠금 없음) · 영웅 미선택 placeholder 추가 · 태그 표기 = 별도 논의</p>
 
   <div class="frame">
     <div class="screen">
@@ -244,12 +256,12 @@
           </div>
 
           <div class="panel roster-panel">
-            <div class="p-head" style="margin-bottom:.7cqw">보유 유닛 <span class="cnt">· 23 / 37</span>
+            <div class="p-head" style="margin-bottom:.7cqw">보유 유닛 <span class="cnt">· 34 (전체 해금)</span>
               <span class="spacer"></span>
               <div class="filters"><span class="f on">전체</span><span class="f">탱커</span><span class="f">딜러</span><span class="f">서포터</span></div>
             </div>
             <div class="roster-scroll">
-              <div class="rc"><span class="newb">NEW</span><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig friend" style="box-shadow:none"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">야수의 발톱</div><div class="rcost">2</div></div></div>
+              <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">야수의 발톱</div><div class="rcost">2</div></div></div>
               <div class="rc in-deck"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">수호 방패병</div><div class="rcost">2</div></div></div>
               <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">피의 맹습자</div><div class="rcost">3</div></div></div>
               <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">과열 장갑병</div><div class="rcost">4</div></div></div>
@@ -261,8 +273,8 @@
               <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">늑대 기수</div><div class="rcost">3</div></div></div>
               <div class="rc"><span class="tbadge tb-combat"><svg><use href="#t-combat"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">궁수</div><div class="rcost">2</div></div></div>
               <div class="rc"><span class="tbadge tb-necro"><svg><use href="#t-necro"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">역병술사</div><div class="rcost">4</div></div></div>
-              <div class="rc locked"><div class="lock"><svg><use href="#i-lock"/></svg></div><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">???</div><div class="rcost">—</div></div></div>
-              <div class="rc locked"><div class="lock"><svg><use href="#i-lock"/></svg></div><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">???</div><div class="rcost">—</div></div></div>
+              <div class="rc"><span class="tbadge tb-machine"><svg><use href="#t-machine"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">강철 골렘</div><div class="rcost">4</div></div></div>
+              <div class="rc"><span class="tbadge tb-beast"><svg><use href="#t-beast"/></svg></span><div class="rfig"><div class="fig"><div class="head"></div><div class="torso"></div></div></div><div class="rmeta"><div class="rnm">광포한 발톱</div><div class="rcost">4</div></div></div>
             </div>
           </div>
         </div>
@@ -301,6 +313,29 @@
     </div>
   </div>
 
+  <!-- 영웅 미선택 상태 (placeholder = "영웅") -->
+  <div class="section"><span class="num">◆</span><span class="label">영웅 슬롯 — 미선택 상태 (placeholder = "영웅")</span><span class="rule"></span></div>
+  <p style="color:var(--muted);font-size:13px;margin:4px 0 12px">첫 진입(온보딩 영웅 선택 전) 또는 영웅 변경 시 = 0번 슬롯이 비어 <b style="color:#FFD24D">"영웅"</b> placeholder 표시(대시 골드 테두리). 탭 → 영웅 선택. 선택 후 = 위 메인 목업의 아르덴.</p>
+  <div class="frame">
+    <div class="herostate">
+      <div class="panel deck-panel">
+        <div class="p-head">내 덱 <span class="cost-meter"><b>0</b><span class="mx">/ 70</span></span><span class="spacer"></span><span class="cnt">영웅 선택 필요</span></div>
+        <div class="deck-row">
+          <div class="deck-hero-wrap">
+            <div class="du hero-slot hero-empty">
+              <div class="idx">0</div>
+              <div class="eh-fig"><div class="head"></div><div class="torso"></div></div>
+              <div class="eh-txt">영웅</div>
+              <div class="eh-hint">탭하여 선택</div>
+            </div>
+            <div class="divider"></div>
+          </div>
+          <div class="deck-slide"><div class="empty-slide-hint">← 먼저 영웅을 선택하세요 · 이후 일반 유닛 편성</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 테마 아이콘 세트 (신규 · design/ui-theme-icons.svg) -->
   <div class="section"><span class="num">◆</span><span class="label">신규 · 테마(UnitType) 아이콘 5종 (dot 대체 · design-system)</span><span class="rule"></span></div>
   <div class="themebar">
@@ -318,6 +353,8 @@
     <div class="n"><div class="k">통일성</div><h3>폰트 = Pretendard 단일</h3><p>메인 허브(uikit·confirmed)와 동일. 구 Cinzel(display)/Chakra(numeric) 도입 = 어긋남 → 폐지, <b>weight로 위계</b>(800/900 강조·700 라벨). design-system §2 = Pretendard 락(Cinzel = 로고 확정까지 미채택).</p></div>
     <div class="n"><div class="k">덱 = 코스트 예산</div><h3>5 고정 슬롯 → 합 ≤ maxCost 자유 편성</h3><p>spec §186(CEO 2026-07-01 "예산 강제"). 영웅 = 고정(예산 외) + 일반 유닛 = <b>코스트 예산 내 다 등록·가로 슬라이드</b>. 미터 <b>48/70</b>(70=잠정·재검). 초과 편성 거부(DeckCostRules).</p></div>
     <div class="n"><div class="k">테마 = dot → 아이콘</div><h3>UnitType 아이콘 5종</h3><p>색 dot → <b>테마 아이콘 배지</b>(모티프 + 테마색). 난전/도감/편성 전반 식별. 태그 아이콘·role = 별도 논의(지금 안 함).</p></div>
+    <div class="n"><div class="k">v2.2 · 전체 해금</div><h3>NEW 칩 · 잠금(🔒) 제거</h3><p>일반 34유닛 = <b>전부 시작부터 해금</b>(spec §376·미러풀). 점진 해금 X → 로스터 NEW/잠금 카드 제거·카운트 "34(전체 해금)". 영웅 3종만 게이팅(0번 슬롯·온보딩).</p></div>
+    <div class="n"><div class="k">v2.2 · 영웅 미선택</div><h3>0번 슬롯 placeholder = "영웅"</h3><p>영웅 미선택 시 0번 슬롯 = 대시 골드 <b>"영웅"</b> placeholder(탭→선택). 상태 뷰 추가(위). 재화 = 2종(크리스탈 제거·46차).</p></div>
     <div class="n"><div class="k">적 편성 간결화</div><h3>방어축 바 · 전/후열 라벨 · 취소 제거</h3><p>물/마 방어 바 제거(hint로 약점 전달) · 전열/후열 라벨 제거(<b>유닛만</b>) · <b>취소 제거</b>(상단 뒤로가 겸함) → 그만큼 편성/CTA 영역 넓어짐.</p></div>
   </div>
 
