@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>무한의 전장 · 메인 허브 비주얼 (밝은 쿨 META)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Cinzel:wght@700&family=Chakra+Petch:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+ --stone-0:#F4F7FB;--stone-1:#E7ECF2;--stone-2:#DAE3EE;--surface:#9BB0C8;
+ --sky:#3A6EA5;--sky-soft:#5E86B5;--ink:#15212E;--muted:#56697D;--dim:#8A9BAD;--line:#C7D4E2;--line2:#B0C0D2;
+ --gold:#FFD24D;--gold-deep:#F0992D;--gold-lite:#FFE9A8;--bronze:#B89B5E;
+ --dark-bg:#0D1117;--dark-panel:#141B22;
+ --combat:#E03A5C;--necro:#9D3EE8;--spirit:#5DDD7E;--machine:#00D4FF;--beast:#E06B14;
+ --tech:"Chakra Petch",ui-monospace,monospace;--body:"Pretendard",system-ui,sans-serif;--disp:"Black Han Sans",sans-serif;
+ --shadow:0 2px 4px rgba(21,33,46,.06),0 10px 30px rgba(21,33,46,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:var(--body);line-height:1.6;background:var(--stone-0);
+ background-image:radial-gradient(ellipse 120% 60% at 50% -10%,rgba(58,110,165,.14),transparent 60%),radial-gradient(ellipse 80% 50% at 50% 108%,rgba(255,210,77,.08),transparent 62%)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+/* hero */
+.pgh{text-align:center;padding:40px 20px 8px}
+.pgh .eyebrow{font-family:var(--tech);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--sky);font-weight:600}
+.pgh h1{font-family:var(--disp);font-size:clamp(24px,4.6vw,38px);margin:8px 0 0;color:var(--ink);letter-spacing:.02em}
+.pgh .tag{color:var(--muted);margin-top:8px;font-size:13px;font-family:var(--tech)}
+
+/* ===== SCREEN (16:9 landscape) ===== */
+.screenwrap{margin:22px auto 0;max-width:1000px}
+.screen{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(21,33,46,.28);border:1px solid var(--line2);
+ background:linear-gradient(180deg,#dbe8f7 0%,#cfe0f2 34%,#e8eef5 62%,#f2ede0 100%)}
+/* atmosphere */
+.sky-sun{position:absolute;left:50%;top:8%;width:46%;height:46%;transform:translateX(-50%);border-radius:50%;
+ background:radial-gradient(circle,rgba(255,233,168,.7),rgba(255,210,77,.15) 45%,transparent 70%)}
+.peaks{position:absolute;left:0;right:0;bottom:30%;height:34%;
+ background:
+  linear-gradient(160deg,transparent 46%,rgba(58,110,165,.28) 47%,transparent 63%),
+  linear-gradient(200deg,transparent 40%,rgba(58,110,165,.22) 41%,transparent 60%);
+ -webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent);opacity:.5}
+.ground{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,transparent,rgba(184,155,94,.16))}
+.grain{position:absolute;inset:0;opacity:.4;background-image:repeating-linear-gradient(0deg,rgba(58,110,165,.03) 0 1px,transparent 1px 6px)}
+
+/* top bar */
+.topbar{position:absolute;top:0;left:0;right:0;height:14.5%;display:flex;align-items:center;gap:2%;padding:0 2.2%;
+ background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(231,236,242,.55));backdrop-filter:blur(4px);border-bottom:1px solid rgba(176,192,210,.6)}
+.cmdr{display:flex;align-items:center;gap:1.6%}
+.cmdr .av{width:2.6vw;max-width:34px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 30%,#5E86B5,#26405c);border:2px solid var(--gold);flex:none}
+.cmdr .nm{font-family:var(--tech);font-weight:700;font-size:clamp(9px,1.15vw,13px);color:var(--ink);line-height:1.1}
+.cmdr .nm span{color:var(--muted);font-weight:600;font-size:.82em}
+.spacer{flex:1}
+.chip{display:flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 10px 3px 7px;box-shadow:0 1px 2px rgba(21,33,46,.06);
+ font-family:var(--tech);font-weight:700;font-size:clamp(9px,1.1vw,12px);color:var(--ink)}
+.chip .ic{width:1.15em;height:1.15em;border-radius:50%;display:inline-block}
+.chip.reb{background:linear-gradient(90deg,rgba(255,210,77,.16),#fff);border-color:var(--gold)}
+.ic.gold{background:radial-gradient(circle at 35% 30%,#FFE9A8,#F0992D)}
+.ic.silver{background:radial-gradient(circle at 35% 30%,#eef3f9,#9BB0C8)}
+.ic.crystal{background:radial-gradient(circle at 35% 30%,#dbeaff,#3A6EA5)}
+
+/* side menus */
+.menu{position:absolute;top:22%;display:flex;flex-direction:column;gap:3.2%;width:15%}
+.menu.left{left:2.4%}.menu.right{right:2.4%}
+.mbtn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8% 4%;border-radius:12px;cursor:pointer;
+ background:rgba(255,255,255,.72);border:1.5px solid var(--sky);color:var(--sky);box-shadow:0 2px 6px rgba(21,33,46,.08)}
+.mbtn .mi{font-size:clamp(13px,1.8vw,20px);line-height:1}
+.mbtn .ml{font-family:var(--body);font-weight:800;font-size:clamp(9px,1.15vw,13px);color:var(--ink)}
+.mbtn .mb{position:absolute}
+.mbtn.badge::after{content:"";position:absolute;top:6px;right:8px;width:8px;height:8px;border-radius:50%;background:var(--combat);box-shadow:0 0 0 2px #fff}
+
+/* center coverflow */
+.center{position:absolute;left:18%;right:18%;top:16%;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4%}
+.cf{display:flex;align-items:center;justify-content:center;gap:2%;width:100%}
+.card{border-radius:14px;overflow:hidden;flex:none;box-shadow:var(--shadow);border:1px solid var(--line2)}
+.card.side{width:16%;aspect-ratio:3/4;opacity:.5;filter:saturate(.7);transform:scale(.9)}
+.card.side .thumb{height:100%}
+.card.cur{width:46%;aspect-ratio:16/11;border:2px solid var(--gold);box-shadow:0 8px 26px rgba(240,153,45,.24),0 0 0 1px var(--gold)}
+.thumb{position:relative;background:linear-gradient(180deg,#1b2431,#0d1117);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.card.cur .thumb{height:64%}
+.thumb .glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 90%,rgba(157,62,232,.4),transparent 65%)}
+.thumb .en{position:relative;z-index:2;width:22%;height:60%;margin-bottom:6%;border-radius:40% 40% 30% 30%;background:#05070a;box-shadow:0 0 0 2px var(--enemy,#FF5B5B),0 0 8px rgba(255,91,91,.5)}
+.thumb .en2{width:15%;height:44%;opacity:.8}
+.thumb .rim{position:absolute;bottom:6%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(240,153,45,.5),transparent)}
+.card.cur .info{height:36%;background:#fff;padding:3% 5%;display:flex;flex-direction:column;justify-content:center;gap:3%}
+.stg{display:flex;align-items:baseline;gap:8px}
+.stg .no{font-family:var(--disp);font-size:clamp(16px,2.6vw,30px);color:var(--ink);line-height:.9}
+.stg .th{font-family:var(--tech);font-weight:700;font-size:clamp(9px,1.2vw,13px);color:var(--necro);background:rgba(157,62,232,.12);border-radius:6px;padding:2px 8px}
+.threat{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--tech);font-size:clamp(8px,1.05vw,11px)}
+.threat .t{display:flex;align-items:center;gap:3px;color:var(--muted)}
+.threat .t b{color:var(--ink)}
+.threat .dot{width:7px;height:7px;border-radius:2px;display:inline-block}
+.cta{font-family:var(--disp);letter-spacing:.03em;border:none;border-radius:12px;padding:2.4% 8%;font-size:clamp(13px,2vw,22px);color:#3a2600;cursor:pointer;
+ background:linear-gradient(180deg,var(--gold),var(--gold-deep));box-shadow:0 4px 14px rgba(240,153,45,.5),0 0 0 1px rgba(255,210,77,.6) inset;animation:pulse 2.6s ease-in-out infinite;text-shadow:0 1px 0 rgba(255,255,255,.3)}
+@keyframes pulse{0%,100%{box-shadow:0 4px 14px rgba(240,153,45,.4),0 0 0 1px rgba(255,210,77,.6) inset}50%{box-shadow:0 6px 22px rgba(240,153,45,.65),0 0 16px rgba(255,210,77,.4),0 0 0 1px rgba(255,210,77,.8) inset}}
+.dots{display:flex;gap:7px;align-items:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line2);display:inline-block}
+.dots i.on{background:var(--gold-deep);width:9px;height:9px}
+.dots i.lock{background:transparent;border:1px solid var(--line2);position:relative}
+
+/* pins (paranoia annotations on screen) */
+.pin{position:absolute;font-family:var(--tech);font-size:10px;font-weight:700;color:#fff;background:rgba(21,33,46,.82);border-radius:20px;padding:2px 9px;z-index:20;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.pin b{color:var(--gold)}
+
+/* annotation strip */
+.section{display:flex;align-items:baseline;gap:10px;margin:40px 0 4px}
+.section .n{font-family:var(--tech);font-size:12px;color:var(--sky);font-weight:700}
+.section .l{font-family:var(--tech);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.section .r{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media(max-width:720px){.grid3{grid-template-columns:1fr}}
+.note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px 17px;box-shadow:var(--shadow)}
+.note h4{margin:0 0 8px;font-size:12px;font-family:var(--tech);letter-spacing:.06em;text-transform:uppercase;color:var(--sky)}
+.note ul{margin:0;padding-left:15px}.note li{font-size:12px;color:var(--muted);margin:5px 0;line-height:1.55}.note li b{color:var(--ink)}
+.tok{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.tok .t{font-family:var(--tech);font-size:11px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 9px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.tok .t b{color:var(--ink)}.tok .sw{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.1)}
+.foot{margin-top:40px;font-family:var(--tech);font-size:11px;color:var(--muted);border-top:1px solid var(--line2);padding-top:14px;line-height:1.9}
+.foot b{color:var(--ink)}
+small.note2{display:block;color:var(--dim);font-family:var(--tech);font-size:10.5px;margin-top:8px;text-align:center}
+</style></head><body>
+
+<div class="pgh">
+ <div class="eyebrow">byiryu studio · UI 화면 비주얼 #1</div>
+ <h1>메인 허브 — 밝은 쿨 지휘소</h1>
+ <p class="tag">확정 와이어(§3) → 프로덕션 목업 · 가로 16:9 · plat M8/M9 구현 spec</p>
+</div>
+
+<div class="screenwrap">
+ <div class="screen">
+  <div class="sky-sun"></div><div class="peaks"></div><div class="ground"></div><div class="grain"></div>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+   <div class="cmdr"><div class="av"></div><div class="nm">지휘관 byiryu<br><span>Lv.24</span></div></div>
+   <div class="spacer"></div>
+   <div class="chip reb">♻ 환생 Lv.7</div>
+   <div class="chip"><span class="ic gold"></span>124,800</div>
+   <div class="chip"><span class="ic silver"></span>3,420</div>
+   <div class="chip"><span class="ic crystal"></span>86</div>
+  </div>
+
+  <!-- LEFT MENU -->
+  <div class="menu left">
+   <div class="mbtn"><span class="mi">⚒️</span><span class="ml">강화</span></div>
+   <div class="mbtn"><span class="mi">♻️</span><span class="ml">환생</span></div>
+   <div class="mbtn"><span class="mi">🏆</span><span class="ml">업적</span></div>
+  </div>
+
+  <!-- RIGHT MENU -->
+  <div class="menu right">
+   <div class="mbtn badge"><span class="mi">📜</span><span class="ml">미션</span></div>
+   <div class="mbtn"><span class="mi">🛒</span><span class="ml">상점</span></div>
+  </div>
+
+  <!-- CENTER COVERFLOW -->
+  <div class="center">
+   <div class="cf">
+    <div class="card side"><div class="thumb" style="height:100%"><div class="glow" style="background:radial-gradient(ellipse 70% 60% at 50% 90%,rgba(224,58,92,.35),transparent 65%)"></div><div class="en en2" style="box-shadow:0 0 0 2px #FF5B5B"></div></div></div>
+    <div class="card cur">
+     <div class="thumb"><div class="glow"></div><div class="rim"></div><div class="en" style="box-shadow:0 0 0 2px #FF5B5B,0 0 8px rgba(255,91,91,.5)"></div><div class="en en2" style="margin-left:-2%"></div></div>
+     <div class="info">
+      <div class="stg"><span class="no">STAGE 12</span><span class="th">망령의 늪 · Necro</span></div>
+      <div class="threat">
+       <span class="t"><span class="dot" style="background:var(--necro)"></span>위협 <b>중장갑</b></span>
+       <span class="t"><span class="dot" style="background:var(--machine)"></span>원거리 폭격</span>
+       <span class="t" style="color:var(--spirit);filter:brightness(.8)">↳ 응수: 마법 딜러 ▲</span>
+      </div>
+     </div>
+    </div>
+    <div class="card side"><div class="thumb" style="height:100%"><div class="glow" style="background:radial-gradient(ellipse 70% 60% at 50% 90%,rgba(0,212,255,.28),transparent 65%)"></div><div class="en en2" style="box-shadow:0 0 0 2px #00D4FF;opacity:.4"></div><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.4vw;color:#8A9BAD;z-index:3">🔒</div></div></div>
+   </div>
+   <button class="cta">▶ 전투 시작</button>
+   <div class="dots"><i></i><i class="lock"></i><i></i><i class="on"></i><i class="lock"></i><i class="lock"></i></div>
+  </div>
+
+  <!-- annotation pins -->
+  <div class="pin" style="top:2.5%;right:1.5%">① 진행 티저 (재화·환생)</div>
+  <div class="pin" style="top:46%;left:50%;transform:translateX(-50%)">② 스테이지 여정 = 1화면 1주인공</div>
+  <div class="pin" style="bottom:15%;left:50%;transform:translateX(-50%)"><b>③ 주 CTA</b> 골드 지배·엄지존</div>
+ </div>
+</div>
+<small class="note2">가로 16:9 · 실제 폰에선 풀스크린 · 상단바 재화/환생 · 좌 강화·환생·업적 / 우 미션·상점 · 중앙 스테이지 코버플로우 + 전투 CTA (영웅 프레즌스 폐기·덱은 편성에서)</small>
+
+<div class="wrap">
+
+<!-- paranoia -->
+<div class="section"><span class="n">◆</span><span class="l">메타화면 3요소 (paranoia #1) 충족</span><span class="r"></span></div>
+<div class="grid3">
+ <div class="note"><h4>① 진행 프레즌스</h4><ul><li><b>스테이지 여정</b> = 1화면 1주인공(코버플로우 중앙 카드 지배)</li><li>상단바 = 진행 티저(Lv·환생 Lv·재화 3종)</li><li>여정 프레즌스(영웅 프레즌스 폐기·§3)</li></ul></div>
+ <div class="note"><h4>② 주 CTA 위계</h4><ul><li><b>[▶ 전투 시작]</b> = 골드 그라디언트+펄스 = 화면서 가장 지배적</li><li>중앙 하단 엄지존(가로 양손 파지)</li><li>메뉴(보조) = 쿨 블루 아웃라인으로 위계 하강</li></ul></div>
+ <div class="note"><h4>③ 2존 대비</h4><ul><li>허브 = <b>밝은 쿨</b>(라이트 스톤/하늘+골드)</li><li>스테이지 카드 프리뷰 = <b>다크 전투 인셋</b>(적 림라이트) = "전장은 어둡다"</li><li>테마색(Necro 보라 등) = 계획 UI 신호</li></ul></div>
+</div>
+
+<!-- tokens -->
+<div class="section"><span class="n">▣</span><span class="l">적용 토큰 (design-system §1/§2)</span><span class="r"></span></div>
+<div class="tok">
+ <span class="t"><span class="sw" style="background:#E7ECF2"></span><b>meta_base</b> 배경</span>
+ <span class="t"><span class="sw" style="background:#9BB0C8"></span><b>meta_surface</b> 표면</span>
+ <span class="t"><span class="sw" style="background:#3A6EA5"></span><b>meta_sky</b> 메뉴 아웃라인</span>
+ <span class="t"><span class="sw" style="background:#FFD24D"></span><b>cta_gold</b> 주 CTA</span>
+ <span class="t"><span class="sw" style="background:#0D1117"></span><b>dark_bg</b> 전투 프리뷰</span>
+ <span class="t"><span class="sw" style="background:#9D3EE8"></span><b>theme_necro</b> 스테이지 테마</span>
+ <span class="t">display <b>Black Han Sans</b></span><span class="t">body <b>Pretendard</b></span><span class="t">수치 <b>Chakra Petch</b></span>
+</div>
+
+<!-- plat -->
+<div class="section"><span class="n">▸</span><span class="l">plat 정합 (M8/M9 UI 구현)</span><span class="r"></span></div>
+<div class="grid3">
+ <div class="note"><h4>재사용 골격</h4><ul><li><b>MainUIManager</b> goldText/silverText/crystalText = 상단바 재화 배선</li><li><b>StageScrollManager·StageItemUI</b> = 코버플로우(룩/위계만 신규)</li><li>좌우 메뉴 = Enhance/Rebirth/Achievement/미션/상점 라우팅 골격 O</li></ul></div>
+ <div class="note"><h4>신규 배선</h4><ul><li><b>heroImage/playerAvatar 폐기</b>(영웅 프레즌스 없음·escalate #6 제거)</li><li>스테이지 카드 = 적 편성 프리뷰(위협 hint) + 전투 CTA 위계</li><li>재화 아이콘 3종(gold/silver/crystal) = M8 출시필수 에셋</li></ul></div>
+ <div class="note"><h4>에셋 상태</h4><ul><li>스테이지 프리뷰 적 유닛 = <b>실 스프라이트 배치</b>(현 스키매틱·매체게이트 #8)</li><li>배경 = 밝은 쿨 하늘/스톤(CSS·추후 아트 대체 가능)</li><li>재화·메뉴 아이콘 = 이모지 placeholder → 아이콘 에셋</li></ul></div>
+</div>
+
+<p class="foot">
+ 무한의 전장 · 메인 허브 비주얼 (밝은 쿨 META) · 2026-07-01 · 디자인 세션 · UI 화면 비주얼 #1<br>
+ <b>확정 와이어(§3) → 프로덕션 목업.</b> 2존(허브 밝은 쿨 ⊥ 스테이지 프리뷰 다크) · paranoia #1 3요소 충족 · plat M8/M9 구현 spec.<br>
+ ★ 매체 게이트 #8 = 레이아웃/UI/토큰 = 디자인 세션 직접(SVG/CSS) · 캐릭터 프리뷰 appeal = 실 스프라이트(현 스키매틱).<br>
+ SoT = wireframes §3 · design-system §1/§2 · gdd Part 2.1. ▶ 다음 = 사용자 검토 → 편성/전투HUD(다크)/메타 화면 순 · 인트로=로고 확정 후.
+</p>
+</div></body></html>
