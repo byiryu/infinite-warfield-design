@@ -46,12 +46,12 @@
   .compbox .sz{font-size:10px;color:#6f8093;margin-top:2px}
 
   /* real components */
-  .mbtn{width:100px;height:82px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-    background:linear-gradient(165deg,#28323f,#141c26);border:2px solid var(--stroke);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 5px 14px rgba(0,0,0,.45);position:relative}
-  .mbtn svg{width:32px;height:32px;color:#F3E6C4;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
-  .mbtn .t{font-size:13px;font-weight:800;color:#EDF2F7}
-  .mbtn.pressed{background:linear-gradient(165deg,#10161f,#1c2632);box-shadow:inset 0 2px 6px rgba(0,0,0,.6);transform:translateY(1px)}
+  .mbtn{width:128px;height:46px;border-radius:12px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:11px;padding:0 15px;
+    background:linear-gradient(160deg,rgba(233,239,246,.5),rgba(180,197,216,.4));border:1.5px solid rgba(184,155,94,.6);
+    box-shadow:0 4px 10px rgba(20,33,46,.22);backdrop-filter:blur(3px);position:relative}
+  .mbtn svg{width:22px;height:22px;color:#2c3e52;flex:0 0 auto}
+  .mbtn .t{font-size:12.5px;font-weight:800;color:#1f2f40}
+  .mbtn.pressed{background:linear-gradient(160deg,rgba(200,210,222,.52),rgba(150,168,190,.46));box-shadow:inset 0 2px 6px rgba(20,33,46,.3);transform:translateY(1px)}
   .mbtn .badge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;background:#e0433a;border:2px solid #fff;
     border-radius:10px;font-size:10px;font-weight:800;color:#fff;display:grid;place-items:center}
 
@@ -230,7 +230,7 @@
       <ul>
         <li>아이콘 = <b>SVG 실제작</b>(UI 9: 강화·환생·업적·미션·상점·전투·별·자물쇠·루프 + <b>재화 2</b>: 재화A·재화B + <b>테마 5</b>)·크리스탈 제거(v1.1)</li>
         <li>크롬 색 토큰 6종 확정 (다크 패널·브론즈 프레임·골드·크림)</li>
-        <li>버튼 컴포넌트 = 확대(100×82)·상태(normal/pressed)·뱃지·터치타깃 ≥44pt</li>
+        <li>버튼 컴포넌트 = 가로 직사각형(128×46·저오퍼시티 글래스·아이콘+라벨)·상태(normal/pressed)·뱃지·터치타깃 ≥44pt</li>
         <li>= CSS/SVG 값 그대로 plat 구현 스펙 (design-system §2 UI 킷 흡수)</li>
       </ul>
     </div>
