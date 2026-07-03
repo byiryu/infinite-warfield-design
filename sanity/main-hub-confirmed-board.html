@@ -246,7 +246,9 @@
     <div class="card"><h3>plat 핸드오프 — ★ MVP=정지 / 라이브 모션=M9 step-4n 이연</h3><ul>
       <li><b>★ MVP = 정지 배경만 import</b> · 라이브 모션 = <b>M9 step-4n</b> VFX 폴리시 패스(이연·juice·코어 후) · 이 보드=그때 모션 spec(design 추가 0)</li>
       <li>배경 5장 import(2752×1536·`assets/backgrounds/main-hub/`)</li>
-      <li>모션 = Unity <b>Particle System</b>(티끌/불티/반딧불)+<b>Additive 스프라이트 셰이더 맥동</b>(글로우)+alpha lerp(셔머/god-ray)+저속 rotate(기어)</li>
+      <li><b>★ 아키텍처 3레이어</b>: ①배경 정지=월드 SpriteRenderer(현 MVP) · ②<b>모션=배경↔크롬 사이 월드/카메라 레이어(UXML 아님!)</b> · ③UXML 크롬=투명배경·앞. 현 배경이 UXML bg면→월드 이전 필요</li>
+      <li>모션 = Unity <b>Particle System</b>(티끌/불티/반딧불)+<b>Additive 스프라이트 셰이더 맥동</b>(글로우)+alpha lerp(셔머/god-ray)+저속 rotate(기어)·테마별 프리팹 5</li>
+      <li><b>★ 상세 구현 스펙 = `asset-manifest.md §라이브 배경 모션` "Unity 구현 스펙"</b>(CSS↔Unity 매핑표·파라미터·성능)</li>
       <li>글로우 focal = 배경별 focal 정렬(본 데모=근사·plat 정밀 배치)</li>
       <li>크롬(상단바·좌우메뉴·코버플로우·CTA) = 5테마 공통 오버레이(CSS=구현 스펙)</li>
     </ul></div>
