@@ -1,0 +1,100 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<title>인트로 · infinite warfield</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+*{margin:0;box-sizing:border-box}
+:root{--gold:#FFD24D;--goldD:#F0992D;--bronze:#B89B5E;--cream:#F3E6C4;--ink:#4A2C05;--muted:#8FA0B4;--line:#2d383f;--card:#151d27;--friend:#4FA3FF;--foe:#FF5B5B}
+body{background:#0c1116;color:#E6ECF3;font-family:'Pretendard',sans-serif;line-height:1.55;padding:44px 20px 90px}
+.wrap{max-width:1160px;margin:0 auto}
+a.back{font-size:11px;font-weight:600;color:var(--friend);text-decoration:none}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-top:14px}
+h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
+.sub{color:var(--muted);font-size:14px;margin-top:10px;max-width:900px}
+.sub b{color:#E6ECF3}
+.status{font-size:11px;font-weight:700;color:var(--gold);margin-top:8px}
+.section{display:flex;align-items:baseline;gap:10px;margin:36px 0 6px}.section .n{font-size:12px;color:var(--gold);font-weight:800}.section .l{font-size:12px;font-weight:800}.section .tag{font-size:10.5px;font-weight:700;color:var(--muted)}.section .r{flex:1;height:1px;background:var(--line)}
+.frame{margin:10px 0 0;border:1px solid var(--line);border-radius:12px;padding:12px;background:#0a0e13}
+.screen{position:relative;width:100%;aspect-ratio:16/9;container-type:inline-size;overflow:hidden;border-radius:7px;background:#06080c}
+.bg{position:absolute;inset:0;background:
+  radial-gradient(120% 80% at 50% 118%, rgba(240,153,45,.20), transparent 55%),
+  radial-gradient(70% 55% at 50% 62%, rgba(255,190,80,.14), transparent 66%),
+  radial-gradient(90% 70% at 50% 44%, rgba(30,42,58,.7), transparent 70%),
+  radial-gradient(140% 120% at 50% 30%, #10161f 0%, #0a0e15 46%, #06080c 100%)}
+.emb{position:absolute;bottom:-2cqw;border-radius:50%;background:radial-gradient(circle,#ffd98a,rgba(240,153,45,.5) 55%,transparent 78%);opacity:0;animation:rise linear infinite;pointer-events:none;filter:blur(.05cqw)}
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0}12%{opacity:.85}88%{opacity:.2}100%{transform:translateY(-46cqw) scale(.35);opacity:0}}
+.clash{position:absolute;inset:0;z-index:2}
+.hero{position:absolute;bottom:10cqw;image-rendering:pixelated}
+.hero.arden{left:23cqw;width:29cqw;filter:drop-shadow(0 0 .9cqw rgba(79,163,255,.95)) drop-shadow(0 0 2.4cqw rgba(79,163,255,.5)) drop-shadow(0 1cqw 1.4cqw rgba(0,0,0,.6))}
+.hero.necro{right:22cqw;width:25cqw;transform:scaleX(-1);filter:drop-shadow(0 0 .9cqw rgba(255,91,91,.95)) drop-shadow(0 0 2.4cqw rgba(255,91,91,.45)) drop-shadow(0 1cqw 1.4cqw rgba(0,0,0,.6))}
+.hero img{width:100%;display:block}
+.floor{position:absolute;left:50%;bottom:10cqw;transform:translateX(-50%);width:64cqw;height:.3cqw;background:linear-gradient(90deg,transparent,rgba(79,163,255,.35) 22%,rgba(255,210,77,.55) 50%,rgba(255,91,91,.35) 78%,transparent);z-index:1;filter:blur(.1cqw)}
+/* 골드 충돌 버스트 — 두 영웅 무기 사이(중앙·무기 높이) */
+.burst{position:absolute;left:50%;bottom:16cqw;transform:translateX(-50%);z-index:3;width:17cqw;height:17cqw;pointer-events:none}
+.burst .core{position:absolute;inset:33%;border-radius:50%;background:radial-gradient(circle,#fff 0%,var(--gold) 36%,rgba(240,153,45,.45) 62%,transparent 76%);animation:pulseB 1.5s ease-in-out infinite}
+.burst .sp{position:absolute;left:50%;top:50%;width:.5cqw;height:8cqw;margin:-4cqw 0 0 -.25cqw;background:linear-gradient(180deg,transparent,var(--gold),transparent);transform-origin:50% 50%;opacity:.8}
+@keyframes pulseB{0%,100%{transform:scale(.88);opacity:.8}50%{transform:scale(1.12);opacity:1}}
+.title{position:absolute;top:5cqw;left:0;right:0;text-align:center;z-index:6}
+.title .small{font-size:3.4cqw;font-weight:800;letter-spacing:.5cqw;color:var(--cream);text-shadow:0 .2cqw .6cqw rgba(0,0,0,.7);opacity:.95}
+.title .big{font-size:11.5cqw;font-weight:900;line-height:.92;letter-spacing:.3cqw;
+  background:linear-gradient(180deg,#fff6dc 0%,var(--gold) 46%,var(--goldD) 78%,#b56a12 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 .35cqw .1cqw rgba(80,40,0,.7)) drop-shadow(0 0 2.4cqw rgba(255,190,70,.35))}
+.title .sub2{margin-top:.6cqw;font-size:1.9cqw;font-weight:800;letter-spacing:1.1cqw;color:rgba(232,236,242,.6);text-indent:1.1cqw}
+.cta{position:absolute;left:50%;bottom:5cqw;transform:translateX(-50%);z-index:7}
+.startbtn{display:flex;align-items:center;justify-content:center;min-height:6cqw;padding:0 11cqw;border-radius:1.3cqw;font-size:2.6cqw;font-weight:900;color:var(--ink);background:linear-gradient(180deg,var(--gold),var(--goldD));border:.16cqw solid #ffe9b0;box-shadow:0 .3cqw 1.6cqw rgba(0,0,0,.5),0 0 2.6cqw rgba(255,190,70,.5);animation:glowB 2s ease-in-out infinite;cursor:pointer}
+@keyframes glowB{0%,100%{box-shadow:0 .3cqw 1.6cqw rgba(0,0,0,.5),0 0 2cqw rgba(255,190,70,.4)}50%{box-shadow:0 .3cqw 1.6cqw rgba(0,0,0,.5),0 0 3.6cqw rgba(255,190,70,.75)}}
+.foot{position:absolute;left:0;right:0;bottom:1.6cqw;display:flex;justify-content:space-between;padding:0 2.4cqw;z-index:6;font-size:1.15cqw;font-weight:700;color:rgba(143,160,180,.7)}
+.gear{position:absolute;top:1.8cqw;right:2.2cqw;z-index:6;width:3.4cqw;height:3.4cqw;border-radius:50%;background:rgba(15,22,32,.7);border:.12cqw solid var(--bronze);display:flex;align-items:center;justify-content:center;color:var(--cream);cursor:pointer}
+.gear svg{width:1.9cqw;height:1.9cqw}
+.notes{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:12px}@media(max-width:820px){.notes{grid-template-columns:1fr}}
+.nn{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 15px}.nn.hl{border-color:rgba(255,210,77,.4)}
+.nn .k{font-size:11px;font-weight:800;color:var(--gold)}.nn h3{font-size:14px;margin:5px 0 4px;font-weight:800}.nn p{font-size:12.5px;color:var(--muted)}.nn p b{color:#E6ECF3}
+.note{margin-top:32px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;line-height:1.9}.note a{color:var(--friend)}
+</style></head><body>
+<div class="wrap">
+<a class="back" href="../index.html">‹ 디자인 보드</a>
+<div class="eyebrow">byiryu studio · 메타 · Intro</div>
+<h1>인트로 (타이틀 화면) — 프로덕션</h1>
+<p class="sub">앱 진입 첫 화면. <b>로고 B안(레인 클래시) 구성을 풀스크린으로 확장</b> — 아르덴(아군 파랑 림) vs Necro 혈귀(적 빨간 림) 대치 + 골드 충돌 + <b>"무한의 전장"</b> 워드마크 + 시작 CTA. 흐름 = Intro → (로그인/동의) → 영웅 선택 → Main (spec 라우터). 구조 단순(wireframes §6 "1슬롯·깊이 불요"). ★ <b>로고 = B안 확정·정밀화 보류</b> → 본 타이틀은 현 스프라이트/워드마크로 gray-box, 로고 정밀화는 나중에 스왑.</p>
+<p class="status">● 검토 대기 · 로고 B안 gray-box(정밀화 보류) · 실 스프라이트(매체게이트 #8) · 확정 UI 킷</p>
+
+<div class="section"><span class="n">①</span><span class="l">타이틀 화면 — 레인 클래시 + 워드마크 + 시작</span><span class="tag">아르덴 파랑 림 ⊥ Necro 빨간 림 · 골드 충돌 · 다크 전장</span><span class="r"></span></div>
+<div class="frame"><div class="screen">
+  <div class="bg"></div>
+  <span class="emb" style="left:14%;width:.6cqw;height:.6cqw;animation-duration:7s;animation-delay:.4s"></span>
+  <span class="emb" style="left:30%;width:.4cqw;height:.4cqw;animation-duration:9s;animation-delay:2.1s"></span>
+  <span class="emb" style="left:50%;width:.5cqw;height:.5cqw;animation-duration:8s;animation-delay:1.2s"></span>
+  <span class="emb" style="left:68%;width:.45cqw;height:.45cqw;animation-duration:8.5s;animation-delay:3s"></span>
+  <span class="emb" style="left:86%;width:.55cqw;height:.55cqw;animation-duration:7.5s;animation-delay:1.7s"></span>
+  <div class="floor"></div>
+  <div class="clash">
+    <div class="hero arden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAANIUlEQVR4nO3cfXRU5Z3A8e+9M5NJ5oXJEJJAhgQKhCgoL4ptD75tj6grgna1u6Buu25lbbd7BBaPuK2KSrdy1AMq9ri1tlWoomJ1FTDCAlsFpEChUZAgYQ0hYYC8TobMTGaSmfvsHzczmckLEAkkd/p8zsk5mec+986987vPy32eey9IkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkmQUykDvQH9SVLNAVVg8/4GUdKvVxrSpUxOffaEQIZ+Pqpoqnl6xIq1+g67MA70D/UVRzeKDt97ulu4LhQDwer2crKsj02bHUzgSXyAIQI7TIcYVFrG7vDwtA50WB6WYVfHab1bhttlS0r1ebyKQnsKRelrNccKhIGNLShL5Qj4fDz+xlNP+hrT4PZIZ/oBynA7xn0ufwuZ2J6pdq1UPdKbNzmUl47utEy/NkUiI0YWjOVlXx7SpU/nHf/lR2gXZ0AczfswY8ciSJwH46vDhXgN6Jl8crgDA7bAD8OiSn9HYEjD075JsUBzIG267uMcX7PO+KGaLeOnZ5VTVVHH1t68+Y95Pd32a8tlqtSWq6ZDPl0j3eDzcPncOQosOit/mfA14J2tGZqa4tLXta64dwxcIMmHS1JTUeMcquU2OnwC+UIjy/WVEIiH27dxBlsOOy50LdLbTQot+zf0ZfAY0wGtVRYz/9+Foz3l7XL7JpIqbY9oZSpIpUbVCZ9sKpFwWJXPbbImA/vTWSQAs+3A/oAc4fnKkiwGthjaZVJE7RGAam8Pkvamdm00mVeQvLmLKsqre9lE8vGhRokMF0NxYz5XTr+nWm95bppfY5LyLZoxLyXM6EObDyjZsbjf/dO/3YZA0X+fropTgtaoiRgKZGWauCLcnfribY5qCD9jb0G2dXIsJ7VfH+vQ9M2bclPg/Oagj8vLweDx4vV7umjSk1/VHOiM0AYpqTptq+qIE2KUoZD53C+GFpT0u35LrEDPqU3uuV4TbFcJ9/669ZWU0N9YnPrcGgkQiocQgB+gB3rV7NzlWN8VTOnvdw/0+bnv4Z2nTwYKLFOBciwkW/w/TNdHjD1fQ0Er9rWNF044agmo7V/h6znc2e8vKAGjx+7jjxqu4fsp4NL8v0cYmt9c5Vjd/2PYFbPuCa2Zfy+RcJ1c9+BSkSdUcp16ML7ki3K4kV83JNkzOFAU/zscyKYLTEUNzuPu07UgklPhLdv2U8azZtBvQS7FeejvljyuipGgo4ZYAO9ZvZ81Hm/v0vUZxUQLcm9KS4aK4SiM8NgxuG+VtWUyraepTCbJabYnOU0+BXr1lD9B5CRQ3xJHJy1v3sPLjbTyzvpQMhwtFHfCrxn43IAF+Y2KJ2JLrEMOPNZL/yGgytWEA1EZFaj63XewtHCp62kZcPKDJPeS4u2/+FvfeeTOgXx7Fx6VVl15LbF69jBumTuT1FUv43rXfPM+jGpwu2im7JdchYk0hnEIw7c4sQo4CAGxD3YSuLIHNu/iupZ2dqiIAWhSFb/3UQ+WSo33+rjzPSBY8+wYvPHRPSvqpmircNz6GCf2cadrzHu+9vBTNr49kCS2KYrYIEe25OTGiC34gb7jtAuCm6cPJnF2EdZgTmmtR1dMAxKZek8hrKttBoCHWbRuVy45Qf1rfVb8Q7MpQWGWx0RQMs3jh/F6/+0DF/wEwrmAEM2bcxO13z2Xn6z/Hk5XNrNsX43VqfPX+LxP5s2+4N/5v2gT4gpXgX2IWeWqMO5YX0T5qDLXjpmMVppQrH1u7j4jFja1dL0GaNgTHsNOJINsCerV72SuzMWV3Tu8VLP8tKzf5EVqM1kCQLEdqBypZWzAAwO1z5/Dlrx+i8i+7efL1fRQUZLP/RDWXf/9hDvz+6US1nU7XwHCBztT7bW7x/GcrqLOeSKTV1zXRuDlERYtCTv5wrvKEcIx04Bihn2Pmtvxet9fc6OWp5/Vr6DdL99PYEuDB0UUALK+q1g9ENSeq3hhKSpDMqomoFqPinf/g5YfWABDKsjDp/gVU1VTxzPMr9YyqQjpVz3CBSnBkiJuFUxbxxJq7IL+A1avKUpaHfLXUfHnu2zvuOwnAr97RL3vivV2Xy87SyZee0zaWfH4o8f+JMPztE0/gttnweDy8tHx0aqDTyAUJ8KpTlQpA9U82iIV/N5YpRZcA0ByIUdXUiAi0p+RXHJYzbq+5QfDWH/cQUwU/Lv4GttZ2Shv8XFvXwsji4Wdc92Rb95kqn6r3qm12K5dMLMF20IrH4+GG6z9j6yfbhBzJOkcbT1Qr/DdibnEtYc3PpO/NYmxOZ1vabm7EEs0BoDHSOSdra4Msp94mtrbo6bFPBNPsTkZkZEBGBjOBbT4/ZVWdzcB1bhcuV2d7fKg2yKcNp1A7Jh+GRlL3LxSMEGhuTHye/6//hvfP+/gyHEqbnvQFv0zaeKJa2dgRgxl/XiVys/Nwnm5JLK/OduLWOvP7VGgM+hOf97YEueH66wAYl+VKpLtcdma77Pj9wZQ0gPVVJwjEwGGCeRPHUm/XeHFnM03W7vtXUZE6VemJRnjw76cx780/CdKgN31Rh262hMMKp6pTE0O+njN3UMwWsXX7dn7x+C945PHHWJRZkFJKAQ626SdFoEE/Me4aW5CyPDeoj+cIv0IoywJtqU1ESt7sPCZP+w68+adzPaxBzXBjcy9Ue1lyeep9VxMzwJVb0MsasLbyKwAUV+egWHxiYkReHja33hz8ZfWrADivTJ9RrcEfYE0PSjjUWRUvPVCRCHLX0hz3u6MnOR5o6XFZchNw6NBBQJ+Byjx5jAzM2Pyn+mXXB4NBH+BbZs7ko9LSxJjzgiIP7xw/xZLPDzGJIRQUZAN60Cq1GP5gKwDFNgf35I0CoFaN4tZgwpxniXU0q2VPL+PKS0qYcPllABzbt4/CgODnLy/msh88imK2IKK9V+VGMegDXLphnQKkTDjk27NQhY3yQAvlp4JEtRhm1UQMhWlOB9e5452xKA1hM24NCjLhbzIsbG2L8tLyFby77n0+/uQTNK/eycqxu3jkxbsZdecD8cAavoMFBjmIf57zD+Ldjf9LqMXHgiIPBzsubSdm9F5Fx3vX8eV+f5CGsJnVddV88Nbb2OxWvPU+Hpt3H79eeh85VjfffOgZAHlHx8X26ttrFUCYVROgV8ddr3m76rrM5bLTEI6AqmCz69dLnlw31dE2bnn0FX2YMo0CGzegE/599cPMIYnAnSm4vRmW2fMkgtCiSroMbHRlqACfbVjybBrCqRXWHXffy/gxY85rm4OdIaro/lLe2giaYMatswB90iLdHjbrypABvs7t4qvaCGPzexh7PIs5E78BgDlvGK9vTY/RqjMxRIDNqkn8MDP1hvU2osC5Bzh5zBogWtf9Zvt0ZIgAR7VYSvurd7CCva/QA5fLzrQsC/914Eg/793gZogA9+Tr9KJHZGQAMPfyYgDKahs5XNckOu74SMu22FC96L5anzRXnOwPByt5++BRKhpOs+q13/PgwgXQZbQsXRi2BJ+PGArJL2y5+ttXo6grGWrPFOn0dD+keQnuzWu/06cFbXZr4m/z+vdpag2BXpLTpjSndYAnZOVwqLZ7Zyz5lQ2JtGAENJXWUBhr1hRmzrotLYJslOpInOvdk+diyeeH2PLhhpS0G2d/F6czm/fWvEYoGEmb93QYpQQrybe99gdvvY9QMEIoGGHdB+sBuNSTx7Ydu/B6e36lhBH9VXayFLOKt+Y4IYed5158niNV1XxnzCiCwM5dO5lQXDzQu9hvDFMFKWZVPDmx5OwZz0Hp4Rp2t4UpHl1EY30dk/PzCWZYcWZZaGltZ3d5ORjotzkTo1TR/WpmSSEAFZWVTM7PR3U5cGZZ0PwBmhvS534sMFCARVRTlh6o6LftmRDkOB0AbC07yGfHjrO/uZnCwsJ++47BwFBtcEzt3yuXptYIf6w8xgPz7ks8oVjnPY5SdjBtnjA0TAkGEFGt26zQ17WgyAOawOnMTnn89Cc/mM2e9a+imPv5bBoghgowoMQfFz1foSwLoxwOrrl2ekp6tMVLxZGjoKkAYvyYMYYOtNEC3G9eOVxF1elmPtr4Ea2BIK0d7+8wOz3cs3AJixfOZ93ad6ms6tvL2AYbQ7XBvXn8wJFubaZZNXV7xAVg2+GjfNzW3jk9qImUEvrCipdQVHPHs8IrMfrVkuECrJg7Kx2/P8gL1V5MAB1P8dMRkagWY+mBCpEc5KUHKnqc9y0/coSt27cDMDTLylB7JopVv1ukscnfNbuhGPX0TJS6+ff/CIAsh52nV6yALsdkVk2JvD0FV1HNQmjRxCVTnD/YSkxVDf9KB8OVYNDvhnxg3n09pnetqs92p4bQosrMWbeJ0g3rEq+GSEwyaN3f+GM0hjw7FdUsoPPF3clvqEuHGSBJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkv46/T8ladZr1onp8gAAAABJRU5ErkJggg==" alt="아르덴"></div>
+    <div class="hero necro"><img src="data:image/png;base64,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" alt="혈귀"></div>
+  </div>
+  <div class="burst">
+    <div class="core"></div>
+    <div class="sp" style="transform:rotate(0deg)"></div>
+    <div class="sp" style="transform:rotate(45deg)"></div>
+    <div class="sp" style="transform:rotate(90deg)"></div>
+    <div class="sp" style="transform:rotate(135deg)"></div>
+  </div>
+  <div class="title">
+    <div class="small">무한의</div>
+    <div class="big">전장</div>
+    <div class="sub2">INFINITE WARFIELD</div>
+  </div>
+  <div class="gear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div>
+  <div class="cta"><div class="startbtn">시작하기</div></div>
+  <div class="foot"><span>v0.1 (개발 중)</span><span>byiryu studio</span></div>
+</div></div>
+
+<div class="section"><span class="n">②</span><span class="l">설계 근거 · plat 핸드오프</span><span class="r"></span></div>
+<div class="notes">
+  <div class="nn hl"><span class="k">타이틀 = 로고 B안 확장</span><h3>"이게 곧 게임"이 첫 화면에</h3><p>승인된 로고 B(레인 클래시)의 대치 구도를 풀스크린으로. <b>아군 파랑 림 ⊥ 적 빨간 림</b>(전투 화면 P0 게이트 규칙 그대로) + 가운데 골드 충돌 = 장르·진영 즉독(paranoia #1 진행 프레즌스·#7 스토어 첫인상). 다크 전장 정박 = 아트 바이블 "전장은 어둡다/캐릭터는 빛난다".</p></div>
+  <div class="nn hl"><span class="k">로고 = gray-box (정밀화 보류)</span><h3>레이아웃 먼저 · 로고 나중 스왑</h3><p>로고 B안 = <b>확정·정밀화 보류</b>(사용자 33차) → 본 타이틀은 현 스프라이트 + Pretendard 워드마크로 먼저 레이아웃 확정. <b>정밀화 시 스왑</b>: 전용 워드마크(강철 재질)·매치업(변경 가능)·충돌 이펙트 고도화. 워드마크 = "전장" 대형 + "무한의" 소형(로고 v3 위계 수렴). 폰트 = Pretendard 900(design-system §2 락·Cinzel 미채택).</p></div>
+  <div class="nn"><span class="k">매체 게이트 #8</span><h3>캐릭터 = 실 스프라이트</h3><p>아르덴(char <b>2b180175</b> 돌진 프레임)·Necro 혈귀(<b>359fdc4a</b>) = 실제 생성 픽셀 스프라이트(코드 도형 X). 레이아웃·워드마크·골드 충돌·림 글로우 = 디자인 도메인(캔버스 OK). 림 글로우 = P0 아군/적 색규칙(#4FA3FF/#FF5B5B) 인용(전투 런타임 셰이더 미리보기).</p></div>
+  <div class="nn"><span class="k">plat 핸드오프 (M9)</span><h3>IntroManager 스킨 + 라우터 전환</h3><p><b>구조 단순</b>(wireframes §6): 시작 CTA = <b>IntroManager.OnClickStart()</b> → 라우터 전환(firstPlay=Login→동의→S0 / 이후 Login→Main). 별도 씬 아님(Meta_Scene 라우터 화면·spec §씬). 배경 라이브 모션 = Unity 내장 레이어(에셋·파티클·림 글로우). 설정 기어 = 옵션(설정=메인이 주·타이틀 최소). 워드마크/폰트 = 정밀화 후 에셋 교체.</p></div>
+</div>
+<p class="note">SoT: <b>wireframes §6</b>(Intro 통합 보드 1슬롯·구조 단순) · <b>spec §씬 흐름</b>(Meta_Scene 라우터·Intro→Login→S0→Main) · 로고 B안 = <b>logo-b-lane-clash-board.html</b>(확정·정밀화 보류) · UI 킷 = design-system §2 · 캐릭터 = 아르덴 2b180175(lunge east frame_005)·Necro 359fdc4a(혈귀). 매체게이트 #8 = 캐릭터 appeal = 실렌더·레이아웃/그래픽 = 캔버스. 제작 = 디자인 세션 2026-07-03.</p>
+</div>
+</body></html>
