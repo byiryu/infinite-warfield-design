@@ -67,6 +67,28 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 .gatebar .gl small{color:var(--muted);font-weight:600}
 .gatebar .gb{height:1cqw;border-radius:.5cqw;background:rgba(0,0,0,.55);overflow:hidden;margin-top:.35cqw}
 .gatebar .gb i{display:block;height:100%;width:80%;background:linear-gradient(90deg,#c99b3f,var(--gold))}
+/* 모드 선택 (상승 / 유지) */
+.mq{font-size:1.18cqw;font-weight:800;color:#dbe3ec;margin-top:.6cqw}
+.mq small{font-size:1cqw;font-weight:600;color:var(--muted);margin-left:.5cqw}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:.8cqw;margin-top:.5cqw}
+.md{position:relative;border-radius:1cqw;background:rgba(10,15,22,.8);border:.14cqw solid #2b3541;padding:.7cqw .95cqw .75cqw;cursor:pointer;overflow:hidden}
+.md .mh{display:flex;align-items:baseline;gap:.5cqw;font-size:1.5cqw;font-weight:900}
+.md.up .mh{color:var(--gold)}.md.stay .mh{color:var(--friend)}
+.md .mh .lvto{font-size:1cqw;font-weight:800;color:var(--muted)}
+.md .row{display:flex;justify-content:space-between;align-items:baseline;font-size:1cqw;font-weight:700;color:rgba(190,204,219,.9);margin-top:.32cqw}
+.md .row .rv{font-weight:900;color:#e6ecf3}
+.md .rw .rv{font-size:1.25cqw}
+.md.up .rw .rv{color:var(--gold)}.md.stay .rw .rv{color:var(--friend)}
+.md.sel{background:rgba(14,20,28,.94)}
+.md.up.sel{border-color:var(--gold);box-shadow:0 0 1.4cqw rgba(255,210,77,.4)}
+.md.stay.sel{border-color:var(--friend);box-shadow:0 0 1.3cqw rgba(79,163,255,.35)}
+.md.sel::after{content:"✓";position:absolute;top:.5cqw;right:.65cqw;font-size:1.15cqw;font-weight:900}
+.md.up.sel::after{color:var(--gold)}.md.stay.sel::after{color:var(--friend)}
+.md .mlock{position:absolute;inset:0;background:rgba(6,9,14,.86);backdrop-filter:blur(.25cqw);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2cqw;text-align:center;padding:0 .6cqw}
+.md .mlock svg{width:1.8cqw;height:1.8cqw;color:#ffce7a}
+.md .mlock b{font-size:1.02cqw;font-weight:800;color:#ffce7a}
+.md .mlock small{font-size:.86cqw;color:var(--muted)}
+.md.dim{opacity:.5}
 /* 주석 */
 .notes{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin-top:12px}@media(max-width:820px){.notes{grid-template-columns:1fr}}
 .nn{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 15px}.nn.hl{border-color:rgba(125,255,160,.4)}
@@ -75,25 +97,39 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 </style></head><body>
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-rebirth" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12a7 7 0 0 1 12-4.9"/><path d="M19 12a7 7 0 0 1-12 4.9"/><path d="M17 3v4h-4"/><path d="M7 21v-4h4"/></g></symbol>
-<symbol id="t-combat" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 3.2c-4.2 0-7.2 3.1-7.2 7.3v6.3h4.4v-3.1h5.6v3.1h4.4v-6.3c0-4.2-3-7.3-7.2-7.3zM8.6 9.1h6.8v2.4H8.6z" clip-rule="evenodd"/></symbol><symbol id="t-necro" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 3a7 7 0 0 0-7 7c0 2.9 1.5 4.7 3.1 5.7v2a1.6 1.6 0 0 0 1.6 1.6h.5V17h.9v2.3h1.8V17h.9v2.3h.5A1.6 1.6 0 0 0 15.9 17.7v-2C17.5 14.7 19 12.9 19 10a7 7 0 0 0-7-7zM9.2 8.9a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm5.6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" clip-rule="evenodd"/></symbol><symbol id="t-spirit" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.4c3.5 4.1 5.4 7.2 5.4 10.5a5.4 5.4 0 0 1-10.8 0C6.6 9.6 8.5 6.5 12 2.4z"/><path fill="#0e0a16" opacity=".32" d="M12 8.2c1.5 1.9 2.3 3.4 2.3 5a2.3 2.3 0 0 1-4.6 0c0-1.6.8-3.1 2.3-5z"/></symbol><symbol id="t-machine" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.3 2.3h3.4l.5 2.4 1.5.9 2.3-.9 1.7 2.9-1.8 1.7.2 1.7 1.8 1.7-1.7 2.9-2.3-.9-1.5.9-.5 2.4h-3.4l-.5-2.4-1.5-.9-2.3.9-1.7-2.9 1.8-1.7-.2-1.7-1.8-1.7 1.7-2.9 2.3.9 1.5-.9zM12 9.1a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z" clip-rule="evenodd"/></symbol><symbol id="t-beast" viewBox="0 0 24 24"><g fill="currentColor"><path d="M6.4 3.4c2.5 3.9 3.4 8.1 2.7 13.7-.1 1-1.5 1-1.7 0C6.1 11.8 5.6 7.6 4.9 3.9c-.2-1 1-1.4 1.5-.5z"/><path d="M11.5 2.7c1.9 4.3 2.4 8.8 1.7 14.5-.1 1-1.5 1-1.7 0-.9-5.5-1.2-9.9-1.5-14-.1-1 1-1.4 1.5-.5z"/><path d="M16.8 3.4c2.5 3.9 3.1 8.1 2.4 13.4-.1 1-1.5 1-1.7 0C16.4 11.5 15.9 7.5 15.3 3.9c-.2-1 1-1.4 1.5-.5z"/></g></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></g></symbol><symbol id="t-combat" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 3.2c-4.2 0-7.2 3.1-7.2 7.3v6.3h4.4v-3.1h5.6v3.1h4.4v-6.3c0-4.2-3-7.3-7.2-7.3zM8.6 9.1h6.8v2.4H8.6z" clip-rule="evenodd"/></symbol><symbol id="t-necro" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 3a7 7 0 0 0-7 7c0 2.9 1.5 4.7 3.1 5.7v2a1.6 1.6 0 0 0 1.6 1.6h.5V17h.9v2.3h1.8V17h.9v2.3h.5A1.6 1.6 0 0 0 15.9 17.7v-2C17.5 14.7 19 12.9 19 10a7 7 0 0 0-7-7zM9.2 8.9a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm5.6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" clip-rule="evenodd"/></symbol><symbol id="t-spirit" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.4c3.5 4.1 5.4 7.2 5.4 10.5a5.4 5.4 0 0 1-10.8 0C6.6 9.6 8.5 6.5 12 2.4z"/><path fill="#0e0a16" opacity=".32" d="M12 8.2c1.5 1.9 2.3 3.4 2.3 5a2.3 2.3 0 0 1-4.6 0c0-1.6.8-3.1 2.3-5z"/></symbol><symbol id="t-machine" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.3 2.3h3.4l.5 2.4 1.5.9 2.3-.9 1.7 2.9-1.8 1.7.2 1.7 1.8 1.7-1.7 2.9-2.3-.9-1.5.9-.5 2.4h-3.4l-.5-2.4-1.5-.9-2.3.9-1.7-2.9 1.8-1.7-.2-1.7-1.8-1.7 1.7-2.9 2.3.9 1.5-.9zM12 9.1a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z" clip-rule="evenodd"/></symbol><symbol id="t-beast" viewBox="0 0 24 24"><g fill="currentColor"><path d="M6.4 3.4c2.5 3.9 3.4 8.1 2.7 13.7-.1 1-1.5 1-1.7 0C6.1 11.8 5.6 7.6 4.9 3.9c-.2-1 1-1.4 1.5-.5z"/><path d="M11.5 2.7c1.9 4.3 2.4 8.8 1.7 14.5-.1 1-1.5 1-1.7 0-.9-5.5-1.2-9.9-1.5-14-.1-1 1-1.4 1.5-.5z"/><path d="M16.8 3.4c2.5 3.9 3.1 8.1 2.4 13.4-.1 1-1.5 1-1.7 0C16.4 11.5 15.9 7.5 15.3 3.9c-.2-1 1-1.4 1.5-.5z"/></g></symbol>
 </defs></svg>
 <div class="wrap">
 <a class="back" href="../index.html">‹ 디자인 보드</a>
 <div class="eyebrow">byiryu studio · 메타 · Rebirth</div>
 <h1>환생 다이얼로그 — 프로덕션</h1>
-<p class="sub">Main 씬 위 <b>다이얼로그</b>(별도 씬 X). <b>3축 = 적 강화(soft-cap 실값 — 구 +10% 거짓 표시 버그 정정) · 재화 가속 +25%/rb(적 ≥ 재화 인버전 해소 = "리셋하면 더 빨리 재성장") · 강화 영구 유지</b>(spec §6.B①·스탯 곱 금지·해금 트리 없음). <b>★ 테마 = 환생마다 5종 자유 재선택</b>(CEO 2026-07-02·client M8 step-8 구현 완료·테마 ⊥ 파워). 게이트 = 현 테마 스테이지 ≥ Max(10, rb×10). 구 wireframes "레벨 상승 vs 유지 80%" 선택지 = stale 폐기. 수치 = 예시(계수 = 출시후 sim).</p>
-<p class="status">● 검토 대기 · 확정 UI 킷 · 온보딩 S13(예고)/S14(첫 환생 실교육) 연결 지점</p>
+<p class="sub">Main 씬 위 <b>다이얼로그</b>(별도 씬 X). <b>★ 두 모드 택1(상승/유지) — spec §6.B① CEO 2026-07-03 확정</b>(구 보드가 "stale 폐기"로 잘못 처리·code엔 있고 spec 미문서였던 drift 정정). <b>상승 = rb+1·즉시보상 ×1.0·적↑ / 유지 = rb 불변·×0.8·같은 난이도 재farm</b>. <b>3축 = 적 강화(soft-cap 실값·구 +10% 거짓표시 정정) · 재화 가속 +25%/rb · 강화 영구 보존</b>(스탯 곱 금지·해금 트리 없음). <b>★ 테마 = 환생마다 5종 자유 재선택</b>(CEO 2026-07-02·M8 step-8). <b>★ 게이트 = 상승은 목표레벨 깊이 `maxClearedStage ≥ (rb+1)×10`</b>(유지·환생가능 = `Max(10, rb×10)`). 수치 = 예시(계수 = 출시후 sim). "유지"=모드 / "보존"=지키는 것(용어 분리).</p>
+<p class="status">● 재작업 (사용자 재검토 지시 2026-07-03·두 모드 반영) · 확정 UI 킷 · 온보딩 S13(예고)/S14(첫 환생 실교육) 연결 지점</p>
 
-<div class="section"><span class="n">①</span><span class="l">환생 가능 상태 — rb 2 → 3 · 테마 재선택(현재 Necro → Spirit 선택 데모)</span><span class="r"></span></div>
+<div class="section"><span class="n">①</span><span class="l">상승 가능 (최고 스테이지 30 도달) — 상승 선택 · 테마 재선택 Necro → Spirit</span><span class="r"></span></div>
 <div class="frame"><div class="screen">
   <div class="bg"></div>
   <div class="dlg">
-    <div class="dt"><svg><use href="#i-rebirth"/></svg><b>환생</b><span class="lvchg">Lv 2 → 3</span><div class="x">✕</div></div>
-    <div class="gate">진입 조건 충족 — <b>Necro 스테이지 21 도달</b> · 필요 20</div>
+    <div class="dt"><svg><use href="#i-rebirth"/></svg><b>환생</b><span class="lvchg">현재 Lv 2</span><div class="x">✕</div></div>
+    <div class="mq">어떻게 환생할까?<small>두 방식 중 선택</small></div>
+    <div class="modes">
+      <div class="md up sel">
+        <div class="mh">상승<span class="lvto">Lv 2 → 3</span></div>
+        <div class="row"><span>난이도</span><span class="rv">↑ 더 강한 적</span></div>
+        <div class="row rw"><span>즉시 보상</span><span class="rv">×1.0</span></div>
+        <div class="row"><span>진입</span><span class="rv">스테이지 30 ✓</span></div>
+      </div>
+      <div class="md stay">
+        <div class="mh">유지<span class="lvto">Lv 2 그대로</span></div>
+        <div class="row"><span>난이도</span><span class="rv">동일</span></div>
+        <div class="row rw"><span>즉시 보상</span><span class="rv">×0.8</span></div>
+        <div class="row"><span>쓰임</span><span class="rv">강화 재화 재farm</span></div>
+      </div>
+    </div>
     <div class="ax">
-      <div class="ac up"><div class="t">적 강화</div><div class="v">+40% <span class="arr">→</span> +58%</div><div class="d">모든 스테이지의 적이 강해집니다</div></div>
-      <div class="ac"><div class="t">재화 획득</div><div class="v"><em>+50% <span class="arr">→</span> +75%</em></div><div class="d">적 강화보다 크게 — 더 빨리 재성장</div></div>
-      <div class="ac keep"><div class="t">강화 유지</div><div class="v">✓ 전부 보존</div><div class="d">유닛 스탯·스킬 강화 그대로</div></div>
+      <div class="ac up"><div class="t">적 강화</div><div class="v">+40% <span class="arr">→</span> +58%</div><div class="d">모든 스테이지 적이 강해집니다</div></div>
+      <div class="ac"><div class="t">재화 가속</div><div class="v"><em>+50% <span class="arr">→</span> +75%</em></div><div class="d">적보다 크게 — 더 빨리 재성장</div></div>
+      <div class="ac keep"><div class="t">강화</div><div class="v">✓ 보존</div><div class="d">유닛 스탯·스킬 그대로</div></div>
     </div>
     <div class="thlab"><b>다음 여정 테마</b><small>자유 선택 · 파워 차이 없음 — 플레이스타일·카운터 퍼즐이 달라집니다</small></div>
     <div class="themes">
@@ -104,29 +140,81 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
       <div class="th" style="--tc:var(--beast);--tg:rgba(224,107,20,.4)"><svg><use href="#t-beast"/></svg><div class="n2">Beast</div></div>
     </div>
     <div class="reset">
-      <div class="rs keep"><b>✓ 유지</b>유닛·영웅 · 강화 레벨 · 별 기록 · 재화</div>
-      <div class="rs lose"><b>↺ 리셋</b>스테이지 진행 — Spirit 스테이지 1부터 재시작</div>
+      <div class="rs keep"><b>✓ 보존</b>유닛·영웅 · 강화 레벨 · 별 기록 · 재화</div>
+      <div class="rs lose"><b>↺ 리셋</b>스테이지 진행 — Spirit 스테이지 1부터</div>
     </div>
     <div class="btns">
       <div class="btn neutral">취소</div>
-      <div class="btn cta"><svg><use href="#i-rebirth"/></svg>Spirit로 환생</div>
+      <div class="btn cta"><svg><use href="#i-rebirth"/></svg>Spirit로 상승 환생</div>
     </div>
   </div>
 </div></div>
 
-<div class="section"><span class="n">②</span><span class="l">게이트 미충족 상태 — CTA 비활성 + 진행바 (온보딩 S13 예고 연결)</span><span class="r"></span></div>
+<div class="section"><span class="n">②</span><span class="l">상승 잠금 · 유지만 가능 (최고 스테이지 21 — 20≤깊이&lt;30) · ★ 구 보드가 놓친 상태</span><span class="r"></span></div>
+<div class="frame"><div class="screen">
+  <div class="bg"></div>
+  <div class="dlg">
+    <div class="dt"><svg><use href="#i-rebirth"/></svg><b>환생</b><span class="lvchg">현재 Lv 2</span><div class="x">✕</div></div>
+    <div class="mq">어떻게 환생할까?<small>상승은 최고 스테이지 30부터</small></div>
+    <div class="modes">
+      <div class="md up dim">
+        <div class="mh">상승<span class="lvto">Lv 2 → 3</span></div>
+        <div class="row"><span>난이도</span><span class="rv">↑ 더 강한 적</span></div>
+        <div class="row rw"><span>즉시 보상</span><span class="rv">×1.0</span></div>
+        <div class="mlock"><svg><use href="#i-lock"/></svg><b>최고 스테이지 30 필요</b><small>현재 21 · 9 남음</small></div>
+      </div>
+      <div class="md stay sel">
+        <div class="mh">유지<span class="lvto">Lv 2 그대로</span></div>
+        <div class="row"><span>난이도</span><span class="rv">동일</span></div>
+        <div class="row rw"><span>즉시 보상</span><span class="rv">×0.8</span></div>
+        <div class="row"><span>쓰임</span><span class="rv">강화 재화 재farm</span></div>
+      </div>
+    </div>
+    <div class="ax">
+      <div class="ac"><div class="t">적 강화</div><div class="v">+40% <span class="arr">→</span> +40%</div><div class="d">그대로 — 난이도 동일</div></div>
+      <div class="ac"><div class="t">재화 가속</div><div class="v">+50% <span class="arr">→</span> +50%</div><div class="d">그대로 — 같은 조건 재farm</div></div>
+      <div class="ac keep"><div class="t">강화</div><div class="v">✓ 보존</div><div class="d">유닛 스탯·스킬 그대로</div></div>
+    </div>
+    <div class="thlab"><b>다음 여정 테마</b><small>유지도 테마는 다시 고를 수 있어요</small></div>
+    <div class="themes">
+      <div class="th" style="--tc:var(--combat);--tg:rgba(224,58,92,.4)"><svg><use href="#t-combat"/></svg><div class="n2">Combat</div></div>
+      <div class="th sel" style="--tc:var(--necro);--tg:rgba(157,62,232,.4)"><span class="cur">현재</span><svg><use href="#t-necro"/></svg><div class="n2">Necro</div></div>
+      <div class="th" style="--tc:var(--spirit);--tg:rgba(93,221,126,.4)"><svg><use href="#t-spirit"/></svg><div class="n2">Spirit</div></div>
+      <div class="th" style="--tc:var(--machine);--tg:rgba(0,212,255,.4)"><svg><use href="#t-machine"/></svg><div class="n2">Machine</div></div>
+      <div class="th" style="--tc:var(--beast);--tg:rgba(224,107,20,.4)"><svg><use href="#t-beast"/></svg><div class="n2">Beast</div></div>
+    </div>
+    <div class="reset">
+      <div class="rs keep"><b>✓ 보존</b>유닛·영웅 · 강화 레벨 · 별 기록 · 재화</div>
+      <div class="rs lose"><b>↺ 리셋</b>스테이지 진행 — Necro 스테이지 1부터</div>
+    </div>
+    <div class="btns">
+      <div class="btn neutral">취소</div>
+      <div class="btn cta"><svg><use href="#i-rebirth"/></svg>Necro로 유지 환생</div>
+    </div>
+  </div>
+</div></div>
+
+<div class="section"><span class="n">③</span><span class="l">환생 자체 미충족 (최고 스테이지 16 / 20) — 둘 다 잠금 + 진행바 (온보딩 S13 예고 연결)</span><span class="r"></span></div>
 <div class="frame"><div class="screen locked">
   <div class="bg"></div>
   <div class="dlg">
-    <div class="dt"><svg><use href="#i-rebirth"/></svg><b>환생</b><span class="lvchg">Lv 2 → 3</span><div class="x">✕</div></div>
+    <div class="dt"><svg><use href="#i-rebirth"/></svg><b>환생</b><span class="lvchg">현재 Lv 2</span><div class="x">✕</div></div>
     <div class="gatebar">
-      <div class="gl"><span>🔒 Necro 스테이지 16 / 20</span><small>다음 환생 목표 · 스테이지 20</small></div>
+      <div class="gl"><span>🔒 Necro 스테이지 16 / 20</span><small>환생하려면 · 스테이지 20 도달</small></div>
       <div class="gb"><i></i></div>
     </div>
-    <div class="ax">
-      <div class="ac up"><div class="t">적 강화</div><div class="v">+40% <span class="arr">→</span> +58%</div><div class="d">모든 스테이지의 적이 강해집니다</div></div>
-      <div class="ac"><div class="t">재화 획득</div><div class="v"><em>+50% <span class="arr">→</span> +75%</em></div><div class="d">적 강화보다 크게 — 더 빨리 재성장</div></div>
-      <div class="ac keep"><div class="t">강화 유지</div><div class="v">✓ 전부 보존</div><div class="d">유닛 스탯·스킬 강화 그대로</div></div>
+    <div class="mq">환생하면 두 방식 중 고를 수 있어요</div>
+    <div class="modes">
+      <div class="md up dim">
+        <div class="mh">상승<span class="lvto">Lv 2 → 3</span></div>
+        <div class="row rw"><span>즉시 보상</span><span class="rv">×1.0</span></div>
+        <div class="mlock"><svg><use href="#i-lock"/></svg><b>스테이지 30 필요</b></div>
+      </div>
+      <div class="md stay dim">
+        <div class="mh">유지<span class="lvto">Lv 2 그대로</span></div>
+        <div class="row rw"><span>즉시 보상</span><span class="rv">×0.8</span></div>
+        <div class="mlock"><svg><use href="#i-lock"/></svg><b>스테이지 20 필요</b></div>
+      </div>
     </div>
     <div class="btns">
       <div class="btn neutral">닫기</div>
@@ -139,10 +227,12 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 <div class="notes">
   <div class="nn hl"><span class="k">3축 = 손익이 한눈에</span><h3>"적도 세지지만 나는 더 빨리 큰다"</h3><p>적 강화(빨강 계열·경계)와 재화 가속(초록·이득)을 나란히 — <b>재화 ≥ 적</b> 배치가 prestige 심리계약("리셋 = 더 빠른 재성장")을 시각으로 증명. 강화 유지 = ✓ 보존 카드로 "리셋 = 손실" 불안 해소. <b>적 강화 = 실값 표기</b>(구 +10% 거짓 표시 버그 → `BalanceTables` 실값 바인딩·spec §6.B① 표시 버그 항목).</p></div>
   <div class="nn hl"><span class="k">테마 재선택 (CEO 2026-07-02)</span><h3>환생 = 새 여정 선언</h3><p>5테마 자유 선택(현재 테마 = "현재" 뱃지·선택 = 테마색 글로우+✓). 카피 = "파워 차이 없음 — 플레이스타일·카운터 퍼즐" (테마 ⊥ 파워·과약속 금지). CTA에 선택 테마 동적 삽입("Spirit로 환생") = 확인 겸용. client = themeDialog 구현 완료(M8 step-8)·본 레이아웃으로 스킨.</p></div>
-  <div class="nn"><span class="k">유지/리셋 2패널</span><h3>보존 먼저 · 리셋은 구체적으로</h3><p>✓ 유지(초록) 먼저 → ↺ 리셋(빨강)은 "스테이지 진행"뿐임을 명시("Spirit 스테이지 1부터"). 구 wireframes "레벨 상승 vs 유지(80%)" 선택지 = <b>stale 폐기</b>(spec §6.B①에 그런 분기 없음 — 환생 = rb+1 단일 행동).</p></div>
-  <div class="nn"><span class="k">plat 핸드오프 (M8)</span><h3>RebirthDialog 스킨 + 실값 바인딩</h3><p>기존 RebirthDialogManager+themeDialog = 본 레이아웃으로 재구현. <b>적 강화 % = `BalanceTables`/`EnemyStatScaler.GetRebirthTerm` 실값</b>(하드코딩 10f 제거) · 재화 % = `rebirthRewardAccel`(0.25) · 게이트 = `rebirthGateBase/PerLevel` 노브 직참조(S13 문구 포함·하드코딩 금지) · 미충족 = CTA dim+진행바 · 온보딩 S14 = 첫 환생 시 3축 카드 하이라이트 순차(오버레이 프리팹).</p></div>
+  <div class="nn hl"><span class="k">★ 두 모드 (상승/유지) — 재검토 정정</span><h3>구 보드가 폐기한 게 사실은 확정</h3><p>구 보드는 "레벨 상승 vs 유지 80%"를 <b>stale 폐기</b>로 처리(spec 미문서라 판단). 그러나 <b>spec §6.B①(CEO 2026-07-03)이 두 모드를 정식 확정</b> — code(`isRebirthLevelUp` 1.0/0.8)엔 있고 spec 문서엔 없던 drift였음. <b>상승</b>=진행(스펙 되면 밀기)·<b>유지</b>=완충(같은 난이도 재farm으로 강화 재화 확보 후 상승). 두 모드 카드로 손익 비교. <b>용어 분리</b>: "유지"=모드 / "보존"=지키는 것(유닛·강화·별·재화 — 양 모드 공통).</p></div>
+  <div class="nn hl"><span class="k">★ 상승 목표게이트 — 재검토 정정</span><h3>상승은 (rb+1)×10 · 유지는 rb×10</h3><p>구 보드 게이트 = "필요 20"(rb×10)만 표기 → rb2→3 상승을 스테이지 21에서 잘못 활성. <b>상승은 목표 레벨 깊이 기준 `maxClearedStage ≥ (rb+1)×10`</b>(rb2→3 = 스테이지 30) = 상승 과잉 원천 차단·rb=순수 깊이-티어. 20≤깊이&lt;30 = <b>유지만</b>(상승 카드 잠금·②). 깊이&lt;20 = 환생 자체 불가(③). 값(10·30) = 예시(출시후 sim).</p></div>
+  <div class="nn"><span class="k">보존/리셋 2패널</span><h3>보존 먼저 · 리셋은 스테이지만</h3><p>✓ 보존(초록·유닛·영웅·강화·별·재화) 먼저 → ↺ 리셋(빨강)은 "스테이지 진행"뿐임을 명시("스테이지 1부터"). 양 모드 공통(상승·유지 둘 다 스테이지 리셋·강화 보존). "리셋=손실" 불안 해소.</p></div>
+  <div class="nn"><span class="k">plat 핸드오프 (M8)</span><h3>RebirthDialog 스킨 + 모드 선택 배선</h3><p>기존 RebirthDialogManager+themeDialog = 본 레이아웃으로 재구현. <b>모드 선택 UI 신규</b>(상승/유지 카드·즉시보상 ×1.0/×0.8 = `RewardCalculator.CalculateRebirthReward` isRebirthLevelUp). <b>★ 상승 목표게이트 = client 코드 변경</b>(`OnboardingRules.CanRebirth` 현재레벨 기준 → 상승 경로에 `maxClearedStage ≥ (rb+1)×gatePerLevel` 추가). 적 강화 % = `EnemyStatScaler.GetRebirthTerm` 실값(하드코딩 10f 제거) · 재화 % = `rebirthRewardAccel`(0.25) · 게이트 = `rebirthGateBase/PerLevel` 노브 직참조 · 온보딩 S14 = 첫 환생 시 모드 카드+3축 하이라이트.</p></div>
 </div>
 
-<p class="note">SoT: <b>spec §6.B①</b>(3축·soft-cap rebirthTerm·게이트 Max(10,rb×10)·표시버그·테마 자유선택) · <b>ideas/2026-07-02-theme-selection-hero-unlock-redesign.md §A</b> · <b>wireframes §7</b>(환생 = 본 보드로 프로덕션·구 "레벨 상승 vs 유지 80%" 폐기) · UI 킷 = design-system §2 · 테마 아이콘 = ui-theme-icons.svg · 백드롭 = 확정 Necro 허브. 수치 = 예시(계수·실발산점 = 출시후 sim·P0 = 환생 1사이클 실플레이 게이트). 제작 = 디자인 세션 2026-07-03.</p>
+<p class="note">SoT: <b>spec §6.B① (라인162·CEO 2026-07-03)</b>(두 모드 상승/유지·즉시보상 1.0/0.8·상승 목표게이트 (rb+1)×10·3축·soft-cap rebirthTerm·표시버그·테마 자유선택) · <b>ideas/2026-07-03-rebirth-modes-gate.md</b>(두 모드 결정 본문) · <b>ideas/2026-07-02-theme-selection-hero-unlock-redesign.md §A</b>(테마) · <b>wireframes §7</b>(환생 = 본 보드로 프로덕션·두 모드 반영) · UI 킷 = design-system §2 · 테마 아이콘 = ui-theme-icons.svg · 백드롭 = 확정 Necro 허브. 수치 = 예시(계수·실발산점 = 출시후 sim·P0 = 환생 1사이클 실플레이 게이트). 재작업 = 디자인 세션 2026-07-03(사용자 재검토 지시·구 22b36cb "stale 폐기" 정정).</p>
 </div>
 </body></html>
