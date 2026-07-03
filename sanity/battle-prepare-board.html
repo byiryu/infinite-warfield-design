@@ -55,7 +55,7 @@
   .chip svg{width:2.2cqw;height:2.2cqw}
   /* 상단 전투 시작 CTA (지배적) */
   .tb-cta{display:flex;align-items:center;justify-content:center;gap:.7cqw;white-space:nowrap;height:6.4cqw;padding:0 2.4cqw;border-radius:1.5cqw;cursor:pointer;
-    background:linear-gradient(180deg,#FFE684,var(--gold-deep));border:.22cqw solid #fff2c8;color:var(--ink);
+    background:linear-gradient(180deg,#FFD24D,var(--gold-deep));border:.22cqw solid #ffe9b0;color:var(--ink);
     font-size:2.3cqw;font-weight:800;letter-spacing:.02em;box-shadow:0 .35cqw 1.8cqw rgba(255,180,60,.5);animation:pulse 2.4s ease-in-out infinite;margin-left:.6cqw}
   .tb-cta svg{width:2.5cqw;height:2.5cqw}
   @keyframes pulse{0%,100%{box-shadow:0 .35cqw 1.8cqw rgba(255,180,60,.45)}50%{box-shadow:0 .35cqw 2.8cqw rgba(255,190,70,.78)}}
@@ -118,7 +118,7 @@
   .roster-scroll{flex:1;overflow-x:auto;overflow-y:hidden;display:grid;grid-auto-flow:column;grid-template-rows:1fr 1fr;gap:.9cqw;padding:.3cqw .3cqw 1cqw;scrollbar-width:thin;scrollbar-color:var(--bronze) transparent;min-width:0}
   .roster-scroll::-webkit-scrollbar{height:.9cqw}.roster-scroll::-webkit-scrollbar-thumb{background:var(--bronze);border-radius:1cqw}
   .rc{width:8.2cqw;position:relative;border-radius:1cqw;background:linear-gradient(180deg,#1a2330,#10161f);border:.15cqw solid #2a3542;display:flex;flex-direction:column;overflow:hidden;cursor:pointer}
-  .rc .rfig{height:4.4cqw;display:flex;align-items:flex-end;justify-content:center;position:relative;background:rgba(8,12,17,.6)}.rsp{width:4cqw;height:4.2cqw;background-size:contain;background-repeat:no-repeat;background-position:center bottom;image-rendering:pixelated}
+  .rc .rfig{height:3.1cqw;display:flex;align-items:flex-end;justify-content:center;position:relative;background:rgba(8,12,17,.6)}.rsp{width:4cqw;height:4.2cqw;background-size:contain;background-repeat:no-repeat;background-position:center bottom;image-rendering:pixelated}
   .rc .rfig .fig{width:3.2cqw;height:3.8cqw;margin-bottom:.2cqw}
   .rc .rfig .fig .head{width:1.6cqw;height:1.6cqw}.rc .rfig .fig .torso{width:2.5cqw;height:2.6cqw}
   .rc .rmeta{padding:.35cqw .4cqw;text-align:center;background:rgba(9,13,18,.85)}
@@ -188,8 +188,8 @@
   .dialog{background:linear-gradient(180deg,#182230,#0f1620);border:.22cqw solid var(--bronze);border-radius:2cqw;
     box-shadow:0 2cqw 6cqw rgba(0,0,0,.6);overflow:hidden;position:relative}
   .dialog.enemy-dlg{border-color:#7a3b3b}
-  .dlg-x{position:absolute;top:1cqw;right:1cqw;width:3cqw;height:3cqw;border-radius:50%;background:rgba(255,255,255,.08);
-    border:.14cqw solid #37424f;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:2cqw;font-weight:700;cursor:pointer;z-index:5}
+  .dlg-x{position:absolute;top:1cqw;right:1cqw;width:3cqw;height:3cqw;border-radius:50%;background:rgba(30,40,52,.85);
+    border:.14cqw solid #37424f;color:#dfe6ee;display:flex;align-items:center;justify-content:center;font-size:2cqw;font-weight:700;cursor:pointer;z-index:5}
   .dlg-title{font-size:2.1cqw;font-weight:800;color:#fff;padding:1.4cqw 1.8cqw .2cqw;display:flex;align-items:center;gap:.8cqw}
   .dlg-title .sub{font-size:1.3cqw;font-weight:600;color:var(--muted)}
 
@@ -315,7 +315,7 @@
               <span class="cost-meter"><b>48</b><span class="mx">/ 70</span></span>
               <span class="syn spirit">정령 2/4</span><span class="syn combat">전투 2</span>
               <span class="spacer"></span>
-              <span class="cnt">코스트 예산 내 자유 편성 · 유닛 길게=정보</span>
+              <span class="cnt">코스트 예산 내 자유 편성</span>
             </div>
             <div class="deck-row">
               <div class="deck-hero-wrap">
@@ -369,7 +369,7 @@
         <!-- 우: 적 유닛 스트립 + 위협 + ★목표 -->
         <div class="col">
           <div class="panel enemy-panel">
-            <div class="p-head">적 편성 <span class="cnt">· 5기</span></div>
+            <div class="p-head">적 편성</div>
             <div class="eu-strip">
               <div class="eunit"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
               <div class="eunit"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
@@ -377,7 +377,7 @@
               <div class="eunit"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
               <div class="eunit"><div class="fig"><div class="head"></div><div class="torso"></div></div></div>
             </div>
-            <div class="eu-hint">적 유닛 아이콘 · <b>길게 눌러 정보</b> (개수 표기 X)</div>
+            <div class="eu-hint">적 유닛 아이콘 · <b>길게 눌러 정보</b></div>
             <div class="th-head"><span class="ic"><svg><use href="#i-fortress"/></svg></span>철벽 · 중장갑</div>
             <div class="hint">→ <b>마법·방어무시</b> 딜러 추천 (물리 튕김)</div>
             <div class="counters"><span class="clbl">카운터</span>
@@ -426,9 +426,9 @@
             <div class="pvu" style="left:15cqw;top:24.6cqw"><div class="sp s-combat" style="width:7.6cqw;height:7.6cqw"></div><div class="gsh"></div></div>
             <div class="pvu" style="left:36cqw;top:15cqw"><div class="sp s-necro" style="width:7.2cqw;height:7.2cqw"></div><div class="gsh"></div></div>
             <div class="pvu" style="left:39cqw;top:22.4cqw"><div class="sp s-necro" style="width:7.2cqw;height:7.2cqw"></div><div class="gsh"></div></div>
-            <span class="pv-dir">◀ 적은 좌측(아군 방향)을 바라봅니다 — 좌/우 대칭 전장</span>
+            
           </div>
-          <p class="note-b">실제 전투 진입 시의 <b>적 시작 진형 그대로</b>(실 유닛·← 대면·전열/후열 라벨 없음). 위협 라벨·카운터 = 상시 패널. 각 유닛 롱클릭 → 정보(③).</p>
+          
         </div>
       </div>
     </div>
@@ -445,7 +445,7 @@
           <div class="dlg-x">✕</div>
           <div class="dlg-in">
             <div class="dlg-art">
-              <span class="idle-tag">idle</span>
+              
               <div class="fig"><div class="head"></div><div class="torso"></div></div>
             </div>
             <div class="dlg-info">
@@ -470,7 +470,7 @@
                 <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-mres"/></svg>마법 저항</span><span class="sv">22 <span class="delta">+6</span></span></div>
               </div>
               <div class="dlg-skill"><b>부패 안개</b> — 범위 내 적에게 지속 마법 피해(DoT). 방어 무시 비례 → <b style="color:#c79bf0">철벽·중장갑</b> 카운터.</div>
-              <div class="dlg-foot"><span class="fk">시너지</span> 부패 전이 <b>Necro 2/4</b> <span class="dot">·</span> <span class="fk">강화</span> Lv 7 (기본→+강화분) <span class="dot">·</span> <span class="fk">DPS</span> <b>~56</b></div>
+              <div class="dlg-foot"><span class="fk">시너지</span> 부패 전이 <b>Necro 2/4</b> <span class="dot">·</span> <span class="fk">강화</span> Lv 7 <span class="dot">·</span> <span class="fk">DPS</span> <b>~56</b></div>
             </div>
           </div>
         </div>
@@ -485,7 +485,7 @@
           <div class="dlg-x">✕</div>
           <div class="dlg-in">
             <div class="dlg-art en">
-              <span class="idle-tag">idle</span>
+              
               <div class="fig"><div class="head"></div><div class="torso"></div></div>
             </div>
             <div class="dlg-info">
@@ -535,7 +535,7 @@
             </div>
             <div class="divider"></div>
           </div>
-          <div class="deck-slide"><div class="empty-slide-hint">← 먼저 영웅을 선택하세요 · 이후 일반 유닛 편성</div></div>
+          <div class="deck-slide"></div>
         </div>
       </div>
     </div>
