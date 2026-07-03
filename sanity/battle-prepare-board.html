@@ -193,6 +193,7 @@
   .dlg-title{font-size:2.1cqw;font-weight:800;color:#fff;padding:1.4cqw 1.8cqw .2cqw;display:flex;align-items:center;gap:.8cqw}
   .dlg-title .sub{font-size:1.3cqw;font-weight:600;color:var(--muted)}
 
+  .st .sk .ski{width:1.5cqw;height:1.5cqw;flex:0 0 auto;color:#c9b98a}
   /* 적진형 미리보기 팝업 (전투 시작 진형·실 유닛·← 대면) */
   .prev{width:62cqw}
   .prev .field{margin:1cqw 1.8cqw .6cqw;border-radius:1.4cqw;position:relative;height:24cqw;overflow:hidden;border:.16cqw solid #34222a;
@@ -229,7 +230,7 @@
   .dlg-tag{font-size:1.25cqw;font-weight:700;color:#cdd7e2;background:rgba(255,255,255,.06);border:.14cqw solid #37424f;padding:.22cqw .85cqw;border-radius:1cqw}
   .dlg-stats{display:grid;grid-template-columns:1fr 1fr;gap:.5cqw 1.4cqw;background:rgba(9,13,18,.5);border:.14cqw solid #263140;border-radius:1cqw;padding:.9cqw 1.2cqw}
   .st{display:flex;align-items:baseline;justify-content:space-between;font-size:1.45cqw}
-  .st .sk{color:var(--muted);font-weight:600}
+  .st .sk{color:var(--muted);font-weight:600;display:flex;align-items:center;gap:.5cqw}
   .st .sv{font-weight:800;color:#fff;display:inline-flex;align-items:baseline;gap:.4cqw}
   .st .sv.mag{color:var(--necro);filter:brightness(1.4)}
   .st .delta{color:var(--go);font-weight:800;font-size:1.15cqw}
@@ -278,7 +279,7 @@
   <symbol id="t-spirit" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.4c3.5 4.1 5.4 7.2 5.4 10.5a5.4 5.4 0 0 1-10.8 0C6.6 9.6 8.5 6.5 12 2.4z"/><path fill="#0e0a16" opacity=".32" d="M12 8.2c1.5 1.9 2.3 3.4 2.3 5a2.3 2.3 0 0 1-4.6 0c0-1.6.8-3.1 2.3-5z"/></symbol>
   <symbol id="t-machine" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M10.3 2.3h3.4l.5 2.4 1.5.9 2.3-.9 1.7 2.9-1.8 1.7.2 1.7 1.8 1.7-1.7 2.9-2.3-.9-1.5.9-.5 2.4h-3.4l-.5-2.4-1.5-.9-2.3.9-1.7-2.9 1.8-1.7-.2-1.7-1.8-1.7 1.7-2.9 2.3.9 1.5-.9zM12 9.1a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8z" clip-rule="evenodd"/></symbol>
   <symbol id="t-beast" viewBox="0 0 24 24"><g fill="currentColor"><path d="M6.4 3.4c2.5 3.9 3.4 8.1 2.7 13.7-.1 1-1.5 1-1.7 0C6.1 11.8 5.6 7.6 4.9 3.9c-.2-1 1-1.4 1.5-.5z"/><path d="M11.5 2.7c1.9 4.3 2.4 8.8 1.7 14.5-.1 1-1.5 1-1.7 0-.9-5.5-1.2-9.9-1.5-14-.1-1 1-1.4 1.5-.5z"/><path d="M16.8 3.4c2.5 3.9 3.1 8.1 2.4 13.4-.1 1-1.5 1-1.7 0C16.4 11.5 15.9 7.5 15.3 3.9c-.2-1 1-1.4 1.5-.5z"/></g></symbol>
-</defs></svg>
+<symbol id="i-stat-hp" viewBox="0 0 24 24"><path d="M12 20.5C7 16.5 3.5 13 3.5 9.3 3.5 6.4 5.7 4.5 8.2 4.5c1.5 0 3 .8 3.8 2.1.8-1.3 2.3-2.1 3.8-2.1 2.5 0 4.7 1.9 4.7 4.8 0 3.7-3.5 7.2-8.5 11.2z" fill="currentColor"/></symbol><symbol id="i-stat-def" viewBox="0 0 24 24"><path d="M12 2.8l7.5 2.7v5.6c0 5-3.2 8.6-7.5 10.1-4.3-1.5-7.5-5.1-7.5-10.1V5.5z" fill="currentColor"/><path d="M12 6v12.6" stroke="rgba(0,0,0,.25)" stroke-width="1.6"/></symbol><symbol id="i-stat-patk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19L17.5 6.5"/><path d="M15 4.5l4.5-1-1 4.5"/><path d="M4 15.5l4.5 4.5"/><path d="M6.5 21.5l-4-4"/></g></symbol><symbol id="i-stat-matk" viewBox="0 0 24 24"><circle cx="11" cy="13" r="6" fill="currentColor"/><g fill="currentColor"><path d="M18.5 3l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z"/><circle cx="17.5" cy="12" r="1.1" opacity=".7"/></g></symbol><symbol id="i-stat-aspd" viewBox="0 0 24 24"><path d="M13.5 2.5L5 13.5h5L9.5 21.5 19 10h-5.5z" fill="currentColor"/></symbol><symbol id="i-stat-crit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4" stroke-linecap="round"/></g><circle cx="12" cy="12" r="2.2" fill="currentColor"/></symbol><symbol id="i-stat-mres" viewBox="0 0 24 24"><path d="M12 2.8l7.5 2.7v5.6c0 5-3.2 8.6-7.5 10.1-4.3-1.5-7.5-5.1-7.5-10.1V5.5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7l1.2 2.6 2.6 1.2-2.6 1.2L12 14.6l-1.2-2.6-2.6-1.2 2.6-1.2z" fill="currentColor"/></symbol><symbol id="i-stat-range" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="13.5" r="6"/><path d="M15 9l6-6"/><path d="M16.5 3H21v4.5"/></g><circle cx="10.5" cy="13.5" r="2" fill="currentColor"/></symbol><symbol id="i-stat-move" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h12"/><path d="M12 6l6 6-6 6"/><path d="M4 6.5h5M4 17.5h5" opacity=".6"/></g></symbol></defs></svg>
 
 <div class="wrap">
   <a class="backlink" href="../index.html">‹ 디자인 보드</a>
@@ -459,14 +460,14 @@
                 <span class="dlg-tag">마법</span><span class="dlg-tag">DoT</span><span class="dlg-tag">광역</span>
               </div>
               <div class="dlg-stats">
-                <div class="st"><span class="sk">HP</span><span class="sv">480 <span class="delta">+160</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-hp"/></svg>HP</span><span class="sv">480 <span class="delta">+160</span></span></div>
                 <div class="st"><span class="sk">코스트</span><span class="sv">4</span></div>
-                <div class="st"><span class="sk">공격력</span><span class="sv mag">62 · 마법 <span class="delta">+18</span></span></div>
-                <div class="st"><span class="sk">공격 속도</span><span class="sv">0.9 / 초</span></div>
-                <div class="st"><span class="sk">사거리</span><span class="sv">원거리 · 5.5</span></div>
-                <div class="st"><span class="sk">이동 속도</span><span class="sv">3.2</span></div>
-                <div class="st"><span class="sk">물리 방어</span><span class="sv">8 <span class="delta">+2</span></span></div>
-                <div class="st"><span class="sk">마법 저항</span><span class="sv">22 <span class="delta">+6</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-matk"/></svg>공격력</span><span class="sv mag">62 · 마법 <span class="delta">+18</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-aspd"/></svg>공격 속도</span><span class="sv">0.9 / 초</span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-range"/></svg>사거리</span><span class="sv">원거리 · 5.5</span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-move"/></svg>이동 속도</span><span class="sv">3.2</span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-def"/></svg>물리 방어</span><span class="sv">8 <span class="delta">+2</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-mres"/></svg>마법 저항</span><span class="sv">22 <span class="delta">+6</span></span></div>
               </div>
               <div class="dlg-skill"><b>부패 안개</b> — 범위 내 적에게 지속 마법 피해(DoT). 방어 무시 비례 → <b style="color:#c79bf0">철벽·중장갑</b> 카운터.</div>
               <div class="dlg-foot"><span class="fk">시너지</span> 부패 전이 <b>Necro 2/4</b> <span class="dot">·</span> <span class="fk">강화</span> Lv 7 (기본→+강화분) <span class="dot">·</span> <span class="fk">DPS</span> <b>~56</b></div>
@@ -499,14 +500,14 @@
                 <span class="dlg-tag">물리</span><span class="dlg-tag">중장갑</span><span class="dlg-tag">철벽</span>
               </div>
               <div class="dlg-stats">
-                <div class="st"><span class="sk">HP</span><span class="sv">1,240 <span class="scale">▲+520</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-hp"/></svg>HP</span><span class="sv">1,240 <span class="scale">▲+520</span></span></div>
                 <div class="st"><span class="sk">위협</span><span class="sv" style="color:var(--fortress)">철벽</span></div>
-                <div class="st"><span class="sk">공격력</span><span class="sv">88 · 물리 <span class="scale">▲+30</span></span></div>
-                <div class="st"><span class="sk">공격 속도</span><span class="sv">0.6 / 초</span></div>
-                <div class="st"><span class="sk">사거리</span><span class="sv">근접</span></div>
-                <div class="st"><span class="sk">이동 속도</span><span class="sv">1.8</span></div>
-                <div class="st"><span class="sk">물리 방어</span><span class="sv">46 <span class="scale">▲+22</span></span></div>
-                <div class="st"><span class="sk">마법 저항</span><span class="sv">10 <span class="scale">▲+4</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-patk"/></svg>공격력</span><span class="sv">88 · 물리 <span class="scale">▲+30</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-aspd"/></svg>공격 속도</span><span class="sv">0.6 / 초</span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-range"/></svg>사거리</span><span class="sv">근접</span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-move"/></svg>이동 속도</span><span class="sv">1.8</span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-def"/></svg>물리 방어</span><span class="sv">46 <span class="scale">▲+22</span></span></div>
+                <div class="st"><span class="sk"><svg class="ski"><use href="#i-stat-mres"/></svg>마법 저항</span><span class="sv">10 <span class="scale">▲+4</span></span></div>
               </div>
               <div class="dlg-skill"><b>중장갑</b> — 물리 방어 매우 높음(물리 딜 튕김). <b style="color:#c79bf0">부패(방어무시)·마법딜·관통</b>으로 응수.</div>
               <div class="dlg-foot"><span class="fk">약점축</span> <b style="color:#ff8a9a">마법 취약</b> <span class="dot">·</span> <span class="fk">보정</span> 스테이지 난이도 스케일 반영 <span class="dot">·</span> <span class="fk">기본</span> HP 720</div>
