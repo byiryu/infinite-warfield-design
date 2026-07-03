@@ -56,27 +56,28 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 .budget .bar i{display:block;height:100%;width:35%;background:linear-gradient(90deg,#c99b3f,var(--gold));border-radius:.7cqw;position:relative}
 .budget .bar i::after{content:"";position:absolute;left:100%;top:0;bottom:0;width:14.3%;background:repeating-linear-gradient(135deg,rgba(255,210,77,.55) 0 .4cqw,rgba(255,210,77,.2) .4cqw .8cqw)}
 /* 스탯 행 */
-.stats{margin-top:.7cqw;display:flex;flex-direction:column;gap:.42cqw}
-.srow{display:flex;align-items:center;gap:1cqw;background:rgba(10,15,22,.72);border:.1cqw solid #2b3541;border-radius:.8cqw;padding:.38cqw 1cqw}
-.srow .sn{flex:0 0 12cqw;font-size:1.3cqw;font-weight:800;display:flex;align-items:center;gap:.6cqw}
-.srow .sn .si{width:1.9cqw;height:1.9cqw;flex:0 0 auto;color:var(--cream)}
-.srow .sn>div{min-width:0}
-.srow .sn small{display:block;font-size:.9cqw;font-weight:700;color:var(--muted)}
-.srow .vals{flex:1;font-size:1.3cqw;font-weight:700;color:#dfe6ee;white-space:nowrap}
-.srow .vals b{color:var(--go);font-weight:800}
-.srow .cost{flex:0 0 auto;display:flex;align-items:center;gap:.4cqw;font-size:1.15cqw;font-weight:800;color:#fff}
-.srow .cost svg{width:1.5cqw;height:1.5cqw;color:var(--gold)}
-.btn1,.btnm{flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:.7cqw;font-weight:800;cursor:pointer;min-height:2.9cqw}
-.btn1{width:5cqw;font-size:1.2cqw;color:var(--cream);background:rgba(12,17,24,.6);border:.12cqw solid var(--bronze)}
-.btnm{width:7cqw;font-size:1.2cqw;color:var(--ink);background:linear-gradient(180deg,var(--gold),var(--goldD));border:.12cqw solid #ffe9b0}
-.srow.pend{border-color:rgba(255,210,77,.5)}
-.srow .sn small em{font-style:normal;color:var(--gold);font-weight:800}
-.pv{flex:0 0 auto;font-size:1.05cqw;font-weight:800;color:#0c1116;background:var(--gold);border-radius:.6cqw;padding:.1cqw .55cqw}
-.commit{display:flex;align-items:center;gap:.8cqw;background:rgba(15,22,32,.9);border:.12cqw solid var(--bronze);border-radius:.9cqw;padding:.38cqw .9cqw;margin-top:.15cqw}
-.commit .ci{font-size:1.2cqw;font-weight:700;color:#dfe6ee}
+.stats{margin-top:.7cqw;display:grid;grid-template-columns:1fr 1fr;gap:.6cqw}
+.scell{background:rgba(10,15,22,.72);border:.1cqw solid #2b3541;border-radius:.8cqw;padding:.55cqw .9cqw}
+.scell.pend{border-color:rgba(255,210,77,.55)}
+.c1{display:flex;align-items:center;gap:.55cqw}
+.c1 .si{width:1.7cqw;height:1.7cqw;flex:0 0 auto;color:var(--cream)}
+.c1 b{font-size:1.3cqw;font-weight:800}
+.c1 .lv{font-size:.95cqw;font-weight:700;color:var(--muted)}
+.c1 .lv em{font-style:normal;color:var(--gold);font-weight:800}
+.c1 .pv{margin-left:auto;font-size:1cqw;font-weight:800;color:#0c1116;background:var(--gold);border-radius:.6cqw;padding:.08cqw .5cqw}
+.c2{font-size:1.25cqw;font-weight:700;color:#dfe6ee;margin:.3cqw 0 .35cqw;white-space:nowrap}
+.c2 b{color:var(--go);font-weight:800}
+.c3{display:flex;align-items:center;gap:.5cqw}
+.c3 .cost{display:flex;align-items:center;gap:.35cqw;font-size:1.1cqw;font-weight:800;color:#fff;margin-right:auto}
+.c3 .cost svg{width:1.4cqw;height:1.4cqw;color:var(--gold)}
+.btn1,.btnm{flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:.7cqw;font-weight:800;cursor:pointer;min-height:2.7cqw}
+.btn1{width:4.4cqw;font-size:1.1cqw;color:var(--cream);background:rgba(12,17,24,.6);border:.12cqw solid var(--bronze)}
+.btnm{width:6.2cqw;font-size:1.1cqw;color:var(--ink);background:linear-gradient(180deg,var(--gold),var(--goldD));border:.12cqw solid #ffe9b0}
+.commit{display:flex;align-items:center;gap:.9cqw;background:rgba(15,22,32,.9);border:.12cqw solid var(--bronze);border-radius:.9cqw;padding:.45cqw .9cqw;margin-top:.6cqw}
+.commit .ci{font-size:1.25cqw;font-weight:700;color:#dfe6ee;white-space:nowrap}
 .commit .ci b{color:var(--gold)}
+.commit .steps{font-size:.98cqw;font-weight:600;color:rgba(174,188,203,.85)}
 .commit .sp2{flex:1}
-.capnote{font-size:.95cqw;font-weight:800;color:#ffce7a}
 /* 스킬 강화 */
 .skillz{margin-top:auto;background:rgba(10,15,22,.8);border:.12cqw solid rgba(198,210,222,.4);border-radius:.9cqw;padding:.5cqw 1cqw;display:flex;align-items:center;gap:1cqw}
 .skillz .ic{width:3.4cqw;height:3.4cqw;border-radius:.8cqw;background:radial-gradient(circle at 50% 38%,#ffe27a,#e0892a 68%,#7a4a12);border:.12cqw solid #fff0c0;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
@@ -103,8 +104,8 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 <a class="back" href="../index.html">‹ 디자인 보드</a>
 <div class="eyebrow">byiryu studio · 메타 · Enhance</div>
 <h1>강화 화면 — 프로덕션</h1>
-<p class="sub">영구 성장 허브(로스터 관리 핵심·전용 씬). <b>스탯 강화 = 테마 재화</b> / <b>스킬 강화 = 파편</b>(재화 2종 분리·spec §6.0). <b>★ 강화 스탯 6종 = HP·방어·물리 공격·마법 공격·공격 속도·치명타</b>(upgrades.json 곡선·Hero/General 그룹 곡선 분리·레벨 = 유닛별 저장) · <b>per-stat +MAX + 합 60 예산</b>(동시 캡·`EnhanceMaxCalculator`) · <b>프리뷰 → [강화 적용] 커밋 모델</b>(temp 레벨 누적·즉시 소비 X·팝업 모달 미도입 = client 설계 그대로) — 예산 게이지가 적용분+프리뷰분을 함께 표시. 배경 = 확정 Combat 허브(대장간 = 강화 정합). 수치 = 예시(밸런스 출시후 sim).</p>
-<p class="status">● 검토 대기 · 확정 UI 킷 · 실 유닛 스프라이트 · 온보딩 S8(첫 강화 게이트) 연결 지점</p>
+<p class="sub">영구 성장 허브(로스터 관리 핵심·전용 씬). <b>스탯 강화 = 테마 재화</b> / <b>스킬 강화 = 파편</b>(재화 2종 분리·spec §6.0). <b>★ 강화 스탯 6종 = HP·방어·물리 공격·마법 공격·공격 속도·치명타</b>(upgrades.json 곡선·Hero/General 그룹 곡선 분리·레벨 = 유닛별 저장) · <b>per-stat +MAX + 합 60 예산</b>(동시 캡·`EnhanceMaxCalculator`) · <b>일괄 강화 모델</b>(+1/+MAX = 담기[즉시 소비 X·골드 테두리 = 선택 중] → [일괄 강화] = 한 번에 적용·[초기화] = 되돌림·client temp→commit 설계 그대로·"프리뷰" 용어 폐기) · <b>스킬 = 즉시 강화</b>(1행·파편·장바구니 불요) — 게이지 = 적용분+선택분 표시. 배경 = 확정 Combat 허브(대장간 = 강화 정합). 수치 = 예시(밸런스 출시후 sim).</p>
+<p class="status">● 재검토 대기 (v2 — 2열 그리드 수납·"프리뷰"→일괄 강화 UX·프로세스 힌트 ①②·스킬 = 즉시 강화) · 온보딩 S8 연결 지점</p>
 
 <div class="section"><span class="n">①</span><span class="l">강화 — 아르덴 선택 · 합 예산 21/60 · per-stat +MAX</span><span class="r"></span></div>
 <div class="frame"><div class="screen">
@@ -137,30 +138,25 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
         <div class="nm"><b>아르덴</b><span class="tchip" style="--tc:var(--combat)">Combat</span><span class="tchip" style="--tc:#9fb0c2">영웅 · 브루저</span></div>
         <div class="role">백전노장 사령관 — 최전열 · 자가증폭 앵커</div>
         <div class="budget">
-          <div class="bl"><span>강화 합계 <em>Σ 21</em> <span style="color:#ffe8a8;font-weight:700">+3 프리뷰</span> / 60</span><small>합 60 예산 · 재화 한도 동시 캡</small></div>
+          <div class="bl"><span>강화 합계 <em>Σ 21</em> <span style="color:#ffe8a8;font-weight:700">+3 선택</span> / 60</span><small>합 60 예산 · 재화 한도 동시 캡</small></div>
           <div class="bar"><i></i></div>
         </div>
       </div>
     </div>
-    <div class="stats">
-      <div class="srow pend"><div class="sn"><svg class="si"><use href="#i-stat-hp"/></svg><div>HP<small>Lv 6 <em>→ 8</em></small></div></div><div class="vals">1,200 → <b>1,380</b></div><div class="pv">+2</div><div class="cost"><svg><use href="#i-cur-theme"/></svg>940</div><div class="btn1">+1</div><div class="btnm">+MAX</div></div>
-      <div class="srow"><div class="sn"><svg class="si"><use href="#i-stat-def"/></svg><div>방어<small>Lv 4</small></div></div><div class="vals">22 → <b>24</b></div><div class="cost"><svg><use href="#i-cur-theme"/></svg>400</div><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div>
-      <div class="srow pend"><div class="sn"><svg class="si"><use href="#i-stat-patk"/></svg><div>물리 공격<small>Lv 5 <em>→ 6</em></small></div></div><div class="vals">96 → <b>102</b></div><div class="pv">+1</div><div class="cost"><svg><use href="#i-cur-theme"/></svg>430</div><div class="btn1">+1</div><div class="btnm">+MAX</div></div>
-      <div class="srow"><div class="sn"><svg class="si"><use href="#i-stat-matk"/></svg><div>마법 공격<small>Lv 0</small></div></div><div class="vals">0 → <b>4</b></div><div class="cost"><svg><use href="#i-cur-theme"/></svg>120</div><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div>
-      <div class="srow"><div class="sn"><svg class="si"><use href="#i-stat-aspd"/></svg><div>공격 속도<small>Lv 3</small></div></div><div class="vals">1.10/초 → <b>1.12/초</b></div><div class="cost"><svg><use href="#i-cur-theme"/></svg>380</div><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div>
-      <div class="srow"><div class="sn"><svg class="si"><use href="#i-stat-crit"/></svg><div>치명타<small>Lv 0</small></div></div><div class="vals">5% → <b>5.4%</b></div><div class="cost"><svg><use href="#i-cur-theme"/></svg>120</div><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div>
-      <div class="commit">
-        <span class="ci">프리뷰 <b>+3 Lv</b> · 총비용 <svg style="width:1.4cqw;height:1.4cqw;color:var(--gold);vertical-align:-.2cqw"><use href="#i-cur-theme"/></svg> <b>1,370</b></span>
-        <div class="sp2"></div>
-        <div class="btn1" style="width:7cqw">초기화</div>
-        <div class="btnm" style="width:10cqw;min-height:3.6cqw;font-size:1.35cqw">강화 적용</div>
-      </div>
+    <div class="stats"><div class="scell pend"><div class="c1"><svg class="si"><use href="#i-stat-hp"/></svg><b>HP</b><span class="lv">Lv 6 <em>→ 8</em></span><span class="pv">+2</span></div><div class="c2">1,200 → <b>1,380</b></div><div class="c3"><span class="cost"><svg><use href="#i-cur-theme"/></svg>940</span><div class="btn1">+1</div><div class="btnm">+MAX</div></div></div><div class="scell"><div class="c1"><svg class="si"><use href="#i-stat-def"/></svg><b>방어</b><span class="lv">Lv 4</span></div><div class="c2">22 → <b>24</b></div><div class="c3"><span class="cost"><svg><use href="#i-cur-theme"/></svg>400</span><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div></div><div class="scell pend"><div class="c1"><svg class="si"><use href="#i-stat-patk"/></svg><b>물리 공격</b><span class="lv">Lv 5 <em>→ 6</em></span><span class="pv">+1</span></div><div class="c2">96 → <b>102</b></div><div class="c3"><span class="cost"><svg><use href="#i-cur-theme"/></svg>430</span><div class="btn1">+1</div><div class="btnm">+MAX</div></div></div><div class="scell"><div class="c1"><svg class="si"><use href="#i-stat-matk"/></svg><b>마법 공격</b><span class="lv">Lv 0</span></div><div class="c2">0 → <b>4</b></div><div class="c3"><span class="cost"><svg><use href="#i-cur-theme"/></svg>120</span><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div></div><div class="scell"><div class="c1"><svg class="si"><use href="#i-stat-aspd"/></svg><b>공격 속도</b><span class="lv">Lv 3</span></div><div class="c2">1.10/초 → <b>1.12/초</b></div><div class="c3"><span class="cost"><svg><use href="#i-cur-theme"/></svg>380</span><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div></div><div class="scell"><div class="c1"><svg class="si"><use href="#i-stat-crit"/></svg><b>치명타</b><span class="lv">Lv 0</span></div><div class="c2">5% → <b>5.4%</b></div><div class="c3"><span class="cost"><svg><use href="#i-cur-theme"/></svg>120</span><div class="btn1">+1</div><div class="btnm">+MAX ·9</div></div></div></div>
+    <div class="commit">
+      <span class="ci">선택 <b>+3 Lv</b> · 총비용 <svg style="width:1.4cqw;height:1.4cqw;color:var(--gold);vertical-align:-.2cqw"><use href="#i-cur-theme"/></svg> <b>1,370</b></span>
+      <span class="steps">① +1/+MAX로 담기 → ② 일괄 강화로 적용 (즉시 소비 X)</span>
+      <div class="sp2"></div>
+      <div class="btn1" style="width:6.4cqw">초기화</div>
+      <div class="btnm" style="width:9.5cqw;min-height:3.3cqw;font-size:1.3cqw">일괄 강화</div>
     </div>
     <div class="skillz">
       <div class="ic" style="background:rgba(10,15,22,.85);border-color:var(--bronze)"><img src="data:image/png;base64,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" style="width:2.9cqw;height:2.9cqw;image-rendering:pixelated"></div>
       <div class="sk"><b>격류 호령 <span style="color:var(--gold)">Lv 3 → 4</span></b><small>광역 물리 일격 + 자기 스택 즉시 최대 — 피해 계수 <em>240% → 265%</em></small></div>
+      <span style="font-size:.95cqw;font-weight:700;color:rgba(174,188,203,.8)">즉시 적용 · 파편 소비</span>
       <div class="cost"><svg><use href="#i-cur-frag"/></svg>180</div>
-      <div class="btn1">+1</div><div class="btnm">+MAX</div>
+      <div class="btnm" style="width:7cqw">강화</div>
     </div>
   </div>
 </div></div>
@@ -170,7 +166,7 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
   <div class="nn hl"><span class="k">합 60 예산 = 상시 게이지</span><h3>"어디에 쓸까"를 화면이 담당</h3><p>스탯 레벨 총합 ≤ 60(balance-plan §215 천장 2.45×)이라 강화는 <b>배분 의사결정</b> — 예산 게이지(Σ n/60)를 유닛 헤더에 상시 노출해 남은 예산이 항상 보임. <b>per-stat +MAX</b> = 그 스탯에 예산·재화 한도까지 일괄(+n 미리보기 표기·`EnhanceMaxCalculator`). 로스터 타일에도 Σ 뱃지 = 투자 분포 한눈에.</p></div>
   <div class="nn"><span class="k">재화 2종 분리</span><h3>스탯 = 테마 재화 · 스킬 = 파편</h3><p>행 비용 아이콘이 재화를 구분(골드 코인 = 스탯 / 실버 파편 = 스킬·spec §6.0 폐루프). 상단 재화 칩 2종과 1:1. 스킬 강화 존 = 하단 분리(효과 증가 미리보기 = 계수 %). 라벨/네이밍 = 미확정(아이콘+숫자 원칙 유지).</p></div>
   <div class="nn"><span class="k">전면 재설계 노트</span><h3>기존 Enhance 씬 = 본 설계로 재구현</h3><p>구 EnhanceUIManager(코드 완성) 화면은 <b>스킨 패스가 아니라 본 레이아웃으로 재구현</b>(전면 재설계 기조). 좌 로스터(영웅 맨 앞·Σ 뱃지·세로 스크롤) + 우 상세(예산 게이지·스탯 6행·스킬 존). 유닛 = 실 스프라이트(south)·선택 = 골드 테두리.</p></div>
-  <div class="nn"><span class="k">plat 핸드오프 (M8/M9)</span><h3>EnhanceMaxCalculator 바인딩</h3><p>per-stat [+MAX] = `EnhanceMaxCalculator.ComputeMaxLevelForStat`(tempLevels/committedLevels·M6 step-4 골든) · [강화 적용] = OnClickStatUpgrade 커밋(TryConsumeThemeCurrency 항상 성립 보장) · 예산 게이지 = committed+pending 2세그먼트 · 비용 = GetUpgradeCost(level) 레벨 공통 곡선 · 스킬 = fragment. <b>온보딩 S8</b> = 첫 재화 획득 직후 이 화면에서 1강 게이트(오버레이 프리팹·탭 리플 = +MAX 버튼). 재화 부족/예산 소진 = 버튼 dim + 사유 1줄.</p></div>
+  <div class="nn"><span class="k">plat 핸드오프 (M8/M9)</span><h3>EnhanceMaxCalculator 바인딩</h3><p>per-stat [+MAX] = `EnhanceMaxCalculator.ComputeMaxLevelForStat`(tempLevels/committedLevels·M6 step-4 골든) · [강화 적용] = OnClickStatUpgrade 커밋(TryConsumeThemeCurrency 항상 성립 보장) · 예산 게이지 = 적용+선택 2세그먼트 · 비용 = GetUpgradeCost(level) 레벨 공통 곡선 · 스킬 = fragment. <b>온보딩 S8</b> = 첫 재화 획득 직후 이 화면에서 1강 게이트(오버레이 프리팹·탭 리플 = +MAX 버튼). 재화 부족/예산 소진 = 버튼 dim + 사유 1줄.</p></div>
 </div>
 
 <p class="note">SoT: <b>spec §6.B⑥</b>(강화 일괄 per-stat·합60+재화 동시 캡) · <b>spec §6.0</b>(theme=스탯/fragment=스킬) · <b>balance-plan §215</b>(천장 2.45×·합60) · <b>wireframes §7</b>(강화 = 본 보드로 프로덕션) · UI 킷 = design-system §2 · 배경 = 확정 Combat 허브(<a href="main-hub-confirmed-board.html">main-hub</a>) · 온보딩 S8 = <a href="tutorial-overlay-board.html">tutorial-overlay</a>. 수치 = 예시(출시후 sim). 매체게이트 #8 = 레이아웃/크롬 도메인(캔버스 OK·유닛 = 실 스프라이트). 제작 = 디자인 세션 2026-07-03.</p>
