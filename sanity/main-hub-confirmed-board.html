@@ -51,7 +51,8 @@
   .mbtn .ic svg{width:2.2cqw;height:2.2cqw;color:#2c3e52;display:block}
   .rbloop{width:1.4cqw;height:1.4cqw;color:#fff;vertical-align:-2px}
   .mbtn .t{font-size:1.25cqw;font-weight:800;color:#1f2f40}
-  .mbtn .dot{position:absolute;top:-.4cqw;right:-.4cqw;width:.9cqw;height:.9cqw;background:#e0433a;border-radius:50%;border:1.5px solid #fff}
+  .mbtn .dot{position:absolute;top:-.4cqw;right:-.4cqw;width:.9cqw;height:.9cqw;background:#e0433a;border-radius:50%;border:1.5px solid #fff;z-index:3}
+.numbadge{position:absolute;top:-.5cqw;right:-.5cqw;min-width:1.5cqw;height:1.5cqw;padding:0 .35cqw;background:#e0433a;color:#fff;border-radius:99px;border:1.5px solid #fff;font-size:1cqw;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1;z-index:3}
   .strip{position:absolute;left:50%;transform:translateX(-50%);bottom:7.8cqw;z-index:6;display:flex;align-items:flex-end;gap:1cqw}
   .sc{width:6cqw;height:6cqw;border-radius:1.2cqw;background:linear-gradient(160deg,rgba(230,238,247,.9),rgba(170,190,212,.86));
     border:1.5px solid var(--frame);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#243447;box-shadow:0 5px 12px rgba(20,33,46,.3)}
@@ -218,11 +219,11 @@
     <div class="side l">
       <div class="mbtn"><div class="ic"><svg><use href="#i-enhance"/></svg></div><div class="t">강화</div></div>
       <div class="mbtn"><div class="ic"><svg><use href="#i-rebirth"/></svg></div><div class="t">환생</div></div>
-      <div class="mbtn"><div class="ic"><svg><use href="#i-trophy"/></svg></div><div class="t">업적</div></div>
+      <div class="mbtn"><div class="numbadge">2</div><div class="ic"><svg><use href="#i-trophy"/></svg></div><div class="t">업적</div></div>
     </div>
     <div class="side r">
       <div class="mbtn"><div class="dot"></div><div class="ic"><svg><use href="#i-mission"/></svg></div><div class="t">미션</div></div>
-      <div class="mbtn"><div class="ic"><svg><use href="#i-shop"/></svg></div><div class="t">상점</div></div>
+      <div class="mbtn"><div class="dot"></div><div class="ic"><svg><use href="#i-shop"/></svg></div><div class="t">상점</div></div>
     </div>
     <div class="strip">
       <div class="arw">‹</div>
@@ -251,6 +252,13 @@
       <li><b>★ 상세 구현 스펙 = `asset-manifest.md §라이브 배경 모션` "Unity 구현 스펙"</b>(CSS↔Unity 매핑표·파라미터·성능)</li>
       <li>글로우 focal = 배경별 focal 정렬(본 데모=근사·plat 정밀 배치)</li>
       <li>크롬(상단바·좌우메뉴·코버플로우·CTA) = 5테마 공통 오버레이(CSS=구현 스펙)</li>
+    </ul></div>
+    <div class="card"><h3>★ 뱃지(알림) IA — PM 2026-07-07 (조건별 · 상시 켜짐 금지)</h3><ul>
+      <li><b>미션 · 상점</b> = daily 리셋 뱃지(빨간점) — 매일 켜졌다 꺼짐 = D2 복귀 훅(무UA 리텐션)</li>
+      <li><b>업적</b> = 미수령 보상 <b>N</b>(숫자 뱃지) — 수령 시 감소·0이면 숨김</li>
+      <li><b>강화</b> = 신규 재화 획득 후만(상시 X = noise 방지) — 조건 미충족 시 뱃지 없음</li>
+      <li><b>환생</b> = 게이트 도달 시만 · 잠금 시 메뉴 dim(뱃지 없음)</li>
+      <li>★ <b>상시 켜지는 뱃지 금지</b> · hub 레이아웃/사이즈 = <b>불변</b>(PM: 재작업 0·뱃지 오버레이만) · 규칙 SoT = design-system §2 뱃지 조건표 · 로직 = client M8/M9</li>
     </ul></div>
   </div>
   <div class="foot">무한의 전장 · 메인 허브 라이브 배경 5테마 · 2026-07-03 · 디자인 세션<br>배경 = 사용자 Gemini 확정 5장 · 라이브 모션 = §라이브 배경 모션(39차 확정·데모 necro-live-board) · plat = M8/M9<br><a href="../index.html" style="color:#3A6EA5">‹ 디자인 보드로</a></div>

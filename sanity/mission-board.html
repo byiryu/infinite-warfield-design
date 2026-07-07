@@ -32,6 +32,14 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 .tab.on{color:var(--ink);background:linear-gradient(180deg,var(--gold),var(--goldD));border-color:#ffe9b0}
 .timer{margin-left:auto;display:flex;align-items:center;gap:.5cqw;font-size:1.15cqw;font-weight:700;color:#aebccb}
 .timer b{color:#fff;font-variant-numeric:tabular-nums}
+.dbanner{position:relative;display:flex;align-items:center;gap:1.1cqw;background:linear-gradient(180deg,rgba(255,210,77,.16),rgba(255,190,70,.05));border:.14cqw solid var(--bronze);border-radius:1cqw;padding:.85cqw 1.2cqw;margin-bottom:1cqw}
+.dbanner .dbi{width:3.6cqw;height:3.6cqw;border-radius:.8cqw;background:rgba(255,210,77,.14);border:.12cqw solid var(--bronze);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.dbanner .dbi svg{width:2.1cqw;height:2.1cqw;color:var(--gold)}
+.dbanner .dbt{flex:1;min-width:0}
+.dbanner .dbt b{display:block;font-size:1.4cqw;font-weight:800;color:#fff}
+.dbanner .dbt span{font-size:1.05cqw;font-weight:600;color:#d8c48f}
+.dbanner .dbtn{flex:0 0 auto;padding:.6cqw 2.2cqw;border-radius:.9cqw;font-size:1.3cqw;font-weight:800;color:var(--ink);background:linear-gradient(180deg,var(--gold),var(--goldD));border:.12cqw solid #ffe9b0;box-shadow:0 0 1.2cqw rgba(255,190,70,.35)}
+.dbanner .ddot{position:absolute;top:-.4cqw;left:-.4cqw;width:1cqw;height:1cqw;border-radius:50%;background:#e0433a;border:.15cqw solid #fff}
 .mlist{margin-top:1cqw;display:flex;flex-direction:column;gap:.8cqw}
 .mrow{display:flex;align-items:center;gap:1.2cqw;background:rgba(10,15,22,.75);border:.1cqw solid #2b3541;border-radius:1cqw;padding:.9cqw 1.2cqw}
 .mrow.done{border-color:rgba(255,210,77,.55)}
@@ -96,7 +104,7 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 <a class="back" href="../index.html">‹ 디자인 보드</a>
 <div class="eyebrow">byiryu studio · 메타 · Missions & Daily</div>
 <h1>미션 화면 + 데일리 출석 팝업 — 프로덕션</h1>
-<p class="sub"><b>미션 = 3트랙</b>(도전 = 업적 연동 / 일일·주간 = 풀 로테이션 3개 추첨·`data/missions/`·실데이터 반영). ★ 가동 = M-server 후(서버 시간 리셋)·미로그인 = 비활성(§6.B③) — 화면 설계는 지금·plat 배선은 M-server 랜딩 시. <b>데일리 출석 = 미션과 별개</b>(로컬 7일 순환·`data/daily-reward.json` 실값·출시 시점 유일한 매일-복귀 루프·M8 step-9 escalation의 design 몫 = 본 보드로 해소). 보상 수치 = 데이터 seed(출시후 sim).</p>
+<p class="sub"><b>미션 = 3트랙</b>(도전 = 업적 연동 / 일일·주간 = 풀 로테이션 3개 추첨·`data/missions/`·실데이터 반영). ★ 가동 = M-server 후(서버 시간 리셋)·미로그인 = 비활성(§6.B③) — 화면 설계는 지금·plat 배선은 M-server 랜딩 시. <b>데일리 출석 = 미션과 별개</b>(로컬 7일 순환·`data/daily-reward.json` 실값·출시 시점 유일한 매일-복귀 루프·M8 step-9 escalation의 design 몫 = 본 보드로 해소). <b>★ 2026-07-07 PM hub 메뉴 IA = 데일리 = 미션 선두 상설 배너로 승격</b>(구 "자동 팝업만" → 상설 진입점 + 자동 팝업 이중·출시 시점 유일 daily 훅이므로 발견성↑·ideas/2026-07-07-hub-menu-ia-review §보완②). 보상 수치 = 데이터 seed(출시후 sim).</p>
 <p class="status">● ✅ 확정 (사용자 2026-07-03) · 미션 행 = 실데이터 풀 · 데일리 7일 그리드 · plat 핸드오프 준비 완료(데일리 = M8·미션 = M-server)</p>
 
 <div class="section"><span class="n">①</span><span class="l">미션 화면 — 일일 탭 활성 · 로테이션 3개 · 수령 가능 1건</span><span class="r"></span></div>
@@ -110,6 +118,11 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
     <div class="cur"><svg style="color:var(--frag)"><use href="#i-cur-frag"/></svg><b>2,310</b></div>
   </div>
   <div class="mpanel">
+    <div class="dbanner"><div class="ddot"></div>
+      <div class="dbi"><svg><use href="#i-gift"/></svg></div>
+      <div class="dbt"><b>오늘의 출석 보상</b><span>연속 4일차 · 오늘 보상 미수령 · 탭하여 수령</span></div>
+      <div class="dbtn">받기</div>
+    </div>
     <div class="tabs">
       <div class="tab">도전</div>
       <div class="tab on">일일</div>
@@ -139,11 +152,11 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
         <div class="mbtn prog">진행 중</div>
       </div>
     </div>
-    <div class="mfoot"><span class="dot"></span>미션은 매일 새로 갱신됩니다 · 도전 탭 = 업적 과제</div>
+    <div class="mfoot"><span class="dot"></span>미션은 매일 새로 갱신됩니다 · 도전 탭 = 업적 딥링크(M-server 후·출시엔 업적 hub 버튼) · 데일리 출석 = 선두 상설 배너</div>
   </div>
 </div></div>
 
-<div class="section"><span class="n">②</span><span class="l">데일리 출석 팝업 — 메인 진입 자동 표시 · 연속 4일차 · 광고 2배</span><span class="r"></span></div>
+<div class="section"><span class="n">②</span><span class="l">데일리 출석 — 미션 선두 상설 배너(위 ①) + 메인 진입 자동 팝업 · 연속 4일차 · 광고 2배</span><span class="r"></span></div>
 <div class="frame"><div class="screen">
   <div class="bg"></div>
   <div class="dlg">
@@ -167,8 +180,8 @@ h1{font-size:clamp(22px,4vw,32px);font-weight:800;margin:8px 0 0}
 
 <div class="section"><span class="n">③</span><span class="l">설계 근거 · plat 핸드오프</span><span class="r"></span></div>
 <div class="notes">
-  <div class="nn hl"><span class="k">미션 3트랙 · 실데이터</span><h3>행 = 제목·설명·진행바·보상·상태</h3><p>일일/주간 = 풀에서 3개 로테이션(`rotationPick:3`)·행 콘텐츠 = `data/missions/daily.json` 실인용(오늘의 출정·단련의 하루·결속의 증명). 상태 3종 = 진행 중(dim)/수령(골드)/완료. 도전 탭 = 기존 업적 22종 연동(별도 화면 아님·탭 통합). 타이머 = 서버 시간 기준 리셋. <b>미로그인 = 미션 탭 비활성 + 로그인 유도 1줄</b>(§6.B③ 치트 가드·화면 변형 = plat).</p></div>
-  <div class="nn hl"><span class="k">데일리 출석 (escalation 해소)</span><h3>7일 그리드 · streak · 광고 2배</h3><p>M8 step-9 escalation의 design 몫 = 본 팝업: 7일 셀(수령 ✓ dim·오늘 = 골드 글로우·7일차 = 주간 앵커 강조)·연속 N일차 streak·[광고 보고 2배 받기](rewarded·M10 SDK 배선 대기·버튼은 정식 노출) + [받기]. 값 = `daily-reward.json` 실값(300/30/500/50/800/80/1,500). 메인 진입 시 미수령이면 자동 팝업.</p></div>
+  <div class="nn hl"><span class="k">미션 3트랙 · 실데이터</span><h3>행 = 제목·설명·진행바·보상·상태</h3><p>일일/주간 = 풀에서 3개 로테이션(`rotationPick:3`)·행 콘텐츠 = `data/missions/daily.json` 실인용(오늘의 출정·단련의 하루·결속의 증명). 상태 3종 = 진행 중(dim)/수령(골드)/완료. <b>★ 도전 탭 = 업적 딥링크</b>(PM 2026-07-07: 업적 = <b>독립 hub 화면 유지</b>·미션 흡수 X·<b>26종</b>[single16+repeat10]·도전탭→업적 딥링크는 <b>M-server 후</b>·출시엔 업적 = <b>hub 버튼으로만</b> 접근·중복 복제 X). 타이머 = 서버 시간 기준 리셋. <b>미로그인 = 미션 탭 비활성 + 로그인 유도 1줄</b>(§6.B③ 치트 가드·화면 변형 = plat).</p></div>
+  <div class="nn hl"><span class="k">데일리 출석 (escalation 해소)</span><h3>7일 그리드 · streak · 광고 2배</h3><p>M8 step-9 escalation의 design 몫 = 본 팝업: 7일 셀(수령 ✓ dim·오늘 = 골드 글로우·7일차 = 주간 앵커 강조)·연속 N일차 streak·[광고 보고 2배 받기](rewarded·M10 SDK 배선 대기·버튼은 정식 노출) + [받기]. 값 = `daily-reward.json` 실값(300/30/500/50/800/80/1,500). 메인 진입 시 미수령이면 자동 팝업. <b>★ 2026-07-07 = 미션 화면 선두 상설 배너</b>(위 ①·미수령 빨간점·[받기]→본 팝업)로도 진입 = 자동 팝업 놓쳐도 상시 접근(출시 유일 daily 훅 발견성).</p></div>
   <div class="nn"><span class="k">미션 ⊥ 출석 분리</span><h3>서버 필요 vs 로컬 충분</h3><p>미션 리셋 = 서버 시간 필요(M-server 후 가동·Supabase Date 헤더) / 출석 = 로컬 날짜로 충분(soft 재화·조작 무해) → 출시 시점 리텐션 = 출석이 담당, 미션은 M-server 랜딩 시 활성. 화면은 둘 다 지금 확정(plat 배선 시점만 다름).</p></div>
   <div class="nn"><span class="k">plat 핸드오프 (M8/M-server)</span><h3>배선 계약</h3><p>데일리 = `DailyRewardManager.Claim/CanClaimToday/PreviewNextCycleDay` 기구현(M8 step-9) → 본 팝업 스킨 + `MainUIManager.dailyRewardPanel` 교체 + 광고 2배 = `rewarded-ads.json`(M10). 미션 = `data/missions/` 로테이션·conditionType 추적(업적 로직 재사용)·SaveEnvelope missions 필드 = M-server 후. 아이콘 = 기존 킷 재사용(i-battle/i-enhance/i-syn 신규 1종만 킷 흡수 대상).</p></div>
 </div>
