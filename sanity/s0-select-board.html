@@ -28,7 +28,7 @@ function render(){
       <div class="act"><img class="ski" src="${x.skill}"><div class="atx"><span class="al" style="color:${x.c}">${x.act}</span><span class="ad">${x.actd}</span></div></div>`;
       d.style.borderColor=x.c; d.style.boxShadow=`0 0 34px ${x.c}, 0 0 80px ${mix(x.c,40)}`;
     } else { d.innerHTML=`<div class="hero" style="background-image:url(${x.south})"></div><div class="nm2">${x.nm}</div>`; }
-    let off=((j-sel+2)%5)-2;const P={0:[0,1,0],1:[26,.60,-26],2:[43,.40,-36],'-1':[-26,.60,26],'-2':[-43,.40,36]}[off];
+    let off=((j-sel)%5+5)%5; if(off>2)off-=5; const P={0:[0,1,0],1:[26,.60,-26],2:[43,.40,-36],'-1':[-26,.60,26],'-2':[-43,.40,36]}[off];
     d.style.transform=`translate(-50%,-50%) translateX(${P[0]}cqw) scale(${P[1]}) rotateY(${P[2]}deg)`;d.style.zIndex=6-Math.abs(off);d.style.opacity=off===0?1:(Math.abs(off)===1?.72:.32);
     d.onclick=()=>{sel=j;render()}; area.appendChild(d);
   });
