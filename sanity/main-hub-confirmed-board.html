@@ -107,6 +107,7 @@
     <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="currentColor"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M11 12h2v4h-2z"/><path d="M8 17h8v2H8z"/></g><g fill="none" stroke="currentColor" stroke-width="2"><path d="M7 5H4v2a3 3 0 0 0 3 3"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/></g></symbol>
     <symbol id="i-mission" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8.5 8h7"/><path d="M8.5 12h7"/><path d="M8.5 16h4"/></g></symbol>
     <symbol id="i-shop" viewBox="0 0 24 24"><path d="M6 8h12l-1.2 11.2a1 1 0 0 1-1 .8H8.2a1 1 0 0 1-1-.8z" fill="currentColor"/><path d="M9 8a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-codex" viewBox="0 0 24 24"><path d="M12 5.5C10.5 4 8 3.5 4.5 4v13c3.5-.5 6 0 7.5 1.5V5.5z" fill="currentColor" opacity=".92"/><path d="M12 5.5C13.5 4 16 3.5 19.5 4v13c-3.5-.5-6 0-7.5 1.5V5.5z" fill="currentColor" opacity=".55"/></symbol>
     <symbol id="i-loop" viewBox="0 0 24 24"><path d="M8.5 12c0-2 1.4-3.3 3.5-3.3s3.5 1.3 3.5 3.3-1.4 3.3-3.5 3.3c-1.6 0-3-1.6-4.5-3.3S7.6 8.7 6 8.7C4.3 8.7 3 10 3 12s1.3 3.3 3 3.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
   </defs></svg>
 <div class="wrap">
@@ -224,6 +225,7 @@
     <div class="side r">
       <div class="mbtn"><div class="dot"></div><div class="ic"><svg><use href="#i-mission"/></svg></div><div class="t">미션</div></div>
       <div class="mbtn"><div class="dot"></div><div class="ic"><svg><use href="#i-shop"/></svg></div><div class="t">상점</div></div>
+      <div class="mbtn"><div class="ic"><svg><use href="#i-codex"/></svg></div><div class="t">도감</div></div>
     </div>
     <div class="strip">
       <div class="arw">‹</div>
@@ -258,6 +260,7 @@
       <li><b>업적</b> = 미수령 보상 <b>N</b>(숫자 뱃지) — 수령 시 감소·0이면 숨김</li>
       <li><b>강화</b> = 신규 재화 획득 후만(상시 X = noise 방지) — 조건 미충족 시 뱃지 없음</li>
       <li><b>환생</b> = 게이트 도달 시만 · 잠금 시 메뉴 dim(뱃지 없음)</li>
+      <li><b>도감</b>(신규·우측 3번째) = 상시 열람 · 뱃지 없음(noise X) · daily 리셋 X</li>
       <li>★ <b>상시 켜지는 뱃지 금지</b> · hub 레이아웃/사이즈 = <b>불변</b>(PM: 재작업 0·뱃지 오버레이만) · 규칙 SoT = design-system §2 뱃지 조건표 · 로직 = client M8/M9</li>
     </ul></div>
   </div>
