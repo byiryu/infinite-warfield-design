@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<title>무한의 전장 — 디자인 시스템 v1</title>
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">INFINITE WARFIELD · DESIGN SYSTEM v1 · 2026</span>
+  <h1>무한의 전장 디자인 시스템</h1>
+  <p class="lede">가로 모바일 · 2D 픽셀아트 · 다크 전장 ⊥ 골드 액센트 · 한글. 기존 §2/§2-R 누적물을 폐기하고
+  <strong>모바일 게임 UI/UX 최적 기준</strong>으로 백지 재작성. 4레이어를 아래 순서로 쌓는다 — 파운데이션에서 실패하면 전부 재작업.</p>
+  <div class="layers">
+    <div class="layer l4"><span class="ln">Layer 4</span> 라이브옵스 · 메타 UX <em>나중에</em></div>
+    <div class="layer l3"><span class="ln">Layer 3</span> 인게임 HUD · 게임필 <em>게임 정체성</em></div>
+    <div class="layer l2"><span class="ln">Layer 2</span> 인터랙션 · 엄지존 · 터치 <em>조작 물리</em></div>
+    <div class="layer l1"><span class="ln">Layer 1</span> 파운데이션 · 토큰 · 컴포넌트 <em>여기서 실패하면 전부 재작업</em></div>
+    <div class="ssot">단일 진실 공급원 <code>design-tokens.json</code> 하나가 전 레이어를 관통</div>
+  </div>
+</header>
+
+<!-- ============ FOUNDATION: TOKENS ============ -->
+<section>
+  <div class="shead"><span class="snum">01</span><h2>파운데이션 — 3계층 토큰</h2></div>
+  <p class="sdesc">컴포넌트는 <strong>절대 원시값(hex/px)을 직접 참조하지 않는다.</strong> 오직 Semantic만.
+  → 5테마 스킨·다크/라이트·리브랜딩이 <strong>"값 교체"만으로</strong> 가능해진다. (현 갭: 화면 USS에 raw값 ~200곳 → 시맨틱화 대상.)</p>
+  <div class="tier-flow">
+    <div class="tier"><span class="tt">Primitive</span><span class="td">원시값 · 의미 없음</span><code>--gold-500: #FFD24D<br>--space-2: 8px</code></div>
+    <div class="arr">→</div>
+    <div class="tier"><span class="tt">Semantic</span><span class="td">의도 · 테마 스위치 지점</span><code>--color-cta: var(--gold-500)<br>--inset-card: var(--space-4)</code></div>
+    <div class="arr">→</div>
+    <div class="tier"><span class="tt">Component</span><span class="td">semantic만 참조</span><code>.btn-cta { background:<br>var(--color-cta) }</code></div>
+  </div>
+  <p class="note">SSOT 파이프(계승·Figma 불요): <code>design-tokens.json</code> → <code>DesignTokenImporter</code> → <code>tokens.uss</code>(UITK 변수) <b>+</b> <code>DesignTokens.asset</code>(uGUI ScriptableObject) 동시 자동생성. 드리프트 가드 = <code>token_drift_check.py</code>. 손작성 금지.</p>
+</section>
+
+<!-- ============ TYPE ============ -->
+<section>
+  <div class="shead"><span class="snum">02</span><h2>타입 스케일 <span class="sh-meta">Pretendard · weight 위계 · 모듈러 1.2 · 한글 본문 하한 15pt</span></h2></div>
+  <p class="sdesc">기준 = <b>1080 높이 레퍼런스 @ Match=1</b>. 최소기기 375pt(iPhone SE2) 기준 <b>1pt ≈ 2.88px</b>. 한글은 라틴보다 헤드룸이 더 필요 → <b>본문 하한 15pt·micro는 숫자 전용</b>.</p>
+  <div class="type-list">
+    <div class="ty"><span class="ty-spec" style="font-size:56px;font-weight:900">무한의 전장 42</span><span class="ty-meta">display · 34pt / 98px · 900</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:40px;font-weight:900">야수 소굴 · 스테이지 7</span><span class="ty-meta">title · 24pt / 69px · 900</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:33px;font-weight:800">적 편성 · 스테이지 목표</span><span class="ty-meta">subtitle · 20pt / 58px · 800</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:28px;font-weight:700">전투 시작 · 강화 · 수령</span><span class="ty-meta">label(버튼·탭) · 17pt / 49px · 700 · 한글 workhorse</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:25px;font-weight:600">전군을 몰아치는 광역 호령</span><span class="ty-meta">body(본문·설명) · 15pt / 43px · 600 · 한글 하한</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:22px;font-weight:600;color:var(--muted)">코스트 예산 내 자유 편성</span><span class="ty-meta">caption(보조) · 13pt / 37px · 600</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:19px;font-weight:800;font-variant-numeric:tabular-nums">14 / 70 · Lv.24</span><span class="ty-meta">micro · 11pt / 32px · 800 · <b>숫자 전용</b>(한글 금지)</span></div>
+  </div>
+  <p class="note">규칙: 위계 = <b>크기 + weight</b>(한 폰트 패밀리). <b>숫자가 가장 큰 목소리</b>(데미지·재화·강화레벨). 1줄 의도 텍스트는 tier·폭으로 1줄에(강제 <code>\n</code> 금지). CJK 서브셋팅 + 폰트 폴백 체인(두부 방지) 필수 — <b>우리 최대 리스크</b>(레퍼런스 GFL2 "폰트 너무 작다" 실패 회피).</p>
+</section>
+
+<!-- ============ COLOR & THEME ============ -->
+<section>
+  <div class="shead"><span class="snum">03</span><h2>색 & 테마 <span class="sh-meta">다크 캔버스 · 골드는 희소한 신호</span></h2></div>
+  <p class="sdesc">다크가 캔버스, 색은 <b>상태 신호</b>로만 소비. 밝은 골드는 <b>주 CTA + 최상위 레어도에만</b> 예약(희석 금지).</p>
+
+  <h3 class="s3">시맨틱 · 크롬</h3>
+  <div class="swatches">
+    <div class="sw"><span class="chip" style="background:#0B0F16"></span>bg · #0B0F16</div>
+    <div class="sw"><span class="chip" style="background:#161F2B"></span>panel · #161F2B</div>
+    <div class="sw"><span class="chip" style="background:#B89B5E"></span>bronze frame · #B89B5E</div>
+    <div class="sw"><span class="chip" style="background:#FFD24D"></span>gold(CTA) · #FFD24D</div>
+    <div class="sw"><span class="chip" style="background:#F3E6C4"></span>cream(글리프) · #F3E6C4</div>
+    <div class="sw"><span class="chip" style="background:#E7ECF2"></span>ink(텍스트) · #E7ECF2</div>
+    <div class="sw"><span class="chip" style="background:#8FA0B4"></span>muted · #8FA0B4</div>
+    <div class="sw"><span class="chip" style="background:#4FA3FF"></span>친화/자원 · #4FA3FF</div>
+    <div class="sw"><span class="chip" style="background:#FF5B5B"></span>적/위험 · #FF5B5B</div>
+    <div class="sw"><span class="chip" style="background:#54E87A"></span>양호 · #54E87A</div>
+  </div>
+
+  <h3 class="s3">5테마 액센트 <span class="s3-meta">— off-unit 신호 · 메타 스킨 스왑(TSS)</span></h3>
+  <div class="swatches">
+    <div class="sw"><span class="chip" style="background:#E03A5C"></span>전투 Combat</div>
+    <div class="sw"><span class="chip" style="background:#9D3EE8"></span>사령 Necro</div>
+    <div class="sw"><span class="chip" style="background:#5DDD7E"></span>정령 Spirit</div>
+    <div class="sw"><span class="chip" style="background:#00D4FF"></span>기계 Machine</div>
+    <div class="sw"><span class="chip" style="background:#E06B14"></span>짐승 Beast</div>
+  </div>
+
+  <h3 class="s3">레어도 사다리 <span class="s3-meta">— 프레임 색으로(텍스트 아님)</span></h3>
+  <div class="rarity">
+    <span class="rr" style="border-color:#8FA0B4">일반</span>
+    <span class="rr" style="border-color:#4FA3FF">고급</span>
+    <span class="rr" style="border-color:#9D3EE8">희귀</span>
+    <span class="rr" style="border-color:#FFD24D;box-shadow:0 0 10px rgba(255,210,77,.5)">영웅</span>
+    <span class="rr" style="border-color:#FF5E55;box-shadow:0 0 10px rgba(255,94,85,.5)">신화</span>
+  </div>
+  <p class="note">골드 규율: 프리미엄 재화 색 ≠ CTA 골드(청록/보라 등으로 분리 — "무료야 유료야" 혼동 방지). 레드닷 알림은 빨강 유지(골드와 색 충돌 회피). <b>색 단독 정보 금지</b> → 색 + 아이콘/모양 이중 인코딩(색맹·직사광선).</p>
+</section>
+
+<!-- ============ SPACING / RADIUS ============ -->
+<section>
+  <div class="shead"><span class="snum">04</span><h2>스페이싱 · 라운드 <span class="sh-meta">8pt 그리드 · 앵귤러 관용구</span></h2></div>
+  <div class="spacing-row">
+    <div class="sp"><span class="box" style="width:4px"></span>xs 4</div>
+    <div class="sp"><span class="box" style="width:8px"></span>sm 8</div>
+    <div class="sp"><span class="box" style="width:12px"></span>md 12</div>
+    <div class="sp"><span class="box" style="width:16px"></span>lg 16</div>
+    <div class="sp"><span class="box" style="width:24px"></span>xl 24</div>
+    <div class="sp"><span class="box" style="width:32px"></span>2xl 32</div>
+  </div>
+  <p class="note">픽셀아트 톤 = <b>앵귤러</b>(1~2px 노치/베벨·얇은 브론즈 룰라인) — 완전 pill 회피, SF/전장 톤. 반지름은 축별 토큰(높이에 눌려 원이 타원 되는 사고 방지). 라운드 = sm 6 · md 10 · lg 14 · xl 22.</p>
+</section>
+
+<!-- ============ CONTROLS ============ -->
+<section>
+  <div class="shead"><span class="snum">05</span><h2>컨트롤 — 버튼 램프 <span class="sh-meta">모든 터치 ≥ 44pt(127px) · 밀도=균형(액션 크게)</span></h2></div>
+  <p class="sdesc">근본 교훈: 버튼 높이는 <b>텍스트에 비례</b>(높이 ≥ 텍스트 ×2.4, 텍스트가 버튼의 ≤42%). 화면당 <b>주 CTA 1개</b>, 나머지 탈채도. 375pt 최소기기서 <b>44pt = 127px</b>가 터치 바닥.</p>
+  <div class="controls-demo">
+    <button class="btn-cta">⚔ 전투 시작</button>
+    <button class="btn-primary">강화</button>
+    <button class="btn-standard">‹ 뒤로</button>
+    <span class="chip-cur">◈ 211</span>
+    <span class="chip-threat">디버퍼 핵·약화</span>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>토큰</th><th>pt</th><th>px@1080</th><th>텍스트</th><th>용도</th></tr></thead>
+    <tbody>
+      <tr><td class="k">ctrl.cta (지배적)</td><td>60</td><td>173</td><td>subtitle 20pt</td><td>전투 시작 · 확정 · 뽑기 (골드 채움 + 글로우 · 우하단 엄지존)</td></tr>
+      <tr><td class="k">ctrl.primary</td><td>52</td><td>150</td><td>label 17pt</td><td>메뉴 · 수령 · 구매 · 강화 (채움/아웃라인)</td></tr>
+      <tr><td class="k">ctrl.standard</td><td>44</td><td>127</td><td>label 17pt</td><td>뒤로 · 탭 · 스텝퍼 · 닫기 (터치 바닥)</td></tr>
+      <tr><td class="k">chip (비터치)</td><td>—</td><td>패딩 6/18</td><td>caption/label</td><td>재화 · 위협 · 시너지 · 카운터 (탭 가능 시 standard 승격)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">게임 핵심 반복 액션(전투 중)은 최소치보다 크게(Fitts + 긴장 시 정밀도 저하). 간격 ≥8pt. 상태 = normal/pressed/disabled + 햅틱 + 사운드 즉시 반환(≤1프레임).</p>
+</section>
+
+<!-- ============ COMPONENTS ============ -->
+<section>
+  <div class="shead"><span class="snum">06</span><h2>컴포넌트 라이브러리 <span class="sh-meta">Atoms → Organisms · 화면별 산재 폐기</span></h2></div>
+  <p class="sdesc">툴바 드리프트(업적/미션/샵 불일치)의 근원 = 화면별 USS 산재. → <b>공유 컴포넌트</b>로 통일.</p>
+  <div class="comp-demo">
+    <div class="demo-label">공유 상단 툴바 (전 메타 화면 동일)</div>
+    <div class="toolbar">
+      <button class="btn-standard sm">‹ 뒤로</button>
+      <span class="tb-title">유닛 도감</span>
+      <span class="tb-spacer"></span>
+      <span class="chip-cur">◈ 211</span>
+      <span class="chip-cur">◆ 1</span>
+    </div>
+  </div>
+  <div class="comp-demo">
+    <div class="demo-label">탭 · 카드 · 다이얼로그</div>
+    <div class="tabs"><span class="tab on">전체</span><span class="tab">전투</span><span class="tab">사령</span><span class="tab">정령</span></div>
+    <div class="cardrow">
+      <div class="ucard" style="border-color:#E03A5C"><span class="ub">영웅</span><span class="uart">🗡</span><span class="un">아르덴</span><span class="ur">딜러</span></div>
+      <div class="ucard" style="border-color:#5DDD7E"><span class="ub">영웅</span><span class="uart">🍃</span><span class="un">에이라</span><span class="ur">서포터</span></div>
+    </div>
+  </div>
+  <p class="note">엘리베이션(하드 1~2px 드롭섀도 + 팝업 뒤 스크림 + CTA 베이크드 글로우)이 "프리미엄 vs 애셋플립"을 가른다. <b>레이어 분리</b>: 전장·유닛=픽셀 / UI 크롬=별도 크리스프 레이어(정수배율).</p>
+</section>
+
+<!-- ============ RESPONSIVE ============ -->
+<section>
+  <div class="shead"><span class="snum">07</span><h2>반응형 <span class="sh-meta">1080 높이 레퍼런스 · Match=1 · 짧은축 바닥 375pt</span></h2></div>
+  <div class="resp-grid">
+    <div class="rc"><span class="rk">레퍼런스</span>1920×1080 (16:9) · UITK PanelSettings <b>Match=1(높이)</b> · uGUI Canvas Scaler 동일</div>
+    <div class="rc"><span class="rk">종횡비 범위</span>1.33:1 (iPad 4:3) ~ 2.22:1 (20:9) · 코어 = 16:9 안전영역</div>
+    <div class="rc"><span class="rk">짧은축 바닥</span>360dp / 375pt (iPhone SE2 · Galaxy A16) — 모든 최소 가독·밀도 검증 기준</div>
+    <div class="rc"><span class="rk">세이프에어리어</span>조작 UI = <code>Screen.safeArea</code> 자식 · 배경 = 밖(노치 뒤) · 방향전환 동적 재적용</div>
+  </div>
+  <div class="zones">
+    <div class="zone zf">고정 — HUD · 탭 · CTA (safe-area 앵커 · 물리크기 유지)</div>
+    <div class="zone zp">비례 — 콘텐츠 패널 (긴 목록 = 패널 내부 스크롤)</div>
+    <div class="zone ze">확장 — 배경 (좌우 여백/사이드레일이 종횡비 차 흡수)</div>
+  </div>
+</section>
+
+<!-- ============ LAYER 2/3/4 PRINCIPLES ============ -->
+<section>
+  <div class="shead"><span class="snum">08</span><h2>인터랙션 · HUD · 라이브옵스 원칙</h2></div>
+  <div class="prin">
+    <div class="pcol"><h4>L2 인터랙션</h4><ul>
+      <li>하단·엄지 우선 — 주 액션 우하단, 상단 코너=재화/상태 전용</li>
+      <li>제스처는 항상 명시적 버튼 대안 병행 · 하단탭 ≤5</li>
+      <li>FTUE: 첫 60초에 코어 루프 체험 · 가입/과금/광고는 뒤로</li>
+    </ul></div>
+    <div class="pcol"><h4>L3 인게임 HUD</h4><ul>
+      <li>빈 화면에서 시작 — 상시 노출 정당화되는 것만</li>
+      <li>위계: Critical(저체력·예고) > Important > Info > Ambient</li>
+      <li><b>이펙트가 적 위협 예고를 가리면 안 됨</b> · 주스는 증폭기지 대체재 아님</li>
+      <li>데미지 넘버: 크리만 강조·일반 누적·체력바 안 가림</li>
+    </ul></div>
+    <div class="pcol"><h4>L4 라이브옵스</h4><ul>
+      <li>가치 투명성 · 가챠 확률+천장 노출 · 다크패턴 금지</li>
+      <li>리텐션 3계층: 코어(30~90초) → 메타(3~5일) → 소셜</li>
+      <li>처벌 아닌 보상 · 푸시는 가치제안(죄책감 금지)</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ QUANT TABLE ============ -->
+<section>
+  <div class="shead"><span class="snum">09</span><h2>정량 기준표 <span class="sh-meta">토큰/QA 루브릭으로 직접 사용</span></h2></div>
+  <table class="tbl">
+    <tbody>
+      <tr><td class="k">터치 절대 최소</td><td>iOS 44pt / Android 48dp = <b>127px@1080</b></td></tr>
+      <tr><td class="k">핵심 액션 버튼</td><td>60pt+ (173px) · 간격 8pt+</td></tr>
+      <tr><td class="k">하단 탭바</td><td>4~5개 이하</td></tr>
+      <tr><td class="k">입력→시각 반응</td><td>≤ 1프레임 (~16ms)</td></tr>
+      <tr><td class="k">UI 애니메이션</td><td>100~300ms · 화면전환 ≤200ms</td></tr>
+      <tr><td class="k">히트스톱</td><td>임팩트 시 1~3프레임 정지</td></tr>
+      <tr><td class="k">화면 흔들림</td><td>소형 1~3px / 대형 5~10px 상한</td></tr>
+      <tr><td class="k">텍스트 대비</td><td>본문 4.5:1 · 큰 텍스트 3:1</td></tr>
+      <tr><td class="k">UI 갱신 프레임 예산</td><td>16.6ms 중 ≤2ms</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ TARGET DEVICE ============ -->
+<section>
+  <div class="shead"><span class="snum">10</span><h2>타깃 기기 매트릭스 <span class="sh-meta">2026 한국 출시</span></h2></div>
+  <table class="tbl">
+    <thead><tr><th>항목</th><th>현재</th><th>권장</th><th>커버리지</th></tr></thead>
+    <tbody>
+      <tr><td class="k">iOS 하한</td><td>15.0</td><td><b>16.0</b></td><td>~97-98%</td></tr>
+      <tr><td class="k">Android minSdk</td><td>25 (7.1)</td><td><b>26 (8.0)</b></td><td>~98%</td></tr>
+      <tr><td class="k">Android targetSdk</td><td>—</td><td><b>36 (Android 16)</b></td><td>Play 정책 필수</td></tr>
+      <tr><td class="k">기준 최소기기</td><td>—</td><td><b>iPhone SE2 (375pt) · Galaxy A16 (360dp)</b></td><td>RAM 2GB↓ / 3GB 쾌적</td></tr>
+      <tr><td class="k">종횡비 (가로)</td><td>—</td><td><b>1.33:1 ~ 2.22:1</b> (코어 16:9)</td><td>—</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ ENGINE / PIPELINE ============ -->
+<section>
+  <div class="shead"><span class="snum">11</span><h2>엔진 · 파이프라인</h2></div>
+  <div class="eng">
+    <div class="ec"><span class="ek">메타 (허브·편성·상점·도감…)</span><b>UI Toolkit</b> — 토큰/테마/리스트 가상화 강점</div>
+    <div class="ec"><span class="ek">전투 HUD · 전투 VFX</span><b>uGUI</b> — Animator/파티클/월드스페이스 (M3 주스 패스)</div>
+    <div class="ec"><span class="ek">토큰 SSOT (단일)</span><code>design-tokens.json</code> → USS 변수 + C# SO 동시생성 → 두 엔진이 같은 브랜드</div>
+    <div class="ec"><span class="ek">QA 게이트</span><code>/render-review</code> 3렌즈 + 하네스 레이아웃 계측(컨트롤높이·비율·강제개행·툴바일관성)</div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>무한의 전장 디자인 시스템 v1 · 창업자 4레이어 문서 + 가로 사이징 리서치 + 레퍼런스 티어다운(Arknights·Guardian Tales·AFK) + 타깃기기 리서치 통합</span>
+  <span class="fm">확정 후 → design-tokens.json 3계층 재구조 · tokens.uss/SO 재생성 · 컴포넌트 라이브러리 · 전 화면 적용 · 자동검증</span>
+</footer>
+
+</div>
+
+<style>
+  :root{
+    --bg:#0B0F16; --panel:#161F2B; --panel-2:#0F1620; --stroke:#2A3542; --stroke-2:#1c2733;
+    --gold:#FFD24D; --gold-deep:#F0992D; --bronze:#B89B5E; --cream:#F3E6C4;
+    --ink:#E7ECF2; --muted:#8FA0B4; --friend:#4FA3FF; --enemy:#FF5B5B; --good:#54E87A;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  .wrap{
+    background:
+      radial-gradient(1100px 560px at 78% -8%, rgba(255,210,77,.06), transparent 58%),
+      radial-gradient(820px 460px at 8% 4%, rgba(79,163,255,.05), transparent 52%),
+      var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    min-height:100%; padding:clamp(22px,4vw,56px) clamp(16px,4vw,40px) 72px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .hero{max-width:var(--maxw);margin:0 auto 8px}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.24em;color:var(--gold);font-variant-numeric:tabular-nums}
+  h1{font-size:clamp(32px,5.5vw,56px);font-weight:900;letter-spacing:-.015em;margin:6px 0 14px;text-wrap:balance}
+  .lede{font-size:clamp(15px,1.7vw,18px);color:#C4D0DE;max-width:66ch;margin:0 0 26px}
+  .lede strong{color:var(--gold);font-weight:700}
+  /* layer diagram */
+  .layers{display:flex;flex-direction:column;gap:6px;margin:0 0 8px}
+  .layer{border:1px solid var(--stroke);border-left-width:4px;border-radius:4px;padding:12px 16px;background:var(--panel);
+    display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px}
+  .layer em{color:var(--muted);font-weight:600;font-style:normal;font-size:13px;margin-left:auto}
+  .layer .ln{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);min-width:58px}
+  .l1{border-left-color:var(--gold)} .l2{border-left-color:var(--friend)}
+  .l3{border-left-color:var(--good)} .l4{border-left-color:var(--bronze)}
+  .ssot{text-align:center;font-size:13px;color:var(--muted);margin-top:6px}
+  .ssot code,code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;color:var(--cream);background:rgba(243,230,196,.08);padding:1px 6px;border-radius:4px}
+  /* sections */
+  section{max-width:var(--maxw);margin:44px auto 0;border-top:1px solid var(--stroke-2);padding-top:28px}
+  .shead{display:flex;align-items:baseline;gap:14px;margin:0 0 12px}
+  .snum{font-size:13px;font-weight:800;color:var(--bronze);font-variant-numeric:tabular-nums;letter-spacing:.05em}
+  h2{font-size:24px;font-weight:800;margin:0}
+  .sh-meta{font-size:13px;font-weight:600;color:var(--muted);margin-left:6px}
+  .sdesc{font-size:15px;color:#C4D0DE;max-width:72ch;margin:0 0 18px}
+  .sdesc strong,.sdesc b{color:var(--cream);font-weight:700}
+  .note{font-size:13px;color:var(--muted);background:var(--panel-2);border:1px solid var(--stroke-2);border-left:3px solid var(--bronze);
+    border-radius:8px;padding:12px 16px;margin:16px 0 0;max-width:78ch}
+  .note b{color:var(--cream)}
+  h3.s3{font-size:15px;font-weight:800;margin:22px 0 10px;color:var(--ink)}
+  .s3-meta,.s3 .s3-meta{font-weight:600;color:var(--muted);font-size:13px}
+  /* tier flow */
+  .tier-flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+  .tier{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--stroke);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+  .tier .tt{font-weight:800;font-size:15px} .tier .td{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .tier code{font-size:12px;line-height:1.7;background:none;padding:0;color:var(--cream)}
+  .arr{align-self:center;color:var(--bronze);font-size:20px;font-weight:800}
+  /* type list */
+  .type-list{display:flex;flex-direction:column;gap:2px}
+  .ty{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid var(--stroke-2)}
+  .ty-spec{color:var(--ink);line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ty-meta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0}
+  .ty-meta b{color:var(--cream)}
+  /* swatches */
+  .swatches{display:flex;flex-wrap:wrap;gap:10px}
+  .sw{display:flex;align-items:center;gap:8px;font-size:13px;color:#C4D0DE;background:var(--panel);border:1px solid var(--stroke);border-radius:6px;padding:7px 12px 7px 8px;font-variant-numeric:tabular-nums}
+  .chip{width:22px;height:22px;border-radius:4px;border:1px solid rgba(255,255,255,.12);flex-shrink:0}
+  .rarity{display:flex;flex-wrap:wrap;gap:12px}
+  .rr{border:2px solid;border-radius:6px;padding:10px 20px;font-weight:800;font-size:15px;background:var(--panel)}
+  /* spacing */
+  .spacing-row{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end}
+  .sp{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .sp .box{height:28px;background:var(--gold);border-radius:2px;display:block}
+  /* controls demo */
+  .controls-demo{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:0 0 18px;padding:22px;background:var(--panel-2);border:1px solid var(--stroke);border-radius:10px}
+  .btn-cta{background:linear-gradient(180deg,var(--gold),var(--gold-deep));color:#4A2C05;font-weight:900;font-size:22px;
+    border:2px solid #ffe9b0;border-radius:14px;padding:0 34px;height:78px;box-shadow:0 0 18px rgba(255,180,60,.4),0 6px 14px rgba(0,0,0,.4);cursor:pointer;font-family:inherit}
+  .btn-primary{background:rgba(231,236,242,.5);color:#15212E;font-weight:800;font-size:20px;border:2px solid var(--bronze);border-radius:12px;padding:0 30px;height:68px;cursor:pointer;font-family:inherit;backdrop-filter:blur(3px)}
+  .btn-standard{background:var(--panel);color:var(--ink);font-weight:700;font-size:20px;border:2px solid var(--bronze);border-radius:12px;padding:0 26px;height:58px;cursor:pointer;font-family:inherit}
+  .btn-standard.sm{font-size:16px;height:48px;padding:0 18px}
+  .chip-cur{display:inline-flex;align-items:center;gap:6px;background:rgba(18,28,40,.6);border:1.5px solid var(--bronze);border-radius:20px;padding:8px 18px;font-weight:800;font-size:18px;color:var(--ink);font-variant-numeric:tabular-nums}
+  .chip-threat{display:inline-flex;align-items:center;background:rgba(255,91,91,.1);border:2px solid var(--enemy);border-radius:12px;padding:6px 16px;font-weight:800;font-size:15px;color:#8AB4FF}
+  /* table */
+  .tbl{width:100%;border-collapse:collapse;font-size:14px;background:var(--panel);border:1px solid var(--stroke);border-radius:10px;overflow:hidden;margin-top:4px}
+  .tbl th,.tbl td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--stroke-2);vertical-align:top}
+  .tbl thead th{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--panel-2)}
+  .tbl tbody tr:last-child td{border-bottom:none}
+  .tbl .k{font-weight:700;color:var(--cream);white-space:nowrap} .tbl b{color:var(--gold)}
+  .tbl td{font-variant-numeric:tabular-nums}
+  /* components */
+  .comp-demo{margin:0 0 16px}
+  .demo-label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .toolbar{display:flex;align-items:center;gap:14px;background:linear-gradient(180deg,rgba(22,31,43,.95),rgba(15,22,32,.7));border:1px solid var(--stroke);border-bottom:2px solid var(--bronze);border-radius:8px;padding:12px 18px}
+  .tb-title{font-size:24px;font-weight:900} .tb-spacer{flex:1}
+  .tabs{display:flex;gap:8px;margin:0 0 12px}
+  .tab{font-size:16px;font-weight:800;color:var(--muted);background:var(--panel);border:1.5px solid var(--stroke);border-radius:10px;padding:10px 22px}
+  .tab.on{color:#4A2C05;background:var(--gold);border-color:#ffe9b0}
+  .cardrow{display:flex;gap:14px;flex-wrap:wrap}
+  .ucard{width:150px;background:rgba(20,27,34,.9);border:2px solid;border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+  .ucard .ub{position:absolute;top:6px;left:6px;font-size:11px;font-weight:800;color:#4A2C05;background:var(--gold);border-radius:5px;padding:1px 7px}
+  .ucard .uart{font-size:42px;margin:10px 0 4px} .ucard .un{font-weight:800;font-size:17px} .ucard .ur{font-size:13px;color:var(--muted)}
+  /* responsive */
+  .resp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:14px}
+  .rc{background:var(--panel);border:1px solid var(--stroke);border-radius:8px;padding:12px 15px;font-size:13px;color:#C4D0DE}
+  .rc .rk{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  .rc b{color:var(--cream)}
+  .zones{display:flex;flex-direction:column;gap:6px}
+  .zone{border-radius:6px;padding:11px 16px;font-size:13px;font-weight:700;border:1px solid var(--stroke)}
+  .zf{background:rgba(255,210,77,.1);border-color:var(--gold)} .zp{background:rgba(79,163,255,.08);border-color:var(--friend)}
+  .ze{background:rgba(184,155,94,.1);border-color:var(--bronze)}
+  /* principles */
+  .prin{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .pcol{background:var(--panel);border:1px solid var(--stroke);border-radius:10px;padding:16px 18px}
+  .pcol h4{margin:0 0 10px;font-size:14px;font-weight:800;color:var(--gold)}
+  .pcol ul{margin:0;padding-left:18px;font-size:13px;color:#C4D0DE;line-height:1.7}
+  .pcol b{color:var(--cream)}
+  /* engine */
+  .eng{display:flex;flex-direction:column;gap:8px}
+  .ec{background:var(--panel);border:1px solid var(--stroke);border-radius:8px;padding:12px 16px;font-size:14px;color:#C4D0DE;display:flex;gap:14px;flex-wrap:wrap;align-items:baseline}
+  .ec .ek{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);min-width:190px}
+  .ec b{color:var(--gold)}
+  /* footer */
+  .foot{max-width:var(--maxw);margin:46px auto 0;padding-top:18px;border-top:1px solid var(--stroke);display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--cream)}
+  .foot .fm{color:var(--muted);font-size:12px}
+  @media(max-width:560px){.ty-spec{font-size:0.9em!important}.arr{transform:rotate(90deg)}}
+</style>
+</body>
+</html>
