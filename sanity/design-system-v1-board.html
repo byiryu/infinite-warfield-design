@@ -9,10 +9,18 @@
 <div class="wrap">
 
 <header class="hero">
-  <span class="eyebrow">INFINITE WARFIELD · DESIGN SYSTEM v1 · 2026</span>
-  <h1>무한의 전장 디자인 시스템</h1>
+  <span class="eyebrow">INFINITE WARFIELD · DESIGN SYSTEM v1.1 · 2026</span>
+  <h1>무한의 전장 디자인 시스템 v1.1</h1>
   <p class="lede">가로 모바일 · 2D 픽셀아트 · 다크 전장 ⊥ 골드 액센트 · 한글. 기존 §2/§2-R 누적물을 폐기하고
   <strong>모바일 게임 UI/UX 최적 기준</strong>으로 백지 재작성. 4레이어를 아래 순서로 쌓는다 — 파운데이션에서 실패하면 전부 재작업.</p>
+  <div class="changelog">
+    <span class="cl-tag">v1.1 · ux-designer 부서 적대적 감사 후 교정</span>
+    ① 타입 램프 단일화(경쟁 3종 폐기·body 44px=15pt 한글하한·micro/행간 신설) ② 컨트롤 173/150/127 정합
+    ③ <b>골드 규율</b>: 재화A를 골드서 분리(#D6A63A 브래스·골드=CTA+legendary 전용) ④ 레어도 5티어 hex+별 이중인코딩
+    ⑤ 동일hex 충돌 분리(debuffer #8FCF4A·cost #3E82E6) ⑥ pressed/disabled(hover-only 폐기) ⑦ <b>2계층 flat</b>(거짓 3계층 철회)
+    ⑧ 엔진정합(그림자/그라디언트/blur→UITK 실행가능) ⑨ chip 앵귤러.
+    <b>⚠ 정직한 상태</b>: 토큰/스펙 확정이나 <b>화면 0곳 적용</b>(raw hex ~105 잔존·gray-box·debt 추적) — "완료" 아님.
+  </div>
   <div class="layers">
     <div class="layer l4"><span class="ln">Layer 4</span> 라이브옵스 · 메타 UX <em>나중에</em></div>
     <div class="layer l3"><span class="ln">Layer 3</span> 인게임 HUD · 게임필 <em>게임 정체성</em></div>
@@ -24,30 +32,28 @@
 
 <!-- ============ FOUNDATION: TOKENS ============ -->
 <section>
-  <div class="shead"><span class="snum">01</span><h2>파운데이션 — 3계층 토큰</h2></div>
-  <p class="sdesc">컴포넌트는 <strong>절대 원시값(hex/px)을 직접 참조하지 않는다.</strong> 오직 Semantic만.
-  → 5테마 스킨·다크/라이트·리브랜딩이 <strong>"값 교체"만으로</strong> 가능해진다. (현 갭: 화면 USS에 raw값 ~200곳 → 시맨틱화 대상.)</p>
+  <div class="shead"><span class="snum">01</span><h2>파운데이션 — 2계층 토큰 (flat)</h2></div>
+  <p class="sdesc">① 시맨틱 토큰(용도명·값=리터럴 hex/px) → ② 컴포넌트(<code>components.uss</code>=시맨틱만 참조). 컴포넌트는 raw 값 직접참조 금지.
+  <strong>primitive층·var() 치환 테마스왑은 의도적으로 없음</strong>(단일 다크+골드 브랜드·스왑 대상 테마 부재 → over-engineering 회피·정직). 유일 런타임 스왑 = <code>--tc</code>(세력 액센트 1슬롯). (현 갭: 화면 USS raw hex ~105곳 → 시맨틱화 대상·debt 추적.)</p>
   <div class="tier-flow">
-    <div class="tier"><span class="tt">Primitive</span><span class="td">원시값 · 의미 없음</span><code>--gold-500: #FFD24D<br>--space-2: 8px</code></div>
+    <div class="tier"><span class="tt">Semantic</span><span class="td">용도명 · 값=리터럴</span><code>--cta-gold: #FFD24D<br>--ctrl-h-cta: 173px</code></div>
     <div class="arr">→</div>
-    <div class="tier"><span class="tt">Semantic</span><span class="td">의도 · 테마 스위치 지점</span><code>--color-cta: var(--gold-500)<br>--inset-card: var(--space-4)</code></div>
-    <div class="arr">→</div>
-    <div class="tier"><span class="tt">Component</span><span class="td">semantic만 참조</span><code>.btn-cta { background:<br>var(--color-cta) }</code></div>
+    <div class="tier"><span class="tt">Component</span><span class="td">시맨틱만 참조</span><code>.btn-cta { min-height:<br>var(--ctrl-h-cta) }</code></div>
   </div>
   <p class="note">SSOT 파이프(계승·Figma 불요): <code>design-tokens.json</code> → <code>DesignTokenImporter</code> → <code>tokens.uss</code>(UITK 변수) <b>+</b> <code>DesignTokens.asset</code>(uGUI ScriptableObject) 동시 자동생성. 드리프트 가드 = <code>token_drift_check.py</code>. 손작성 금지.</p>
 </section>
 
 <!-- ============ TYPE ============ -->
 <section>
-  <div class="shead"><span class="snum">02</span><h2>타입 스케일 <span class="sh-meta">Pretendard · weight 위계 · 모듈러 1.2 · 한글 본문 하한 15pt</span></h2></div>
+  <div class="shead"><span class="snum">02</span><h2>타입 스케일 <span class="sh-meta">Pretendard · weight+크기 위계 · 가독 pt-floor 램프 · 한글 본문 하한 15pt</span></h2></div>
   <p class="sdesc">기준 = <b>1080 높이 레퍼런스 @ Match=1</b>. 최소기기 375pt(iPhone SE2) 기준 <b>1pt ≈ 2.88px</b>. 한글은 라틴보다 헤드룸이 더 필요 → <b>본문 하한 15pt·micro는 숫자 전용</b>.</p>
   <div class="type-list">
-    <div class="ty"><span class="ty-spec" style="font-size:56px;font-weight:900">무한의 전장 42</span><span class="ty-meta">display · 34pt / 98px · 900</span></div>
-    <div class="ty"><span class="ty-spec" style="font-size:40px;font-weight:900">야수 소굴 · 스테이지 7</span><span class="ty-meta">title · 24pt / 69px · 900</span></div>
-    <div class="ty"><span class="ty-spec" style="font-size:33px;font-weight:800">적 편성 · 스테이지 목표</span><span class="ty-meta">subtitle · 20pt / 58px · 800</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:56px;font-weight:900">무한의 전장 42</span><span class="ty-meta">display · 32pt / 92px · 900</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:40px;font-weight:900">야수 소굴 · 스테이지 7</span><span class="ty-meta">title · 25pt / 72px · 900</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:33px;font-weight:800">적 편성 · 스테이지 목표</span><span class="ty-meta">subtitle · 21pt / 60px · 800</span></div>
     <div class="ty"><span class="ty-spec" style="font-size:28px;font-weight:700">전투 시작 · 강화 · 수령</span><span class="ty-meta">label(버튼·탭) · 17pt / 49px · 700 · 한글 workhorse</span></div>
-    <div class="ty"><span class="ty-spec" style="font-size:25px;font-weight:600">전군을 몰아치는 광역 호령</span><span class="ty-meta">body(본문·설명) · 15pt / 43px · 600 · 한글 하한</span></div>
-    <div class="ty"><span class="ty-spec" style="font-size:22px;font-weight:600;color:var(--muted)">코스트 예산 내 자유 편성</span><span class="ty-meta">caption(보조) · 13pt / 37px · 600</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:25px;font-weight:600">전군을 몰아치는 광역 호령</span><span class="ty-meta">body(본문·설명) · 15pt / 44px · 600 · 한글 하한</span></div>
+    <div class="ty"><span class="ty-spec" style="font-size:22px;font-weight:600;color:var(--muted)">코스트 예산 내 자유 편성</span><span class="ty-meta">caption(보조) · 13pt / 38px · 600</span></div>
     <div class="ty"><span class="ty-spec" style="font-size:19px;font-weight:800;font-variant-numeric:tabular-nums">14 / 70 · Lv.24</span><span class="ty-meta">micro · 11pt / 32px · 800 · <b>숫자 전용</b>(한글 금지)</span></div>
   </div>
   <p class="note">규칙: 위계 = <b>크기 + weight</b>(한 폰트 패밀리). <b>숫자가 가장 큰 목소리</b>(데미지·재화·강화레벨). 1줄 의도 텍스트는 tier·폭으로 1줄에(강제 <code>\n</code> 금지). CJK 서브셋팅 + 폰트 폴백 체인(두부 방지) 필수 — <b>우리 최대 리스크</b>(레퍼런스 GFL2 "폰트 너무 작다" 실패 회피).</p>
@@ -63,7 +69,7 @@
     <div class="sw"><span class="chip" style="background:#0B0F16"></span>bg · #0B0F16</div>
     <div class="sw"><span class="chip" style="background:#161F2B"></span>panel · #161F2B</div>
     <div class="sw"><span class="chip" style="background:#B89B5E"></span>bronze frame · #B89B5E</div>
-    <div class="sw"><span class="chip" style="background:#FFD24D"></span>gold(CTA) · #FFD24D</div>
+    <div class="sw"><span class="chip" style="background:#FFD24D"></span>gold(CTA·전설 전용) · #FFD24D</div>
     <div class="sw"><span class="chip" style="background:#F3E6C4"></span>cream(글리프) · #F3E6C4</div>
     <div class="sw"><span class="chip" style="background:#E7ECF2"></span>ink(텍스트) · #E7ECF2</div>
     <div class="sw"><span class="chip" style="background:#8FA0B4"></span>muted · #8FA0B4</div>
@@ -83,11 +89,11 @@
 
   <h3 class="s3">레어도 사다리 <span class="s3-meta">— 프레임 색으로(텍스트 아님)</span></h3>
   <div class="rarity">
-    <span class="rr" style="border-color:#8FA0B4">일반</span>
-    <span class="rr" style="border-color:#4FA3FF">고급</span>
-    <span class="rr" style="border-color:#9D3EE8">희귀</span>
-    <span class="rr" style="border-color:#FFD24D;box-shadow:0 0 10px rgba(255,210,77,.5)">영웅</span>
-    <span class="rr" style="border-color:#FF5E55;box-shadow:0 0 10px rgba(255,94,85,.5)">신화</span>
+    <span class="rr" style="border-color:#7C8592">일반</span>
+    <span class="rr" style="border-color:#6FA8A0">고급</span>
+    <span class="rr" style="border-color:#5B8FD4">희귀</span>
+    <span class="rr" style="border-color:#A86BD6">영웅</span>
+    <span class="rr" style="border-color:#FFD24D;box-shadow:0 0 10px rgba(255,210,77,.5)">전설</span>
   </div>
   <p class="note">골드 규율: 프리미엄 재화 색 ≠ CTA 골드(청록/보라 등으로 분리 — "무료야 유료야" 혼동 방지). 레드닷 알림은 빨강 유지(골드와 색 충돌 회피). <b>색 단독 정보 금지</b> → 색 + 아이콘/모양 이중 인코딩(색맹·직사광선).</p>
 </section>
@@ -103,7 +109,7 @@
     <div class="sp"><span class="box" style="width:24px"></span>xl 24</div>
     <div class="sp"><span class="box" style="width:32px"></span>2xl 32</div>
   </div>
-  <p class="note">픽셀아트 톤 = <b>앵귤러</b>(1~2px 노치/베벨·얇은 브론즈 룰라인) — 완전 pill 회피, SF/전장 톤. 반지름은 축별 토큰(높이에 눌려 원이 타원 되는 사고 방지). 라운드 = sm 6 · md 10 · lg 14 · xl 22.</p>
+  <p class="note">픽셀아트 톤 = <b>앵귤러</b>(1~2px 노치/베벨·얇은 브론즈 룰라인) — 완전 pill 회피, SF/전장 톤. 라운드 = sm6·md10·lg14·xl22 (스칼라). chip/pill = 앵귤러(xl)·완전 pill(round 999) 금지 — round는 원형요소(아바타·원형버튼) 전용.</p>
 </section>
 
 <!-- ============ CONTROLS ============ -->
@@ -364,6 +370,6 @@
   .foot{max-width:var(--maxw);margin:46px auto 0;padding-top:18px;border-top:1px solid var(--stroke);display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--cream)}
   .foot .fm{color:var(--muted);font-size:12px}
   @media(max-width:560px){.ty-spec{font-size:0.9em!important}.arr{transform:rotate(90deg)}}
+.changelog{background:var(--panel-2);border:1px solid var(--stroke);border-left:3px solid var(--gold);border-radius:10px;padding:14px 18px;margin:18px 0 4px;font-size:13px;line-height:1.7;color:#C4D0DE;max-width:80ch}.changelog b{color:var(--cream)}.changelog .cl-tag{display:block;font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--gold);margin-bottom:6px}
 </style>
-</body>
-</html>
+</body></html>
