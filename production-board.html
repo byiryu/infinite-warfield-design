@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>무한의 전장 — 프로덕션 보드 (화면 마스터)</title>
+<style>
+  :root{
+    --bg:#0B0F16; --panel:#161F2B; --panel-2:#0F1620; --stroke:#2A3542; --stroke-2:#1c2733;
+    --gold:#FFD24D; --gold-deep:#F0992D; --bronze:#B89B5E; --cream:#F3E6C4;
+    --ink:#E7ECF2; --muted:#8FA0B4; --friend:#4FA3FF; --enemy:#FF5B5B; --good:#54E87A;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box}
+  .wrap{
+    background:
+      radial-gradient(1100px 560px at 78% -8%, rgba(255,210,77,.06), transparent 58%),
+      radial-gradient(820px 460px at 8% 4%, rgba(79,163,255,.05), transparent 52%),
+      var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,"Apple SD Gothic Neo","Pretendard","Malgun Gothic",system-ui,sans-serif;
+    min-height:100%; padding:clamp(22px,4vw,56px) clamp(16px,4vw,40px) 72px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  /* ---- hero ---- */
+  .hero{max-width:var(--maxw);margin:0 auto 8px}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.24em;color:var(--gold);font-variant-numeric:tabular-nums}
+  h1{font-size:clamp(32px,5.5vw,54px);font-weight:900;letter-spacing:-.015em;margin:6px 0 14px;text-wrap:balance}
+  .lede{font-size:clamp(15px,1.7vw,18px);color:#C4D0DE;max-width:74ch;margin:0 0 22px}
+  .lede strong{color:var(--gold);font-weight:700}
+  /* ---- legend ---- */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 6px}
+  .lg{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#C4D0DE;background:var(--panel);border:1px solid var(--stroke);border-radius:6px;padding:7px 13px}
+  .lg .dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+  .lg b{color:var(--cream);font-weight:800}
+  .d-conf{background:var(--good)} .d-rw{background:var(--gold)} .d-stub{background:var(--bronze)} .d-miss{background:var(--enemy)}
+  /* ---- section ---- */
+  section{max-width:var(--maxw);margin:40px auto 0;border-top:1px solid var(--stroke-2);padding-top:24px}
+  .shead{display:flex;align-items:baseline;gap:14px;margin:0 0 16px;flex-wrap:wrap}
+  .snum{font-size:13px;font-weight:800;color:var(--bronze);font-variant-numeric:tabular-nums;letter-spacing:.05em}
+  h2{font-size:23px;font-weight:800;margin:0}
+  .sh-meta{font-size:13px;font-weight:600;color:var(--muted);margin-left:2px}
+  /* ---- screen grid ---- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:12px}
+  .card{background:var(--panel);border:1px solid var(--stroke);border-left-width:4px;border-radius:8px;
+    padding:15px 16px 14px;display:flex;flex-direction:column;gap:7px;position:relative;transition:border-color .15s,transform .1s}
+  .card.rw{border-left-color:var(--gold)} .card.conf{border-left-color:var(--good)}
+  .card.stub{border-left-color:var(--bronze)} .card.miss{border-left-color:var(--enemy)}
+  a.card:hover{transform:translateY(-2px);border-color:var(--bronze)}
+  .card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .card .nm{font-size:17px;font-weight:800;line-height:1.25}
+  .card .en{font-size:11.5px;font-weight:700;letter-spacing:.05em;color:var(--muted);text-transform:uppercase;margin-top:1px}
+  .badge{font-size:10px;font-weight:800;letter-spacing:.06em;padding:4px 9px;border-radius:5px;white-space:nowrap;flex-shrink:0;text-transform:uppercase}
+  .b-conf{background:rgba(84,232,122,.14);color:var(--good);border:1px solid rgba(84,232,122,.5)}
+  .b-rw{background:rgba(255,210,77,.13);color:var(--gold);border:1px solid rgba(255,210,77,.5)}
+  .b-stub{background:rgba(184,155,94,.14);color:var(--bronze);border:1px solid rgba(184,155,94,.5)}
+  .b-miss{background:rgba(255,91,91,.12);color:var(--enemy);border:1px solid rgba(255,91,91,.5)}
+  .card .note{font-size:12.5px;color:#B7C4D3;line-height:1.5}
+  .card .note b{color:var(--cream)}
+  .card .lnk{font-size:11.5px;font-weight:800;color:var(--gold);margin-top:2px}
+  .card .warn{font-size:11px;font-weight:700;color:var(--gold);background:rgba(255,210,77,.08);border:1px solid rgba(255,210,77,.3);border-radius:5px;padding:3px 8px;align-self:flex-start}
+  /* ---- reference cards ---- */
+  .refs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  a.ref{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--stroke);border-bottom:2px solid var(--bronze);
+    border-radius:9px;padding:16px 18px;display:flex;flex-direction:column;gap:5px;transition:transform .1s,border-color .15s}
+  a.ref:hover{transform:translateY(-2px);border-color:var(--gold)}
+  .ref .rt{font-size:16px;font-weight:800;color:var(--gold)}
+  .ref .rd{font-size:12.5px;color:#B7C4D3}
+  .ref .rf{font-size:11px;color:var(--muted);font-family:ui-monospace,Menlo,monospace;margin-top:3px}
+  a.ref.aux{border-bottom-color:var(--stroke);opacity:.92}
+  a.ref.aux .rt{color:var(--cream);font-size:15px}
+  .aux-q{font-size:11px;font-weight:700;color:var(--muted);background:var(--panel-2);border:1px dashed var(--bronze);border-radius:5px;padding:3px 8px;margin-top:4px;align-self:flex-start}
+  .sdesc{font-size:14px;color:#C4D0DE;max-width:78ch;margin:-6px 0 16px}
+  /* ---- footer ---- */
+  .foot{max-width:var(--maxw);margin:46px auto 0;padding-top:18px;border-top:1px solid var(--stroke);
+    display:flex;flex-wrap:wrap;gap:14px 26px;font-size:13px;color:var(--cream);align-items:center}
+  .foot .stat{display:flex;align-items:baseline;gap:6px}
+  .foot .stat b{font-size:19px;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums}
+  .foot .fm{color:var(--muted);font-size:12px;flex-basis:100%}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">INFINITE WARFIELD · PRODUCTION BOARD · 화면 마스터</span>
+  <h1>무한의 전장 — 프로덕션 보드</h1>
+  <p class="lede">게임에 필요한 <strong>전 화면 마스터 허브</strong>. 각 화면의 상태를 한 눈에.
+  <strong>메인 허브만 확정(CONFIRMED)</strong> · 그 외 전 화면은 UX-first <strong>전면 재설계(TO-REWRITE)</strong> 대상 —
+  구 화면별 목업/와이어/이터레이션 보드는 폐기했다(코드 완성=스킨 패스 폐기·2026 방향).
+  토큰·타입·컨트롤 규율 = 디자인 시스템 v1.1 SoT.</p>
+  <div class="legend">
+    <span class="lg"><span class="dot d-conf"></span><b>CONFIRMED</b> 확정·승인 디자인</span>
+    <span class="lg"><span class="dot d-rw"></span><b>TO-REWRITE</b> 전면 재설계(구 보드 폐기)</span>
+    <span class="lg"><span class="dot d-stub"></span><b>STUB</b> 골격만</span>
+    <span class="lg"><span class="dot d-miss"></span><b>MISSING</b> 보드 없음·신규 필요</span>
+  </div>
+</header>
+
+<!-- ===== 온보딩 · 진입 ===== -->
+<section>
+  <div class="shead"><span class="snum">01</span><h2>온보딩 · 진입</h2><span class="sh-meta">최초 실행 → 코어 루프 진입까지</span></div>
+  <div class="grid">
+    <div class="card miss">
+      <div class="top"><div><div class="nm">로딩 · 스플래시</div><div class="en">Loading / Splash</div></div><span class="badge b-miss">Missing</span></div>
+      <div class="note">최초 진입 · 에셋 로드 · 버전/점검 체크. <b>보드 없음</b> — 신규 필요.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">진입 · 약관 동의 · 로그인</div><div class="en">Intro / Consent / Login</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">OAuth · 약관/개인정보 동의 · 딥링크. 구 <b>intro-sian</b> 탐색 보드 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">영웅 선택 S0</div><div class="en">Hero Select</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">온보딩 1영웅 선택(5테마 앵커). 구 <b>s0-select · hero-select · commander-wireframe</b> 3중복 보드 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">튜토리얼 (FTUE)</div><div class="en">Tutorial</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">첫 60초 코어 루프 체험(방치형 아님 → 필수). 구 <b>tutorial-overlay</b> 보드 폐기.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 코어 루프 ===== -->
+<section>
+  <div class="shead"><span class="snum">02</span><h2>코어 루프</h2><span class="sh-meta">스테이지 선택 → 편성 → 전투 → 결과 (프로덕션 씬)</span></div>
+  <div class="grid">
+    <a class="card conf" href="sanity/main-hub-confirmed-board.html">
+      <div class="top"><div><div class="nm">메인 허브</div><div class="en">Main Hub</div></div><span class="badge b-conf">Confirmed</span></div>
+      <div class="note">스테이지 코버플로우 · 주 CTA(전투 진입) · 진행 티저. 흐름·위계 확정.</div>
+      <span class="warn">⚠ 프리미엄 에셋 키트(라이브 배경·재화 아이콘) 대기</span>
+      <span class="lnk">→ main-hub-confirmed-board.html 열기</span>
+    </a>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">편성 (BattlePrepare)</div><div class="en">Formation</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">덱이 <b>여기서만</b> 짜임 = 핵심 화면. 확인·조정 모델 + 위협 텔레그래프(적 진형 응수). 구 <b>battle-prepare · threat-formation · threat-telegraph</b> 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">전투 HUD (탑다운)</div><div class="en">Battle · Top-down</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">탑다운 필드 · 코스트/덱슬롯(44pt) · 시너지 · 영웅 HP · 배속. 구 <b>battle-hud · battle-hud-topdown · coherence/verify/floor-motion</b> 이터레이션 다수 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">전투 결과</div><div class="en">Battle End</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">클리어/실패 오버레이(별도 씬 아님) · 보상 · 다음/재도전. 구 <b>battle-result</b> 보드 폐기.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 성장 메타 ===== -->
+<section>
+  <div class="shead"><span class="snum">03</span><h2>성장 메타</h2><span class="sh-meta">강화 · 환생 · 도감</span></div>
+  <div class="grid">
+    <div class="card rw">
+      <div class="top"><div><div class="nm">강화</div><div class="en">Enhance</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">유닛/영웅 강화(60렙 2.45× · 스킬 5렙) · 경제 트랜잭션. 구 <b>enhance</b> 보드 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">환생</div><div class="en">Rebirth</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">prestige 다이얼로그(Main 씬 내) · soft-cap 곡선 · 재화 가속. 구 <b>rebirth</b> 보드 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">유닛 도감</div><div class="en">Unit Codex</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">34 일반유닛 + 5 영웅 · 시너지 8세트 열람. 구 <b>unit-codex · codex-screen · unit-concept-sheets</b> + 자동생성 코덱스 폐기.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 라이브옵스 · 서비스 ===== -->
+<section>
+  <div class="shead"><span class="snum">04</span><h2>라이브옵스 · 서비스</h2><span class="sh-meta">미션 · 업적 · 상점 · 출석</span></div>
+  <div class="grid">
+    <div class="card rw">
+      <div class="top"><div><div class="nm">미션</div><div class="en">Mission</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">일일/도전 미션 · 보상 수령. 구 <b>mission</b> 보드 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">업적</div><div class="en">Achievement</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">업적 트랙 · 보상 · 아이콘. 경제 트랜잭션. 구 <b>achievement</b> 보드 폐기.</div>
+    </div>
+    <div class="card rw">
+      <div class="top"><div><div class="nm">상점</div><div class="en">Shop</div></div><span class="badge b-rw">Rewrite</span></div>
+      <div class="note">IAP 5종 · 리워드/전면 광고 · soft 교환 · 7일 출석 연계. P2W 엄격(코스메틱·QoL). 구 <b>shop</b> 보드 폐기.</div>
+    </div>
+    <div class="card miss">
+      <div class="top"><div><div class="nm">출석 보상 (7일)</div><div class="en">Daily Login</div></div><span class="badge b-miss">Missing</span></div>
+      <div class="note">gdd §6 7일 출석 리텐션. <b>보드 없음</b> — 신규 필요.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 시스템 ===== -->
+<section>
+  <div class="shead"><span class="snum">05</span><h2>시스템</h2><span class="sh-meta">공통 · 설정</span></div>
+  <div class="grid">
+    <div class="card miss">
+      <div class="top"><div><div class="nm">설정</div><div class="en">Settings</div></div><span class="badge b-miss">Missing</span></div>
+      <div class="note">사운드 · 언어 · 계정/로그아웃 · 개인정보/계정삭제(cascade). <b>보드 없음</b> — 신규 필요.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 리빙 레퍼런스 (SoT) ===== -->
+<section>
+  <div class="shead"><span class="snum">06</span><h2>리빙 레퍼런스 (SoT)</h2><span class="sh-meta">전 화면 재설계의 근거 — 유지</span></div>
+  <p class="sdesc">화면 보드는 재설계로 폐기하되, 아래 3개는 <b>현행 유효 기준(SoT)</b> — 재설계는 여기서 파생한다.</p>
+  <div class="refs">
+    <a class="ref" href="sanity/design-system-v1-board.html">
+      <span class="rt">디자인 시스템 v1.1</span>
+      <span class="rd">2계층 토큰 · 타입 램프 · 컨트롤(173/150/127) · 색/레어도 · 반응형 · 엔진 파이프라인. 전 레이어 SoT.</span>
+      <span class="rf">sanity/design-system-v1-board.html</span>
+    </a>
+    <a class="ref" href="sanity/color-tokens-board.html">
+      <span class="rt">색 토큰</span>
+      <span class="rd">5테마 액센트 + 시스템 팔레트. 다크 캔버스 ⊥ 골드 신호. design-tokens.json 시각 참조.</span>
+      <span class="rf">sanity/color-tokens-board.html</span>
+    </a>
+    <a class="ref" href="asset-board.html">
+      <span class="rt">에셋 추적 보드</span>
+      <span class="rd">게임아트(유닛 애니·VFX·배경) + UI 에셋 생산 현황 트래커. asset-tracker(구) 대체.</span>
+      <span class="rf">asset-board.html</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== 부록 · 검토 대기 (KEEP?) ===== -->
+<section>
+  <div class="shead"><span class="snum">07</span><h2>부록 · 검토 대기</h2><span class="sh-meta">유지 여부 창업자 판단 대기 (KEEP?)</span></div>
+  <p class="sdesc">폐기·유지 판단이 애매한 2개. 삭제하지 않고 남겨 둠 — 창업자 확인 후 유지/통합/폐기 결정.</p>
+  <div class="refs">
+    <a class="ref aux" href="asset-store-recommendations.html">
+      <span class="rt">에셋 스토어 도입 후보</span>
+      <span class="rd">Unity 에셋 스토어 구매 후보 shortlist.</span>
+      <span class="aux-q">KEEP? — 여전히 유효한 구매 리스트인가 · 에셋 추적 보드에 통합?</span>
+      <span class="rf">asset-store-recommendations.html</span>
+    </a>
+    <a class="ref aux" href="audit/">
+      <span class="rt">정밀 감사 보고서</span>
+      <span class="rd">아키텍처 · 유닛 · 시스템 정밀 진단 스냅샷.</span>
+      <span class="aux-q">KEEP? — 최신 스냅샷인가 · 이관 대장과 중복?</span>
+      <span class="rf">audit/index.html</span>
+    </a>
+  </div>
+</section>
+
+<footer class="foot">
+  <span class="stat"><b>16</b> 화면 total</span>
+  <span class="stat"><b>1</b> CONFIRMED</span>
+  <span class="stat"><b>12</b> TO-REWRITE</span>
+  <span class="stat"><b>3</b> MISSING</span>
+  <span class="stat" style="margin-left:auto"><b>52</b> 폐기 보드 · <b>3</b> SoT 유지 · <b>2</b> 신규 · <b>2</b> 검토</span>
+  <span class="fm">무한의 전장 디자인 보드 · 프로덕션 마스터 허브 · 상태 규약 = fidelity-and-done · 화면 재설계 = design 부서 · SoT = projects/infinite-warfield/design/</span>
+</footer>
+
+</div>
+</body>
+</html>
