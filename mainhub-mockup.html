@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>infinite-warfield — MainHub · device-native v1 (874×402 pt)</title>
+<style>
+/* =====================================================================
+   infinite-warfield — MAIN HUB · DEVICE-NATIVE v1
+   ui-artist · 2026-07-15
+   ---------------------------------------------------------------------
+   WHY THIS FILE: r4(1080/2349px 저작)는 목업 px → 기기 pt 로 ×0.37 축소돼
+   기기에서 본문 6~9pt·터치 19~36pt 로 붕괴(스케일 갭의 근원). 이 파일은
+   그 갭을 0 으로 만든다 — 캔버스 = 874×402 pt = UITK Reference Resolution
+   = 기기 논리 pt(iPhone 12 Pro Max 시뮬 ScaleWithScreenSize Ref874×402 Match=1).
+   ★ 여기 모든 px = 1pt = Unity USS px = 기기 pt (변환 없음). 값 = 이 파일이 소스.
+
+   내용/IA = mainhub-v3-r4.html 5요소 그대로(사이드레일·헤더·캐러셀·CTA +
+   카드 하단 정보행·잠금카드·카드 2단 헤더). 바뀐 건 좌표계뿐(px→pt·플로어 준수).
+
+   AESTHETIC LOCK (art-bible v3 SoT · 아트디렉션 v3 '긴장/Tactical Field Ops'):
+     base #07090C · 매트 플랫 · 1px 헤어라인 #222D38 · radius 3 · 깊이=명도 램프 ·
+     크림골드 #FFD24D = 주CTA 단일 비컨 · 브론즈 ≤6 · 이모지 0.
+     box-shadow / css-gradient / blur / clip-path = UITK 미지원 →
+       이 목업의 그런 표현은 전부 [BAKE] 주석 = Unity 서 베이크드 스프라이트/9슬라이스.
+
+   PT FLOORS (§ui-scale-contract): 본문 ≥15 · 라벨/부제 ≥13 · 터치 ≥44 · 컨트롤:텍스트 ≥2.4.
+   폰트-클립 금지: 텍스트 담는 요소엔 고정 height 금지 → min-height + padding(자연높이 따라 성장).
+   ===================================================================== */
+@font-face{font-family:'NanumSquareNeo';font-weight:800;font-style:normal;src:url('_fonts/NanumSquareNeoBL.woff2') format('woff2');font-display:block;}
+@font-face{font-family:'NanumSquareNeo';font-weight:700;font-style:normal;src:url('_fonts/NanumSquareNeoEB.woff2') format('woff2');font-display:block;}
+@font-face{font-family:'JetBrainsMono';font-weight:700;font-style:normal;src:url('_fonts/JetBrainsMono-700.woff2') format('woff2');font-display:block;}
+@font-face{font-family:'JetBrainsMono';font-weight:500;font-style:normal;src:url('_fonts/JetBrainsMono-500.woff2') format('woff2');font-display:block;}
+@font-face{font-family:'Pretendard';font-weight:500;font-style:normal;src:url('_fonts/Pretendard-Medium.woff2') format('woff2');font-display:block;}
+:root{
+  --base:#07090C; --panel:#10151A; --raise:#182029; --line:#222D38; --sunken:#0A0E12;
+  --head:#F2EFE7; --body:#E7E4DC; --dim:#9AA6AD;
+  --cta:#FFD24D; --cta-ink:#07090C; --bronze:#B8863F; --slate:#7C93AB;
+  --threat:#E86A5C; --success:#5FB07A;
+  /* theme sector accent (세력 액센트 1슬롯 --tc) · Stage27 = Combat 웜 앰버 */
+  --tc:#C9923F;
+  --f-disp:'NanumSquareNeo','Apple SD Gothic Neo',sans-serif;
+  --f-body:'Pretendard','Apple SD Gothic Neo',sans-serif;
+  --f-mono:'JetBrainsMono','Pretendard',monospace;
+  --safe-l:16px; /* leading-edge inset(노치/라운드코너) · 1px=1pt */
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+/* ★ 캔버스 = 874×402 pt. 1px = 1pt. r4 의 stage/scale 래퍼 폐기(스케일 해킹 제거). */
+html,body{width:874px;height:402px;overflow:hidden;background:#000;}
+body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+.frame{position:relative;width:874px;height:402px;overflow:hidden;color:var(--body);background:var(--base);}
+.mono{font-family:var(--f-mono);font-weight:700;font-feature-settings:'tnum' 1;letter-spacing:0;}
+.mono5{font-weight:500;}
+.inf{font-family:var(--f-body);font-weight:500;}
+.ico{display:block;flex:none;}
+.ico svg{display:block;width:100%;height:100%;}
+.ico svg *{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;vector-effect:non-scaling-stroke;}
+.ico svg .fill{fill:currentColor;stroke:none;}
+
+/* ---- FULL-BLEED SCENE (Combat 테마 일러 · Stage27) ---- */
+.scene{position:absolute;inset:0;overflow:hidden;background:var(--base);}
+.bgimg{position:absolute;inset:0;background-size:cover;background-position:center 42%;
+  background-image:url('mainhub-scene-combat.jpg');}
+/* [BAKE] vignette/scrim = 배경-전경 분리(피사계심도). Unity = 배경 스프라이트에 프리다크닝 베이크
+   또는 씬 위 정적 scrim 스프라이트(런타임 필터 아님). 목업의 유일 허용 gradient. */
+.vig{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(124% 98% at 50% 44%,transparent 32%,rgba(7,9,12,0.62) 100%);}
+.vig-top{position:absolute;left:0;right:0;top:0;height:64px;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(7,9,12,0.86),transparent);}
+.vig-bot{position:absolute;left:0;right:0;bottom:0;height:96px;pointer-events:none;
+  background:linear-gradient(to top,rgba(7,9,12,0.84),transparent);}
+.vig-l{position:absolute;left:0;top:0;bottom:0;width:128px;pointer-events:none;
+  background:linear-gradient(to right,rgba(7,9,12,0.70),transparent);}
+.vig-r{position:absolute;right:0;top:0;bottom:0;width:128px;pointer-events:none;
+  background:linear-gradient(to left,rgba(7,9,12,0.70),transparent);}
+/* 중앙 포커스 암막 — 캐러셀 판독 확보 [BAKE 스프라이트] */
+.vig-focus{position:absolute;left:50%;top:222px;width:600px;height:320px;transform:translate(-50%,-50%);
+  pointer-events:none;background:radial-gradient(closest-side,rgba(7,9,12,0.56),transparent 80%);}
+
+/* ===================== TOPBAR (헤더 · 풀패널 미니바) ===================== */
+.topbar{position:absolute;top:0;left:0;right:0;min-height:60px;z-index:8;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 20px 6px calc(20px + var(--safe-l));
+  background:var(--panel);border-bottom:1px solid var(--line);}
+.cmdr{display:flex;align-items:center;gap:12px;}
+/* 프로필 = 마지막 사용 영웅(동적·목업=아르덴) · sunken 슬롯 라이트박스 + 1px 프레임.
+   crop = arden idle/0 (120² · 불투명 bbox 27,30-84,90) head→torso 프레이밍. [터치 44 = 영웅선택 진입] */
+.avatar{position:relative;width:44px;height:44px;border:1px solid var(--line);border-radius:3px;
+  background:var(--sunken);overflow:hidden;flex:none;}
+.avatar img{position:absolute;width:84px;height:84px;left:-17px;top:-20px;image-rendering:pixelated;}
+.cmdr-txt{display:flex;flex-direction:column;gap:4px;}
+.cmdr-row1{display:flex;align-items:center;gap:8px;}
+.cmdr-name{font-family:var(--f-body);font-weight:700;font-size:17px;color:var(--head);line-height:1.1;}
+/* Lv = 스탯 레벨(max60) · 브론즈 pill(경강조). min-height=폰트-클립 방지(14pt→27). */
+.lv{display:inline-flex;align-items:center;min-height:27px;font-family:var(--f-mono);font-weight:500;font-size:14px;
+  color:var(--cta-ink);background:var(--bronze);border-radius:3px;padding:2px 8px;font-feature-settings:'tnum' 1;line-height:1.2;}
+.lv .mx{opacity:.62;}
+/* 스킬강화(max5) = 슬레이트 후퇴 chip. */
+.skl{display:inline-flex;align-items:center;gap:5px;min-height:27px;padding:2px 8px;border-radius:3px;
+  background:var(--raise);border:1px solid var(--line);}
+.skl .ico{width:13px;height:13px;color:var(--slate);}
+.skl .sk-l{font-family:var(--f-body);font-weight:700;font-size:13px;color:var(--slate);letter-spacing:.01em;line-height:1.2;}
+.skl .sv{font-family:var(--f-mono);font-weight:500;font-size:13px;color:var(--slate);font-feature-settings:'tnum' 1;line-height:1.2;}
+.skl .mx{opacity:.62;}
+.cmdr-row2{display:flex;align-items:center;gap:8px;}
+.cmdr-row2 .ico{width:16px;height:16px;color:var(--slate);}
+.cp{font-family:var(--f-mono);font-weight:700;font-size:20px;color:var(--head);font-feature-settings:'tnum' 1;line-height:1.1;}
+.cp-lbl{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--dim);align-self:flex-end;padding-bottom:2px;}
+.wallet{display:flex;align-items:center;gap:10px;}
+/* 재화칩 [터치 44 = 상점/재화 진입] */
+.cur{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;
+  background:var(--raise);border:1px solid var(--line);border-radius:3px;}
+.cur .ico{width:18px;height:18px;}
+.cur.gold > .ico{color:var(--bronze);} .cur.ess > .ico{color:var(--slate);}
+.cur .val{font-family:var(--f-mono);font-weight:500;font-size:15px;color:var(--body);font-feature-settings:'tnum' 1;}
+.gear{width:44px;height:44px;background:var(--raise);border:1px solid var(--line);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;color:var(--body);margin-left:2px;}
+.gear .ico{width:20px;height:20px;}
+
+/* ===================== SIDE RAILS (런처) ===================== */
+.rail{position:absolute;top:calc(60px + (402px - 60px)/2);transform:translateY(-50%);z-index:6;
+  display:flex;flex-direction:column;align-items:center;gap:10px;}
+.rail.left{left:calc(14px + var(--safe-l));}
+.rail.right{right:14px;}
+/* 레일버튼 [터치 52 > 44 floor] · rgba near-opaque = 배경무관 대비. 아이콘+라벨 스택. */
+.railbtn{position:relative;width:52px;min-height:52px;background:rgba(16,21,26,0.86);border:1px solid var(--line);
+  border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:4px 2px;}
+.railbtn .ico{width:20px;height:20px;color:var(--head);}
+.railbtn .rl{font-family:var(--f-body);font-weight:700;font-size:13px;color:var(--body);line-height:1.1;}
+.railbtn .badge{position:absolute;top:5px;right:5px;min-width:17px;height:17px;padding:0 4px;border-radius:3px;
+  background:var(--bronze);color:var(--cta-ink);display:flex;align-items:center;justify-content:center;
+  font-family:var(--f-mono);font-weight:700;font-size:12px;font-feature-settings:'tnum' 1;}
+
+/* ===================== FRONTIER LABEL (무한 전선 ∞ 진행) ===================== */
+.frontier{position:absolute;top:69px;left:50%;transform:translateX(-50%);z-index:6;
+  display:flex;flex-direction:row;align-items:baseline;gap:10px;}
+.frontier .fl{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.20em;
+  text-transform:uppercase;color:var(--dim);}
+.frontier .fv{display:flex;align-items:baseline;gap:6px;}
+.frontier .fv .nm{font-family:var(--f-disp);font-weight:800;font-size:15px;color:var(--head);letter-spacing:-.01em;line-height:1;}
+.frontier .fv .fk{font-family:var(--f-mono);font-weight:700;font-size:15px;color:var(--head);font-feature-settings:'tnum' 1;line-height:1;}
+.frontier .fv .fd{font-family:var(--f-mono);font-weight:500;font-size:13px;color:var(--dim);line-height:1;}
+.frontier .fv .inf{font-size:15px;color:var(--dim);line-height:1;}
+
+/* ===================== CENTER — STAGE SELECT CAROUSEL ===================== */
+.carousel{position:absolute;top:216px;left:50%;transform:translate(-50%,-50%);z-index:6;
+  display:flex;align-items:center;justify-content:center;gap:8px;}
+/* nav chevrons [터치 44] */
+.nav{width:44px;height:44px;flex:none;background:rgba(16,21,26,0.86);border:1px solid var(--line);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;color:var(--body);}
+.nav .ico{width:18px;height:18px;}
+
+/* ---- PEEK CARD (인접 스테이지 · 작게·후퇴) ---- */
+.peek{position:relative;width:100px;height:150px;background:rgba(16,21,26,0.80);border:1px solid var(--line);
+  border-radius:3px;padding:12px 10px;display:flex;flex-direction:column;overflow:hidden;}
+.peek .pz{font-family:var(--f-disp);font-weight:800;font-size:14px;color:var(--body);letter-spacing:-.01em;line-height:1;}
+.peek .pt{display:flex;align-items:center;gap:6px;margin-top:6px;}
+.peek .pt .spine{width:3px;height:12px;background:var(--tc);border-radius:2px;}
+.peek .pt .ptx{font-family:var(--f-body);font-weight:700;font-size:13px;color:var(--dim);}
+.peek .pbody{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;}
+.peek .pstate-ico{width:30px;height:30px;}
+.peek .pstate-lbl{font-family:var(--f-body);font-weight:700;font-size:13px;letter-spacing:.02em;line-height:1.1;}
+.peek .phint{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--dim);text-align:center;line-height:1.35;}
+.peek .pstars{display:flex;gap:4px;justify-content:center;}
+.peek .pstars .ico{width:13px;height:13px;}
+.peek.cleared{opacity:.74;}
+.peek.cleared .pstate-ico{color:var(--success);}
+.peek.cleared .pstate-lbl{color:var(--success);}
+.peek.cleared .pstars .ico{color:var(--bronze);}
+.peek.locked{opacity:.60;}
+.peek.locked .pz{color:var(--dim);}
+.peek.locked .pt .spine{background:var(--line);}
+.peek.locked .pstate-ico{color:var(--dim);}
+.peek.locked .pstate-lbl{color:var(--dim);}
+
+/* ---- FOCUS CARD (프론티어 스테이지 · 풀 정보 · 초점 앵커 2.8× 폭) ---- */
+.focus{position:relative;width:320px;height:230px;background:var(--panel);border:1px solid var(--line);
+  border-radius:3px;display:flex;flex-direction:column;}
+/* HUD 코너 틱 데코(오너먼트 절제·앵귤러) — 좌측(tc 스핀 액센트 측)만 = 의도적 비대칭 [BAKE 또는 border] */
+.focus .tick{position:absolute;width:13px;height:13px;pointer-events:none;}
+.focus .tick.tl{top:7px;left:7px;border-top:1.5px solid var(--tc);border-left:1.5px solid var(--tc);}
+.focus .tick.tr{top:7px;right:7px;border-top:1.5px solid var(--tc);border-right:1.5px solid var(--tc);}
+.focus .tick.bl{bottom:7px;left:7px;border-bottom:1.5px solid var(--line);border-left:1.5px solid var(--line);}
+.focus .tick.br{bottom:7px;right:7px;border-bottom:1.5px solid var(--line);border-right:1.5px solid var(--line);}
+/* header row (2단: zone № + 테마 세그먼트) */
+.f-head{display:flex;align-items:stretch;min-height:50px;border-bottom:1px solid var(--line);}
+.f-zone{position:relative;display:flex;align-items:center;gap:10px;padding:0 14px;flex:1;}
+.f-zone .spine{position:absolute;left:0;top:16px;bottom:16px;width:4px;background:var(--tc);border-radius:0 2px 2px 0;}
+.f-zone .zn{display:flex;align-items:baseline;gap:7px;}
+.f-zone .zn .zpre{font-family:var(--f-disp);font-weight:700;font-size:15px;color:var(--dim);letter-spacing:-.01em;line-height:1;}
+/* znum = 초점 앵커 대형 수치. ⚠ Unity NanumSquareNeo digit '8' 글리프 깨짐 이슈(보고 플래그) — 목업은 정상 렌더. */
+.f-zone .zn .znum{font-family:var(--f-disp);font-weight:800;font-size:40px;color:var(--head);letter-spacing:-.03em;line-height:1;}
+.f-zone .zd{display:flex;flex-direction:column;gap:3px;}
+.f-zone .zd .zk{font-family:var(--f-mono);font-weight:500;font-size:13px;color:var(--dim);font-feature-settings:'tnum' 1;line-height:1;}
+.f-zone .zd .zk .inf{font-family:var(--f-body);color:var(--dim);}
+.f-zone .zd .zt{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.10em;color:var(--dim);line-height:1.1;}
+.f-theme{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:5px;
+  padding:0 14px;background:var(--sunken);border-left:1px solid var(--line);width:100px;}
+.f-theme .th-k{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.12em;color:var(--dim);line-height:1;}
+.f-theme .th-row{display:flex;align-items:center;gap:7px;}
+.f-theme .th-ico{width:18px;height:18px;color:var(--tc);}
+.f-theme .th-lbl{font-family:var(--f-disp);font-weight:700;font-size:15px;color:var(--tc);letter-spacing:-.01em;line-height:1;}
+/* body */
+.f-body{flex:1;padding:9px 14px;display:flex;flex-direction:column;gap:8px;}
+/* power comparison — sunken slot(리세스) */
+.pwr{background:var(--sunken);border:1px solid var(--line);border-radius:3px;padding:9px 12px;
+  display:flex;flex-direction:column;gap:7px;}
+.pwr .row{display:flex;align-items:center;gap:12px;}
+.pwr .col{display:flex;flex-direction:column;gap:3px;}
+.pwr .col .k{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.02em;color:var(--dim);line-height:1;}
+.pwr .col .v{display:flex;align-items:center;gap:6px;}
+.pwr .col .v .ico{width:15px;height:15px;color:var(--slate);}
+.pwr .col .v .n{font-family:var(--f-mono);font-weight:700;font-size:20px;color:var(--body);font-feature-settings:'tnum' 1;line-height:1;}
+.pwr .col.reco .v .n{color:var(--head);}
+.pwr .vs{font-family:var(--f-body);font-weight:700;font-size:13px;color:var(--dim);letter-spacing:.06em;align-self:center;padding-top:12px;}
+.pwr .warn{display:flex;align-items:center;gap:7px;min-height:26px;padding:0 10px;border-radius:3px;
+  border:1px solid var(--threat);color:var(--threat);align-self:flex-start;}
+.pwr .warn .ico{width:14px;height:14px;}
+.pwr .warn .wtx{font-family:var(--f-body);font-weight:700;font-size:13px;line-height:1;}
+.pwr .warn .wd{font-family:var(--f-mono);font-weight:700;font-size:13px;font-feature-settings:'tnum' 1;line-height:1;}
+/* threat archetype telegraph (정보·경보 아님 → 무채/슬레이트) · 1행 압축 */
+.threat{display:flex;align-items:center;gap:8px;}
+.threat .tbadge{display:flex;align-items:center;gap:7px;min-height:28px;padding:0 10px;border-radius:3px;
+  background:var(--raise);border:1px solid var(--line);flex:none;}
+.threat .tbadge .ico{width:16px;height:16px;color:var(--slate);}
+.threat .tbadge .tl{font-family:var(--f-body);font-weight:700;font-size:13px;color:var(--body);line-height:1;}
+.threat .thint{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--dim);line-height:1.2;}
+.threat .thint b{color:var(--slate);font-weight:700;}
+/* footer: 미도전 ☆☆☆ + 첫 클리어 보상 (r4 카드 하단 정보행) */
+.f-foot{display:flex;align-items:center;justify-content:space-between;padding:0 14px;min-height:32px;
+  border-top:1px solid var(--line);background:var(--sunken);border-radius:0 0 3px 3px;}
+.f-stars{display:flex;align-items:center;gap:8px;}
+.f-stars .sk{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.06em;color:var(--dim);}
+.f-stars .sset{display:flex;gap:5px;}
+.f-stars .sset .ico{width:16px;height:16px;}
+.f-stars .sset .on{color:var(--bronze);} .f-stars .sset .off{color:var(--line);}
+.f-reward{display:flex;align-items:center;gap:8px;}
+.f-reward .rk{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.04em;color:var(--dim);}
+.f-reward .rchip{display:flex;align-items:center;gap:6px;min-height:28px;padding:0 10px;border-radius:3px;
+  background:var(--raise);border:1px solid var(--line);}
+.f-reward .rchip .ico{width:16px;height:16px;color:var(--bronze);}
+.f-reward .rchip .rv{font-family:var(--f-mono);font-weight:700;font-size:15px;color:var(--body);font-feature-settings:'tnum' 1;}
+.f-reward .rchip .ru{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--dim);}
+
+/* ===================== CTA (우하단 지배 비컨) ===================== */
+/* [BAKE] CTA 뒤 골드 글로우 헤일로 = radial 스프라이트(CSS glow 아님·주스 P7). */
+.cta-glow{position:absolute;right:-30px;bottom:-30px;width:360px;height:180px;z-index:6;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,210,77,0.24),transparent 78%);}
+/* CTA = 단일 최고 채도/엘리베이션 비컨. 앵귤러 컷(pill 금지). [BAKE] clip-path → 9슬라이스 컷코너 스프라이트. */
+.cta{position:absolute;right:20px;bottom:6px;z-index:7;width:264px;min-height:60px;background:var(--cta);color:var(--cta-ink);
+  clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+  display:flex;align-items:center;gap:14px;padding:0 18px;}
+.cta .play{width:40px;height:40px;border:2px solid var(--cta-ink);border-radius:3px;display:flex;
+  align-items:center;justify-content:center;flex:none;}
+.cta .play .ico{width:22px;height:22px;color:var(--cta-ink);}
+.cta .ctxt{display:flex;flex-direction:column;gap:3px;}
+.cta .ctxt .m{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.12em;
+  color:rgba(7,9,12,0.64);line-height:1;}
+.cta .ctxt .big{font-family:var(--f-disp);font-weight:800;font-size:24px;letter-spacing:-.02em;line-height:1.05;color:var(--cta-ink);}
+.cta .go{margin-left:auto;display:flex;align-items:center;}
+.cta .go .ico{width:26px;height:26px;color:var(--cta-ink);}
+</style>
+</head>
+<body>
+<div class="frame">
+ <div class="scene">
+  <div class="bgimg"></div>
+  <div class="vig"></div><div class="vig-top"></div><div class="vig-bot"></div><div class="vig-l"></div><div class="vig-r"></div>
+  <div class="vig-focus"></div>
+
+  <!-- ============ TOPBAR (헤더 · 초상+Lv+스킬+전투력 · 재화 · 설정) ============ -->
+  <div class="topbar">
+   <div class="cmdr">
+    <div class="avatar"><img alt="마지막 사용 영웅 · 아르덴" src="avatar-arden.png"></div>
+    <div class="cmdr-txt">
+     <div class="cmdr-row1">
+      <span class="cmdr-name">아르덴</span>
+      <span class="lv">Lv 37 <span class="mx">/ 60</span></span>
+      <span class="skl"><span class="ico"><svg viewBox="0 0 24 24"><path class="fill" d="M12 2.4 L14.5 9.5 L21.6 12 L14.5 14.5 L12 21.6 L9.5 14.5 L2.4 12 L9.5 9.5 Z"/></svg></span><span class="sk-l">스킬</span><span class="sv">+3 <span class="mx">/ 5</span></span></span>
+     </div>
+     <div class="cmdr-row2"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 L20 6 V11 C20 16 16.4 19.4 12 21 C7.6 19.4 4 16 4 11 V6 Z"/></svg></span><span class="cp mono">24,860</span><span class="cp-lbl">전투력</span></div>
+    </div>
+   </div>
+   <div class="wallet">
+    <div class="cur gold"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.6"/></svg></span><span class="val mono mono5">1,240</span></div>
+    <div class="cur ess"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2 L19 9 L12 22 L5 9 Z"/><path d="M5 9 H19"/><path d="M12 2 L9 9 L12 22 M12 2 L15 9 L12 22"/></svg></span><span class="val mono mono5">86</span></div>
+    <div class="gear"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3.1"/><path d="M12 1.5 v3.5 M12 19 v3.5 M22.5 12 h-3.5 M5 12 H1.5 M19.4 4.6 l-2.5 2.5 M7.1 16.9 l-2.5 2.5 M19.4 19.4 l-2.5 -2.5 M7.1 7.1 l-2.5 -2.5"/></svg></span></div>
+   </div>
+  </div>
+
+  <!-- ============ LEFT RAIL = 성장(강화·환생·도감) ============ -->
+  <div class="rail left">
+   <div class="railbtn"><span class="ico"><svg viewBox="0 0 24 24"><path d="M6 13 L12 7 L18 13"/><path d="M6 18 L12 12 L18 18"/></svg></span><span class="rl">강화</span></div>
+   <div class="railbtn"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4.6 12 a7.4 7.4 0 0 1 12.6 -5.2"/><path d="M17.4 3 V7 H13.4"/><path d="M19.4 12 a7.4 7.4 0 0 1 -12.6 5.2"/><path d="M6.6 21 V17 H10.6"/></svg></span><span class="rl">환생</span></div>
+   <div class="railbtn"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 5 C10 3.7 7 3.5 4 4.3 V19 C7 18.2 10 18.4 12 19.7"/><path d="M12 5 C14 3.7 17 3.5 20 4.3 V19 C17 18.2 14 18.4 12 19.7"/><path d="M12 5 V19.7"/></svg></span><span class="rl">도감</span></div>
+  </div>
+
+  <!-- ============ RIGHT RAIL = 임무·상점(미션·업적·상점) ============ -->
+  <div class="rail right">
+   <div class="railbtn"><span class="badge mono">3</span><span class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M8 12.5 L11 15.5 L16.5 9"/></svg></span><span class="rl">미션</span></div>
+   <div class="railbtn"><span class="ico"><svg viewBox="0 0 24 24"><path d="M8 4 H16 V9 A4 4 0 0 1 8 9 Z"/><path d="M8 6 H5 V7 A3 3 0 0 0 8 10 M16 6 H19 V7 A3 3 0 0 1 16 10"/><path d="M12 13 V16 M9 20 H15 M10 20 L10.5 16.4 H13.5 L14 20"/></svg></span><span class="rl">업적</span></div>
+   <div class="railbtn"><span class="ico"><svg viewBox="0 0 24 24"><path d="M6 8 H18 L17 20 H7 Z"/><path d="M9 8 V6 A3 3 0 0 1 15 6 V8"/></svg></span><span class="rl">상점</span></div>
+  </div>
+
+  <!-- ============ FRONTIER LABEL (무한 전선 ∞) ============ -->
+  <div class="frontier">
+   <span class="fl">무한 전선 · FRONTIER</span>
+   <span class="fv"><span class="nm">Stage</span><span class="fk">27</span><span class="fd">/</span><span class="inf">&#8734;</span></span>
+  </div>
+
+  <!-- ============ CENTER = STAGE SELECT CAROUSEL ============ -->
+  <div class="carousel">
+   <div class="nav"><span class="ico"><svg viewBox="0 0 24 24"><path d="M15 5 L8 12 L15 19"/></svg></span></div>
+
+   <!-- LEFT PEEK = Stage 26 (클리어) -->
+   <div class="peek cleared">
+    <div class="pz">Stage 26</div>
+    <div class="pt"><span class="spine"></span><span class="ptx">전투</span></div>
+    <div class="pbody">
+     <span class="ico pstate-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.4 L11 15.4 L16.4 9"/></svg></span>
+     <span class="pstate-lbl">클리어</span>
+     <span class="pstars">
+      <span class="ico"><svg viewBox="0 0 24 24"><path class="fill" d="M12 3 L14.6 9 L21 9.6 L16 14 L17.6 20.4 L12 16.8 L6.4 20.4 L8 14 L3 9.6 L9.4 9 Z"/></svg></span>
+      <span class="ico"><svg viewBox="0 0 24 24"><path class="fill" d="M12 3 L14.6 9 L21 9.6 L16 14 L17.6 20.4 L12 16.8 L6.4 20.4 L8 14 L3 9.6 L9.4 9 Z"/></svg></span>
+      <span class="ico"><svg viewBox="0 0 24 24"><path class="fill" d="M12 3 L14.6 9 L21 9.6 L16 14 L17.6 20.4 L12 16.8 L6.4 20.4 L8 14 L3 9.6 L9.4 9 Z"/></svg></span>
+     </span>
+    </div>
+   </div>
+
+   <!-- FOCUS = Stage 27 (프론티어 · 풀 정보) -->
+   <div class="focus">
+    <span class="tick tl"></span><span class="tick bl"></span>
+    <div class="f-head">
+     <div class="f-zone">
+      <span class="spine"></span>
+      <span class="zn"><span class="zpre">Stage</span><span class="znum">27</span></span>
+      <span class="zd">
+       <span class="zk"><span class="inf">/ &#8734;</span></span>
+       <span class="zt">현재 전선</span>
+      </span>
+     </div>
+     <div class="f-theme">
+      <span class="th-k">테마</span>
+      <span class="th-row"><span class="ico th-ico"><svg viewBox="0 0 24 24"><path d="M4 20 L14.5 9.5"/><path d="M20 20 L9.5 9.5"/><path d="M16 4 L20 4 L20 8"/><path d="M8 4 L4 4 L4 8"/><path d="M4 20 L7 20 L7 17"/><path d="M20 20 L17 20 L17 17"/></svg></span><span class="th-lbl">전투</span></span>
+     </div>
+    </div>
+    <div class="f-body">
+     <div class="pwr">
+      <div class="row">
+       <div class="col mine">
+        <span class="k">내 전투력</span>
+        <span class="v"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 L20 6 V11 C20 16 16.4 19.4 12 21 C7.6 19.4 4 16 4 11 V6 Z"/></svg></span><span class="n">24,860</span></span>
+       </div>
+       <span class="vs">VS</span>
+       <div class="col reco">
+        <span class="k">권장 전력</span>
+        <span class="v"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><circle class="fill" cx="12" cy="12" r="2"/><path d="M12 1.5 V5 M12 19 V22.5 M22.5 12 H19 M5 12 H1.5"/></svg></span><span class="n">26,400</span></span>
+       </div>
+      </div>
+      <div class="warn">
+       <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 4 L21 19 H3 Z"/><path d="M12 10 V14 M12 16.5 V16.6"/></svg></span>
+       <span class="wtx">권장 전력 미달</span><span class="wd">&#8722;1,540</span>
+      </div>
+     </div>
+     <div class="threat">
+      <div class="tbadge">
+       <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 L20 6 V11 C20 16 16.4 19.4 12 21 C7.6 19.4 4 16 4 11 V6 Z"/><path d="M9 10 L11 12 L9 14 M15 10 L13 12 L15 14"/></svg></span>
+       <span class="tl">철벽·중장갑</span>
+      </div>
+      <span class="thint">약점 <b>마법 취약</b></span>
+     </div>
+    </div>
+    <div class="f-foot">
+     <div class="f-stars">
+      <span class="sk">미도전</span>
+      <span class="sset">
+       <span class="ico off"><svg viewBox="0 0 24 24"><path d="M12 3 L14.6 9 L21 9.6 L16 14 L17.6 20.4 L12 16.8 L6.4 20.4 L8 14 L3 9.6 L9.4 9 Z"/></svg></span>
+       <span class="ico off"><svg viewBox="0 0 24 24"><path d="M12 3 L14.6 9 L21 9.6 L16 14 L17.6 20.4 L12 16.8 L6.4 20.4 L8 14 L3 9.6 L9.4 9 Z"/></svg></span>
+       <span class="ico off"><svg viewBox="0 0 24 24"><path d="M12 3 L14.6 9 L21 9.6 L16 14 L17.6 20.4 L12 16.8 L6.4 20.4 L8 14 L3 9.6 L9.4 9 Z"/></svg></span>
+      </span>
+     </div>
+     <div class="f-reward">
+      <span class="rk">첫 보상</span>
+      <div class="rchip">
+       <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.6"/></svg></span>
+       <span class="rv">640</span><span class="ru">골드</span>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- RIGHT PEEK = Stage 28 (잠금 · 자물쇠+해금조건+디밍) -->
+   <div class="peek locked">
+    <div class="pz">Stage 28</div>
+    <div class="pt"><span class="spine"></span><span class="ptx">전투</span></div>
+    <div class="pbody">
+     <span class="ico pstate-ico"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11"/><circle class="fill" cx="12" cy="15.5" r="1.3"/></svg></span>
+     <span class="pstate-lbl">잠금</span>
+     <span class="phint">Stage 27<br>정복 시 해금</span>
+    </div>
+   </div>
+
+   <div class="nav"><span class="ico"><svg viewBox="0 0 24 24"><path d="M9 5 L16 12 L9 19"/></svg></span></div>
+  </div>
+
+  <!-- ============ CTA (우하단 지배 비컨 · 선택 스테이지 반영) ============ -->
+  <div class="cta-glow"></div>
+  <div class="cta">
+   <span class="play"><span class="ico"><svg viewBox="0 0 24 24"><path class="fill" d="M8 5 L19 12 L8 19 Z"/></svg></span></span>
+   <span class="ctxt"><span class="m">무한 전선</span><span class="big">Stage 27 진입</span></span>
+   <span class="go"><span class="ico"><svg viewBox="0 0 24 24"><path d="M9 5 L16 12 L9 19"/></svg></span></span>
+  </div>
+ </div>
+</div>
+</body>
+</html>
