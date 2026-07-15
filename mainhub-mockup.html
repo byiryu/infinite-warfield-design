@@ -2,11 +2,18 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>infinite-warfield — MainHub · device-native v3 (874×402 pt)</title>
+<title>infinite-warfield — MainHub · device-native v4 (874×402 pt)</title>
 <style>
 /* =====================================================================
-   infinite-warfield — MAIN HUB · DEVICE-NATIVE v3
+   infinite-warfield — MAIN HUB · DEVICE-NATIVE v4
    ui-artist · 2026-07-15
+   ---------------------------------------------------------------------
+   WHY v4: 창작자 피드백 1곳만(v3 나머지 전부 유지) — focus 카드 하단 "첫 보상" 칩.
+     · 축소: rv 15→13pt(≥13 유지)로 칩 자연높이↓(폰트클립 계약: 칩 높이는 최대 텍스트가
+       구동 — 15px→~29pt UITK 자연높이라 min-height 만 줄이면 목업이 UITK 를 과소표현).
+       min-height 28→26(=13px→26pt 정직 하한)·padding 0 10→0 8·icon 16→14·gap↓.
+       → 좌 "미도전 ☆☆☆"(13pt·라인 별)과 시각무게 균형.
+     · 우측 정렬: f-foot 우 padding 14→8 로 칩을 카드 우측 엣지 쪽으로 밀착.
    ---------------------------------------------------------------------
    WHY v3: 창작자 목업 피드백 3곳만 교정(v2 개선점 전부 유지).
      A) focus 카드 코너틱(ㄱㄴ 모서리 표기) 4개 전부 삭제 — 더 깔끔하게.
@@ -261,19 +268,21 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
 .threat .thint{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--dim);line-height:1.2;}
 .threat .thint b{color:var(--slate);font-weight:700;}
 /* footer: 미도전 ☆☆☆ + 첫 클리어 보상 */
-.f-foot{display:flex;align-items:center;justify-content:space-between;padding:0 14px;min-height:31px;
+/* v4: 우 padding 14→8 — "첫 보상" 칩을 카드 우측 엣지 쪽으로 밀착(좌는 14 유지=미도전 정렬). */
+.f-foot{display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 14px;min-height:31px;
   border-top:1px solid var(--line);background:var(--base);border-radius:0 0 3px 3px;}
 .f-stars{display:flex;align-items:center;gap:8px;}
 .f-stars .sk{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.06em;color:var(--dim);}
 .f-stars .sset{display:flex;gap:5px;}
 .f-stars .sset .ico{width:16px;height:16px;}
 .f-stars .sset .on{color:var(--bronze);} .f-stars .sset .off{color:var(--line);}
-.f-reward{display:flex;align-items:center;gap:8px;}
+.f-reward{display:flex;align-items:center;gap:7px;}
 .f-reward .rk{font-family:var(--f-body);font-weight:500;font-size:13px;letter-spacing:.04em;color:var(--dim);}
-.f-reward .rchip{display:flex;align-items:center;gap:6px;min-height:28px;padding:0 10px;border-radius:3px;
+/* v4: 칩 축소(행 비율 맞춤·좌측과 무게 균형). min-height 26 = 13px→26pt 폰트클립 정직 하한. */
+.f-reward .rchip{display:flex;align-items:center;gap:5px;min-height:26px;padding:0 8px;border-radius:3px;
   background:var(--raise);border:1px solid var(--line);}
-.f-reward .rchip .ico{width:16px;height:16px;color:var(--bronze);}
-.f-reward .rchip .rv{font-family:var(--f-mono);font-weight:700;font-size:15px;color:var(--body);font-feature-settings:'tnum' 1;}
+.f-reward .rchip .ico{width:14px;height:14px;color:var(--bronze);}
+.f-reward .rchip .rv{font-family:var(--f-mono);font-weight:700;font-size:13px;color:var(--body);font-feature-settings:'tnum' 1;}
 .f-reward .rchip .ru{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--dim);}
 
 /* ===================== CTA (우하단 지배 비컨) ===================== */
