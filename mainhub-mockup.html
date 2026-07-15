@@ -2,16 +2,33 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>infinite-warfield — MainHub · device-native v4 (874×402 pt)</title>
+<title>infinite-warfield — MainHub · device-native v5 (926×428 pt)</title>
 <style>
 /* =====================================================================
-   infinite-warfield — MAIN HUB · DEVICE-NATIVE v4
+   infinite-warfield — MAIN HUB · DEVICE-NATIVE v5
    ui-artist · 2026-07-15
+   ---------------------------------------------------------------------
+   WHY v5 (캔버스 정합 · 디자인 재발명 없음):
+     참조 기기 확정 = iPhone 12 Pro Max (물리 2778×1284 @3x → 논리 926×428).
+     § .claude/rules/ui-scale-contract.md — 목업 캔버스 = Unity Ref = 기기 논리 pt,
+     세 숫자 동일. v4 는 874×402 로 저작돼 기준기기(926×428)와 어긋나 있었다.
+     v5 = v4 의 디자인·수정을 전부 계승하고 **캔버스만 926×428 로 정합**한다.
+       · pt 는 절대값 → 폰트 크기·터치 44·아이콘 크기·1px 헤어라인 전부 불변.
+       · 캔버스 +52w / +26h 만큼 **여백이 늘고**, 그 여유를 아래 두 곳에 쓴다:
+         (A) ★ 세로 +26 → FOCUS 카드가 402 밖으로 하단 클립되던 v4 UITK P0 잔여 해소.
+             v4 focus height 218(고정) → v5 **min-height 244 + carousel 중심 220** 으로
+             카드 상단 헤더(Stage 27 · 현재 전선 · 테마칩)부터 하단행(미도전 ☆☆☆ ·
+             첫 보상 골드칩)까지 **428 안에 무클립**. 프론티어↔카드 상단, 카드 하단↔CTA
+             양쪽에 클리어런스 확보(바닥/톱에 안 붙임).
+             카드 min-height(고정 height 아님) = UITK 자연 폰트높이(§폰트클립)로 내용이
+             더 커지면 카드가 구조적으로 따라 자라 재클립 원천 차단.
+         (B) 가로 +52 → 캐러셀은 중앙정렬·레일은 엣지앵커라 **양측 여백이 자동 분배**
+             (v4 side margin 113 → v5 139, 레일↔캐러셀 간극 31 → 57). 욱여넣기 0.
+       · 그 외 좌표(topbar/frontier/rail/CTA)는 새 엣지·중심에 맞춰 산술 재배치만.
    ---------------------------------------------------------------------
    WHY v4: 창작자 피드백 1곳만(v3 나머지 전부 유지) — focus 카드 하단 "첫 보상" 칩.
      · 축소: rv 15→13pt(≥13 유지)로 칩 자연높이↓(폰트클립 계약: 칩 높이는 최대 텍스트가
-       구동 — 15px→~29pt UITK 자연높이라 min-height 만 줄이면 목업이 UITK 를 과소표현).
-       min-height 28→26(=13px→26pt 정직 하한)·padding 0 10→0 8·icon 16→14·gap↓.
+       구동). min-height 28→26(=13px→26pt 정직 하한)·padding 0 10→0 8·icon 16→14·gap↓.
        → 좌 "미도전 ☆☆☆"(13pt·라인 별)과 시각무게 균형.
      · 우측 정렬: f-foot 우 padding 14→8 로 칩을 카드 우측 엣지 쪽으로 밀착.
    ---------------------------------------------------------------------
@@ -22,27 +39,9 @@
    ---------------------------------------------------------------------
    WHY v2: v1 을 두 독립검증(ui-critic 적대비평 + ux-reviewer) 펀치리스트로 교정.
    새로 안 그리고 v1 을 고침. 유지=크림골드 단일비컨·정보위계·상태분기·매트플랫 v3·전장 dim.
-
-   변경(펀치리스트 대응):
-   1) 상단바 통일 — Lv·스킬·재화·톱니 = 공통 44pt·단일 수직중심 스냅. Lv 솔리드
-      브론즈 채움 해제(Lv·스킬 둘 다 다크 raise+보더). 톱니 히트 44.
-   2) 엘리베이션 규율 — 오프토큰 #0A0E12 제거. 램프 4단만(base/panel/raise/line).
-      리세스 웰 = base(패널 한 단계 아래). 칩 깊이방향 전화면 단일(칩=raise).
-   3) 코너틱·브론즈 예산 — 코너틱 세트 통일(4코너 동일 색·두께=slate, 냉 HUD 오너먼트,
-      warm 예산 밖). 상단좌 브론즈 중복(틱 warm→slate) 해소, spine(tc)만 warm 마커.
-      브론즈 풀강도 6군데(badge·spine·theme·cleared별·reward코인·wallet코인).
-   4) 우측 플랭킹·페이저 — peek 딤 대칭(둘 다 .74, 잠금 딤은 콘텐츠색이 담당).
-      nav 화살표 48pt(≥48). 카드 lift 로 우하단 CTA 뭉침 완화.
-   5) 아이콘 — 라인 기본 통일. fill 예약=①CTA play(단일 액션 솔리드) ②별 상태
-      (채움=획득/윤곽=미획득) ③아이콘 내부 미세 디테일 점. 스킬 스파클 fill→line.
-      전 아이콘 stroke 1.5 non-scaling(동일 스트로크). 별=SVG stroke(폰트글리프 0).
-   6) 13pt 하한+대비 — badge 12→13. 분모(/60·/5) opacity 트릭 제거→dim 풀불투명(≥4.5).
-      FRONTIER 브레드크럼 뒤 미세 스크림(raw 전장 저대비 해소). CTA 캡션 14·대비↑.
-   7) 세로 리듬 — focus 카드 230→218, carousel lift → 카드 하단↔CTA 클리어런스 확보
-      (바닥에 안 붙임). 402pt 에 안 욱여넣음.
-   8) 세이프에어리어 — 배경 full-bleed. 액션(topbar·rail·carousel·cta)=엣지앵커
-      오버레이 컨테이너 + flex 자식(절대좌표 자식배치 금지). safe-area 인셋은
-      앵커 컨테이너 패딩으로(--safe-l = leading-edge 노치). ↓ [SAFE] 주석 참조.
+   변경 요지(펀치리스트): 상단바 통일(공통 44pt 단일 베이스라인)·엘리베이션 램프 4단·
+     코너틱/브론즈 예산·우측 플랭킹 대칭·아이콘 라인기본(fill 예약)·13pt 하한+대비·세로 리듬·
+     세이프에어리어(엣지앵커+flex).
 
    AESTHETIC LOCK (art-bible v3 SoT · '긴장/Tactical Field Ops'):
      base #07090C · 매트 플랫 · 1px 헤어라인 #222D38 · radius 3 · 깊이=명도 램프 ·
@@ -52,6 +51,7 @@
 
    PT FLOORS (§ui-scale-contract): 본문 ≥15 · 라벨/부제 ≥13 · 터치 ≥44 · 컨트롤:텍스트 ≥2.4.
    폰트-클립 금지: 텍스트 담는 요소엔 고정 height 금지 → min-height + padding.
+     실측 하한: 13px→26 · 14px→27 · 15px→29 (그 외 ceil(fontSize×2.0)).
    ===================================================================== */
 @font-face{font-family:'NanumSquareNeo';font-weight:800;font-style:normal;src:url('_fonts/NanumSquareNeoBL.woff2') format('woff2');font-display:block;}
 @font-face{font-family:'NanumSquareNeo';font-weight:700;font-style:normal;src:url('_fonts/NanumSquareNeoEB.woff2') format('woff2');font-display:block;}
@@ -73,10 +73,10 @@
   --safe-l:16px; /* leading-edge inset(노치/라운드코너) · 1px=1pt */
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-/* ★ 캔버스 = 874×402 pt. 1px = 1pt = Unity USS px = 기기 pt. */
-html,body{width:874px;height:402px;overflow:hidden;background:#000;}
+/* ★ 캔버스 = 926×428 pt (iPhone 12 Pro Max 논리 @3x). 1px = 1pt = Unity USS px = 기기 pt. */
+html,body{width:926px;height:428px;overflow:hidden;background:#000;}
 body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
-.frame{position:relative;width:874px;height:402px;overflow:hidden;color:var(--body);background:var(--base);}
+.frame{position:relative;width:926px;height:428px;overflow:hidden;color:var(--body);background:var(--base);}
 .mono{font-family:var(--f-mono);font-weight:700;font-feature-settings:'tnum' 1;letter-spacing:0;}
 .mono5{font-weight:500;}
 .inf{font-family:var(--f-body);font-weight:500;}
@@ -106,14 +106,14 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
   background:radial-gradient(124% 98% at 50% 44%,transparent 32%,rgba(7,9,12,0.62) 100%);}
 .vig-top{position:absolute;left:0;right:0;top:0;height:64px;pointer-events:none;
   background:linear-gradient(to bottom,rgba(7,9,12,0.86),transparent);}
-.vig-bot{position:absolute;left:0;right:0;bottom:0;height:96px;pointer-events:none;
+.vig-bot{position:absolute;left:0;right:0;bottom:0;height:100px;pointer-events:none;
   background:linear-gradient(to top,rgba(7,9,12,0.84),transparent);}
-.vig-l{position:absolute;left:0;top:0;bottom:0;width:128px;pointer-events:none;
+.vig-l{position:absolute;left:0;top:0;bottom:0;width:136px;pointer-events:none;
   background:linear-gradient(to right,rgba(7,9,12,0.70),transparent);}
-.vig-r{position:absolute;right:0;top:0;bottom:0;width:128px;pointer-events:none;
+.vig-r{position:absolute;right:0;top:0;bottom:0;width:136px;pointer-events:none;
   background:linear-gradient(to left,rgba(7,9,12,0.70),transparent);}
-/* 중앙 포커스 암막 — 캐러셀 판독 확보 [BAKE 스프라이트] */
-.vig-focus{position:absolute;left:50%;top:210px;width:600px;height:320px;transform:translate(-50%,-50%);
+/* 중앙 포커스 암막 — 캐러셀 판독 확보 [BAKE 스프라이트] · v5: 카드 중심 220 정합 */
+.vig-focus{position:absolute;left:50%;top:220px;width:640px;height:344px;transform:translate(-50%,-50%);
   pointer-events:none;background:radial-gradient(closest-side,rgba(7,9,12,0.56),transparent 80%);}
 
 /* ===================== TOPBAR (헤더 · 풀패널 미니바) ===================== */
@@ -157,8 +157,9 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
 .gear .ico{width:20px;height:20px;}
 
 /* ===================== SIDE RAILS (런처) ===================== */
-/* [SAFE] 엣지앵커 세로 오버레이. 내부 = flex column. rgba near-opaque = 5테마 배경무관 대비. */
-.rail{position:absolute;top:calc(60px + (402px - 60px)/2);transform:translateY(-50%);z-index:6;
+/* [SAFE] 엣지앵커 세로 오버레이. 내부 = flex column. rgba near-opaque = 5테마 배경무관 대비.
+   v5: 세로중심 = topbar 아래 영역(428) 중앙으로 재계산. */
+.rail{position:absolute;top:calc(60px + (428px - 60px)/2);transform:translateY(-50%);z-index:6;
   display:flex;flex-direction:column;align-items:center;gap:10px;}
 .rail.left{left:calc(14px + var(--safe-l));}
 .rail.right{right:14px;}
@@ -186,8 +187,9 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
 .frontier .fv .inf{font-size:15px;color:var(--dim);line-height:1;}
 
 /* ===================== CENTER — STAGE SELECT CAROUSEL ===================== */
-/* [SAFE] 엣지앵커 중앙 오버레이. 내부 = flex row(nav·peek·focus·peek·nav) gap 8 대칭. */
-.carousel{position:absolute;top:209px;left:50%;transform:translate(-50%,-50%);z-index:6;
+/* [SAFE] 엣지앵커 중앙 오버레이. 내부 = flex row(nav·peek·focus·peek·nav) gap 8 대칭.
+   v5: 중심 209→220 (세로 +26 여유 활용 — 카드 상/하 클리어런스 확보). */
+.carousel{position:absolute;top:220px;left:50%;transform:translate(-50%,-50%);z-index:6;
   display:flex;align-items:center;justify-content:center;gap:8px;}
 /* nav chevrons [터치 48 ≥48] · 카드 엣지에 gap 8 로 일관 앵커(양측 동일). */
 .nav{width:48px;height:48px;flex:none;background:rgba(16,21,26,0.86);border:1px solid var(--line);border-radius:3px;
@@ -195,7 +197,8 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
 .nav .ico{width:18px;height:18px;}
 
 /* ---- PEEK CARD (인접 스테이지 · 작게·후퇴 · 딤 대칭) ---- */
-.peek{position:relative;width:100px;height:150px;background:rgba(16,21,26,0.80);border:1px solid var(--line);
+/* v5: 고정 height 150 → min-height 152 (세로 여유 소폭 반영 + 폰트클립 안전: 내용이 커지면 자람). */
+.peek{position:relative;width:100px;min-height:152px;background:rgba(16,21,26,0.80);border:1px solid var(--line);
   border-radius:3px;padding:12px 10px;display:flex;flex-direction:column;overflow:hidden;}
 .peek .pz{font-family:var(--f-disp);font-weight:800;font-size:14px;color:var(--body);letter-spacing:-.01em;line-height:1;}
 .peek .pt{display:flex;align-items:center;gap:6px;margin-top:6px;}
@@ -219,8 +222,11 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
 .peek.locked .pstate-ico{color:var(--dim);}
 .peek.locked .pstate-lbl{color:var(--dim);}
 
-/* ---- FOCUS CARD (프론티어 스테이지 · 풀 정보 · 초점 앵커 3.2× 폭 · 218pt) ---- */
-.focus{position:relative;width:320px;height:218px;background:var(--panel);border:1px solid var(--line);
+/* ---- FOCUS CARD (프론티어 스테이지 · 풀 정보 · 초점 앵커 3.2× 폭) ----
+   v5: 고정 height 218 → min-height 244. 세로 +26 여유를 카드에 투입해 헤더~하단행
+   전부 428 안에 무클립. min-height 라 UITK 자연 폰트높이(§폰트클립)로 내용이 더 커지면
+   카드가 구조적으로 따라 자라 재클립 원천 차단(고정 height 회귀 금지). */
+.focus{position:relative;width:320px;min-height:244px;background:var(--panel);border:1px solid var(--line);
   border-radius:3px;display:flex;flex-direction:column;}
 /* v3: HUD 코너 틱 4개 전부 삭제(창작자 지시) — 카드는 1px 헤어라인 프레임 + 좌측 spine(tc) 단독 마커. */
 /* header row (2단: zone № + 테마 세그먼트) */
@@ -241,8 +247,8 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
 .f-theme .th-row{display:flex;align-items:center;gap:7px;}
 .f-theme .th-ico{width:18px;height:18px;color:var(--tc);}
 .f-theme .th-lbl{font-family:var(--f-disp);font-weight:700;font-size:15px;color:var(--tc);letter-spacing:-.01em;line-height:1;}
-/* body */
-.f-body{flex:1;padding:9px 14px;display:flex;flex-direction:column;justify-content:center;gap:9px;}
+/* body · v5: 세로 여유로 padding/gap 소폭 숨통(9→11 · gap 9→10) — 카드가 커진 만큼 내부도 리듬 확보 */
+.f-body{flex:1;padding:11px 14px;display:flex;flex-direction:column;justify-content:center;gap:10px;}
 /* power comparison — 리세스 웰(base = 패널 한 단계 아래) */
 .pwr{background:var(--base);border:1px solid var(--line);border-radius:3px;padding:9px 12px;
   display:flex;flex-direction:column;gap:7px;}
@@ -287,11 +293,11 @@ body{font-family:var(--f-body);-webkit-font-smoothing:antialiased;text-rendering
 
 /* ===================== CTA (우하단 지배 비컨) ===================== */
 /* [SAFE] 엣지앵커 우하단 오버레이. [BAKE] 뒤 골드 글로우 헤일로 = radial 스프라이트(CSS glow 아님·주스 P7). */
-.cta-glow{position:absolute;right:-30px;bottom:-30px;width:360px;height:180px;z-index:6;pointer-events:none;
+.cta-glow{position:absolute;right:-30px;bottom:-30px;width:380px;height:200px;z-index:6;pointer-events:none;
   background:radial-gradient(closest-side,rgba(255,210,77,0.24),transparent 78%);}
 /* CTA = 단일 최고 채도/엘리베이션 비컨. 앵귤러 컷(pill 금지). [BAKE] clip-path → 9슬라이스 컷코너 스프라이트. */
-/* v3: width 264→288 + 내부 padding 0 22(텍스트가 엣지에 안 붙게 확보). */
-.cta{position:absolute;right:20px;bottom:6px;z-index:7;width:288px;min-height:60px;background:var(--cta);color:var(--cta-ink);
+/* v5: bottom 6→12 (세로 여유로 바닥서 살짝 띄움 · 카드 하단과 클리어런스). */
+.cta{position:absolute;right:20px;bottom:12px;z-index:7;width:288px;min-height:60px;background:var(--cta);color:var(--cta-ink);
   clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
   display:flex;align-items:center;gap:13px;padding:0 22px;}
 .cta .play{width:38px;height:38px;border:2px solid var(--cta-ink);border-radius:3px;display:flex;
